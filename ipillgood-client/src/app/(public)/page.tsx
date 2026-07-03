@@ -1,8 +1,8 @@
-import React from 'react';
-
 const HomePage = () => {
   return (
-    <div className='text-3xl flex items-center justify-center min-h-dvh'>Hello 안녕하세요</div>
+    <div className='flex items-center justify-center min-h-dvh text-secondary-500 text-body-5'>
+      Hello 안녕하세요
+    </div>
   );
 };
 

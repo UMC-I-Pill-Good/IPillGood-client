@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+/* tokens */
+@import './styles/color.css';
+@import './styles/fonts.css';
+
 html,
 body {
   margin: 0;
