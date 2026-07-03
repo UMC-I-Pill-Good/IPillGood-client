@@ -1,0 +1,81 @@
+@layer utilities {
+  .text-title-1 {
+    @apply text-[40px] font-bold leading-none;
+  }
+
+  .text-title-2 {
+    @apply text-[40px] font-semibold leading-none;
+  }
+
+  .text-title-3 {
+    @apply text-[32px] font-semibold leading-none;
+  }
+
+  .text-title-4 {
+    @apply text-[32px] font-medium leading-none;
+  }
+
+  .text-subtitle-1 {
+    @apply text-[28px] font-semibold leading-none;
+  }
+
+  .text-subtitle-2 {
+    @apply text-[28px] font-medium leading-none;
+  }
+
+  .text-subtitle-3 {
+    @apply text-[28px] font-normal leading-none;
+  }
+
+  .text-subtitle-4 {
+    @apply text-[24px] font-semibold leading-none;
+  }
+
+  .text-subtitle-5 {
+    @apply text-[24px] font-medium leading-none;
+  }
+
+  .text-subtitle-6 {
+    @apply text-[24px] font-normal leading-none;
+  }
+
+  .text-body-1 {
+    @apply text-[20px] font-semibold leading-none;
+  }
+
+  .text-body-2 {
+    @apply text-[20px] font-medium leading-none;
+  }
+
+  .text-body-3 {
+    @apply text-[20px] font-normal leading-none;
+  }
+
+  .text-body-4 {
+    @apply text-[20px] font-light leading-none;
+  }
+
+  .text-body-5 {
+    @apply text-[16px] font-semibold leading-none;
+  }
+
+  .text-body-6 {
+    @apply text-[16px] font-medium leading-none;
+  }
+
+  .text-body-7 {
+    @apply text-[16px] font-normal leading-none;
+  }
+
+  .text-body-8 {
+    @apply text-[16px] font-light leading-none;
+  }
+
+  .text-caption-1 {
+    @apply text-[12px] font-medium leading-none;
+  }
+
+  .text-caption-2 {
+    @apply text-[12px] font-normal leading-none;
+  }
+}

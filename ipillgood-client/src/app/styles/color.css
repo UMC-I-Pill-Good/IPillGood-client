@@ -1,0 +1,45 @@
+@theme {
+  /* Primary / Blue */
+  --color-primary-100: #ebf1ff;
+  --color-primary-200: #c0d4ff;
+  --color-primary-300: #a2bfff;
+  --color-primary-400: #77a2ff;
+  --color-primary-500: #5d90ff;
+  --color-primary-600: #3474ff;
+  --color-primary-700: #2f6ae8;
+  --color-primary-800: #2552b5;
+  --color-primary-900: #1d408c;
+
+  /* Secondary / Purple */
+  --color-secondary-100: #f5f6ff;
+  --color-secondary-200: #e0e2ff;
+  --color-secondary-300: #d1d4ff;
+  --color-secondary-400: #bcc0ff;
+  --color-secondary-500: #afb4ff;
+  --color-secondary-600: #9ba1ff;
+  --color-secondary-700: #8d93e8;
+  --color-secondary-800: #6e72b5;
+  --color-secondary-900: #55598c;
+
+  /* Point / Green */
+  --color-point-100: #f5fefa;
+  --color-point-200: #dffbef;
+  --color-point-300: #d0f9e8;
+  --color-point-400: #bbf6dd;
+  --color-point-500: #adf4d6;
+  --color-point-600: #99f1cc;
+  --color-point-700: #8bdbba;
+  --color-point-800: #6dab91;
+  --color-point-900: #548570;
+
+  /* Neutral / Gray */
+  --color-neutral-100: #f5fefa;
+  --color-neutral-200: #e7e9eb;
+  --color-neutral-300: #dbdee1;
+  --color-neutral-400: #cbcfd3;
+  --color-neutral-500: #c1c6cb;
+  --color-neutral-600: #b1b8be;
+  --color-neutral-700: #a1a7ad;
+  --color-neutral-800: #7e8387;
+  --color-neutral-900: #616569;
+}
