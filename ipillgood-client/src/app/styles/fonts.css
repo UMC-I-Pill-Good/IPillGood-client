@@ -56,26 +56,62 @@
   }
 
   .text-body-5 {
-    @apply text-[16px] font-semibold leading-none;
+    @apply text-[18px] font-semibold leading-none;
   }
 
   .text-body-6 {
-    @apply text-[16px] font-medium leading-none;
+    @apply text-[18px] font-medium leading-none;
   }
 
   .text-body-7 {
-    @apply text-[16px] font-normal leading-none;
+    @apply text-[18px] font-normal leading-none;
   }
 
   .text-body-8 {
+    @apply text-[18px] font-light leading-none;
+  }
+
+  .text-body-9 {
+    @apply text-[16px] font-semibold leading-none;
+  }
+
+  .text-body-10 {
+    @apply text-[16px] font-medium leading-none;
+  }
+
+  .text-body-11 {
+    @apply text-[16px] font-normal leading-none;
+  }
+
+  .text-body-12 {
     @apply text-[16px] font-light leading-none;
   }
 
   .text-caption-1 {
-    @apply text-[12px] font-medium leading-none;
+    @apply text-[14px] font-semibold leading-none;
   }
 
   .text-caption-2 {
+    @apply text-[14px] font-medium leading-none;
+  }
+
+  .text-caption-3 {
+    @apply text-[14px] font-normal leading-none;
+  }
+
+  .text-caption-4 {
+    @apply text-[14px] font-light leading-none;
+  }
+
+  .text-caption-5 {
+    @apply text-[12px] font-semibold leading-none;
+  }
+
+  .text-caption-6 {
+    @apply text-[12px] font-medium leading-none;
+  }
+
+  .text-caption-7 {
     @apply text-[12px] font-normal leading-none;
   }
 }
