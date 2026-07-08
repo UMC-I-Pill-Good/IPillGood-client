@@ -2,6 +2,7 @@
 
 import {
   forwardRef,
+  useId,
   useState,
   type ComponentPropsWithoutRef,
   type FocusEvent,
@@ -108,6 +109,7 @@ const EyeOffIcon = () => {
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
     {
+      id,
       label,
       status = 'default',
       message,
@@ -122,6 +124,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     },
     ref,
   ) => {
+    const generatedInputId = useId();
+    const inputId = id ?? generatedInputId;
+
     const [isFocused, setIsFocused] = useState(false);
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -156,13 +161,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
       >
         {label && (
-          <label className="text-[18px] font-semibold leading-none text-black">
+          <label
+            htmlFor={inputId}
+            className="text-[18px] font-semibold leading-none text-black"
+          >
             {label}
           </label>
         )}
 
         <div className="relative w-full">
           <input
+            id={inputId}
             ref={ref}
             type={inputType}
             disabled={disabled}
