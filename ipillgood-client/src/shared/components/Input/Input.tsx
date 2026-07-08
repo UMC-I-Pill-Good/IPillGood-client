@@ -10,17 +10,14 @@ import { cva } from 'class-variance-authority';
 import { cn } from '@/shared/utils/cn';
 
 const inputVariants = cva(
-  'h-[39px] w-full rounded-lg border p-2.5 text-base leading-none outline-none transition-colors placeholder:text-[#858B93] disabled:cursor-not-allowed disabled:bg-[#E1E3E6] disabled:text-[#858B93]',
+  'text-body-7 h-10 w-full rounded-lg border p-2.5 text-black outline-none transition-colors placeholder:text-neutral-800 backdrop-blur-[20px] backdrop-saturate-150 shadow-[inset_0_1px_1px_rgba(255,255,255,0.85),0_4px_16px_rgba(255,255,255,0.28)] disabled:cursor-not-allowed disabled:bg-[#E1E3E6] disabled:text-neutral-800',
   {
     variants: {
       status: {
-        default:
-          'border-white bg-gradient-to-b from-white/90 to-white/65 text-black',
-        pressed:
-          'border-white bg-gradient-to-b from-white/65 to-white/45 text-black',
-        failed:
-          'border-[#D53D4A] bg-gradient-to-b from-white/65 to-white/45 text-black',
-        succeeded: 'border-[#4680FE] bg-[#A2BFFF4D] text-black',
+        default: 'border-white bg-white/50',
+        pressed: 'border-white bg-white',
+        failed: 'border-[#D53D4A] bg-white/50',
+        succeeded: 'border-[#4680FE] bg-primary-300/30',
       },
       hasIcon: {
         true: 'pr-10',
@@ -121,7 +118,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       onFocus,
       onBlur,
       disabled,
-      style,
       ...props
     },
     ref,
@@ -153,9 +149,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     };
 
     return (
-      <div className={cn('flex w-full flex-col gap-1', containerClassName)}>
+      <div
+        className={cn(
+          'flex w-full max-w-[353px] flex-col gap-1',
+          containerClassName,
+        )}
+      >
         {label && (
-          <label className="text-[18px] font-medium leading-none text-black">
+          <label className="text-[18px] font-semibold leading-none text-black">
             {label}
           </label>
         )}
@@ -173,13 +174,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               }),
               inputClassName,
             )}
-            style={{
-              WebkitBackdropFilter: 'blur(24px) saturate(160%)',
-              backdropFilter: 'blur(24px) saturate(160%)',
-              boxShadow:
-                'inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 6px 20px rgba(255, 255, 255, 0.35)',
-              ...style,
-            }}
             onFocus={handleFocus}
             onBlur={handleBlur}
             {...props}
@@ -188,7 +182,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {shouldShowPasswordToggle && (
             <button
               type="button"
-              className="absolute right-2.5 top-1/2 flex -translate-y-1/2 items-center justify-center text-[#6B7280] disabled:cursor-not-allowed"
+              className="absolute right-2.5 top-1/2 flex -translate-y-1/2 items-center justify-center text-[#333333] disabled:cursor-not-allowed"
               onClick={handleTogglePasswordVisible}
               disabled={disabled}
               aria-label={
@@ -207,7 +201,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               status === 'failed' && 'text-[#D53D4A]',
               status === 'succeeded' && 'text-[#4680FE]',
               (status === 'default' || status === 'pressed') &&
-              'text-[#858B93]',
+              'text-neutral-800',
             )}
           >
             {message}
