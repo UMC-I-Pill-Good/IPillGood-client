@@ -41,7 +41,7 @@ export const ItemCard = ({
                 )}
             </div>
 
-            <p className="text-caption-1 relative z-10 w-[54px] truncate text-[#111111]">
+            <p className="typo-caption-6 relative z-10 w-[54px] truncate text-[#111111]">
                 {foodName}
             </p>
 

@@ -11,7 +11,7 @@ import { cva } from 'class-variance-authority';
 import { cn } from '@/shared/utils/cn';
 
 const inputVariants = cva(
-  'text-body-7 h-10 w-full rounded-lg border p-2.5 text-black outline-none transition-colors placeholder:text-neutral-800 backdrop-blur-[20px] backdrop-saturate-150 shadow-[inset_0_1px_1px_rgba(255,255,255,0.85),0_4px_16px_rgba(255,255,255,0.28)] disabled:cursor-not-allowed disabled:bg-[#E1E3E6] disabled:text-neutral-800',
+  'typo-body-11 h-10 w-full rounded-lg border p-2.5 text-black outline-none transition-colors placeholder:text-neutral-800 backdrop-blur-[20px] backdrop-saturate-150 shadow-[inset_0_1px_1px_rgba(255,255,255,0.85),0_4px_16px_rgba(255,255,255,0.28)] disabled:cursor-not-allowed disabled:bg-[#E1E3E6] disabled:text-neutral-800',
   {
     variants: {
       status: {
@@ -161,10 +161,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         )}
       >
         {label && (
-          <label
-            htmlFor={inputId}
-            className="text-[18px] font-semibold leading-none text-black"
-          >
+          <label htmlFor={inputId} className="typo-body-5 text-black">
             {label}
           </label>
         )}
@@ -206,7 +203,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {message && (
           <p
             className={cn(
-              'text-sm leading-5',
+              'typo-caption-3',
               status === 'failed' && 'text-[#D53D4A]',
               status === 'succeeded' && 'text-[#4680FE]',
               (status === 'default' || status === 'pressed') &&
