@@ -10,8 +10,5 @@ export { default as ConfirmModal } from './modal/ConfirmModal';
 /* chip */
 export { default as Chip } from './Chip';
 
-/* header */
-export { Header } from './Header';
-
 /* search */
 export { SearchBar } from './SearchBar';

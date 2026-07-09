@@ -7,8 +7,8 @@ import {
   ConfirmModal,
   CheckboxButton,
   ToggleButton,
-  Header,
 } from '@/shared/components';
+import { Header } from '@/shared/layout';
 import { ChevronLeft, X } from 'lucide-react';
 import { useState } from 'react';
 

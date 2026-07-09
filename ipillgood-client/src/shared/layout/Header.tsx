@@ -1,7 +1,7 @@
 'use client';
 import { ChevronLeft, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import IconButton from './button/IconButton';
+import { IconButton } from '@/shared/components';
 
 interface HeaderProps {
   title?: string;
