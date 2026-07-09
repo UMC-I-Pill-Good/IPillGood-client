@@ -1,11 +1,12 @@
 'use client';
 
-import { TextButton, IconButton, Chip, ConfirmModal } from '@/shared/components';
+import { TextButton, IconButton, Chip, ConfirmModal, CheckboxButton } from '@/shared/components';
 import { ChevronLeft, X } from 'lucide-react';
 import { useState } from 'react';
 
 const ExamplePage = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   return (
     <div className='p-4 flex flex-col gap-4'>
@@ -37,6 +38,9 @@ const ExamplePage = () => {
       <Chip text='텍스트' className='w-15' />
       <Chip text='텍스트' variant='point' icon={true} />
       <Chip text='텍스트' variant='point' />
+
+      <CheckboxButton checked={checked} onClick={() => setChecked((prev) => !prev)} />
+      <CheckboxButton checked={checked} onClick={() => setChecked((prev) => !prev)} size='lg' />
 
       {modalOpen && (
         <ConfirmModal
