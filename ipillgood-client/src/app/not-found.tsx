@@ -25,7 +25,7 @@ const NotFoundPage = () => {
 
         <div className='flex flex-col sm:flex-row gap-3 justify-center'>
           <Link
-            href='/feed'
+            href='/'
             className='w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-slate-500 font-medium hover:bg-slate-700 transition-colors'
           >
             <Home size={20} className='text-white' />
