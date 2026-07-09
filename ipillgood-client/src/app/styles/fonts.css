@@ -1,117 +1,117 @@
 @layer utilities {
-  .text-title-1 {
-    @apply text-[40px] font-bold leading-none;
+  .typo-title-1 {
+    @apply text-[40px] font-bold leading-5;
   }
 
-  .text-title-2 {
-    @apply text-[40px] font-semibold leading-none;
+  .typo-title-2 {
+    @apply text-[40px] font-semibold leading-5;
   }
 
-  .text-title-3 {
-    @apply text-[32px] font-semibold leading-none;
+  .typo-title-3 {
+    @apply text-[32px] font-semibold leading-5;
   }
 
-  .text-title-4 {
-    @apply text-[32px] font-medium leading-none;
+  .typo-title-4 {
+    @apply text-[32px] font-medium leading-5;
   }
 
-  .text-subtitle-1 {
-    @apply text-[28px] font-semibold leading-none;
+  .typo-subtitle-1 {
+    @apply text-[28px] font-semibold leading-5;
   }
 
-  .text-subtitle-2 {
-    @apply text-[28px] font-medium leading-none;
+  .typo-subtitle-2 {
+    @apply text-[28px] font-medium leading-5;
   }
 
-  .text-subtitle-3 {
-    @apply text-[28px] font-normal leading-none;
+  .typo-subtitle-3 {
+    @apply text-[28px] font-normal leading-5;
   }
 
-  .text-subtitle-4 {
-    @apply text-[24px] font-semibold leading-none;
+  .typo-subtitle-4 {
+    @apply text-[24px] font-semibold leading-5;
   }
 
-  .text-subtitle-5 {
-    @apply text-[24px] font-medium leading-none;
+  .typo-subtitle-5 {
+    @apply text-[24px] font-medium leading-5;
   }
 
-  .text-subtitle-6 {
-    @apply text-[24px] font-normal leading-none;
+  .typo-subtitle-6 {
+    @apply text-[24px] font-normal leading-5;
   }
 
-  .text-body-1 {
-    @apply text-[20px] font-semibold leading-none;
+  .typo-body-1 {
+    @apply text-[20px] font-semibold leading-5;
   }
 
-  .text-body-2 {
-    @apply text-[20px] font-medium leading-none;
+  .typo-body-2 {
+    @apply text-[20px] font-medium leading-5;
   }
 
-  .text-body-3 {
-    @apply text-[20px] font-normal leading-none;
+  .typo-body-3 {
+    @apply text-[20px] font-normal leading-5;
   }
 
-  .text-body-4 {
-    @apply text-[20px] font-light leading-none;
+  .typo-body-4 {
+    @apply text-[20px] font-light leading-5;
   }
 
-  .text-body-5 {
-    @apply text-[18px] font-semibold leading-none;
+  .typo-body-5 {
+    @apply text-[18px] font-semibold leading-5;
   }
 
-  .text-body-6 {
-    @apply text-[18px] font-medium leading-none;
+  .typo-body-6 {
+    @apply text-[18px] font-medium leading-5;
   }
 
-  .text-body-7 {
-    @apply text-[18px] font-normal leading-none;
+  .typo-body-7 {
+    @apply text-[18px] font-normal leading-5;
   }
 
-  .text-body-8 {
-    @apply text-[18px] font-light leading-none;
+  .typo-body-8 {
+    @apply text-[18px] font-light leading-5;
   }
 
-  .text-body-9 {
-    @apply text-[16px] font-semibold leading-none;
+  .typo-body-9 {
+    @apply text-[16px] font-semibold leading-5;
   }
 
-  .text-body-10 {
-    @apply text-[16px] font-medium leading-none;
+  .typo-body-10 {
+    @apply text-[16px] font-medium leading-5;
   }
 
-  .text-body-11 {
-    @apply text-[16px] font-normal leading-none;
+  .typo-body-11 {
+    @apply text-[16px] font-normal leading-5;
   }
 
-  .text-body-12 {
-    @apply text-[16px] font-light leading-none;
+  .typo-body-12 {
+    @apply text-[16px] font-light leading-5;
   }
 
-  .text-caption-1 {
-    @apply text-[14px] font-semibold leading-none;
+  .typo-caption-1 {
+    @apply text-[14px] font-semibold leading-5;
   }
 
-  .text-caption-2 {
-    @apply text-[14px] font-medium leading-none;
+  .typo-caption-2 {
+    @apply text-[14px] font-medium leading-5;
   }
 
-  .text-caption-3 {
-    @apply text-[14px] font-normal leading-none;
+  .typo-caption-3 {
+    @apply text-[14px] font-normal leading-5;
   }
 
-  .text-caption-4 {
-    @apply text-[14px] font-light leading-none;
+  .typo-caption-4 {
+    @apply text-[14px] font-light leading-5;
   }
 
-  .text-caption-5 {
-    @apply text-[12px] font-semibold leading-none;
+  .typo-caption-5 {
+    @apply text-[12px] font-semibold leading-5;
   }
 
-  .text-caption-6 {
-    @apply text-[12px] font-medium leading-none;
+  .typo-caption-6 {
+    @apply text-[12px] font-medium leading-5;
   }
 
-  .text-caption-7 {
-    @apply text-[12px] font-normal leading-none;
+  .typo-caption-7 {
+    @apply text-[12px] font-normal leading-5;
   }
 }
