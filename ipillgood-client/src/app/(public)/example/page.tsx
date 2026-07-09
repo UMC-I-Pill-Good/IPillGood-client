@@ -1,8 +1,6 @@
 'use client';
 
-import { TextButton } from '@/shared/components';
-import IconButton from '@/shared/components/button/IconButton';
-import ConfirmModal from '@/shared/components/modal/ConfirmModal';
+import { TextButton, IconButton, Chip, ConfirmModal } from '@/shared/components';
 import { ChevronLeft, X } from 'lucide-react';
 import { useState } from 'react';
 
@@ -35,6 +33,10 @@ const ExamplePage = () => {
       <TextButton type='button' text='텍스트' variant='secondary' size='sm' className='w-21.5' />
       <TextButton type='button' text='텍스트' variant='assistive' size='sm' className='w-21.5' />
       <TextButton type='button' text='텍스트' variant='outline' size='sm' className='w-21.5' />
+
+      <Chip text='텍스트' className='w-15' />
+      <Chip text='텍스트' variant='point' icon={true} />
+      <Chip text='텍스트' variant='point' />
 
       {modalOpen && (
         <ConfirmModal
