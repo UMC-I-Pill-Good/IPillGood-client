@@ -32,6 +32,8 @@ const CheckboxButton = ({ size = 'sm', checked, onClick }: CheckboxButtonProps) 
     <button
       type='button'
       onClick={onClick}
+      role='checkbox'
+      aria-checked={!!checked}
       className={cn(checkboxButtonVariants({ size, checked }))}
     >
       <Check size={size === 'sm' ? 12 : 14} strokeWidth={3} />

@@ -10,8 +10,8 @@ const ExamplePage = () => {
 
   return (
     <div className='p-4 flex flex-col gap-4'>
-      <IconButton icon={<ChevronLeft size={26} />} />
-      <IconButton icon={<X size={22} />} disabled={true} />
+      <IconButton icon={<ChevronLeft size={26} />} ariaLabel='뒤로 가기' />
+      <IconButton icon={<X size={22} />} ariaLabel='닫기' disabled={true} />
       <button
         onClick={() => setModalOpen(true)}
         className='bg-amber-500 text-white px-4 py-2 rounded'

@@ -1,7 +1,7 @@
 import { cn } from '@/shared/utils/cn';
 import { cva, VariantProps } from 'class-variance-authority';
 
-const TextButtonVariants = cva(
+const textButtonVariants = cva(
   'shrink-0 inline-flex items-center justify-center w-fit shadow-[0_4px_4px_rgba(126,131,135,0.1)] transition-all disabled:bg-neutral-500 disabled:cursor-not-allowed disabled:text-white rounded-[8px] break-keep',
   {
     variants: {
@@ -29,7 +29,7 @@ const TextButtonVariants = cva(
   },
 );
 
-interface TextButtonProps extends VariantProps<typeof TextButtonVariants> {
+interface TextButtonProps extends VariantProps<typeof textButtonVariants> {
   type: 'button' | 'submit' | 'reset';
   onClick?: () => void;
   text: string;
@@ -51,7 +51,7 @@ const TextButton = ({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={cn(TextButtonVariants({ size, variant }), className)}
+      className={cn(textButtonVariants({ size, variant }), className)}
     >
       {text}
     </button>
