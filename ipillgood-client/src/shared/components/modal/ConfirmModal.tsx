@@ -1,14 +1,23 @@
 import { useEscapeKey, useScrollLock } from '@/shared/hooks';
+import TextButton from '../button/TextButton';
 
 interface ConfirmModalProps {
   title: string;
   content?: string;
-  buttonLabel?: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
   onConfirm: () => void;
   onCancel: () => void;
 }
 
-const ConfirmModal = ({ title, content, buttonLabel, onConfirm, onCancel }: ConfirmModalProps) => {
+const ConfirmModal = ({
+  title,
+  content,
+  confirmLabel = '네',
+  cancelLabel = '아니요',
+  onConfirm,
+  onCancel,
+}: ConfirmModalProps) => {
   useScrollLock();
   useEscapeKey(onCancel);
 
@@ -18,7 +27,24 @@ const ConfirmModal = ({ title, content, buttonLabel, onConfirm, onCancel }: Conf
         <p className='text-center typo-body-9 mb-2'>{title}</p>
         <p className='text-center typo-caption-6 text-neutral-800'>{content}</p>
 
-        <div className='mt-4 flex items-center gap-3'></div>
+        <div className='mt-5 flex items-center gap-3'>
+          <TextButton
+            type='button'
+            text={cancelLabel}
+            variant='outline'
+            size='sm'
+            onClick={onCancel}
+            className='flex-1'
+          />
+          <TextButton
+            type='button'
+            text={confirmLabel}
+            variant='primary'
+            size='sm'
+            onClick={onConfirm}
+            className='flex-1'
+          />
+        </div>
       </div>
     </div>
   );

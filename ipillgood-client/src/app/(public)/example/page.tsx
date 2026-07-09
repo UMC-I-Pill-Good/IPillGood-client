@@ -15,7 +15,7 @@ const ExamplePage = () => {
       <IconButton icon={<X size={22} />} disabled={true} />
       <button
         onClick={() => setModalOpen(true)}
-        className='bg-blue-500 text-white px-4 py-2 rounded'
+        className='bg-amber-500 text-white px-4 py-2 rounded'
       >
         모달 오픈
       </button>

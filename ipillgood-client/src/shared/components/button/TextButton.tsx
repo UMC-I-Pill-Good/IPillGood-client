@@ -2,7 +2,7 @@ import { cn } from '@/shared/utils/cn';
 import { cva, VariantProps } from 'class-variance-authority';
 
 const TextButtonVariants = cva(
-  'shrink-0 inline-flex items-center justify-center shadow-[0_4px_4px_rgba(126,131,135,0.1)] transition-all disabled:bg-neutral-500 disabled:cursor-not-allowed disabled:text-white rounded-[8px]',
+  'shrink-0 inline-flex items-center justify-center shadow-[0_4px_4px_rgba(126,131,135,0.1)] transition-all disabled:bg-neutral-500 disabled:cursor-not-allowed disabled:text-white rounded-[8px] break-keep',
   {
     variants: {
       variant: {
