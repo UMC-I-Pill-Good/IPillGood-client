@@ -28,7 +28,7 @@ export const SearchBar = ({ value, onChange, onSearch, placeholder = 'Text' }: S
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        className='flex-1 bg-transparent text-body-7 text-neutral-900 outline-none placeholder:text-neutral-900'
+        className='flex-1 bg-transparent typo-body-11 text-neutral-900 outline-none placeholder:text-neutral-900'
       />
       <button type='button' onClick={handleSearch} aria-label='검색'>
         <Search size={27} className='text-[#4680FE]' />
