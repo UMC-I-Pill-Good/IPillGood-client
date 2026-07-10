@@ -1,1 +1,1 @@
-// init
+export { Header } from './Header';
