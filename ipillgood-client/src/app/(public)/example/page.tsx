@@ -1,6 +1,6 @@
 'use client';
 
-import { TextButton, IconButton, Chip, ConfirmModal, CheckboxButton } from '@/shared/components';
+import { TextButton, IconButton, Chip, ConfirmModal, CheckboxButton, Input, ItemCard } from '@/shared/components';
 import { ChevronLeft, X } from 'lucide-react';
 import { useState } from 'react';
 
@@ -50,6 +50,11 @@ const ExamplePage = () => {
           onCancel={() => setModalOpen(false)}
         />
       )}
+
+      <Input label='이메일' placeholder='이메일을 입력해주세요.' />
+      <Input label='비밀번호' type='password' placeholder='비밀번호를 입력해주세요.' />
+
+      <ItemCard imageSrc='/favicon.ico' foodName='바나나' desc='100g 당 칼륨 358mg' />
     </div>
   );
 };

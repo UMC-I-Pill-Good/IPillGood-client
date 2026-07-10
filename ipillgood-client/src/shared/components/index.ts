@@ -11,8 +11,6 @@ export { default as Chip } from './Chip';
 
 /* input */
 export { default as Input } from './Input';
-export type { InputProps } from './Input';
 
 /* itemCard */
 export { default as ItemCard } from './ItemCard';
-export type { ItemCardProps } from './ItemCard';
