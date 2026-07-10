@@ -39,7 +39,7 @@ export const NavBar = () => {
 
   return (
     <nav className='fixed bottom-0 left-1/2 z-50 w-full max-w-110 -translate-x-1/2 bg-background shadow-[0_-4px_4px_0_rgba(126,131,135,0.1)]'>
-      <ul className='flex h-18'>
+      <ul className='flex h-16.5 items-center justify-between'>
         {menus.map(({ label, href, icon: Icon }) => {
           const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href);
 
