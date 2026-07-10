@@ -19,9 +19,9 @@ const ExamplePage = () => {
 
   return (
     <div className='flex flex-col gap-4'>
-      <Header hasBackButton={false} title='마이페이지' />
-      <Header hasCloseButton={true} title='알림 설정' />
-      <Header hasCloseButton={true} />
+      <Header showBackButton={false} title='마이페이지' />
+      <Header showCloseButton={true} title='알림 설정' />
+      <Header showCloseButton={true} />
       <Header title='영양제 이름' />
       <div className='p-4 flex flex-col gap-4'>
         <IconButton icon={<ChevronLeft size={26} />} ariaLabel='뒤로 가기' />
