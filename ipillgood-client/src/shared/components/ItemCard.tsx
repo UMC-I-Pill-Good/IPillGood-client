@@ -21,7 +21,7 @@ export const ItemCard = ({
       className={cn(
         'relative flex h-30 w-18 flex-col items-center gap-1 overflow-hidden rounded-xl',
         'bg-secondary-600/25 px-2 py-2.5 text-center',
-        'shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] backdrop-blur-[24px]',
+        'shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] backdrop-blur-xl',
         className,
       )}
       {...props}
@@ -34,7 +34,7 @@ export const ItemCard = ({
         className='relative z-10 h-10 w-10 shrink-0 rounded-full object-cover'
       />
 
-      <p className='typo-caption-6 relative z-10 w-14 truncate text-neutral-900'>
+      <p className='typo-caption-6 relative z-10 w-14 truncate text-[#111111]'>
         {foodName}
       </p>
 
