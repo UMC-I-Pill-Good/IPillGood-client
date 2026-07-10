@@ -49,7 +49,7 @@ export const NavBar = () => {
                 href={href}
                 className={cn(
                   'flex h-full flex-col items-center justify-center gap-1 text-xs font-medium leading-normal transition-colors',
-                  isActive ? 'text-primary-600' : 'text-neutral-800',
+                  isActive ? 'text-primary-600' : 'text-neutral-800 hover:text-primary-400',
                 )}
               >
                 <Icon className='size-6' />
