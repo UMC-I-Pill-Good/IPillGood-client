@@ -4,6 +4,11 @@
 @import './styles/color.css';
 @import './styles/fonts.css';
 
+@theme {
+  /* Primary / Blue */
+  --color-background: #f2f6ff;
+}
+
 html,
 body {
   margin: 0;
