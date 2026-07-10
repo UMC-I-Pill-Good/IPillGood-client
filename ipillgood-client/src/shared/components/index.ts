@@ -10,5 +10,11 @@ export { default as ConfirmModal } from './modal/ConfirmModal';
 /* chip */
 export { default as Chip } from './Chip';
 
+/* input */
+export { default as Input } from './Input';
+
+/* itemCard */
+export { default as ItemCard } from './ItemCard';
+
 /* search */
 export { SearchBar } from './SearchBar';

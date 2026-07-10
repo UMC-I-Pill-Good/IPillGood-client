@@ -7,6 +7,8 @@ import {
   ConfirmModal,
   CheckboxButton,
   ToggleButton,
+  Input,
+  ItemCard,
 } from '@/shared/components';
 import { Header } from '@/shared/layout';
 import { ChevronLeft, X } from 'lucide-react';
@@ -66,6 +68,11 @@ const ExamplePage = () => {
             onCancel={() => setModalOpen(false)}
           />
         )}
+        
+        <Input label='이메일' type='email' placeholder='이메일을 입력해주세요.' />
+        <Input label='비밀번호' type='password' placeholder='비밀번호를 입력해주세요.' />
+        
+        <ItemCard imageSrc='/favicon.ico' foodName='바나나' desc='100g 당 칼륨 358mg' />
       </div>
     </div>
   );
