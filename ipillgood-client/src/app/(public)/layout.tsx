@@ -1,5 +1,12 @@
+import { NavBar } from '@/shared/layout';
+
 const PublicLayout = ({ children }: { children: React.ReactNode }) => {
-  return <div className='min-h-dvh max-w-110 w-full mx-auto bg-secondary-100'>{children}</div>;
+  return (
+    <div className='mx-auto min-h-dvh w-full max-w-110 bg-background'>
+      {children}
+      <NavBar />
+    </div>
+  );
 };
 
 export default PublicLayout;
