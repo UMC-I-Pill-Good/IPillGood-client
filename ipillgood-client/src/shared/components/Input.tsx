@@ -1,16 +1,11 @@
 'use client';
 
-import {
-  forwardRef,
-  useId,
-  useState,
-  type ComponentPropsWithoutRef,
-} from 'react';
+import { forwardRef, useId, useState, type ComponentPropsWithoutRef } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import { cn } from '@/shared/utils/cn';
 
-export interface InputProps
-  extends Omit<ComponentPropsWithoutRef<'input'>, 'size'> {
+interface InputProps
+  extends Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'className'> {
   label?: string;
   error?: string;
   hasPasswordToggle?: boolean;
@@ -59,6 +54,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
         <div className='relative w-full'>
           <input
+            {...props}
             id={inputId}
             ref={ref}
             type={inputType}
@@ -70,7 +66,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               shouldShowPasswordToggle && 'pr-10',
               inputClassName,
             )}
-            {...props}
           />
 
           {shouldShowPasswordToggle && (
