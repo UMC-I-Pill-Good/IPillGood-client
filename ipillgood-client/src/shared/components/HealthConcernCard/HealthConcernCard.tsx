@@ -59,7 +59,7 @@ const HealthConcernCard = ({
       >
         {icon}
       </span>
-      <span className="flex h-[17px] w-[75px] items-center justify-center text-[14px] font-medium leading-[17px] break-keep whitespace-normal [font-family:var(--font-pretendard)]">
+      <span className="typo-caption-2 flex h-5 w-[75px] items-center justify-center break-keep whitespace-normal">
         {label}
       </span>
     </button>

@@ -21,4 +21,3 @@ export { SearchBar } from './SearchBar';
 
 /* healthConcernCard */
 export { default as HealthConcernCard } from './HealthConcernCard';
-export type { HealthConcernCardProps } from './HealthConcernCard';
