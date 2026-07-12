@@ -9,15 +9,23 @@ import {
   ToggleButton,
   Input,
   ItemCard,
+  HealthConcernCard,
 } from '@/shared/components';
 import { Header } from '@/shared/layout';
-import { ChevronLeft, X } from 'lucide-react';
+import { Bone, Brain, ChevronLeft, HeartPulse, X } from 'lucide-react';
 import { useState } from 'react';
+
+const healthConcernItems = [
+  { id: 'heart', label: '심혈관', icon: <HeartPulse size={30} /> },
+  { id: 'brain', label: '두뇌', icon: <Brain size={30} /> },
+  { id: 'bone', label: '뼈 건강', icon: <Bone size={30} /> },
+];
 
 const ExamplePage = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [checked, setChecked] = useState(false);
   const [isToggled, setIsToggled] = useState(false);
+  const [selectedHealthConcern, setSelectedHealthConcern] = useState('heart');
 
   return (
     <div className='flex flex-col gap-4'>
@@ -25,7 +33,7 @@ const ExamplePage = () => {
       <Header showCloseButton={true} title='알림 설정' />
       <Header showCloseButton={true} />
       <Header title='영양제 이름' />
-      <div className='p-4 flex flex-col gap-4'>
+      <div className='flex flex-col gap-4 p-4 pb-28'>
         <IconButton icon={<ChevronLeft size={26} />} ariaLabel='뒤로 가기' />
         <IconButton icon={<X size={22} />} ariaLabel='닫기' disabled={true} />
         <button
@@ -68,11 +76,25 @@ const ExamplePage = () => {
             onCancel={() => setModalOpen(false)}
           />
         )}
-        
+
         <Input label='이메일' type='email' placeholder='이메일을 입력해주세요.' />
         <Input label='비밀번호' type='password' placeholder='비밀번호를 입력해주세요.' />
-        
+
         <ItemCard imageSrc='/favicon.ico' foodName='바나나' desc='100g 당 칼륨 358mg' />
+
+        <div className='grid grid-cols-3 gap-2'>
+          {healthConcernItems.map(({ id, label, icon }) => (
+            <HealthConcernCard
+              key={id}
+              id={id}
+              label={label}
+              icon={icon}
+              isSelected={selectedHealthConcern === id}
+              onClick={setSelectedHealthConcern}
+              className='w-full'
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
