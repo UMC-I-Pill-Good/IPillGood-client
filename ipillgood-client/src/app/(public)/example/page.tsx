@@ -76,13 +76,13 @@ const ExamplePage = () => {
             onCancel={() => setModalOpen(false)}
           />
         )}
-        
+
         <Input label='이메일' type='email' placeholder='이메일을 입력해주세요.' />
         <Input label='비밀번호' type='password' placeholder='비밀번호를 입력해주세요.' />
-        
+
         <ItemCard imageSrc='/favicon.ico' foodName='바나나' desc='100g 당 칼륨 358mg' />
 
-        <div className='flex gap-2'>
+        <div className='grid grid-cols-3 gap-2'>
           {healthConcernItems.map(({ id, label, icon }) => (
             <HealthConcernCard
               key={id}
@@ -91,15 +91,12 @@ const ExamplePage = () => {
               icon={icon}
               isSelected={selectedHealthConcern === id}
               onClick={setSelectedHealthConcern}
+              className='w-full'
             />
           ))}
         </div>
       </div>
     </div>
-
-
-
-
   );
 };
 
