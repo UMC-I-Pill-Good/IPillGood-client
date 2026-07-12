@@ -10,6 +10,7 @@ import {
   Input,
   ItemCard,
   HealthConcernCard,
+  SearchBar,
 } from '@/shared/components';
 import { Header } from '@/shared/layout';
 import { Bone, Brain, ChevronLeft, HeartPulse, X } from 'lucide-react';
@@ -26,6 +27,7 @@ const ExamplePage = () => {
   const [checked, setChecked] = useState(false);
   const [isToggled, setIsToggled] = useState(false);
   const [selectedHealthConcern, setSelectedHealthConcern] = useState('heart');
+  const [searchValue, setSearchValue] = useState('');
 
   return (
     <div className='flex flex-col gap-4'>
@@ -81,6 +83,13 @@ const ExamplePage = () => {
         <Input label='비밀번호' type='password' placeholder='비밀번호를 입력해주세요.' />
 
         <ItemCard imageSrc='/favicon.ico' foodName='바나나' desc='100g 당 칼륨 358mg' />
+
+        <SearchBar
+          value={searchValue}
+          onChange={setSearchValue}
+          onSearch={() => console.log('search:', searchValue)}
+          placeholder='영양제를 검색해보세요.'
+        />
 
         <div className='grid grid-cols-3 gap-2'>
           {healthConcernItems.map(({ id, label, icon }) => (
