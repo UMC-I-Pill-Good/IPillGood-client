@@ -67,7 +67,6 @@ button:disabled {
 
     white-space: nowrap;
     color: inherit;
-    cursor: pointer;
 
     border: 1px solid rgba(255, 255, 255, 0.85);
     border-radius: 8px;
