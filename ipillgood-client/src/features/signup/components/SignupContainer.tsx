@@ -88,7 +88,7 @@ const SignupContainer = () => {
     setIsIdDuplicated(true);
   };
 
-  const onSubmit: SubmitHandler<SignupType> = async (data) => {
+  const handleSignupSubmit: SubmitHandler<SignupType> = async (data) => {
     try {
       if (step === 1) {
         setStep(2);
@@ -115,7 +115,7 @@ const SignupContainer = () => {
             desc={step === 1 ? '기본 정보를 입력해주세요' : '서비스 이용을 위해 동의해주세요'}
           />
 
-          <form onSubmit={handleSubmit(onSubmit)} className='flex flex-1 flex-col'>
+          <form onSubmit={handleSubmit(handleSignupSubmit)} className='flex flex-1 flex-col'>
             {step === 1 && (
               <SignupInputStep
                 register={register}
