@@ -189,7 +189,10 @@ const SignupPage = () => {
           {step === 1 && (
             <section className='space-y-3 py-4'>
               {inputFields.map((field) => (
-                <div key={field.name} className='flex items-end gap-2'>
+                <div
+                  key={field.name}
+                  className={clsx('flex gap-2', errors[field.name] ? 'items-center' : 'items-end')}
+                >
                   <Input
                     {...register(field.name)}
                     id={field.name}
