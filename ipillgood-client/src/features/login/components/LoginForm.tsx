@@ -1,5 +1,6 @@
 'use client';
 
+import { motion } from 'framer-motion';
 import { IdIcon, KakaoIcon, LockIcon, NaverIcon } from '@/assets';
 import { TextButton } from '@/shared/components';
 import Link from 'next/link';
@@ -21,7 +22,20 @@ const LoginForm = () => {
   };
 
   return (
-    <section className='mt-auto w-full'>
+    <motion.section
+      initial={{
+        opacity: 0,
+      }}
+      animate={{
+        opacity: 1,
+      }}
+      transition={{
+        delay: 0.25,
+        duration: 1.2,
+        ease: 'easeOut',
+      }}
+      className='mt-auto w-full'
+    >
       <form onSubmit={handleSubmit}>
         <div className='relative'>
           <IdIcon size={20} className='absolute left-5 top-1/2 -translate-y-1/2' />
@@ -77,7 +91,7 @@ const LoginForm = () => {
       >
         회원 가입하러 가기
       </Link>
-    </section>
+    </motion.section>
   );
 };
 

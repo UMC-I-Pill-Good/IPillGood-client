@@ -1,3 +1,7 @@
+'use client';
+
+import { motion } from 'framer-motion';
+
 export const Background = () => {
   return (
     <>
@@ -17,8 +21,27 @@ export const Background = () => {
         }}
       />
 
-      {/* Capsule */}
-      <div
+      {/* Capsule 1 */}
+      <motion.div
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+          y: [0, -10, 0],
+        }}
+        transition={{
+          opacity: {
+            delay: 0.6,
+            duration: 0.8,
+          },
+          y: {
+            delay: 0.8,
+            duration: 4,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          },
+        }}
         className='absolute top-4 left-15 h-[30.73px] w-[114.36px] rotate-[-45.94deg] rounded-full border-y border-white/30'
         style={{
           boxShadow:
@@ -26,7 +49,27 @@ export const Background = () => {
         }}
       />
 
-      <div
+      {/* Capsule 2 */}
+      <motion.div
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+          y: [0, -14, 0],
+        }}
+        transition={{
+          opacity: {
+            delay: 0.8,
+            duration: 0.8,
+          },
+          y: {
+            delay: 1,
+            duration: 4.5,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          },
+        }}
         className='absolute top-25 right-22 h-[30.73px] w-[50.03px] rotate-[56.71deg] rounded-full border-x border-white/30'
         style={{
           boxShadow:
