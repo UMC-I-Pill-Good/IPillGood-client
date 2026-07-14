@@ -1,11 +1,4 @@
-import {
-  LogoIcon,
-  Rectangle1Icon,
-  Rectangle2Icon,
-  Rectangle3Icon,
-  Rectangle4Icon,
-  Rectangle5Icon,
-} from '@/assets';
+import { LogoIcon } from '@/assets';
 import { Tilt_Warp } from 'next/font/google';
 
 const tiltWarp = Tilt_Warp({
@@ -17,15 +10,45 @@ const HomePage = () => {
   return (
     <main className='relative flex h-screen items-center justify-center overflow-hidden bg-primary-500'>
       {/* Background */}
-      <Rectangle1Icon className='absolute -top-6 left-10' />
+      <div
+        className='absolute top-4 left-15 w-[114.36px] h-[30.73px] rotate-[-45.94deg] rounded-full border-t border-b border-white/30 bg-[rgba(71,81,231,0.3)]'
+        style={{
+          boxShadow:
+            'inset 0 -4px 4px rgba(155,161,255,.2), inset 0 4px 4px rgba(255,255,255,.4), 2px 2px 4px rgba(155,161,255,.2)',
+        }}
+      />
 
-      <Rectangle2Icon className='absolute top-30 right-24' />
+      <div
+        className='absolute top-40 right-22 w-[50.03px] h-[30.73px] rotate-[56.71deg] rounded-full border-r border-l border-white/30 bg-[rgba(245,130,130,0.3)]'
+        style={{
+          boxShadow:
+            'inset 0 -4px 4px rgba(155,161,255,.2), inset 2px 2px 4px rgba(255,255,255,.4), 2px 2px 4px rgba(155,161,255,.2)',
+        }}
+      />
 
-      <Rectangle3Icon className='absolute bottom-36 left-6' />
+      <div
+        className='absolute bottom-36 left-15 w-[79.62px] h-[41.11px] rotate-[-17.73deg] rounded-full border-r border-b border-t border-white/30 bg-white/20'
+        style={{
+          boxShadow:
+            'inset 0 -4px 4px rgba(155,161,255,.2), inset 0 4px 4px rgba(255,255,255,.4), 2px 2px 4px rgba(155,161,255,.2)',
+        }}
+      />
 
-      <Rectangle4Icon className='absolute bottom-6 right-10 z-10' />
+      <div
+        className='absolute right-17 bottom-11 w-[65.91px] h-[20.56px] rotate-[125.47deg] rounded-full border-t border-b border-l border-white/30'
+        style={{
+          boxShadow:
+            'inset 0 4px 4px rgba(155,161,255,.2), inset 3px -2px 4px rgba(255,255,255,.4), 2px 2px 4px rgba(155,161,255,.2)',
+        }}
+      />
 
-      <Rectangle5Icon className='absolute -bottom-4 right-10' />
+      <div
+        className='absolute right-18 bottom-0 w-[114.04px] h-[53.91px] rotate-[-145.8deg] rounded-full bg-[rgba(226,155,155,0.2)]'
+        style={{
+          boxShadow:
+            'inset 0 4px 4px rgba(155,161,255,.2), inset 0 -4px 4px rgba(255,255,255,.4), 2px 2px 4px rgba(155,161,255,.2)',
+        }}
+      />
 
       {/* Center */}
       <section className='relative flex flex-col items-center justify-center'>
@@ -36,7 +59,7 @@ const HomePage = () => {
         >
           I Pill Good
         </h1>
-        <p className='absolute bottom-19 text-white typo-body-10 text-center'>
+        <p className='absolute bottom-19 text-white typo-body-11 text-center'>
           건강한 습관의 시작, 아필굿
         </p>
       </section>
