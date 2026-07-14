@@ -9,7 +9,7 @@ const textButtonVariants = cva(
         primary:
           'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 backdrop-blur-xl',
         secondary:
-          'bg-secondary-600 text-white hover:bg-secondary-700/90 active:bg-secondary-700 backdrop-blur-xl',
+          'bg-secondary-600 text-white hover:bg-secondary-600/80 active:bg-secondary-700 backdrop-blur-xl',
         assistive:
           'bg-white text-neutral-800 hover:bg-secondary-500/50 active:bg-secondary-600 active:text-white backdrop-blur-xl ring ring-white hover:ring-0 active:ring-0',
         outline:
