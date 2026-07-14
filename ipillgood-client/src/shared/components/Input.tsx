@@ -8,6 +8,7 @@ import { EyeIcon, EyeOffIcon } from '@/assets';
 interface InputProps extends Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'className'> {
   label?: string;
   error?: string;
+  successMessage?: string;
   hasPasswordToggle?: boolean;
   containerClassName?: string;
   inputClassName?: string;
@@ -19,6 +20,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       id,
       label,
       error,
+      successMessage,
       type = 'text',
       hasPasswordToggle,
       containerClassName,
@@ -61,7 +63,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             aria-invalid={!!error}
             aria-describedby={errorId}
             className={cn(
-              'typo-body-11 h-10 w-full rounded-lg border border-white bg-white/50 p-2.5 text-black outline-none transition-colors placeholder:text-neutral-800 backdrop-blur-[20px] backdrop-saturate-150 shadow-[inset_0_1px_1px_rgba(255,255,255,0.85),0_4px_16px_rgba(255,255,255,0.28)] focus:bg-white disabled:cursor-not-allowed disabled:bg-[#E1E3E6] disabled:text-neutral-800 glass',
+              'typo-body-11 h-10 w-full rounded-lg bg-white/50 p-2.5 text-black outline-none transition-colors placeholder:text-neutral-800 backdrop-blur-[20px] backdrop-saturate-150 shadow-[inset_0_1px_1px_rgba(255,255,255,0.85),0_4px_16px_rgba(255,255,255,0.28)] focus:bg-white disabled:cursor-not-allowed disabled:bg-[#E1E3E6] disabled:text-neutral-800 glass',
+              error && 'border-semantic-400',
+              !error && successMessage && 'border-point-600',
+              !error && !successMessage && 'border-white',
               shouldShowPasswordToggle && 'pr-10',
               inputClassName,
             )}
@@ -86,9 +91,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         </div>
 
         {error && (
-          <p id={errorId} className='typo-caption-2 text-semantic-500'>
+          <p id={errorId} className='typo-caption-6 text-semantic-500'>
             {error}
           </p>
+        )}
+
+        {successMessage && !error && (
+          <p className='typo-caption-7 text-point-800'>{successMessage}</p>
         )}
       </div>
     );

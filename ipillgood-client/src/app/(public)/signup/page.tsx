@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import mascotImage from '@/assets/images/mascot.png';
 import { signupSchema, SignupType } from '@/features/signup/schemas/authSchema';
@@ -81,6 +81,7 @@ const agreementLists = [
 const SignupPage = () => {
   const router = useRouter();
   const [step, setStep] = useState(1);
+  const [isIdDuplicated, setIsIdDuplicated] = useState(false);
   const [checked, setChecked] = useState({
     all: false,
     terms: false,
@@ -117,6 +118,7 @@ const SignupPage = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isValid },
   } = useForm<SignupType>({
     resolver: zodResolver(signupSchema),
@@ -129,6 +131,18 @@ const SignupPage = () => {
       passwordConfirm: '',
     },
   });
+
+  const idValue = useWatch({
+    control,
+    name: 'id',
+  });
+
+  const handleDuplicateCheck = () => {
+    if (!idValue.trim()) return;
+
+    // API 호출
+    setIsIdDuplicated(true);
+  };
 
   const handleBack = () => {
     if (step === 1) {
@@ -191,15 +205,29 @@ const SignupPage = () => {
               {inputFields.map((field) => (
                 <div
                   key={field.name}
-                  className={clsx('flex gap-2', errors[field.name] ? 'items-center' : 'items-end')}
+                  className={clsx(
+                    'flex gap-2',
+                    errors[field.name] || isIdDuplicated ? 'items-center' : 'items-end',
+                  )}
                 >
                   <Input
-                    {...register(field.name)}
+                    {...register(field.name, {
+                      onChange: () => {
+                        if (field.name === 'id') {
+                          setIsIdDuplicated(false);
+                        }
+                      },
+                    })}
                     id={field.name}
                     type={field.type}
                     label={field.label}
                     placeholder={field.placeholder}
                     error={errors[field.name]?.message}
+                    successMessage={
+                      field.name === 'id' && isIdDuplicated
+                        ? '사용 가능한 아이디입니다.'
+                        : undefined
+                    }
                   />
                   {field.isDuplicateCheck && (
                     <TextButton
@@ -207,6 +235,8 @@ const SignupPage = () => {
                       text='중복 확인'
                       variant='secondary'
                       className='h-10 px-4'
+                      disabled={!idValue.trim()}
+                      onClick={handleDuplicateCheck}
                     />
                   )}
                 </div>
