@@ -6,7 +6,7 @@ const tiltWarp = Tilt_Warp({
   weight: '400',
 });
 
-const OnBoardingPage = () => {
+const LandingPage = () => {
   return (
     <main className='relative isolate flex h-screen items-center justify-center overflow-hidden bg-[linear-gradient(180deg,#9ABAFF_0%,#5D90FF_64%,#4580FF_100%)]'>
       {/* Background */}
@@ -77,7 +77,7 @@ const OnBoardingPage = () => {
 
       {/* Content */}
       <section className='relative z-10 flex flex-col items-center justify-center'>
-        <LogoIcon />
+        <LogoIcon width='261' height='272' />
 
         <h1
           className={`${tiltWarp.className} absolute text-6xl font-bold text-white whitespace-nowrap [text-shadow:4px_4px_4px_rgba(0,0,0,0.15),8px_2px_40px_rgba(52,116,255,0.6)]`}
@@ -92,4 +92,4 @@ const OnBoardingPage = () => {
   );
 };
 
-export default OnBoardingPage;
+export default LandingPage;
