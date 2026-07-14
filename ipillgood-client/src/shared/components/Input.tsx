@@ -1,11 +1,11 @@
 'use client';
 
 import { forwardRef, useId, useState, type ComponentPropsWithoutRef } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
-import { cn } from '@/shared/utils/cn';
 
-interface InputProps
-  extends Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'className'> {
+import { cn } from '@/shared/utils/cn';
+import { EyeIcon, EyeOffIcon } from '@/assets';
+
+interface InputProps extends Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'className'> {
   label?: string;
   error?: string;
   hasPasswordToggle?: boolean;
@@ -37,8 +37,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const isPasswordInput = type === 'password';
     const shouldShowPasswordToggle = hasPasswordToggle ?? isPasswordInput;
 
-    const inputType =
-      shouldShowPasswordToggle && isPasswordVisible ? 'text' : type;
+    const inputType = shouldShowPasswordToggle && isPasswordVisible ? 'text' : type;
 
     const handleTogglePasswordVisible = () => {
       setIsPasswordVisible((prev) => !prev);
@@ -74,14 +73,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               className='absolute right-2.5 top-1/2 flex -translate-y-1/2 items-center justify-center disabled:cursor-not-allowed'
               onClick={handleTogglePasswordVisible}
               disabled={disabled}
-              aria-label={
-                isPasswordVisible ? '비밀번호 숨기기' : '비밀번호 보기'
-              }
+              aria-label={isPasswordVisible ? '비밀번호 숨기기' : '비밀번호 보기'}
             >
               {isPasswordVisible ? (
-                <Eye size={20} className='text-neutral-800' />
+                <EyeIcon className='text-neutral-800' />
               ) : (
-                <EyeOff size={20} className='text-neutral-800' />
+                <EyeOffIcon className='text-neutral-800' />
               )}
             </button>
           )}

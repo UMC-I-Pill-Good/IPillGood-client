@@ -6,12 +6,12 @@ const tiltWarp = Tilt_Warp({
   weight: '400',
 });
 
-const HomePage = () => {
+const OnBoardingPage = () => {
   return (
     <main className='relative flex h-screen items-center justify-center overflow-hidden bg-primary-500'>
       {/* Background */}
       <div
-        className='absolute top-4 left-15 w-[114.36px] h-[30.73px] rotate-[-45.94deg] rounded-full border-t border-b border-white/30 bg-[rgba(71,81,231,0.3)]'
+        className='absolute top-4 left-15 w-[114.36px] h-[30.73px] rotate-[-45.94deg] rounded-full border-t border-b border-white/30 bg-[#4751E7]/30'
         style={{
           boxShadow:
             'inset 0 -4px 4px rgba(155,161,255,.2), inset 0 4px 4px rgba(255,255,255,.4), 2px 2px 4px rgba(155,161,255,.2)',
@@ -19,7 +19,7 @@ const HomePage = () => {
       />
 
       <div
-        className='absolute top-40 right-22 w-[50.03px] h-[30.73px] rotate-[56.71deg] rounded-full border-r border-l border-white/30 bg-[rgba(245,130,130,0.3)]'
+        className='absolute top-40 right-22 w-[50.03px] h-[30.73px] rotate-[56.71deg] rounded-full border-r border-l border-white/30 bg-[#F58282]/30'
         style={{
           boxShadow:
             'inset 0 -4px 4px rgba(155,161,255,.2), inset 2px 2px 4px rgba(255,255,255,.4), 2px 2px 4px rgba(155,161,255,.2)',
@@ -43,7 +43,7 @@ const HomePage = () => {
       />
 
       <div
-        className='absolute right-18 bottom-0 w-[114.04px] h-[53.91px] rotate-[-145.8deg] rounded-full bg-[rgba(226,155,155,0.2)]'
+        className='absolute right-18 bottom-0 w-[114.04px] h-[53.91px] rotate-[-145.8deg] rounded-full bg-[#E29B9B]/20'
         style={{
           boxShadow:
             'inset 0 4px 4px rgba(155,161,255,.2), inset 0 -4px 4px rgba(255,255,255,.4), 2px 2px 4px rgba(155,161,255,.2)',
@@ -67,4 +67,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default OnBoardingPage;
