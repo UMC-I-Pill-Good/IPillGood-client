@@ -1,6 +1,6 @@
 import { TextButton } from '@/shared/components';
 import Image from 'next/image';
-import mascotImage from '../../../assets/images/mascot.png';
+import mascotImage from '@/assets/images/mascot.png';
 
 const SignupCompleteStep = ({ onRouter }: { onRouter: () => void }) => {
   return (
