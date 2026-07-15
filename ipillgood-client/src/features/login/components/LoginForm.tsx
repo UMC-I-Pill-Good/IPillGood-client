@@ -10,6 +10,7 @@ const LoginForm = () => {
   const [idValue, setIdValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
+  // 로그인 폼 제출 핸들러
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -37,6 +38,7 @@ const LoginForm = () => {
       className='mt-auto w-full'
     >
       <form onSubmit={handleSubmit}>
+        {/* 아이디 입력 */}
         <div className='relative'>
           <IdIcon size={20} className='absolute left-5 top-1/2 -translate-y-1/2' />
           <input
@@ -48,6 +50,7 @@ const LoginForm = () => {
           />
         </div>
 
+        {/* 비밀번호 입력 */}
         <div className='relative'>
           <LockIcon size={20} className='absolute left-5 top-1/2 -translate-y-1/2' />
           <input
@@ -68,6 +71,7 @@ const LoginForm = () => {
         <div className='bg-neutral-700 h-px flex-1' />
       </div>
 
+      {/* 소셜 로그인 */}
       <button
         type='button'
         className='bg-[#FEE500] h-13 flex items-center justify-center gap-2.5 w-full py-2.5 rounded-lg typo-body-2 transition hover:brightness-95 active:brightness-90 shadow-[0_4px_4px_rgba(126,131,135,0.1)] mb-2.5'

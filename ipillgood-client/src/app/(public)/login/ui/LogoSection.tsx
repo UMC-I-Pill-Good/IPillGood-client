@@ -1,3 +1,6 @@
+'use client';
+
+import { motion } from 'framer-motion';
 import { LogoIcon } from '@/assets';
 import { Tilt_Warp } from 'next/font/google';
 
@@ -8,7 +11,21 @@ const tiltWarp = Tilt_Warp({
 
 export const LogoSection = () => {
   return (
-    <section className='relative z-10 flex flex-col items-center justify-center mt-12'>
+    <motion.section
+      initial={{
+        opacity: 0,
+        y: 30,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{
+        duration: 0.8,
+        ease: 'easeOut',
+      }}
+      className='relative z-10 flex flex-col items-center justify-center mt-12'
+    >
       <p className='typo-body-1 text-primary-500'>나에게 맞는 영양제 추천</p>
 
       <div className='flex items-center justify-center pt-18'>
@@ -19,6 +36,6 @@ export const LogoSection = () => {
           I Pill Good
         </h1>
       </div>
-    </section>
+    </motion.section>
   );
 };

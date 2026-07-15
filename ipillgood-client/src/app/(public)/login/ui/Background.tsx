@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 export const Background = () => {
   return (
     <>
+      {/* blur */}
       <div
         className='bg-blur absolute top-22 -right-20 h-52 w-52'
         style={{

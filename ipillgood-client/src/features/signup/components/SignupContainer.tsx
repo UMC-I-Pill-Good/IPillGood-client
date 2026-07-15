@@ -15,8 +15,11 @@ import SignupCompleteStep from './SignupCompleteStep';
 
 const SignupContainer = () => {
   const router = useRouter();
-  const [step, setStep] = useState(1);
-  const [isIdDuplicated, setIsIdDuplicated] = useState(false);
+
+  const [step, setStep] = useState(1); // 회원가입 단계 (1: 정보 입력, 2: 약관 동의, 3: 가입 완료)
+  const [isIdDuplicated, setIsIdDuplicated] = useState(false); // 아이디 중복확인 완료 여부
+
+  // 약관 동의 체크 상태
   const [checked, setChecked] = useState({
     all: false,
     terms: false,
@@ -25,6 +28,7 @@ const SignupContainer = () => {
     marketing: false,
   });
 
+  // 이전 단계로 이동 (1단계에서는 이전 페이지로 이동)
   const handleBack = () => {
     if (step === 1) {
       router.back();
@@ -34,8 +38,10 @@ const SignupContainer = () => {
     setStep(1);
   };
 
+  // 필수 약관(이용약관/개인정보/건강정보) 모두 동의했는지 여부
   const isRequiredChecked = checked.terms && checked.privacy && checked.health;
 
+  // 전체 동의 토글
   const handleAllCheck = () => {
     const next = !checked.all;
 
@@ -48,6 +54,7 @@ const SignupContainer = () => {
     });
   };
 
+  // 개별 약관 항목 토글 (하나라도 해제되면 전체 동의도 자동 해제)
   const handleCheck = (key: keyof typeof checked) => {
     const next = {
       ...checked,
@@ -59,6 +66,7 @@ const SignupContainer = () => {
     setChecked(next);
   };
 
+  // react-hook-form + zod 스키마 기반 유효성 검사
   const {
     register,
     handleSubmit,
@@ -76,11 +84,13 @@ const SignupContainer = () => {
     },
   });
 
+  // 아이디 입력값 실시간 감시
   const idValue = useWatch({
     control,
     name: 'id',
   });
 
+  // 아이디 중복확인 처리
   const handleDuplicateCheck = () => {
     if (!idValue.trim()) return;
 
@@ -88,6 +98,7 @@ const SignupContainer = () => {
     setIsIdDuplicated(true);
   };
 
+  // 폼 제출 처리: 1단계에서는 다음 단계로만 이동, 2단계에서는 실제 가입 처리
   const handleSignupSubmit: SubmitHandler<SignupType> = async (data) => {
     try {
       if (step === 1) {
@@ -107,6 +118,7 @@ const SignupContainer = () => {
 
   return (
     <main className='flex min-h-screen flex-col px-5 py-4'>
+      {/* 3단계(가입 완료)가 아닐 때만 상단 네비/헤더/폼 노출 */}
       {step !== 3 && (
         <>
           <StepNavigation step={step} onBack={handleBack} />
@@ -116,6 +128,7 @@ const SignupContainer = () => {
           />
 
           <form onSubmit={handleSubmit(handleSignupSubmit)} className='flex flex-1 flex-col'>
+            {/* 1단계: 기본 정보 입력 */}
             {step === 1 && (
               <SignupInputStep
                 register={register}
@@ -127,6 +140,7 @@ const SignupContainer = () => {
               />
             )}
 
+            {/* 2단계: 약관 동의 */}
             {step === 2 && (
               <SignupAgreementStep
                 checked={checked}
@@ -162,6 +176,7 @@ const SignupContainer = () => {
         </>
       )}
 
+      {/* 3단계: 가입 완료 화면 */}
       {step === 3 && <SignupCompleteStep onRouter={() => router.push('/')} />}
     </main>
   );

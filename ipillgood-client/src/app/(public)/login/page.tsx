@@ -1,7 +1,3 @@
-'use client';
-
-import { motion } from 'framer-motion';
-
 import LoginForm from '@/features/login/components/LoginForm';
 import { LogoSection } from './ui/LogoSection';
 import { Background } from './ui/Background';
@@ -12,26 +8,8 @@ const LoginPage = () => {
       {/* Background */}
       <Background />
 
-      {/* Logo */}
-      <motion.div
-        initial={{
-          opacity: 0,
-          y: 30,
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
-        transition={{
-          duration: 0.8,
-          ease: 'easeOut',
-        }}
-      >
-        <LogoSection />
-      </motion.div>
-
-      {/* Login Form */}
-
+      {/* Content */}
+      <LogoSection />
       <LoginForm />
     </main>
   );
