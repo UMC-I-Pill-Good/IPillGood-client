@@ -1,5 +1,5 @@
 import { CheckboxButton } from '@/shared/components';
-import { agreementLists } from '../constants/signup.constants';
+import { agreementLists } from '@/features/signup/constants/signup.constants';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 

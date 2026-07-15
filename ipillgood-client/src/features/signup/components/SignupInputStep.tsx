@@ -1,9 +1,8 @@
-import React from 'react';
-import { inputFields } from '../constants/signup.constants';
+import { inputFields } from '@/features/signup/constants/signup.constants';
 import clsx from 'clsx';
 import { Input, TextButton } from '@/shared/components';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { SignupType } from '../schemas/authSchema';
+import { SignupType } from '@/features/signup/schemas/authSchema';
 
 interface SignupInputStepProps {
   register: UseFormRegister<SignupType>;

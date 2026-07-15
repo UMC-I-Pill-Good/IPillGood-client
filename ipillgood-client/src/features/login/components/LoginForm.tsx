@@ -40,7 +40,7 @@ const LoginForm = () => {
       <form onSubmit={handleSubmit}>
         {/* 아이디 입력 */}
         <div className='relative'>
-          <IdIcon size={20} className='absolute left-5 top-1/2 -translate-y-1/2' />
+          <IdIcon className='absolute left-5 top-1/2 -translate-y-1/2' />
           <input
             type='text'
             className='w-full py-3 border-b border-neutral-700 text-neutral-800 placeholder:text-neutral-700 focus:outline-none typo-body-2 pl-12 pr-5'
@@ -52,7 +52,7 @@ const LoginForm = () => {
 
         {/* 비밀번호 입력 */}
         <div className='relative'>
-          <LockIcon size={20} className='absolute left-5 top-1/2 -translate-y-1/2' />
+          <LockIcon className='absolute left-5 top-1/2 -translate-y-1/2' />
           <input
             type='password'
             className='w-full py-3 border-b border-neutral-700 text-neutral-800 placeholder:text-neutral-700 focus:outline-none typo-body-2 pl-12 pr-5'
