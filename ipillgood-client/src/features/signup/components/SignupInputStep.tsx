@@ -1,5 +1,4 @@
 import { inputFields } from '@/features/signup/constants/signup.constants';
-import clsx from 'clsx';
 import { Input, TextButton } from '@/shared/components';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { SignupType } from '@/features/signup/schemas/authSchema';
@@ -49,7 +48,7 @@ const SignupInputStep = ({
                 type='button'
                 text='중복 확인'
                 variant='secondary'
-                className={clsx('h-10 px-4', !errors[field.name] || !(isIdDuplicated && ''))}
+                className='h-10 px-3'
                 disabled={!idValue.trim()}
                 onClick={onDuplicateCheck}
               />
