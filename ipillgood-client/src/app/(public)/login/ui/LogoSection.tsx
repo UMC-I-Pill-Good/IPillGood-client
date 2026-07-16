@@ -26,7 +26,7 @@ export const LogoSection = () => {
       }}
       className='relative z-10 flex flex-col items-center justify-center mt-12'
     >
-      <p className='typo-body-1 text-primary-500'>나에게 맞는 영양제 추천</p>
+      <p className='typo-body-1 text-primary-600'>나에게 맞는 영양제 추천</p>
 
       <div className='flex items-center justify-center pt-18'>
         <LogoIcon width='245' height='233' />

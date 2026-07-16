@@ -43,7 +43,7 @@ const LoginForm = () => {
           <IdIcon className='absolute left-5 top-1/2 -translate-y-1/2' />
           <input
             type='text'
-            className='w-full py-3 border-b border-neutral-700 text-neutral-800 placeholder:text-neutral-700 focus:outline-none typo-body-2 pl-12 pr-5'
+            className='w-full py-3 border-b border-neutral-500 text-neutral-800 placeholder:text-neutral-700 focus:outline-none typo-body-2 pl-12 pr-5'
             placeholder='아이디'
             value={idValue}
             onChange={(e) => setIdValue(e.target.value)}
@@ -55,7 +55,7 @@ const LoginForm = () => {
           <LockIcon className='absolute left-5 top-1/2 -translate-y-1/2' />
           <input
             type='password'
-            className='w-full py-3 border-b border-neutral-700 text-neutral-800 placeholder:text-neutral-700 focus:outline-none typo-body-2 pl-12 pr-5'
+            className='w-full py-3 border-b border-neutral-500 text-neutral-800 placeholder:text-neutral-700 focus:outline-none typo-body-2 pl-12 pr-5'
             placeholder='비밀번호'
             value={passwordValue}
             onChange={(e) => setPasswordValue(e.target.value)}

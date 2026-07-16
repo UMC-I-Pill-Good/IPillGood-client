@@ -16,7 +16,7 @@ export const LandingContainer = () => {
   const router = useRouter();
 
   return (
-    <main className='relative isolate flex h-screen items-center justify-center overflow-hidden bg-[linear-gradient(225deg,#9ABAFF_0%,#7F99FF_64%,#4580FF_100%)] bg-[#4580FF]'>
+    <main className='relative isolate flex h-screen items-center justify-center overflow-hidden bg-[linear-gradient(225deg,#CBD6FF_0%,#92A8FF_59%,#92A8FF_80%,#7590ff_100%)]'>
       {/* Background */}
       <Background />
 
@@ -41,11 +41,11 @@ export const LandingContainer = () => {
       >
         <LogoIcon width='261' height='272' />
         <h1
-          className={`${tiltWarp.className} absolute text-6xl font-bold text-white whitespace-nowrap [text-shadow:4px_4px_4px_rgba(0,0,0,0.15),8px_2px_40px_rgba(52,116,255,0.6)]`}
+          className={`${tiltWarp.className} absolute text-6xl font-bold text-white whitespace-nowrap [text-shadow:4px_4px_4px_rgba(0,0,0,0.15)]`}
         >
           I Pill Good
         </h1>
-        <p className='absolute bottom-19 text-white typo-body-11 text-center'>
+        <p className='absolute bottom-20 text-white typo-body-11 text-center'>
           건강한 습관의 시작, 아필굿
         </p>
       </motion.section>

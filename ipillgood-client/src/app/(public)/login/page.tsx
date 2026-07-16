@@ -4,7 +4,7 @@ import { Background } from './ui/Background';
 
 const LoginPage = () => {
   return (
-    <main className='relative isolate p-5 flex flex-col h-screen items-center justify-center overflow-hidden bg-[linear-gradient(180deg,#a4befa_0%,#F2F6FF_50%)]'>
+    <main className='relative isolate p-5 flex flex-col h-screen items-center justify-center overflow-hidden bg-[linear-gradient(180deg,#C0CCFF_0%,#fcfcfc_50%)]'>
       {/* Background */}
       <Background />
 

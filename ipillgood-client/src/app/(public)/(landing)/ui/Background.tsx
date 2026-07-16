@@ -54,11 +54,11 @@ export const Background = () => {
   return (
     <>
       {/* blur */}
-      <div className='bg-blur absolute top-22 -right-20 h-52 w-52 bg-[#DEA0FF]/50 blur-[80px]' />
+      <div className='bg-blur absolute top-22 -right-20 h-52 w-52 bg-[#C1AFFF]/90 blur-[80px]' />
 
-      <div className='bg-blur absolute -left-22.5 top-60 h-[319.48px] w-[386.21px] rotate-[-26.62deg] bg-[#C299FF]/50 blur-[100px]' />
+      <div className='bg-blur absolute -left-15 top-65 h-[319.48px] w-[386.21px] rotate-[-26.62deg] bg-[#B596FF]/80 blur-[100px]' />
 
-      <div className='bg-blur absolute right-0 bottom-55 h-[161.7px] w-[181.93px] rotate-[-26.62deg] bg-[#9961EC]/80 blur-[80px]' />
+      <div className='bg-blur absolute right-0 bottom-55 h-[161.7px] w-[181.93px] rotate-[-26.62deg] bg-[#D0A9FF]/90 blur-[80px]' />
 
       {/* Circle */}
       {circles.map((circle) => (

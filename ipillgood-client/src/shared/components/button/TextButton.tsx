@@ -7,11 +7,11 @@ const textButtonVariants = cva(
     variants: {
       variant: {
         primary:
-          'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 backdrop-blur-xl',
+          'bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800 backdrop-blur-xl',
         secondary:
-          'bg-secondary-600 text-white hover:bg-secondary-600/80 active:bg-secondary-700 backdrop-blur-xl',
+          'bg-secondary-500 text-white hover:bg-secondary-600 active:bg-secondary-700 backdrop-blur-xl',
         assistive:
-          'bg-white text-neutral-800 hover:bg-secondary-500/50 active:bg-secondary-600 active:text-white backdrop-blur-xl ring ring-white hover:ring-0 active:ring-0',
+          'bg-white text-neutral-800 hover:bg-secondary-500 hover:text-white active:bg-secondary-700 active:text-white backdrop-blur-xl ring ring-white hover:ring-0 active:ring-0',
         outline:
           'ring ring-secondary-600 text-secondary-600 rounded-[10px] hover:bg-secondary-300 hover:text-white hover:ring-0 active:ring-0 active:bg-secondary-600 active:text-white backdrop-blur-xl',
       },
