@@ -5,20 +5,17 @@ const circles = [
     className:
       'absolute -top-6 right-10 border border-white/50 h-22.5 w-22.5 rounded-full blur-[2px]',
     distance: 10,
-    duration: 3.2,
     delay: 0.2,
   },
   {
     className:
       'absolute left-18 top-80 border border-white/70 h-11.5 w-11.5 rounded-full blur-[2px]',
     distance: 15,
-    duration: 4.4,
     delay: 0.9,
   },
   {
     className: 'absolute bottom-46 right-30 border border-white/70 h-6 w-6 rounded-full blur-[2px]',
     distance: 7,
-    duration: 2.8,
     delay: 1.4,
   },
 ];
