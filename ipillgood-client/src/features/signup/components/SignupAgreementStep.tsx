@@ -1,7 +1,6 @@
 import { CheckboxButton } from '@/shared/components';
 import { agreementLists } from '@/features/signup/constants/signup.constants';
 import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
 
 interface SignupAgreementStepProps {
   checked: {
@@ -24,7 +23,7 @@ const SignupAgreementStep = ({ checked, onAllCheck, onCheck }: SignupAgreementSt
         <p className='typo-body-9'>전체 동의합니다</p>
       </div>
 
-      <div className='bg-white/50 glass h-40 p-4 w-full rounded-[20px]'>
+      <div className='bg-white/50 glass h-40 p-4h w-full rounded-[20px]'>
         <ul className='space-y-4 w-full'>
           {agreementLists.map(({ id, label, href }) => (
             <li key={id} className='flex items-center justify-between'>

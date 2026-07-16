@@ -177,7 +177,7 @@ const SignupContainer = () => {
       )}
 
       {/* 3단계: 가입 완료 화면 */}
-      {step === 3 && <SignupCompleteStep onRouter={() => router.push('/')} />}
+      {step === 3 && <SignupCompleteStep onRouter={() => router.push('/survey')} />}
     </main>
   );
 };

@@ -33,6 +33,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const generatedInputId = useId();
     const inputId = id ?? generatedInputId;
     const errorId = error ? `${inputId}-error` : undefined;
+    const successId = successMessage ? `${inputId}-success` : undefined;
+
+    const describedBy = errorId ?? successId;
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -61,7 +64,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             type={inputType}
             disabled={disabled}
             aria-invalid={!!error}
-            aria-describedby={errorId}
+            aria-describedby={describedBy}
             className={cn(
               'typo-body-11 h-10 w-full rounded-lg bg-white/50 p-2.5 text-black outline-none transition-colors placeholder:text-neutral-800 backdrop-blur-[20px] backdrop-saturate-150 shadow-[inset_0_1px_1px_rgba(255,255,255,0.85),0_4px_16px_rgba(255,255,255,0.28)] focus:bg-white disabled:cursor-not-allowed disabled:bg-[#E1E3E6] disabled:text-neutral-800 glass',
               error && 'border-semantic-400',
@@ -95,7 +98,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               {error}
             </p>
           ) : successMessage ? (
-            <p className='typo-caption-7 text-point-800'>{successMessage}</p>
+            <p id={successId} className='typo-caption-7 text-point-800'>
+              {successMessage}
+            </p>
           ) : null}
         </div>
       </div>

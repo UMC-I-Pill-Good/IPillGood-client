@@ -2,7 +2,11 @@ import { TextButton } from '@/shared/components';
 import Image from 'next/image';
 import mascotImage from '@/assets/images/mascot.png';
 
-const SignupCompleteStep = ({ onRouter }: { onRouter: () => void }) => {
+interface SignupCompleteStepProps {
+  onRouter: () => void;
+}
+
+const SignupCompleteStep = ({ onRouter }: SignupCompleteStepProps) => {
   return (
     <section className='flex flex-1 flex-col items-center justify-center py-2.5'>
       <div className='flex pt-22 flex-col items-center justify-center'>
