@@ -66,10 +66,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             aria-invalid={!!error}
             aria-describedby={describedBy}
             className={cn(
-              'typo-body-11 h-10 w-full rounded-lg bg-white/50 p-2.5 text-black outline-none transition-colors placeholder:text-neutral-800 backdrop-blur-[20px] backdrop-saturate-150 shadow-[inset_0_1px_1px_rgba(255,255,255,0.85),0_4px_16px_rgba(255,255,255,0.28)] focus:bg-white disabled:cursor-not-allowed disabled:bg-[#E1E3E6] disabled:text-neutral-800 glass',
-              error && 'border-semantic-400',
-              !error && successMessage && 'border-point-600',
-              !error && !successMessage && 'border-white',
+              'typo-body-11 h-10 w-full rounded-lg bg-white/50 p-2.5 text-black outline-none transition-colors placeholder:text-neutral-800 backdrop-blur-[20px] backdrop-saturate-150 shadow-[inset_0_1px_1px_rgba(255,255,255,0.85),0_4px_16px_rgba(255,255,255,0.28)] disabled:cursor-not-allowed disabled:bg-[#E1E3E6] disabled:text-neutral-800 glass',
+              error && 'border-semantic bg-semantic-200/20',
+              !error && successMessage && 'border-primary bg-primary-200',
+              !error && !successMessage && 'border-white focus:bg-white',
               shouldShowPasswordToggle && 'pr-10',
               inputClassName,
             )}
@@ -94,11 +94,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
         <div className='min-h-5'>
           {error ? (
-            <p id={errorId} className='typo-caption-6 text-semantic-500'>
+            <p id={errorId} className='typo-caption-6 text-semantic'>
               {error}
             </p>
           ) : successMessage ? (
-            <p id={successId} className='typo-caption-7 text-point-800'>
+            <p id={successId} className='typo-caption-7 text-primary-700'>
               {successMessage}
             </p>
           ) : null}

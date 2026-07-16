@@ -1,6 +1,6 @@
 import { IconButton } from '@/shared/components';
 import clsx from 'clsx';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, X } from 'lucide-react';
 
 interface StepNavigationProps {
   step: number;
@@ -10,10 +10,13 @@ interface StepNavigationProps {
 const StepNavigation = ({ step, onBack }: StepNavigationProps) => {
   return (
     <section>
-      <IconButton icon={<ChevronLeft size={26} />} ariaLabel='뒤로 가기' onClick={onBack} />
+      <div className='flex items-center justify-between'>
+        <IconButton icon={<ChevronLeft size={26} />} ariaLabel='뒤로 가기' onClick={onBack} />
+        <IconButton icon={<X size={26} />} ariaLabel='취소 모달 열기' onClick={onBack} />
+      </div>
 
       <div className='mt-4 flex items-center gap-5'>
-        {[1, 2].map((item) => (
+        {[1, 2, 3, 4, 5].map((item) => (
           <div
             key={item}
             className={clsx(

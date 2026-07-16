@@ -7,6 +7,11 @@
 @theme {
   /* Primary / Blue */
   --color-background: #f2f6ff;
+  --color-primary: #7f99ff;
+  --color-secondary: #b9a9ff;
+  --color-neutral: #7e8387;
+  --color-point: #aeffdd;
+  --color-semantic: #d53d4a;
 }
 
 html,
