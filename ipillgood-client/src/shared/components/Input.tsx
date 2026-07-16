@@ -4,8 +4,7 @@ import { forwardRef, useId, useState, type ComponentPropsWithoutRef } from 'reac
 import { Eye, EyeOff } from 'lucide-react';
 import { cn } from '@/shared/utils/cn';
 
-interface InputProps
-  extends Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'className'> {
+interface InputProps extends ComponentPropsWithoutRef<'input'> {
   label?: string;
   error?: string;
   hasPasswordToggle?: boolean;
@@ -35,10 +34,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const isPasswordInput = type === 'password';
-    const shouldShowPasswordToggle = hasPasswordToggle ?? isPasswordInput;
 
     const inputType =
-      shouldShowPasswordToggle && isPasswordVisible ? 'text' : type;
+      isPasswordInput && isPasswordVisible ? 'text' : type;
 
     const handleTogglePasswordVisible = () => {
       setIsPasswordVisible((prev) => !prev);
@@ -62,13 +60,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             aria-invalid={!!error}
             aria-describedby={errorId}
             className={cn(
-              'typo-body-11 h-10 w-full rounded-lg border border-white bg-white/50 p-2.5 text-black outline-none transition-colors placeholder:text-neutral-800 backdrop-blur-[20px] backdrop-saturate-150 shadow-[inset_0_1px_1px_rgba(255,255,255,0.85),0_4px_16px_rgba(255,255,255,0.28)] focus:bg-white disabled:cursor-not-allowed disabled:bg-[#E1E3E6] disabled:text-neutral-800',
-              shouldShowPasswordToggle && 'pr-10',
+              'typo-body-11 h-10 w-full rounded-lg border border-white bg-white/50 p-2.5 text-black outline-none transition-colors placeholder:text-neutral-800 backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_1px_rgba(255,255,255,0.85),0_4px_16px_rgba(255,255,255,0.28)] focus:bg-white disabled:cursor-not-allowed disabled:bg-[#E1E3E6] disabled:text-neutral-800',
+              isPasswordInput && 'pr-10',
               inputClassName,
             )}
           />
 
-          {shouldShowPasswordToggle && (
+          {isPasswordInput && (
             <button
               type='button'
               className='absolute right-2.5 top-1/2 flex -translate-y-1/2 items-center justify-center disabled:cursor-not-allowed'
@@ -88,7 +86,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         </div>
 
         {error && (
-          <p id={errorId} className='typo-caption-3 text-[#D53D4A]'>
+          <p id={errorId} className='typo-caption-3 text-semantic-600'>
             {error}
           </p>
         )}

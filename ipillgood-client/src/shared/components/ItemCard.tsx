@@ -1,17 +1,15 @@
-import Image from 'next/image';
 import { type ComponentPropsWithoutRef } from 'react';
 import { cn } from '@/shared/utils/cn';
 
-interface ItemCardProps
-  extends Omit<ComponentPropsWithoutRef<'div'>, 'children'> {
+interface ItemCardProps extends ComponentPropsWithoutRef<'div'> {
   imageSrc: string;
-  foodName: string;
+  title: string;
   desc: string;
 }
 
 export const ItemCard = ({
   imageSrc,
-  foodName,
+  title,
   desc,
   className,
   ...props
@@ -26,16 +24,14 @@ export const ItemCard = ({
       )}
       {...props}
     >
-      <Image
+      <img
         src={imageSrc}
         alt='음식 이미지'
-        width={40}
-        height={40}
         className='relative z-10 h-10 w-10 shrink-0 rounded-full object-cover'
       />
 
       <p className='typo-caption-6 relative z-10 w-14 truncate text-[#111111]'>
-        {foodName}
+        {title}
       </p>
 
       <p className='relative z-10 break-keep px-1 text-[10px] font-medium leading-3 text-neutral-800'>
