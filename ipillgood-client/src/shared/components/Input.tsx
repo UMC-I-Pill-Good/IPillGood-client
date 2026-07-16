@@ -75,7 +75,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {shouldShowPasswordToggle && (
             <button
               type='button'
-              tabIndex={-1}
               className='absolute right-2.5 top-1/2 flex -translate-y-1/2 items-center justify-center disabled:cursor-not-allowed'
               onClick={handleTogglePasswordVisible}
               disabled={disabled}
@@ -90,15 +89,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
         </div>
 
-        {error && (
-          <p id={errorId} className='typo-caption-6 text-semantic-500'>
-            {error}
-          </p>
-        )}
-
-        {successMessage && !error && (
-          <p className='typo-caption-7 text-point-800'>{successMessage}</p>
-        )}
+        <div className='min-h-5'>
+          {error ? (
+            <p id={errorId} className='typo-caption-6 text-semantic-500'>
+              {error}
+            </p>
+          ) : successMessage ? (
+            <p className='typo-caption-7 text-point-800'>{successMessage}</p>
+          ) : null}
+        </div>
       </div>
     );
   },

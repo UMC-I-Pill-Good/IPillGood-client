@@ -22,15 +22,9 @@ const SignupInputStep = ({
   onIdChange,
 }: SignupInputStepProps) => {
   return (
-    <section className='space-y-3 py-4'>
+    <section className='space-y-2 py-4'>
       {inputFields.map((field) => (
-        <div
-          key={field.name}
-          className={clsx(
-            'flex gap-2',
-            errors[field.name] || isIdDuplicated ? 'items-center' : 'items-end',
-          )}
-        >
+        <div key={field.name} className='flex gap-2'>
           <Input
             {...register(field.name, {
               onChange: () => {
@@ -48,15 +42,18 @@ const SignupInputStep = ({
               field.name === 'id' && isIdDuplicated ? '사용 가능한 아이디입니다.' : undefined
             }
           />
+
           {field.isDuplicateCheck && (
-            <TextButton
-              type='button'
-              text='중복 확인'
-              variant='secondary'
-              className='h-10 px-4'
-              disabled={!idValue.trim()}
-              onClick={onDuplicateCheck}
-            />
+            <div className='flex items-center justify-center shrink-0'>
+              <TextButton
+                type='button'
+                text='중복 확인'
+                variant='secondary'
+                className={clsx('h-10 px-4', !errors[field.name] || !(isIdDuplicated && ''))}
+                disabled={!idValue.trim()}
+                onClick={onDuplicateCheck}
+              />
+            </div>
           )}
         </div>
       ))}

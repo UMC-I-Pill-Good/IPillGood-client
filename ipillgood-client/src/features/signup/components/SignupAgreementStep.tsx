@@ -24,8 +24,8 @@ const SignupAgreementStep = ({ checked, onAllCheck, onCheck }: SignupAgreementSt
         <p className='typo-body-9'>전체 동의합니다</p>
       </div>
 
-      <div className='bg-white/50 glass h-38 p-2.5 w-full rounded-[20px]'>
-        <ul className='space-y-3 w-full'>
+      <div className='bg-white/50 glass h-40 p-4 w-full rounded-[20px]'>
+        <ul className='space-y-4 w-full'>
           {agreementLists.map(({ id, label, href }) => (
             <li key={id} className='flex items-center justify-between'>
               <div className='flex items-center gap-2'>
@@ -35,10 +35,9 @@ const SignupAgreementStep = ({ checked, onAllCheck, onCheck }: SignupAgreementSt
 
               <Link
                 href={href}
-                className='typo-caption-6 flex items-center text-neutral-800 transition hover:brightness-90'
+                className='typo-caption-6 flex items-center text-neutral-800 transition hover:underline'
               >
                 보기
-                <ChevronRight size={14} />
               </Link>
             </li>
           ))}
