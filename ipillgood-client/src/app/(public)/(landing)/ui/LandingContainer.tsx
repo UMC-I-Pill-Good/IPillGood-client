@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Tilt_Warp } from 'next/font/google';
 import { Background } from './Background';
 import { useRouter } from 'next/navigation';
+import { TextButton } from '@/shared/components';
 
 export const tiltWarp = Tilt_Warp({
   subsets: ['latin'],
@@ -15,10 +16,7 @@ export const LandingContainer = () => {
   const router = useRouter();
 
   return (
-    <main
-      onClick={() => router.push('/login')}
-      className='relative isolate flex h-screen items-center justify-center overflow-hidden bg-[linear-gradient(180deg,#9ABAFF_0%,#5D90FF_64%,#4580FF_100%)] cursor-pointer'
-    >
+    <main className='relative isolate flex h-screen items-center justify-center overflow-hidden bg-[linear-gradient(225deg,#9ABAFF_0%,#5D90FF_64%,#4580FF_100%)]'>
       {/* Background */}
       <Background />
 
@@ -51,19 +49,24 @@ export const LandingContainer = () => {
           건강한 습관의 시작, 아필굿
         </p>
       </motion.section>
-      <motion.p
+      <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 1, 0] }}
+        animate={{ opacity: 1 }}
         transition={{
-          delay: 1.5,
-          duration: 1.8,
-          repeat: Infinity,
+          delay: 1.3,
+          duration: 1.5,
           ease: 'easeInOut',
         }}
-        className='absolute bottom-6 text-white/80 typo-body-11 text-center whitespace-nowrap'
+        className='absolute bottom-4 left-5 right-5'
       >
-        화면 아무곳이나 클릭해주세요
-      </motion.p>
+        <TextButton
+          type='button'
+          text='시작하기'
+          size='xl'
+          className='bg-white/20 hover:bg-white/30 active:bg-white/40 w-full'
+          onClick={() => router.push('/login')}
+        />
+      </motion.div>
     </main>
   );
 };
