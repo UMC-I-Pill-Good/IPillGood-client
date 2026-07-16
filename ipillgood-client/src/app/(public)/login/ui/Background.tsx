@@ -6,21 +6,9 @@ export const Background = () => {
   return (
     <>
       {/* blur */}
-      <div
-        className='bg-blur absolute top-22 -right-20 h-52 w-52'
-        style={{
-          background: 'rgba(205, 160, 255,.5)',
-          filter: 'blur(70px)',
-        }}
-      />
+      <div className='bg-blur absolute top-22 -right-20 h-52 w-52 bg-[#CDA0FF]/50 blur-[70px]' />
 
-      <div
-        className='bg-blur absolute -left-22.5 top-75 h-[319.48px] w-[386.21px] rotate-[-26.62deg]'
-        style={{
-          background: 'rgba(192, 182, 255,.5)',
-          filter: 'blur(90px)',
-        }}
-      />
+      <div className='bg-blur absolute -left-22.5 top-70 h-[319.48px] w-[386.21px] rotate-[-26.62deg] bg-[#c0B6FF]/30 blur-[90px]' />
 
       {/* Capsule 1 */}
       <motion.div

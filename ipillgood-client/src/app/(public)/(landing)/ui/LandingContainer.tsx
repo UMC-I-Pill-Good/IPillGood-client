@@ -16,7 +16,7 @@ export const LandingContainer = () => {
   const router = useRouter();
 
   return (
-    <main className='relative isolate flex h-screen items-center justify-center overflow-hidden bg-[linear-gradient(225deg,#9ABAFF_0%,#5D90FF_64%,#4580FF_100%)]'>
+    <main className='relative isolate flex h-screen items-center justify-center overflow-hidden bg-[linear-gradient(225deg,#9ABAFF_0%,#7F99FF_64%,#4580FF_100%)] bg-[#4580FF]'>
       {/* Background */}
       <Background />
 
