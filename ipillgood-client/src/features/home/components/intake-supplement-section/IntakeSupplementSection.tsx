@@ -39,7 +39,14 @@ const IntakeSupplementSection = () => {
       </div>
       {deleteTargetId !== null && (
         <ConfirmModal
-          title='해당 영양제를 섭취 중인 영양제에서 삭제하시겠습니까?'
+          title={
+            <>
+              해당 영양제를 섭취 중인
+              <br />
+              영양제에서 <span className='text-semantic-600'>삭제</span>
+              하시겠습니까?
+            </>
+          }
           onConfirm={handleDeleteConfirm}
           onCancel={() => setDeleteTargetId(null)}
         />

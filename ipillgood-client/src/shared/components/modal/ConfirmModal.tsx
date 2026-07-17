@@ -1,11 +1,11 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, type ReactNode } from 'react';
 import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
 import TextButton from '../button/TextButton';
 
 interface ConfirmModalProps {
-  title: string;
+  title: ReactNode;
   content?: string;
   confirmLabel?: string;
   cancelLabel?: string;
