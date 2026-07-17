@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import StepNavigation from './StepNavigation';
 import { useState } from 'react';
-import BasicInfoStep from './BasicInfoStep';
+import BasicInfoStep from './InfoStep/BasicInfoStep';
 import { TextButton } from '@/shared/components';
 
 const SurveyContainer = () => {

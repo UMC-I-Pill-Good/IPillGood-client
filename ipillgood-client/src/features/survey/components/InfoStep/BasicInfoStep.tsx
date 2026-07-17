@@ -6,23 +6,11 @@ import { ChevronDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import DatePickerBottomSheet from './DatePickerBottomSheet';
 import { TextButton } from '@/shared/components';
-
-// 2026 ~ 1970
-const birthYearOptions = Array.from({ length: 2026 - 1970 + 1 }, (_, i) => 2026 - i);
-
-// 10 ~ 50
-const periodOptions = Array.from({ length: 50 - 10 + 1 }, (_, i) => 10 + i);
-
-const jobOptions = [
-  '사무직',
-  '전문직',
-  '서비스직',
-  '생산/기술직',
-  '자영업',
-  '학생',
-  '주부',
-  '기타',
-];
+import {
+  birthYearOptions,
+  jobOptions,
+  periodOptions,
+} from '@/features/survey/constants/survey.constants';
 
 const BasicInfoStep = () => {
   const [isYearOpen, setIsYearOpen] = useState(false);
@@ -37,8 +25,8 @@ const BasicInfoStep = () => {
 
   const [selectedDate, setSelectedDate] = useState({
     year: 2026,
-    month: 6,
-    day: 6,
+    month: 7,
+    day: 17,
   });
 
   const [selectedJob, setSelectedJob] = useState('');
@@ -103,7 +91,7 @@ const BasicInfoStep = () => {
         </div>
       </section>
 
-      <section className='py-4 space-y-2 z-50'>
+      <section className='py-4 space-y-2'>
         <h5 className='typo-body-5'>
           2. 성별을 선택해주세요.<span className='text-semantic'>*</span>
         </h5>
@@ -156,11 +144,11 @@ const BasicInfoStep = () => {
         </article>
 
         {gender === 'woman' && (
-          <article className='bg-white/50 border border-white rounded-[20px] no-center-glass p-3 py-4 w-full h-30'>
+          <article className='bg-white/50 border border-white rounded-[20px] no-center-glass p-3 py-4 w-full h-30 relative z-30'>
             <p className='typo-body-10 mb-2'>
               여성 정보 <span className='text-neutral'>(선택 입력)</span>
             </p>
-            <div ref={periodRef} className='flex items-center justify-between relative mb-1.5 z-20'>
+            <div ref={periodRef} className='flex items-center justify-between relative mb-1.5'>
               <p className='typo-caption-2'>생리 주기</p>
               <button
                 type='button'
@@ -209,7 +197,7 @@ const BasicInfoStep = () => {
           3. 직군을 선택해주세요.<span className='text-semantic'>*</span>
         </h5>
 
-        <div className='flex flex-wrap items-center gap-2 mt-3 z-10'>
+        <div className='flex flex-wrap items-center gap-2 mt-3'>
           {jobOptions.map((option) => (
             <TextButton
               key={option}
