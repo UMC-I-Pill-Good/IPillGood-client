@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { mockIntakeCalendar } from '../api/intakeCalendar.mock';
-import { getMockIntakeDayDetail } from '../api/intakeDayDetail.mock';
+import { mockIntakeCalendar } from '../mocks/intakeCalendar.mock';
+import { getMockIntakeDayDetail } from '../mocks/intakeDayDetail.mock';
 
 export const useIntakeCalendar = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);

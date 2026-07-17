@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { mockIntakeSupplementList } from '../api/intakeSupplement.mock';
+import { mockIntakeSupplementList } from '../mocks/intakeSupplement.mock';
 
 export const useIntakeCheck = () => {
   const [checkedIdList, setCheckedIdList] = useState<number[]>([]);

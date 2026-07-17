@@ -26,7 +26,7 @@ const RecommendedSupplementCard = ({ recommendation }: RecommendedSupplementCard
           <span className='text-neutral-800'>
             일일 권장량: {recommendation.recommendedDosageText}
           </span>
-          <span className='text-primary-500'>{recommendation.recommendedTimeText}</span>
+          <span className='text-primary-600'>{recommendation.recommendedTimeText}</span>
         </div>
         {/* TODO: 태그 개수 미정/ 태그 많을 경우 처리 필요  */}
         <div className='flex gap-1 mt-2 flex-wrap'>

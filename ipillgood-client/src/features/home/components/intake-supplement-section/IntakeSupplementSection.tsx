@@ -11,8 +11,8 @@ const IntakeSupplementSection = () => {
   const { list, deleteTargetId, setDeleteTargetId, handleDeleteConfirm } = useIntakeSupplement();
 
   return (
-    <div className='w-full flex flex-col gap-1 mt-4'>
-      <div className='flex items-center justify-between'>
+    <section className='w-full flex flex-col gap-1 mt-4'>
+      <article className='flex items-center justify-between'>
         <h2 className='typo-body-5 text-[#111111]'>섭취 중인 영양제</h2>
         {/* TODO: 마이페이지 알림 설정으로 이동 */}
         <Link
@@ -22,12 +22,12 @@ const IntakeSupplementSection = () => {
           <Bell size={15} className='relative' />
           <span className='relative'>알림 설정</span>
         </Link>
-      </div>
-      <div className='flex gap-3 px-8 pt-5 pb-4 rounded-[20px] border border-white bg-white/50 items-center shadow-[0px_4px_4px_0px_rgba(126,131,135,0.10)]'>
+      </article>
+      <section className='flex gap-3 px-8 pt-5 pb-4 rounded-[20px] border border-white bg-white/50 items-center shadow-[0px_4px_4px_0px_rgba(126,131,135,0.10)]'>
         {/* 섭취 중인 영양제 목록 */}
         <SupplementBottleList list={list} onDeleteClick={setDeleteTargetId} />
         {/* TODO: 캐비닛 페이지로 이동 */}
-        <Link href='/home'>
+        <Link href='/home' className='transition hover:brightness-90'>
           <div className='relative'>
             <SupplementBottleIcon />
             <div className='absolute left-1/2 -translate-x-1/2 top-7 flex flex-col items-center justify-center text-neutral-800 gap-1'>
@@ -36,7 +36,7 @@ const IntakeSupplementSection = () => {
             </div>
           </div>
         </Link>
-      </div>
+      </section>
       {deleteTargetId !== null && (
         <ConfirmModal
           title={
@@ -51,7 +51,7 @@ const IntakeSupplementSection = () => {
           onCancel={() => setDeleteTargetId(null)}
         />
       )}
-    </div>
+    </section>
   );
 };
 

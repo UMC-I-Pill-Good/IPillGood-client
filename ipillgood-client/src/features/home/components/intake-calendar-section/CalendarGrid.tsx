@@ -2,7 +2,7 @@
 
 import { CapsuleGrayIcon, CapsuleIcon } from '@/assets';
 import { CalendarDayType } from '../../types/intakeCalendar.type';
-import { getFirstDayOfWeek } from '../../utils/calendar';
+import { getFirstDayOfWeek, isFutureDate } from '../../utils/calendar';
 
 const WEEKDAY_LABELS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
@@ -30,14 +30,15 @@ const CalendarGrid = ({ year, month, days, onDayClick }: CalendarGridProps) => {
 
       {days.map((day) => {
         const isClickable = day.status === 'DONE';
+        const isFuture = isFutureDate(day.date);
 
         return (
           <div
             key={day.date}
             onClick={isClickable ? () => onDayClick(day.date) : undefined}
-            className={`relative z-0 h-6.75 flex items-center justify-center w-6.75 text-[#111] typo-caption-6 ${
-              isClickable ? 'cursor-pointer' : 'cursor-default'
-            }`}
+            className={`relative z-0 h-6.75 flex items-center justify-center w-6.75 typo-caption-6 ${
+              isFuture ? 'text-neutral-800' : 'text-[#111]'
+            } ${isClickable ? 'cursor-pointer' : 'cursor-default'}`}
           >
             <div className='absolute -z-10'>
               {day.status === 'DONE' ? (
