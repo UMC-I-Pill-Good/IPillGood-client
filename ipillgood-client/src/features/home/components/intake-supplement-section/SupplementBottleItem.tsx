@@ -18,11 +18,14 @@ const SupplementBottleItem = ({
     <div className='flex flex-col items-center'>
       <div className='relative '>
         <Image src={imageUrl} height={70} width={43} alt={productName} className=' h-18.5 w-auto' />
-        <X
-          size={13}
+        <button
+          type='button'
           onClick={onDeleteClick}
+          aria-label='삭제'
           className='absolute -right-1.5 -top-0.5 text-neutral-800 cursor-pointer'
-        />
+        >
+          <X size={13} />
+        </button>
       </div>
       <span className='typo-caption-6 mr-0.5 w-11 truncate text-center'>{productName}</span>
     </div>
