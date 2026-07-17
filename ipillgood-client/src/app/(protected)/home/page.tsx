@@ -10,7 +10,7 @@ const HomePage = () => {
   return (
     <div className='flex items-center justify-center flex-col p-5 pb-23'>
       <div className='flex items-center w-full h-23'>
-        <HeaderLogoIcon className='-ml-4' />
+        <HeaderLogoIcon className='-ml-4' role='img' aria-label='I Pill Good' />
       </div>
       <IntakeSupplementSection />
       <TodayIntakeCheckSection />

@@ -13,7 +13,11 @@ const DayIntakeListModal = ({ date, intakes, onClose }: DayIntakeListModalProps)
   const [, month, day] = date.split('-');
 
   return (
-    <ModalShell onClose={onClose} className='gap-5'>
+    <ModalShell
+      onClose={onClose}
+      className='gap-5'
+      ariaLabel={`${Number(month)}/${Number(day)} 섭취한 영양제 목록`}
+    >
       <p className='typo-body-5 text-[#111] text-center'>
         {Number(month)}/{Number(day)} 섭취한 영양제 목록
       </p>

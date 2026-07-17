@@ -17,7 +17,13 @@ const SupplementBottleList = ({ list, onDeleteClick }: SupplementBottleListProps
   });
 
   return (
-    <div className='px-1 overflow-hidden mask-l-from-99% mask-r-from-99%' ref={emblaRef}>
+    <div
+      className='px-1 overflow-hidden mask-l-from-99% mask-r-from-99%'
+      ref={emblaRef}
+      role='region'
+      aria-roledescription='carousel'
+      aria-label='섭취 중인 영양제 목록'
+    >
       <div className='flex gap-4'>
         {list.map((supplement) => (
           // TODO: 개별 영양제 클릭 모달
