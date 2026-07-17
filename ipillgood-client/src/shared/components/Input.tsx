@@ -40,9 +40,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const isPasswordInput = type === 'password';
-    const shouldShowPasswordToggle = hasPasswordToggle ?? isPasswordInput;
 
-    const inputType = shouldShowPasswordToggle && isPasswordVisible ? 'text' : type;
+    const inputType = hasPasswordToggle && isPasswordVisible ? 'text' : type;
 
     const handleTogglePasswordVisible = () => {
       setIsPasswordVisible((prev) => !prev);
@@ -70,12 +69,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               error && 'border-semantic-400',
               !error && successMessage && 'border-point-600',
               !error && !successMessage && 'border-white',
-              shouldShowPasswordToggle && 'pr-10',
+              hasPasswordToggle && 'pr-10',
               inputClassName,
             )}
           />
 
-          {shouldShowPasswordToggle && (
+          {isPasswordInput && (
             <button
               type='button'
               className='absolute right-2.5 top-1/2 flex -translate-y-1/2 items-center justify-center disabled:cursor-not-allowed'
