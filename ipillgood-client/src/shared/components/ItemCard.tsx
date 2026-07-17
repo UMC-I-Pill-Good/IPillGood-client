@@ -24,6 +24,7 @@ export const ItemCard = ({
       )}
       {...props}
     >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={imageSrc}
         alt='음식 이미지'

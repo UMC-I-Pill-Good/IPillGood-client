@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
     const rules = config.module?.rules;
     if (!rules) return config;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const fileLoaderRule = rules.find((rule: any) =>
       rule.test instanceof RegExp && rule.test.test('.svg')
     );
