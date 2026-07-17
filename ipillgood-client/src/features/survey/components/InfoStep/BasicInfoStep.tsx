@@ -17,12 +17,9 @@ const BasicInfoStep = () => {
   const [year, setYear] = useState(2026);
 
   const [gender, setGender] = useState<'woman' | 'man' | null>(null);
-
-  const [period, setPeriod] = useState(30);
   const [isPeriodOpen, setIsPeriodOpen] = useState(false);
-
   const [isBeginOpen, setIsBeginOpen] = useState(false);
-
+  const [period, setPeriod] = useState(30);
   const [selectedDate, setSelectedDate] = useState({
     year: 2026,
     month: 7,
@@ -31,31 +28,13 @@ const BasicInfoStep = () => {
 
   const [selectedJob, setSelectedJob] = useState('');
 
-  const yearRef = useRef<HTMLDivElement>(null);
-  const periodRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as Node;
-
-      if (yearRef.current && !yearRef.current.contains(target)) {
-        setIsYearOpen(false);
-      }
-
-      if (periodRef.current && !periodRef.current.contains(target)) {
-        setIsPeriodOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
   return (
-    <div>
+    <div
+      onClick={() => {
+        setIsYearOpen(false);
+        setIsPeriodOpen(false);
+      }}
+    >
       <StepHeader title='기본 정보를 알려주세요!' desc='나에게 맞는 영양제를 추천해드릴게요.' />
 
       <section className='py-4 flex flex-col items-start gap-2'>
@@ -63,7 +42,7 @@ const BasicInfoStep = () => {
           1. 출생 연도를 선택해주세요.<span className='text-semantic'>*</span>
         </h5>
 
-        <div ref={yearRef} className='flex items-center gap-1 relative'>
+        <div onClick={(e) => e.stopPropagation()} className='flex items-center gap-1 relative'>
           <button
             type='button'
             className='bg-primary/80 inline-flex items-center justify-center gap-1 typo-body-10 rounded-lg pr-3 pl-4 h-8 w-25 text-white shadow-[0_4px_4px_rgba(126,131,135,0.1)] transition hover:bg-primary-700 active:bg-primary-800 shirnk-0'
@@ -148,7 +127,10 @@ const BasicInfoStep = () => {
             <p className='typo-body-10 mb-2'>
               여성 정보 <span className='text-neutral'>(선택 입력)</span>
             </p>
-            <div ref={periodRef} className='flex items-center justify-between relative mb-1.5'>
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className='flex items-center justify-between relative mb-1.5'
+            >
               <p className='typo-caption-2'>생리 주기</p>
               <button
                 type='button'
@@ -193,9 +175,7 @@ const BasicInfoStep = () => {
       </section>
 
       <section className='py-4 space-y-2 z-0'>
-        <h5 className='typo-body-5'>
-          3. 직군을 선택해주세요.<span className='text-semantic'>*</span>
-        </h5>
+        <h5 className='typo-body-5'>3. 직군을 선택해주세요.</h5>
 
         <div className='flex flex-wrap items-center gap-2 mt-3'>
           {jobOptions.map((option) => (

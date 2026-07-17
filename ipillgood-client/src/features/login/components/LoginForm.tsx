@@ -5,8 +5,11 @@ import { IdIcon, KakaoIcon, LockIcon, NaverIcon } from '@/assets';
 import { TextButton } from '@/shared/components';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const LoginForm = () => {
+  const router = useRouter();
+
   const [idValue, setIdValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
@@ -62,7 +65,13 @@ const LoginForm = () => {
           />
         </div>
 
-        <TextButton type='submit' text='로그인' size='xl' className='w-full mt-2.5' />
+        <TextButton
+          type='submit'
+          text='로그인'
+          size='xl'
+          className='w-full mt-2.5'
+          onClick={() => router.push('survey')}
+        />
       </form>
 
       <div className='my-4 flex items-center gap-2'>
