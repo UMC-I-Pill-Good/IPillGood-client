@@ -1,103 +1,32 @@
 'use client';
 
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useConditionStore } from '../store/useConditionStore';
 
 import {
-    type ConditionGraphDataType,
     type ConditionGraphPointType,
 } from '../types/condition';
 import ConditionWeekDetailModal from './ConditionWeekDetailModal';
 
-const conditionGraphDataList: ConditionGraphDataType[] = [
-    {
-        weekLabel: '1주차',
-        score: 2,
-        vitality: 2,
-        sleepHours: 5,
-        intakeDays: 2,
-        totalDays: 5,
-    },
-    {
-        weekLabel: '2주차',
-        score: 3.2,
-        vitality: 3,
-        sleepHours: 6,
-        intakeDays: 3,
-        totalDays: 5,
-    },
-    {
-        weekLabel: '3주차',
-        score: 4,
-        vitality: 4,
-        sleepHours: 7,
-        intakeDays: 4,
-        totalDays: 5,
-    },
-    {
-        weekLabel: '4주차',
-        score: 2.8,
-        vitality: 2,
-        sleepHours: 5,
-        intakeDays: 2,
-        totalDays: 5,
-    },
-    {
-        weekLabel: '5주차',
-        score: 5,
-        vitality: 3,
-        sleepHours: 4.5,
-        intakeDays: 3,
-        totalDays: 5,
-    },
-];
-
-const CURRENT_MONTH = 5;
-
-const GRAPH_WIDTH = 284;
-const GRAPH_HEIGHT = 166;
-
-const AXIS_LEFT = 12.6;
-const AXIS_BOTTOM = 148.67;
-const SCORE_INTERVAL = 25.108;
-
-const WEEK_X_POSITION_LIST = [
-    48.38,
-    99.88,
-    149.72,
-    200.38,
-    251.05,
-];
-
-const guideLineList = [
-    {
-        score: 5,
-        y: 23.13,
-    },
-    {
-        score: 4,
-        y: 48.238,
-    },
-    {
-        score: 3,
-        y: 73.346,
-    },
-    {
-        score: 2,
-        y: 98.454,
-    },
-    {
-        score: 1,
-        y: 123.562,
-    },
-];
+import {
+    DUMMY_CONDITION_GRAPH_DATA,
+    CURRENT_MONTH,
+    GRAPH_WIDTH,
+    GRAPH_HEIGHT,
+    AXIS_LEFT,
+    AXIS_BOTTOM,
+    SCORE_INTERVAL,
+    WEEK_X_POSITION_LIST,
+    GUIDE_LINE_LIST,
+} from '../constants/conditionGraph';
 
 const getScoreY = (score: number) => {
     return AXIS_BOTTOM - score * SCORE_INTERVAL;
 };
 
 const graphPointList: ConditionGraphPointType[] =
-    conditionGraphDataList.map((condition, index) => ({
+    DUMMY_CONDITION_GRAPH_DATA.map((condition, index) => ({
         ...condition,
         x: WEEK_X_POSITION_LIST[index] ?? AXIS_LEFT,
         y: getScoreY(condition.score),
@@ -109,22 +38,20 @@ const graphLinePoints = [
 ].join(' ');
 
 const ConditionGraphSection = () => {
-    const [graphCardElement, setGraphCardElement] = useState<HTMLDivElement | null>(null);
-
-    const [selectedPointIndex, setSelectedPointIndex] =
-        useState<number | null>(null);
+    const { selectedWeekIndex, setSelectedWeekIndex, closeModal } = useConditionStore();
+    const [hoveredPointIndex, setHoveredPointIndex] = useState<number | null>(null);
 
     const selectedPoint =
-        selectedPointIndex !== null
-            ? conditionGraphDataList[selectedPointIndex]
+        selectedWeekIndex !== null
+            ? DUMMY_CONDITION_GRAPH_DATA[selectedWeekIndex]
             : null;
 
     const handlePointClick = (index: number) => {
-        setSelectedPointIndex(index);
+        setSelectedWeekIndex(index);
     };
 
     const handleModalClose = () => {
-        setSelectedPointIndex(null);
+        closeModal();
     };
 
     return (
@@ -136,7 +63,6 @@ const ConditionGraphSection = () => {
                     </h2>
 
                     <div
-                        ref={setGraphCardElement}
                         className='relative h-[258px] w-full overflow-hidden rounded-[20px] border border-white bg-white/70 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] backdrop-blur-xl'
                     >
                         <div className='absolute left-1/2 top-[11px] flex h-6 w-[283px] -translate-x-1/2 items-center justify-between'>
@@ -175,7 +101,7 @@ const ConditionGraphSection = () => {
                             viewBox={`0 0 ${GRAPH_WIDTH} ${GRAPH_HEIGHT}`}
                             className='absolute left-1/2 top-[67px] h-[166px] w-[284px] -translate-x-1/2 overflow-visible'
                         >
-                            {guideLineList.map(({ score, y }) => (
+                            {GUIDE_LINE_LIST.map(({ score, y }) => (
                                 <g key={score}>
                                     <line
                                         x1={AXIS_LEFT}
@@ -232,11 +158,30 @@ const ConditionGraphSection = () => {
                             {graphPointList.map(
                                 (condition, index) => (
                                     <g key={condition.weekLabel}>
+                                        {/* 호버 시 세로 평행 가이드라인 렌더링 */}
+                                        {hoveredPointIndex === index && (
+                                            <line
+                                                x1={condition.x}
+                                                y1={AXIS_BOTTOM}
+                                                x2={condition.x}
+                                                y2={condition.y}
+                                                stroke='#B1B8BE'
+                                                strokeWidth='1.5'
+                                                pointerEvents='none'
+                                            />
+                                        )}
+
+                                        {/* 호버 시 커지고 색상 변하는 데이터 점 */}
                                         <circle
                                             cx={condition.x}
                                             cy={condition.y}
-                                            r='3'
-                                            fill='var(--color-neutral-800)'
+                                            r={hoveredPointIndex === index ? 4.87 : 3}
+                                            fill={hoveredPointIndex === index ? '#6580EE' : 'var(--primary, #7F99FF)'}
+                                            style={
+                                                hoveredPointIndex === index
+                                                    ? { filter: 'drop-shadow(0px 0px 5px rgba(126, 131, 135, 0.61))' }
+                                                    : undefined
+                                            }
                                             pointerEvents='none'
                                         />
 
@@ -251,6 +196,8 @@ const ConditionGraphSection = () => {
                                                 type='button'
                                                 aria-label={`${condition.weekLabel} 컨디션 점수 ${condition.score}점 상세 보기`}
                                                 className='size-6 rounded-full bg-transparent focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary-600'
+                                                onMouseEnter={() => setHoveredPointIndex(index)}
+                                                onMouseLeave={() => setHoveredPointIndex(null)}
                                                 onClick={() =>
                                                     handlePointClick(
                                                         index,
@@ -289,7 +236,6 @@ const ConditionGraphSection = () => {
 
             {selectedPoint && (
                 <ConditionWeekDetailModal
-                    anchorElement={graphCardElement}
                     month={CURRENT_MONTH}
                     weekLabel={selectedPoint.weekLabel}
                     vitality={selectedPoint.vitality}
