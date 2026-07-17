@@ -22,7 +22,7 @@ const SurveyContainer = () => {
       return;
     }
 
-    setStep(1);
+    setStep((prev) => prev - 1);
   };
 
   const handleNext = () => {

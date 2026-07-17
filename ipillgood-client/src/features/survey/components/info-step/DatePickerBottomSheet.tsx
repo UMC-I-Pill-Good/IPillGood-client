@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { WheelSelectDate } from './WeelSelectDate';
 import { DateValue } from '@/features/survey/types/survey';
-import { monthOptions, yearOptions } from '@/features/survey/constants/survey.constants';
+import { monthOptions, yearOptions } from '@/features/survey/constants/basicInfo.constants';
 
 interface DatePickerBottomSheetProps {
   value: DateValue;

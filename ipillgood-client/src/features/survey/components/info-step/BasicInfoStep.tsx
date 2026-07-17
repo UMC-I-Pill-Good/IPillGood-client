@@ -10,7 +10,7 @@ import {
   birthYearOptions,
   jobOptions,
   periodOptions,
-} from '@/features/survey/constants/survey.constants';
+} from '@/features/survey/constants/basicInfo.constants';
 import { useAtom } from 'jotai';
 import { genderAtom } from '../../atoms/survey.atom';
 
@@ -39,8 +39,8 @@ const BasicInfoStep = () => {
     >
       <StepHeader title='기본 정보를 알려주세요!' desc='나에게 맞는 영양제를 추천해드릴게요.' />
 
-      <section className='py-4 flex flex-col items-start gap-2'>
-        <h5 className='typo-body-5'>
+      <section className='mt-2 flex flex-col items-start gap-2'>
+        <h5 className='typo-body-5 ml-1'>
           1. 출생 연도를 선택해주세요.<span className='text-semantic'>*</span>
         </h5>
 
@@ -72,8 +72,8 @@ const BasicInfoStep = () => {
         </div>
       </section>
 
-      <section className='py-4 space-y-2 pb-8'>
-        <h5 className='typo-body-5'>
+      <section className='space-y-2 py-8'>
+        <h5 className='typo-body-5 ml-1'>
           2. 성별을 선택해주세요. <span className='text-semantic'>*</span>
         </h5>
 
@@ -177,7 +177,7 @@ const BasicInfoStep = () => {
       </section>
 
       <section className='pb-4 space-y-2'>
-        <h5 className='typo-body-5'>3. 직군을 선택해주세요.</h5>
+        <h5 className='typo-body-5 ml-1'>3. 직군을 선택해주세요.</h5>
 
         <div className='flex flex-wrap items-center gap-2 mt-3'>
           {jobOptions.map((option) => (

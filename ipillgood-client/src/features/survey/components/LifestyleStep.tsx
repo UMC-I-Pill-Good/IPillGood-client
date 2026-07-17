@@ -3,7 +3,7 @@ import { StepHeader } from '@/shared/layout';
 import { useAtomValue } from 'jotai';
 import { useState } from 'react';
 import { genderAtom } from '../atoms/survey.atom';
-import { lifestyleOptions } from '../constants/survey.constants';
+import { lifestyleOptions } from '../constants/lifestyle.constants';
 
 const LifestyleStep = () => {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
