@@ -102,7 +102,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             </p>
           ) : null}
         </div>
-      </div >
+      </div>
     );
   },
 );

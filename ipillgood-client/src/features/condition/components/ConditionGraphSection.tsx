@@ -56,14 +56,14 @@ const ConditionGraphSection = () => {
 
     return (
         <>
-            <section className='flex h-[319px] w-full flex-col px-5 py-4'>
-                <div className='flex w-full flex-col gap-2'>
-                    <h2 className='typo-body-5 h-[21px] text-[#111111]'>
+            <section className='flex w-full flex-col px-5 py-4'>
+                <div className='flex w-full flex-col gap-2.5'>
+                    <h2 className='typo-body-5 text-[#111111]'>
                         {CURRENT_MONTH}월 컨디션 변화 그래프
                     </h2>
 
                     <div
-                        className='relative h-[258px] w-full overflow-hidden rounded-[20px] border border-white bg-white/70 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] backdrop-blur-xl'
+                        className='relative h-[258px] w-full overflow-hidden rounded-[20px] border border-white bg-white/70 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'
                     >
                         <div className='absolute left-1/2 top-[11px] flex h-6 w-[283px] -translate-x-1/2 items-center justify-between'>
                             <button
@@ -227,7 +227,7 @@ const ConditionGraphSection = () => {
                             )}
                         </svg>
 
-                        <p className='absolute bottom-[9px] left-1/2 h-3 w-[284px] -translate-x-1/2 text-right text-[10px] font-normal leading-none text-neutral-700'>
+                        <p className='absolute bottom-[5px] left-1/2 w-[284px] -translate-x-1/2 text-right text-[10px] font-normal leading-none text-neutral-700'>
                             컨디션 점수 (1-5점)
                         </p>
                     </div>

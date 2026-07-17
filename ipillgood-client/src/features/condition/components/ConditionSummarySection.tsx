@@ -16,13 +16,13 @@ const ConditionSummarySection = ({
     totalDays = 7,
 }: ConditionSummarySectionProps) => {
     return (
-        <section className='flex w-full flex-col gap-2 px-5 pt-1 pb-4'>
+        <section className='flex w-full flex-col gap-2 px-5 pt-4 pb-0'>
             <div className='flex h-[21px] w-full items-center gap-1'>
-                <h2 className='typo-body-5 h-[21px] whitespace-nowrap text-[#111111]'>
+                <h2 className='typo-body-5 whitespace-nowrap text-[#111111]'>
                     이번 달 컨디션 요약
                 </h2>
 
-                <p className='typo-caption-7 h-3.5 whitespace-nowrap text-neutral-800'>
+                <p className='typo-caption-7 whitespace-nowrap text-[#757575]'>
                     ({dateRange})
                 </p>
             </div>

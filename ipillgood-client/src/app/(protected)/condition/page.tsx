@@ -10,7 +10,7 @@ const ConditionCheckPage = () => {
       <ConditionGraphSection />
       <ConditionSummarySection />
 
-      <ConditionHealthStatusSection href='/condition/health-status' />
+      <ConditionHealthStatusSection />
     </main>
   );
 };
