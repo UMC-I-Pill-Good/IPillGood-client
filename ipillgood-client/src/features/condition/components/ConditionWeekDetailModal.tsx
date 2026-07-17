@@ -1,0 +1,125 @@
+'use client';
+
+import { ConditionIntakeIcon, ConditionSleepIcon, ConditionVitalityIcon } from '@/assets';
+import { useEscapeKey, useScrollLock } from '@/shared/hooks';
+import { X } from 'lucide-react';
+import { type MouseEvent } from 'react';
+
+interface ConditionWeekDetailModalProps {
+    month: number;
+    weekLabel: string;
+    vitality: number;
+    sleepHours: number;
+    intakeDays: number;
+    totalDays: number;
+    onClose: () => void;
+}
+
+const ConditionWeekDetailModal = ({
+    month,
+    weekLabel,
+    vitality,
+    sleepHours,
+    intakeDays,
+    totalDays,
+    onClose,
+}: ConditionWeekDetailModalProps) => {
+    useScrollLock();
+    useEscapeKey(onClose);
+
+    const handleBackdropClick = () => {
+        onClose();
+    };
+
+    const handleModalClick = (event: MouseEvent<HTMLDivElement>) => {
+        event.stopPropagation();
+    };
+
+    return (
+        <div
+            className='fixed inset-0 z-50 flex items-center justify-center bg-neutral-800/30'
+            onClick={handleBackdropClick}
+            role='presentation'
+        >
+            <div
+                role='dialog'
+                aria-modal='true'
+                className='flex h-[153px] w-[264px] flex-col gap-4 rounded-[20px] bg-white px-5 py-4 shadow-[4px_4px_40px_0_rgba(126,131,135,0.2)]'
+                onClick={handleModalClick}
+            >
+                <div className='flex h-9 w-full shrink-0 items-center justify-between'>
+                    <h3 className='typo-body-5 whitespace-nowrap text-[#111111]'>
+                        {month}월 {weekLabel} 컨디션
+                    </h3>
+
+                    <button
+                        type='button'
+                        aria-label='컨디션 상세 모달 닫기'
+                        className='flex size-9 shrink-0 items-center justify-center rounded-full border border-white bg-white/50 text-neutral-800 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600'
+                        onClick={onClose}
+                    >
+                        <X
+                            aria-hidden='true'
+                            size={24}
+                            strokeWidth={2}
+                        />
+                    </button>
+                </div>
+
+                <div className='flex h-[69px] w-full shrink-0 items-start justify-between'>
+                    {/* 활력 메트릭 */}
+                    <div className='flex h-[69px] w-[55px] shrink-0 flex-col items-center gap-1'>
+                        <div className='flex h-[45px] w-[55px] flex-col items-center gap-1'>
+                            <p className='typo-caption-2 flex h-[17px] w-full items-center justify-center whitespace-nowrap text-center text-[#111111]'>
+                                활력
+                            </p>
+                            <div className='flex size-6 shrink-0 items-center justify-center'>
+                                <ConditionVitalityIcon className='block h-[19.31px] w-4 shrink-0' />
+                            </div>
+                        </div>
+                        <div className='flex h-5 w-full items-center justify-center whitespace-nowrap text-center text-neutral-800 typo-caption-2'>
+                            {vitality}
+                            <span className='mx-1 text-[13px] font-medium leading-[150%] tracking-[-0.011em] text-neutral-500'>/</span>
+                            <span className='typo-caption-7 text-neutral-600'>5</span>
+                        </div>
+                    </div>
+
+                    {/* 수면 메트릭 */}
+                    <div className='flex h-[69px] w-[55px] shrink-0 flex-col items-center gap-1'>
+                        <div className='flex h-[45px] w-[55px] flex-col items-center gap-1'>
+                            <p className='typo-caption-2 flex h-[17px] w-full items-center justify-center whitespace-nowrap text-center text-[#111111]'>
+                                수면
+                            </p>
+                            <div className='flex size-6 shrink-0 items-center justify-center'>
+                                <ConditionSleepIcon className='block h-5 w-[12.93px] shrink-0' />
+                            </div>
+                        </div>
+                        <div className='flex h-5 w-full items-center justify-center whitespace-nowrap text-center text-neutral-800 typo-caption-2'>
+                            {sleepHours}
+                            <span className='ml-1 font-[var(--font-dm-sans)] typo-caption-7 text-neutral-600'>h</span>
+                        </div>
+                    </div>
+
+                    {/* 섭취 기록 메트릭 */}
+                    <div className='flex h-[69px] w-[55px] shrink-0 flex-col items-center gap-1'>
+                        <div className='flex h-[45px] w-[55px] flex-col items-center gap-1'>
+                            <p className='typo-caption-2 flex h-[17px] w-full items-center justify-center whitespace-nowrap text-center text-[#111111]'>
+                                섭취 기록
+                            </p>
+                            <div className='flex size-6 shrink-0 items-center justify-center'>
+                                <ConditionIntakeIcon className='block h-5 w-[18px] shrink-0' />
+                            </div>
+                        </div>
+                        <div className='flex h-5 w-full items-center justify-center whitespace-nowrap text-center text-neutral-800 typo-caption-2'>
+                            {intakeDays}
+                            <span className='mx-1 text-[13px] font-medium leading-[150%] tracking-[-0.011em] text-neutral-500'>/</span>
+                            <span className='typo-caption-7 text-neutral-600'>{totalDays}일</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default ConditionWeekDetailModal;

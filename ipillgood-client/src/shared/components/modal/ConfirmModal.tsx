@@ -1,8 +1,11 @@
-import { useEscapeKey, useScrollLock } from '@/shared/hooks';
+'use client';
+
+import { useRef, type ReactNode } from 'react';
+import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
 import TextButton from '../button/TextButton';
 
 interface ConfirmModalProps {
-  title: string;
+  title: ReactNode;
   content?: string;
   confirmLabel?: string;
   cancelLabel?: string;
@@ -18,8 +21,11 @@ const ConfirmModal = ({
   onConfirm,
   onCancel,
 }: ConfirmModalProps) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+
   useScrollLock();
   useEscapeKey(onCancel);
+  useOutsideClick(contentRef, onCancel);
 
   return (
     <div
@@ -29,7 +35,10 @@ const ConfirmModal = ({
       aria-labelledby='confirm-modal-title'
       aria-describedby='confirm-modal-content'
     >
-      <div className='flex flex-col overflow-hidden rounded-[20px] bg-white px-7.5 py-6 w-77.5'>
+      <div
+        ref={contentRef}
+        className='flex flex-col overflow-hidden rounded-[20px] bg-white px-7.5 py-6 w-77.5'
+      >
         <p id='confirm-modal-title' className='text-center typo-body-9 mb-2'>
           {title}
         </p>
