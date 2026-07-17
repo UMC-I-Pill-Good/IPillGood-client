@@ -6,6 +6,9 @@ import { useState } from 'react';
 import BasicInfoStep from './info-step/BasicInfoStep';
 import { TextButton } from '@/shared/components';
 import LifestyleStep from './LifestyleStep';
+import HealthStateStep from './HealthStateStep';
+import HealthConcernStep from './HealthConcernStep';
+import SupplementStep from './SupplementStep';
 
 const SurveyContainer = () => {
   const router = useRouter();
@@ -38,6 +41,9 @@ const SurveyContainer = () => {
 
       {step === 1 && <BasicInfoStep />}
       {step === 2 && <LifestyleStep />}
+      {step === 3 && <HealthStateStep />}
+      {step === 4 && <HealthConcernStep />}
+      {step === 5 && <SupplementStep />}
 
       <TextButton
         type='button'
