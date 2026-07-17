@@ -5,12 +5,24 @@ import clsx from 'clsx';
 import { ChevronDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import DatePickerBottomSheet from './DatePickerBottomSheet';
+import { TextButton } from '@/shared/components';
 
 // 2026 ~ 1970
 const birthYearOptions = Array.from({ length: 2026 - 1970 + 1 }, (_, i) => 2026 - i);
 
 // 10 ~ 50
 const periodOptions = Array.from({ length: 50 - 10 + 1 }, (_, i) => 10 + i);
+
+const jobOptions = [
+  '사무직',
+  '전문직',
+  '서비스직',
+  '생산/기술직',
+  '자영업',
+  '학생',
+  '주부',
+  '기타',
+];
 
 const BasicInfoStep = () => {
   const [isYearOpen, setIsYearOpen] = useState(false);
@@ -28,6 +40,8 @@ const BasicInfoStep = () => {
     month: 6,
     day: 6,
   });
+
+  const [selectedJob, setSelectedJob] = useState('');
 
   const yearRef = useRef<HTMLDivElement>(null);
   const periodRef = useRef<HTMLDivElement>(null);
@@ -89,7 +103,7 @@ const BasicInfoStep = () => {
         </div>
       </section>
 
-      <section className='py-4 space-y-2'>
+      <section className='py-4 space-y-2 z-50'>
         <h5 className='typo-body-5'>
           2. 성별을 선택해주세요.<span className='text-semantic'>*</span>
         </h5>
@@ -146,7 +160,7 @@ const BasicInfoStep = () => {
             <p className='typo-body-10 mb-2'>
               여성 정보 <span className='text-neutral'>(선택 입력)</span>
             </p>
-            <div ref={periodRef} className='flex items-center justify-between relative mb-1.5'>
+            <div ref={periodRef} className='flex items-center justify-between relative mb-1.5 z-20'>
               <p className='typo-caption-2'>생리 주기</p>
               <button
                 type='button'
@@ -189,7 +203,34 @@ const BasicInfoStep = () => {
           </article>
         )}
       </section>
-      {isBeginOpen && <DatePickerBottomSheet />}
+
+      <section className='py-4 space-y-2 z-0'>
+        <h5 className='typo-body-5'>
+          3. 직군을 선택해주세요.<span className='text-semantic'>*</span>
+        </h5>
+
+        <div className='flex flex-wrap items-center gap-2 mt-3 z-10'>
+          {jobOptions.map((option) => (
+            <TextButton
+              key={option}
+              type='button'
+              text={option}
+              variant={selectedJob === option ? 'secondary' : 'assistive'}
+              size='sm'
+              className='px-4'
+              onClick={() => setSelectedJob(option)}
+            />
+          ))}
+        </div>
+      </section>
+
+      {isBeginOpen && (
+        <DatePickerBottomSheet
+          value={selectedDate}
+          onClose={() => setIsBeginOpen(false)}
+          onChange={setSelectedDate}
+        />
+      )}
     </div>
   );
 };

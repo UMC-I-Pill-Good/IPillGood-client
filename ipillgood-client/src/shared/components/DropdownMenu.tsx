@@ -26,7 +26,7 @@ const DropdownMenu = <T extends string | number>({
           type='button'
           onClick={() => onSelect(option)}
           className={cn(
-            'w-full text-center text-neutral py-1.5 transition hover:bg-primary-100 hover:text-black typo-body-10 rounded-t-lg',
+            'w-full text-center text-neutral py-1.5 transition hover:bg-primary-100 hover:text-black typo-body-10 rounded-t-lg z-50',
             option === value && 'text-black',
           )}
         >
