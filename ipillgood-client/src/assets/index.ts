@@ -17,3 +17,9 @@ export { default as NaverIcon } from './icons/naver.svg';
 export { default as ConditionVitalityIcon } from './icons/condition-vitality.svg';
 export { default as ConditionSleepIcon } from './icons/condition-sleep.svg';
 export { default as ConditionIntakeIcon } from './icons/condition-intake.svg';
+
+// home
+export { default as HeaderLogoIcon } from './icons/header-logo.svg';
+export { default as SupplementBottleIcon } from './icons/supplement-bottle.svg';
+export { default as CapsuleIcon } from './icons/capsule.svg';
+export { default as CapsuleGrayIcon } from './icons/capsule-gray.svg';

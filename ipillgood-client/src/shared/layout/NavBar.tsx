@@ -19,7 +19,7 @@ const menuList = [
   },
   {
     label: '홈',
-    href: '/',
+    href: '/home',
     icon: House,
   },
   {
@@ -41,8 +41,7 @@ export const NavBar = () => {
     <nav className='fixed bottom-0 left-1/2 z-50 w-full max-w-110 -translate-x-1/2 shadow-[0_-4px_4px_0_rgba(126,131,135,0.1)] bg-linear-to-b from-white/40 to-white/0 backdrop-blur-xl'>
       <ul className='flex h-18 items-center justify-between'>
         {menuList.map(({ label, href, icon: Icon }) => {
-          const isActive =
-            href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`);
+          const isActive = pathname === href || pathname.startsWith(`${href}/`);
 
           return (
             <li key={href} className='flex-1'>
