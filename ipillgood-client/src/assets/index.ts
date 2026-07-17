@@ -14,3 +14,8 @@ export { default as NaverIcon } from './icons/naver.svg';
 export { default as ManIcon } from './icons/survey/man.svg';
 export { default as WomanIcon } from './icons/survey/woman.svg';
 export { default as CalendarIcon } from './icons/survey/calendar.svg';
+export { default as SmokingIcon } from './icons/survey/smoking.svg';
+export { default as DrinkingIcon } from './icons/survey/drinking.svg';
+export { default as EatingHabitIcon } from './icons/survey/eating-habits.svg';
+export { default as WorkOutIcon } from './icons/survey/workout.svg';
+export { default as ConceiveIcon } from './icons/survey/conceive.svg';

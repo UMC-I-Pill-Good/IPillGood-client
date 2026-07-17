@@ -3,8 +3,9 @@
 import { useRouter } from 'next/navigation';
 import StepNavigation from './StepNavigation';
 import { useState } from 'react';
-import BasicInfoStep from './InfoStep/BasicInfoStep';
+import BasicInfoStep from './info-step/BasicInfoStep';
 import { TextButton } from '@/shared/components';
+import LifestyleStep from './LifestyleStep';
 
 const SurveyContainer = () => {
   const router = useRouter();
@@ -36,6 +37,7 @@ const SurveyContainer = () => {
       <StepNavigation step={step} onBack={handleBack} />
 
       {step === 1 && <BasicInfoStep />}
+      {step === 2 && <LifestyleStep />}
 
       <TextButton
         type='button'

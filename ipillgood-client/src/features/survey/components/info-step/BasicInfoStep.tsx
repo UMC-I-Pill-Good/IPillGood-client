@@ -3,7 +3,7 @@ import DropdownMenu from '@/shared/components/DropdownMenu';
 import { StepHeader } from '@/shared/layout';
 import clsx from 'clsx';
 import { ChevronDown } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import DatePickerBottomSheet from './DatePickerBottomSheet';
 import { TextButton } from '@/shared/components';
 import {
@@ -29,7 +29,7 @@ const BasicInfoStep = () => {
   const [selectedJob, setSelectedJob] = useState('');
 
   return (
-    <div
+    <section
       onClick={() => {
         setIsYearOpen(false);
         setIsPeriodOpen(false);
@@ -70,9 +70,9 @@ const BasicInfoStep = () => {
         </div>
       </section>
 
-      <section className='py-4 space-y-2'>
+      <section className='py-4 space-y-2 pb-8'>
         <h5 className='typo-body-5'>
-          2. 성별을 선택해주세요.<span className='text-semantic'>*</span>
+          2. 성별을 선택해주세요. <span className='text-semantic'>*</span>
         </h5>
 
         <article className='flex items-center gap-2'>
@@ -174,7 +174,7 @@ const BasicInfoStep = () => {
         )}
       </section>
 
-      <section className='py-4 space-y-2 z-0'>
+      <section className='pb-4 space-y-2'>
         <h5 className='typo-body-5'>3. 직군을 선택해주세요.</h5>
 
         <div className='flex flex-wrap items-center gap-2 mt-3'>
@@ -199,7 +199,7 @@ const BasicInfoStep = () => {
           onChange={setSelectedDate}
         />
       )}
-    </div>
+    </section>
   );
 };
 
