@@ -12,7 +12,7 @@ const RecommendedSupplementCard = ({ recommendation }: RecommendedSupplementCard
     // TODO: 영양제 성분 상세 페이지로 이동
     <Link
       href='/home'
-      className='flex items-center gap-3 bg-[#4680FE]/15 rounded-[20px] p-4 w-full '
+      className='flex items-center gap-3 rounded-[20px] p-4 w-full bg-linear-[175deg] from-[#4680FE]/10 from-70% to-[#4680FE]/16 backdrop-blur-md  shadow-[inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-2px_5px_rgba(126,131,135,0.07),0_2px_3px_rgba(126,131,135,0.1)]'
     >
       <Image
         width={45}
