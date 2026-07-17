@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { cn } from '@/shared/utils/cn';
 
 interface DropdownMenuProps<T extends string | number> {
   options: T[];
@@ -14,30 +14,26 @@ const DropdownMenu = <T extends string | number>({
   className,
 }: DropdownMenuProps<T>) => {
   return (
-    <ul
-      role='listbox'
-      className={clsx(
-        'absolute top-full left-0 z-10 mt-2 max-h-60 w-full overflow-y-auto rounded-xl border border-neutral-300 bg-white p-1 shadow-lg',
+    <div
+      className={cn(
+        'absolute top-full z-50 mt-1 max-h-50 no-center-glass rounded-lg border border-white bg-white/80 shadow-lg backdrop-blur-2xl divide-y divide-neutral-200 overflow-y-auto thin-scrollbar',
         className,
       )}
     >
       {options.map((option) => (
-        <li key={option}>
-          <button
-            type='button'
-            role='option'
-            aria-selected={value === option}
-            onClick={() => onSelect(option)}
-            className={clsx(
-              'flex w-full items-center rounded-lg px-3 py-2 text-left transition-colors',
-              value === option ? 'bg-primary/10 text-primary font-medium' : 'hover:bg-neutral-100',
-            )}
-          >
-            {option}
-          </button>
-        </li>
+        <button
+          key={option}
+          type='button'
+          onClick={() => onSelect(option)}
+          className={cn(
+            'w-full text-center text-neutral py-1.5 transition hover:bg-primary-100 hover:text-black typo-body-10 rounded-t-lg',
+            option === value && 'text-black',
+          )}
+        >
+          {option}
+        </button>
       ))}
-    </ul>
+    </div>
   );
 };
 

@@ -9,3 +9,8 @@ export { default as IdIcon } from './icons/id.svg';
 export { default as LockIcon } from './icons/lock.svg';
 export { default as KakaoIcon } from './icons/kakao.svg';
 export { default as NaverIcon } from './icons/naver.svg';
+
+/* survay */
+export { default as ManIcon } from './icons/survey/man.svg';
+export { default as WomanIcon } from './icons/survey/woman.svg';
+export { default as CalendarIcon } from './icons/survey/calendar.svg';
