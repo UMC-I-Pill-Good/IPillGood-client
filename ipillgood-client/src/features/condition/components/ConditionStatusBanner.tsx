@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import { MascotHeartIcon, MascotSearchIcon } from '@/assets';
 import { cn } from '@/shared/utils/cn';
 
 interface ConditionStatusBannerProps {
@@ -15,10 +15,6 @@ const ConditionStatusBanner = ({
     const title = isCompleted
         ? '이번 주 컨디션 체크 완료!'
         : '이번 주 컨디션 체크 미완료!';
-
-    const mascotSrc = isCompleted
-        ? '/icons/mascot-heart.svg'
-        : '/icons/mascot-search.svg';
 
     const bannerContent = (
         <>
@@ -60,15 +56,11 @@ const ConditionStatusBanner = ({
                         : 'right-[40px] h-[72.07px] w-[55px] -translate-y-1/2',
                 )}
             >
-                <Image
-                    src={mascotSrc}
-                    alt='I Pill Good Mascot'
-                    width={isCompleted ? 60 : 55}
-                    height={isCompleted ? 83 : 72}
-                    unoptimized
-                    draggable={false}
-                    className='block h-full w-full object-contain'
-                />
+                {isCompleted ? (
+                    <MascotHeartIcon className='block h-full w-full object-contain' />
+                ) : (
+                    <MascotSearchIcon className='block h-full w-full object-contain' />
+                )}
             </div>
         </>
     );
