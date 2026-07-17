@@ -19,14 +19,18 @@ const RankingSearchBar = ({
       value={value}
       onChange={onChange}
       placeholder='브랜드, 영양 성분을 검색해 보세요.'
+      className='ranking-search-glass gap-0 rounded-2xl text-primary-600 backdrop-blur-none'
+      inputClassName='min-w-0 px-1 typo-body-11 placeholder:text-neutral-800'
+      searchIconClassName='size-5'
+      searchIconSize={20}
       rightElement={
         <button
           type='button'
           aria-label='필터 열기'
-          className='inline-flex size-[26px] shrink-0 items-center justify-center text-primary-500'
+          className='inline-flex size-7 shrink-0 items-center justify-center text-primary-500'
           onClick={onFilterClick}
         >
-          <SlidersHorizontal size={26} aria-hidden='true' strokeWidth={2} />
+          <SlidersHorizontal aria-hidden='true' className='size-6' />
         </button>
       }
     />

@@ -35,7 +35,7 @@ const DropdownOptionMenu = <T extends string>({
             aria-selected={isSelected}
             className={cn(
               'flex h-8 w-full items-center justify-center gap-1 px-2 typo-caption-2',
-              isSelected ? 'text-[#111111]' : 'text-neutral-800',
+              isSelected ? 'text-black' : 'text-neutral-800',
               !isLast && 'border-b border-neutral-200',
             )}
             onClick={() => onSelect(option)}

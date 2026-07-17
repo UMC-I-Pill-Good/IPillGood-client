@@ -1,6 +1,6 @@
-import { ChevronRight, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { BadgeIcon } from '@/assets';
-import MedicineImage from '@/assets/icons/S오메가3.svg';
+import MedicineImage from '@/assets/icons/S오메가3.svg';
 import { cn } from '@/shared/utils/cn';
 
 interface RankingProductCardProps {
@@ -32,28 +32,28 @@ const RankingProductCard = ({
     : 'text-neutral-800';
 
   return (
-    <article className='relative flex h-[123px] w-full items-center gap-3 rounded-[20px] bg-primary-100/70 px-5 py-4 shadow-[4px_4px_12px_0_rgba(93,144,255,0.08)]'>
-      <div className='flex h-10 w-[34px] shrink-0 items-center justify-start'>
+    <article className='ranking-product-card relative flex w-full items-center gap-3 bg-primary-100/70 px-5 py-4 shadow-md'>
+      <div className='flex h-10 w-9 shrink-0 items-center justify-start'>
         {isTopRank ? (
           <div
             className={cn(
-              'flex h-10 shrink-0 items-center gap-[2px]',
+              'flex h-10 shrink-0 items-center gap-0.5',
               rankColor,
             )}
           >
             <BadgeIcon
               aria-hidden='true'
-              className='h-6 w-[14px] shrink-0 origin-center scale-[1.3] overflow-visible fill-current stroke-current'
+              className='h-6 w-3.5 shrink-0 origin-center scale-[1.3] overflow-visible'
             />
 
-            <span className='text-[20px] font-medium leading-none'>
+            <span className='typo-body-2 leading-none'>
               {rank}
             </span>
           </div>
         ) : (
           <span
             className={cn(
-              'w-full text-center text-[20px] font-medium leading-none',
+              'w-full text-center typo-body-2 leading-none',
               rankColor,
             )}
           >
@@ -62,44 +62,45 @@ const RankingProductCard = ({
         )}
       </div>
 
-      <div className='flex h-[70px] w-[43px] shrink-0 items-center justify-center'>
+      <div className='ranking-medicine-image flex shrink-0 items-center justify-center overflow-visible'>
         <MedicineImage
           aria-hidden='true'
-          className='h-[70px] w-[43px] object-contain'
+          className='ranking-medicine-image overflow-visible object-contain'
         />
       </div>
 
-      <div className='flex min-w-0 flex-1 flex-col pr-16'>
-        <p className='truncate typo-caption-2 text-neutral-800'>
-          {brand}
-        </p>
+      <div className='flex min-w-0 flex-1 flex-col gap-2 pr-16'>
+        <div className='flex flex-col gap-1'>
+          <p className='truncate typo-caption-2 text-neutral-800'>
+            {brand}
+          </p>
 
-        <h3 className='mt-1 truncate typo-body-5 text-[#111111]'>
-          {name}
-        </h3>
+          <h3 className='truncate typo-body-5 text-black'>
+            {name}
+          </h3>
 
-        <div className='mt-2 flex items-center gap-1 typo-caption-3 text-neutral-800'>
-          <Star
-            aria-hidden='true'
-            className='size-[14px] shrink-0 fill-primary-500 text-primary-500'
-          />
+          <div className='flex items-center gap-1 typo-caption-3 text-neutral-800'>
+            <Star
+              aria-hidden='true'
+              className='size-3.5 shrink-0 fill-primary-500 text-primary-500'
+            />
 
-          <span className='whitespace-nowrap'>
-            {rating.toFixed(1)} ({reviewCount.toLocaleString('ko-KR')})
-          </span>
+            <span className='whitespace-nowrap'>
+              {rating.toFixed(1)} ({reviewCount.toLocaleString('ko-KR')})
+            </span>
+          </div>
         </div>
 
-        <span className='mt-[10px] inline-flex h-6 w-fit items-center rounded-full bg-point-700 px-3 typo-caption-6 text-white'>
+        <span className='inline-flex h-6 w-fit items-center rounded-full bg-point-700 px-3 typo-caption-6 text-white'>
           {tag}
         </span>
       </div>
 
       <button
         type='button'
-        className='absolute right-5 top-4 inline-flex items-center gap-1 whitespace-nowrap typo-caption-3 text-neutral-800'
+        className='absolute right-5 top-4 inline-flex items-center whitespace-nowrap typo-caption-3 text-neutral-800'
       >
         더보기
-        <ChevronRight aria-hidden='true' className='size-4' />
       </button>
     </article>
   );

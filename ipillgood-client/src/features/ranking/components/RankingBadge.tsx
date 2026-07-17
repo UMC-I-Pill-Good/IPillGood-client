@@ -19,24 +19,24 @@ const RankingBadge = ({ rank }: RankingBadgeProps) => {
 
   return (
     <div
-      className='flex h-5 w-6 shrink-0 items-center justify-start'
+      className='flex h-6 w-6 shrink-0 items-center justify-center'
       aria-label={`${rank}위`}
     >
       {isTopRank ? (
-        <div className={cn('flex h-5 items-center gap-0.5', rankColor)}>
-          <span className='flex h-5 w-5 shrink-0 items-center justify-center overflow-visible'>
+        <div className={cn('flex h-6 items-center justify-center', rankColor)}>
+          <span className='-mr-2 flex shrink-0 items-center justify-center overflow-visible'>
             <BadgeIcon
               aria-hidden='true'
-              className='block h-5 w-5 shrink-0 overflow-visible [&_path]:fill-current [&_path]:stroke-current'
+              className='ranking-badge-mark block shrink-0 overflow-visible'
             />
           </span>
 
-          <span className='flex h-6 min-w-[11px] items-center justify-center text-[20px] font-medium leading-none'>
+          <span className='flex h-6 min-w-3 items-center justify-center text-xl font-medium leading-none'>
             {rank}
           </span>
         </div>
       ) : (
-        <span className='flex h-6 w-full items-center justify-center text-[20px] font-medium leading-none text-neutral-800'>
+        <span className='flex h-6 w-full items-center justify-center text-xl font-medium leading-none text-neutral-800'>
           {rank}
         </span>
       )}

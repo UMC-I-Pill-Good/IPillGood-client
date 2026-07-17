@@ -52,7 +52,7 @@ const SupplementFilterBar = () => {
                     ? selectedHealthConcern
                     : '전체'}
                 </span>
-                <ChevronDown size={16} className='text-neutral-800' aria-hidden='true' />
+                <ChevronDown className='size-4 text-neutral-800' aria-hidden='true' />
               </span>
             </button>
             {isHealthConcernFilter && isHealthConcernOpen && (
@@ -60,7 +60,7 @@ const SupplementFilterBar = () => {
                 options={HEALTH_CONCERN_OPTIONS}
                 selectedOption={selectedHealthConcern}
                 onSelect={handleSelectHealthConcern}
-                className='left-0 right-auto w-[130px]'
+                className='left-0 right-auto w-32'
               />
             )}
           </div>

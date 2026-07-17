@@ -62,7 +62,7 @@ const RankingPageContent = () => {
   };
 
   return (
-    <main className='flex min-h-dvh w-full flex-col overflow-x-hidden pb-[98px]'>
+    <main className='flex min-h-dvh w-full flex-col overflow-x-hidden pb-24'>
       <section className='px-5 pb-4 pt-4'>
         <RankingSearchBar value={searchValue} onChange={setSearchValue} />
       </section>
@@ -80,7 +80,7 @@ const RankingPageContent = () => {
             onSortChange={setSelectedSort}
           />
           {message ? (
-            <section className='flex min-h-[123px] w-full items-center justify-center rounded-[20px] bg-white/50 px-5 py-8 typo-caption-2 text-neutral-800'>
+            <section className='flex min-h-32 w-full items-center justify-center rounded-2xl bg-white/50 px-5 py-8 typo-caption-2 text-neutral-800'>
               {message}
             </section>
           ) : (

@@ -18,7 +18,7 @@ const RecentSearches = ({
   return (
     <section className='flex w-full flex-col gap-2 px-5 py-4'>
       <div className='flex w-full items-center justify-between'>
-        <h2 className='typo-caption-1 text-[#111111]'>최근 검색어</h2>
+        <h2 className='typo-caption-1 text-black'>최근 검색어</h2>
         <button
           type='button'
           className='typo-caption-7 text-neutral-800'
@@ -40,10 +40,10 @@ const RecentSearches = ({
             <button
               type='button'
               aria-label={`${searchTerm} 최근 검색어 삭제`}
-              className='inline-flex size-[15px] shrink-0 items-center justify-center text-neutral-800'
+              className='inline-flex size-4 shrink-0 items-center justify-center text-neutral-800'
               onClick={() => onRemove(searchTerm)}
             >
-              <X size={15} aria-hidden='true' strokeWidth={2} />
+              <X aria-hidden='true' className='size-4' />
             </button>
           </div>
         ))}
