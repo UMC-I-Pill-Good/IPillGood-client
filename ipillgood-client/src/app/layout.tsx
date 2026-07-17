@@ -2,6 +2,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import { Metadata } from 'next';
 import { QueryProvider } from '@/app/_providers/QueryProvider';
+import { NavBar } from '@/shared/layout';
 
 export const metadata: Metadata = {
   title: 'I Pill Good',
@@ -30,7 +31,12 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body className={`${pretendard.variable} ${dmSans.variable} antialiased`}>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <div className='mx-auto min-h-dvh w-full max-w-110 bg-background'>
+            {children}
+            <NavBar />
+          </div>
+        </QueryProvider>
       </body>
     </html>
   );

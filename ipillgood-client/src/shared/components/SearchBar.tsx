@@ -1,16 +1,23 @@
 'use client';
 
-import { Search, X } from 'lucide-react';
-import { KeyboardEvent } from 'react';
+import { Search } from 'lucide-react';
+import { KeyboardEvent, ReactNode } from 'react';
 
 interface SearchBarProps {
   value: string;
   onChange: (value: string) => void;
   onSearch?: () => void;
   placeholder: string;
+  rightElement?: ReactNode;
 }
 
-export const SearchBar = ({ value, onChange, onSearch, placeholder }: SearchBarProps) => {
+export const SearchBar = ({
+  value,
+  onChange,
+  onSearch,
+  placeholder,
+  rightElement,
+}: SearchBarProps) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter' || e.nativeEvent.isComposing) return; // IME 조합 중 엔터 오작동 방지
     if (!value.trim()) return;
@@ -18,26 +25,17 @@ export const SearchBar = ({ value, onChange, onSearch, placeholder }: SearchBarP
   };
 
   return (
-    <div className='flex gap-1 h-12 w-full items-center justify-between rounded-[10px] border border-white bg-white/70 px-3 py-3 backdrop-blur-xs text-[#4680FE]'>
-      <Search size={28} aria-hidden='true' />
+    <div className='ranking-search-glass flex h-[50px] w-full items-center justify-between rounded-[16px] px-3 py-3 text-primary-600'>
+      <Search size={20} aria-hidden='true' className='shrink-0' />
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         aria-label={placeholder}
-        className='flex-1 bg-transparent typo-body-2 outline-none placeholder:text-neutral-500'
+        className='min-w-0 flex-1 bg-transparent px-1 typo-body-11 outline-none placeholder:text-neutral-800'
       />
-      {value.trim() && (
-        <button
-          type='button'
-          onClick={() => onChange('')}
-          aria-label='검색어 지우기'
-          className='cursor-pointer'
-        >
-          <X size={24} className='text-neutral-800' />
-        </button>
-      )}
+      {rightElement}
     </div>
   );
 };
