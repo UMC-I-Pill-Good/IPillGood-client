@@ -1,6 +1,6 @@
 'use client';
 
-import { X } from 'lucide-react';
+import CrossSmallIcon from '@/assets/icons/fi-rr-cross-small.svg';
 
 interface RecentSearchesProps {
   searches: string[];
@@ -16,7 +16,7 @@ const RecentSearches = ({
   if (searches.length === 0) return null;
 
   return (
-    <section className='flex w-full flex-col gap-2 px-5 py-4'>
+    <section className='flex w-full flex-col gap-1 px-5 pb-4 pt-2'>
       <div className='flex w-full items-center justify-between'>
         <h2 className='typo-caption-1 text-black'>최근 검색어</h2>
         <button
@@ -43,7 +43,7 @@ const RecentSearches = ({
               className='inline-flex size-4 shrink-0 items-center justify-center text-neutral-800'
               onClick={() => onRemove(searchTerm)}
             >
-              <X aria-hidden='true' className='size-4' />
+              <CrossSmallIcon aria-hidden='true' className='size-4' />
             </button>
           </div>
         ))}

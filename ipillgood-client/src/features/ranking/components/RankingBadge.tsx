@@ -7,8 +7,8 @@ interface RankingBadgeProps {
 
 const rankColorClassName: Record<number, string> = {
   1: 'text-primary-600',
-  2: 'text-point-900',
-  3: 'text-secondary-800',
+  2: 'text-[#92E4C2]',
+  3: 'text-secondary-600',
 };
 
 const RankingBadge = ({ rank }: RankingBadgeProps) => {
@@ -19,24 +19,28 @@ const RankingBadge = ({ rank }: RankingBadgeProps) => {
 
   return (
     <div
-      className='flex h-6 w-6 shrink-0 items-center justify-center'
+      className='ranking-badge-container flex shrink-0 items-center justify-center overflow-visible'
       aria-label={`${rank}위`}
     >
       {isTopRank ? (
-        <div className={cn('flex h-6 items-center justify-center', rankColor)}>
-          <span className='-mr-2 flex shrink-0 items-center justify-center overflow-visible'>
+        <div
+          className={cn(
+            'flex items-center justify-center overflow-visible',
+            rankColor,
+          )}
+        >
+          <span className='relative mr-[-0.1875rem] size-[1.1875rem] shrink-0 overflow-visible'>
             <BadgeIcon
               aria-hidden='true'
-              className='ranking-badge-mark block shrink-0 overflow-visible'
+              className='ranking-badge-mark absolute left-[29.17%] top-[8.33%] block overflow-visible'
             />
           </span>
-
-          <span className='flex h-6 min-w-3 items-center justify-center text-xl font-medium leading-none'>
+          <span className='shrink-0 typo-body-2 leading-normal'>
             {rank}
           </span>
         </div>
       ) : (
-        <span className='flex h-6 w-full items-center justify-center text-xl font-medium leading-none text-neutral-800'>
+        <span className='flex size-full items-center justify-center typo-body-2 leading-normal text-neutral-800'>
           {rank}
         </span>
       )}

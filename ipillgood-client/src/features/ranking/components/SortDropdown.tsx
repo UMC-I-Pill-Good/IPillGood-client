@@ -1,7 +1,7 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import DropdownIcon from '@/assets/icons/dropdown.svg';
 import {
   RANKING_UI_SORT_LABELS,
   RANKING_UI_SORT_OPTIONS,
@@ -51,14 +51,14 @@ const SortDropdown = ({ selectedSort, onSortChange }: SortDropdownProps) => {
     <div ref={dropdownRef} className='relative shrink-0'>
       <button
         type='button'
-        className='ranking-control-glass inline-flex h-8 w-28 shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-lg p-2 typo-caption-2 text-neutral-800'
+        className='ranking-control-glass inline-flex h-8 shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-lg p-2 typo-caption-2 text-neutral-800'
         aria-label='정렬 방식'
         aria-haspopup='listbox'
         aria-expanded={isOpen}
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <span>{RANKING_UI_SORT_LABELS[selectedSort]}</span>
-        <ChevronDown aria-hidden='true' className='size-6' />
+        <DropdownIcon aria-hidden='true' className='size-6' />
       </button>
       {isOpen && (
         <DropdownOptionMenu
@@ -66,7 +66,7 @@ const SortDropdown = ({ selectedSort, onSortChange }: SortDropdownProps) => {
           getOptionLabel={(option) => RANKING_UI_SORT_LABELS[option]}
           selectedOption={selectedSort}
           onSelect={handleSelect}
-          className='w-28'
+          className='min-w-full'
         />
       )}
     </div>

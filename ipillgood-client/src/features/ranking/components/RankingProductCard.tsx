@@ -1,5 +1,5 @@
-import { Star } from 'lucide-react';
 import { BadgeIcon } from '@/assets';
+import RatingStarIcon from '@/assets/icons/fi-rr-star.svg';
 import MedicineImage from '@/assets/icons/S오메가3.svg';
 import { cn } from '@/shared/utils/cn';
 
@@ -80,9 +80,9 @@ const RankingProductCard = ({
           </h3>
 
           <div className='flex items-center gap-1 typo-caption-3 text-neutral-800'>
-            <Star
+            <RatingStarIcon
               aria-hidden='true'
-              className='size-3.5 shrink-0 fill-primary-500 text-primary-500'
+              className='size-3.5 shrink-0'
             />
 
             <span className='whitespace-nowrap'>

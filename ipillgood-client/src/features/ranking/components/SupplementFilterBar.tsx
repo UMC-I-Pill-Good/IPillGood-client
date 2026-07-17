@@ -1,7 +1,7 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
+import DropdownIcon from '@/assets/icons/dropdown.svg';
 import DropdownOptionMenu from './DropdownOptionMenu';
 
 const FILTERS = ['연령대', '성별', '식약처 인증', '성분', '건강 고민'] as const;
@@ -52,7 +52,7 @@ const SupplementFilterBar = () => {
                     ? selectedHealthConcern
                     : '전체'}
                 </span>
-                <ChevronDown className='size-4 text-neutral-800' aria-hidden='true' />
+                <DropdownIcon className='size-4' aria-hidden='true' />
               </span>
             </button>
             {isHealthConcernFilter && isHealthConcernOpen && (
