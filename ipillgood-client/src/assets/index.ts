@@ -9,3 +9,9 @@ export { default as IdIcon } from './icons/id.svg';
 export { default as LockIcon } from './icons/lock.svg';
 export { default as KakaoIcon } from './icons/kakao.svg';
 export { default as NaverIcon } from './icons/naver.svg';
+
+// home
+export { default as HeaderLogoIcon } from './icons/header-logo.svg';
+export { default as SupplementBottleIcon } from './icons/supplement-bottle.svg';
+export { default as CapsuleIcon } from './icons/capsule.svg';
+export { default as CapsuleGrayIcon } from './icons/capsule-gray.svg';
