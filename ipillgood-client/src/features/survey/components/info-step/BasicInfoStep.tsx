@@ -11,12 +11,14 @@ import {
   jobOptions,
   periodOptions,
 } from '@/features/survey/constants/survey.constants';
+import { useAtom } from 'jotai';
+import { genderAtom } from '../../atoms/survey.atom';
 
 const BasicInfoStep = () => {
   const [isYearOpen, setIsYearOpen] = useState(false);
   const [year, setYear] = useState(2026);
 
-  const [gender, setGender] = useState<'woman' | 'man' | null>(null);
+  const [gender, setGender] = useAtom(genderAtom);
   const [isPeriodOpen, setIsPeriodOpen] = useState(false);
   const [isBeginOpen, setIsBeginOpen] = useState(false);
   const [period, setPeriod] = useState(30);
