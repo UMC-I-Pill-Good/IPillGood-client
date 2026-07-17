@@ -109,7 +109,7 @@ const graphLinePoints = [
 ].join(' ');
 
 const ConditionGraphSection = () => {
-    const graphCardRef = useRef<HTMLDivElement>(null);
+    const [graphCardElement, setGraphCardElement] = useState<HTMLDivElement | null>(null);
 
     const [selectedPointIndex, setSelectedPointIndex] =
         useState<number | null>(null);
@@ -136,7 +136,7 @@ const ConditionGraphSection = () => {
                     </h2>
 
                     <div
-                        ref={graphCardRef}
+                        ref={setGraphCardElement}
                         className='relative h-[258px] w-full overflow-hidden rounded-[20px] border border-white bg-white/70 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] backdrop-blur-xl'
                     >
                         <div className='absolute left-1/2 top-[11px] flex h-6 w-[283px] -translate-x-1/2 items-center justify-between'>
@@ -289,7 +289,7 @@ const ConditionGraphSection = () => {
 
             {selectedPoint && (
                 <ConditionWeekDetailModal
-                    anchorElement={graphCardRef.current}
+                    anchorElement={graphCardElement}
                     month={CURRENT_MONTH}
                     weekLabel={selectedPoint.weekLabel}
                     vitality={selectedPoint.vitality}

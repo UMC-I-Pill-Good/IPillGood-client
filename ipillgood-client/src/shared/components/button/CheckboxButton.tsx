@@ -12,7 +12,7 @@ const checkboxButtonVariants = cva(
         lg: 'h-5 w-5',
       },
       checked: {
-        true: 'border-primary-500 bg-primary-500 text-white',
+        true: 'border-primary-500 bg-primary-600 text-white',
         false: 'border-neutral-800 bg-white text-transparent hover:bg-neutral-300',
       },
     },

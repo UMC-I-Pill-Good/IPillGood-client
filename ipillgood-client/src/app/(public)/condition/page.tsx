@@ -2,6 +2,7 @@ import ConditionGraphSection from '@/features/condition/components/ConditionGrap
 import ConditionHealthStatusSection from '@/features/condition/components/ConditionHealthStatusSection';
 import ConditionStatusBanner from '@/features/condition/components/ConditionStatusBanner';
 import ConditionSummarySection from '@/features/condition/components/ConditionSummarySection';
+import { NavBar } from '@/shared/layout';
 
 const ConditionCheckPage = () => {
   return (
@@ -11,6 +12,7 @@ const ConditionCheckPage = () => {
       <ConditionSummarySection />
 
       <ConditionHealthStatusSection href='/condition/health-status' />
+      <NavBar />
 
     </main>
   );

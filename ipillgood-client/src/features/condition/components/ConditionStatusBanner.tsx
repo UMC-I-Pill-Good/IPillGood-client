@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface ConditionStatusBannerProps {
     isCompleted?: boolean;
 }
@@ -25,10 +27,12 @@ const ConditionStatusBanner = ({
                 </div>
 
                 <div className='pointer-events-none relative z-10 h-[70px] w-[54px] shrink-0 -translate-x-1'>
-                    <img
+                    <Image
                         src='/icons/mascot-default.svg'
-                        alt=''
-                        aria-hidden='true'
+                        alt='마스코트 이미지'
+                        width={54}
+                        height={70}
+                        unoptimized
                         draggable={false}
                         className='block h-full w-full origin-center rotate-[2deg] object-contain drop-shadow-[0_4px_10px_rgba(126,131,135,0.2)]'
                     />
