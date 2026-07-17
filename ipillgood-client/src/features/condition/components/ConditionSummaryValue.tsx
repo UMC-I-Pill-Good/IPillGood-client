@@ -13,7 +13,7 @@ const ConditionSummaryValue = ({
 }: ConditionSummaryValueProps) => {
     if (type === 'sleep') {
         return (
-            <>
+            <div className='flex items-center justify-center'>
                 <span className='typo-caption-2'>
                     {value}
                 </span>
@@ -21,42 +21,42 @@ const ConditionSummaryValue = ({
                 <span className='ml-1 font-[var(--font-dm-sans)] typo-caption-7'>
                      h
                 </span>
-            </>
+            </div>
         );
     }
 
     if (type === 'intake') {
         return (
-            <>
+            <div className='flex items-center justify-center'>
                 <span className='typo-caption-2'>
                     {value}
                 </span>
 
-                <span className='mx-1 text-[10px] font-medium leading-[150%] tracking-[-0.011em]'>
+                <span className='mx-1 text-[10px] font-medium leading-[150%] tracking-[-0.011em] text-neutral-500'>
                     /
                 </span>
 
                 <span className='typo-caption-7'>
-                    {total} 일
+                    {total}일
                 </span>
-            </>
+            </div>
         );
     }
 
     return (
-        <>
+        <div className='flex items-center justify-center'>
             <span className='typo-caption-2'>
                 {value}
             </span>
 
-            <span className='mx-1 text-[10px] font-medium leading-[150%] tracking-[-0.011em]'>
+            <span className='mx-1 text-[10px] font-medium leading-[150%] tracking-[-0.011em] text-neutral-500'>
                 /
             </span>
 
             <span className='typo-caption-7'>
                 {total}
             </span>
-        </>
+        </div>
     );
 };
 

@@ -6,7 +6,7 @@ import ConditionSummarySection from '@/features/condition/components/ConditionSu
 const ConditionCheckPage = () => {
   return (
     <main className='min-h-dvh bg-background'>
-      <ConditionStatusBanner />
+      <ConditionStatusBanner isCompleted={false} />
       <ConditionGraphSection />
       <ConditionSummarySection />
 
