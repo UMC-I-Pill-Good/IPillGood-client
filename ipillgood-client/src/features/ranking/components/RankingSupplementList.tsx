@@ -8,7 +8,7 @@ interface RankingSupplementListProps {
 const RankingSupplementList = ({ items }: RankingSupplementListProps) => {
   if (items.length === 0) {
     return (
-      <section className='flex min-h-[123px] w-full items-center justify-center rounded-[20px] bg-white/50 px-5 py-8 typo-caption-2 text-neutral-800'>
+      <section className='flex min-h-32 w-full items-center justify-center rounded-2xl bg-white/50 px-5 py-8 typo-caption-2 text-neutral-800'>
         검색 결과가 없습니다.
       </section>
     );

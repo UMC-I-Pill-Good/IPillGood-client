@@ -1,7 +1,8 @@
 'use client';
 
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { KeyboardEvent, ReactNode } from 'react';
+import { cn } from '@/shared/utils/cn';
 
 interface SearchBarProps {
   value: string;
@@ -9,6 +10,10 @@ interface SearchBarProps {
   onSearch?: () => void;
   placeholder: string;
   rightElement?: ReactNode;
+  className?: string;
+  inputClassName?: string;
+  searchIconClassName?: string;
+  searchIconSize?: number;
 }
 
 export const SearchBar = ({
@@ -17,6 +22,10 @@ export const SearchBar = ({
   onSearch,
   placeholder,
   rightElement,
+  className,
+  inputClassName,
+  searchIconClassName,
+  searchIconSize = 28,
 }: SearchBarProps) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter' || e.nativeEvent.isComposing) return; // IME 조합 중 엔터 오작동 방지
@@ -25,17 +34,39 @@ export const SearchBar = ({
   };
 
   return (
-    <div className='ranking-search-glass flex h-[50px] w-full items-center justify-between rounded-[16px] px-3 py-3 text-primary-600'>
-      <Search size={20} aria-hidden='true' className='shrink-0' />
+    <div
+      className={cn(
+        'flex h-12 w-full items-center justify-between gap-1 rounded-[10px] border border-white bg-white/70 px-3 py-3 text-[#4680FE] backdrop-blur-xs',
+        className,
+      )}
+    >
+      <Search
+        size={searchIconSize}
+        aria-hidden='true'
+        className={cn('shrink-0', searchIconClassName)}
+      />
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         aria-label={placeholder}
-        className='min-w-0 flex-1 bg-transparent px-1 typo-body-11 outline-none placeholder:text-neutral-800'
+        className={cn(
+          'flex-1 bg-transparent typo-body-2 outline-none placeholder:text-neutral-500',
+          inputClassName,
+        )}
       />
-      {rightElement}
+      {rightElement ??
+        (value.trim() && (
+          <button
+            type='button'
+            onClick={() => onChange('')}
+            aria-label='검색어 지우기'
+            className='cursor-pointer'
+          >
+            <X size={24} className='text-neutral-800' />
+          </button>
+        ))}
     </div>
   );
 };

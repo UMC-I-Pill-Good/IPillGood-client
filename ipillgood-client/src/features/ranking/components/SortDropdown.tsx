@@ -58,7 +58,7 @@ const SortDropdown = ({ selectedSort, onSortChange }: SortDropdownProps) => {
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <span>{RANKING_UI_SORT_LABELS[selectedSort]}</span>
-        <ChevronDown size={24} aria-hidden='true' />
+        <ChevronDown aria-hidden='true' className='size-6' />
       </button>
       {isOpen && (
         <DropdownOptionMenu
