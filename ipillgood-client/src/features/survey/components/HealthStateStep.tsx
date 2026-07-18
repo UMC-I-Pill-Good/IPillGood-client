@@ -28,7 +28,9 @@ const HealthStateStep = () => {
           <section key={question.id} className='space-y-2'>
             <h5 className='typo-body-5 ml-1'>
               {index + 1}. {question.title}{' '}
-              <span className='text-neutral typo-body-11'>(복수 선택 가능)</span>
+              <span className='text-neutral typo-body-11'>
+                (복수 선택 가능) <span className='text-semantic'>*</span>
+              </span>
             </h5>
 
             <div className='flex flex-wrap gap-2 mt-2'>

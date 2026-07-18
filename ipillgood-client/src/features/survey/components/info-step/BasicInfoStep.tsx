@@ -1,5 +1,5 @@
 import { CalendarIcon, ManIcon, WomanIcon } from '@/assets';
-import DropdownMenu from '@/shared/components/DropdownMenu';
+import DropdownMenu from '@/features/survey/components/info-step/DropdownMenu';
 import { StepHeader } from '@/shared/layout';
 import clsx from 'clsx';
 import { ChevronDown } from 'lucide-react';
@@ -12,7 +12,7 @@ import {
   periodOptions,
 } from '@/features/survey/constants/basicInfo.constants';
 import { useAtom } from 'jotai';
-import { genderAtom } from '../../atoms/survey.atom';
+import { genderAtom } from '@/features/survey/atoms/survey.atom';
 
 const BasicInfoStep = () => {
   const [isYearOpen, setIsYearOpen] = useState(false);
@@ -83,9 +83,9 @@ const BasicInfoStep = () => {
             onClick={() => setGender('woman')}
             className={clsx(
               'group flex flex-1 flex-col items-center justify-center gap-2 rounded-[20px] border no-center-glass h-33 transition',
-              'hover:border-secondary/0 hover:bg-secondary/30 active:bg-secondary/50',
+              'hover:border-transparent hover:bg-secondary/50 active:bg-secondary/70',
               gender === 'woman'
-                ? 'border-secondary/0 bg-secondary/30'
+                ? 'border-transparent bg-secondary/50'
                 : 'bg-white/50 border-white',
             )}
           >
@@ -106,8 +106,8 @@ const BasicInfoStep = () => {
             onClick={() => setGender('man')}
             className={clsx(
               'group flex flex-1 flex-col items-center justify-center gap-2 rounded-[20px] border no-center-glass h-33 transition',
-              'hover:border-transparent hover:bg-secondary/30 active:bg-secondary/50',
-              gender === 'man' ? 'border-secondary/0 bg-secondary/30' : 'bg-white/50 border-white',
+              'hover:border-transparent hover:bg-secondary/50 active:bg-secondary/70',
+              gender === 'man' ? 'border-transparent bg-secondary/50' : 'bg-white/50 border-white',
             )}
           >
             <div
@@ -194,13 +194,12 @@ const BasicInfoStep = () => {
         </div>
       </section>
 
-      {isBeginOpen && (
-        <DatePickerBottomSheet
-          value={selectedDate}
-          onClose={() => setIsBeginOpen(false)}
-          onChange={setSelectedDate}
-        />
-      )}
+      <DatePickerBottomSheet
+        open={isBeginOpen}
+        value={selectedDate}
+        onOpenChange={setIsBeginOpen}
+        onChange={setSelectedDate}
+      />
     </section>
   );
 };

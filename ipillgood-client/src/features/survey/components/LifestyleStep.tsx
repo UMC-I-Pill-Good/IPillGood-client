@@ -36,8 +36,7 @@ const LifestyleStep = () => {
               {/* Content */}
               <div className='flex flex-col gap-2'>
                 <h5 className='typo-body-6'>
-                  {index + 1}. {title}
-                  {required && <span className='text-semantic'>*</span>}
+                  {index + 1}.{title} {required && <span className='text-semantic'>*</span>}
                 </h5>
 
                 <div className='flex flex-wrap items-center gap-2'>

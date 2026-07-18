@@ -1,15 +1,21 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { WheelSelectDate } from './WeelSelectDate';
 import { DateValue } from '@/features/survey/types/survey';
 import { monthOptions, yearOptions } from '@/features/survey/constants/basicInfo.constants';
+import { BottomSheet } from '@/shared/components';
+import { WheelSelectDate } from './WeelSelectDate';
 
 interface DatePickerBottomSheetProps {
+  open: boolean;
   value: DateValue;
-  onClose: () => void;
+  onOpenChange: (open: boolean) => void;
   onChange: (date: DateValue) => void;
 }
 
-const DatePickerBottomSheet = ({ value, onClose, onChange }: DatePickerBottomSheetProps) => {
+const DatePickerBottomSheet = ({
+  open,
+  value,
+  onOpenChange,
+  onChange,
+}: DatePickerBottomSheetProps) => {
   const getDaysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate();
 
   const dayOptions = Array.from(
@@ -27,42 +33,18 @@ const DatePickerBottomSheet = ({ value, onClose, onChange }: DatePickerBottomShe
     onChange({ ...value, month, day: Math.min(value.day, maxDay) });
   };
 
-  const handleDayChange = (day: number) => {
-    onChange({ ...value, day });
-  };
-
   return (
-    <div className='fixed inset-0 z-50 bg-black/30' onClick={onClose}>
-      <AnimatePresence>
-        <motion.div
-          className='absolute bottom-0 left-0 right-0 max-w-110 mx-auto w-full rounded-t-4xl bg-white pb-8 shadow-[0_-4px_20px_rgba(126,131,135,0.20)]'
-          initial={{ y: '100%' }}
-          animate={{ y: 0 }}
-          exit={{ y: '100%' }}
-          transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* 핸들 바 - 클릭하면 닫힘 */}
-          <button
-            type='button'
-            onClick={onClose}
-            className='mx-auto flex py-2.5 w-full items-center justify-center'
-          >
-            <div className='h-1 w-38 rounded-full bg-neutral-500' />
-          </button>
-
-          <div className='flex items-stretch gap-4 px-5 mt-6'>
-            <WheelSelectDate options={yearOptions} value={value.year} onChange={handleYearChange} />
-            <WheelSelectDate
-              options={monthOptions}
-              value={value.month}
-              onChange={handleMonthChange}
-            />
-            <WheelSelectDate options={dayOptions} value={value.day} onChange={handleDayChange} />
-          </div>
-        </motion.div>
-      </AnimatePresence>
-    </div>
+    <BottomSheet open={open} onOpenChange={onOpenChange}>
+      <div className='mt-6 flex items-stretch gap-4'>
+        <WheelSelectDate options={yearOptions} value={value.year} onChange={handleYearChange} />
+        <WheelSelectDate options={monthOptions} value={value.month} onChange={handleMonthChange} />
+        <WheelSelectDate
+          options={dayOptions}
+          value={value.day}
+          onChange={(day) => onChange({ ...value, day })}
+        />
+      </div>
+    </BottomSheet>
   );
 };
 
