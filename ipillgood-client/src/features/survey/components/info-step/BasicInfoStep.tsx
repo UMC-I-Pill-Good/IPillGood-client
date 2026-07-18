@@ -106,7 +106,7 @@ const BasicInfoStep = () => {
             onClick={() => setGender('man')}
             className={clsx(
               'group flex flex-1 flex-col items-center justify-center gap-2 rounded-[20px] border no-center-glass h-33 transition',
-              'hover:border-secondary/0 hover:bg-secondary/30 active:bg-secondary/50',
+              'hover:border-transparent hover:bg-secondary/30 active:bg-secondary/50',
               gender === 'man' ? 'border-secondary/0 bg-secondary/30' : 'bg-white/50 border-white',
             )}
           >

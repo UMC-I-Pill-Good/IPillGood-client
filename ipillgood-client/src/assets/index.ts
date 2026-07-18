@@ -22,6 +22,20 @@ export { default as DrinkingIcon } from './icons/survey/drinking.svg';
 export { default as EatingHabitIcon } from './icons/survey/eating-habits.svg';
 export { default as WorkOutIcon } from './icons/survey/workout.svg';
 export { default as ConceiveIcon } from './icons/survey/conceive.svg';
+export { default as FatigueIcon } from './icons/survey/fatigue.svg';
+export { default as ImmunityIcon } from './icons/survey/immunity.svg';
+export { default as SleepIcon } from './icons/survey/sleep.svg';
+export { default as GutHealthIcon } from './icons/survey/guthealth.svg';
+export { default as SkinHealthIcon } from './icons/survey/skin.svg';
+export { default as WeightManagementIcon } from './icons/survey/weight.svg';
+export { default as EyeHealthIcon } from './icons/survey/eyehealth.svg';
+export { default as BoneJointIcon } from './icons/survey/bone.svg';
+export { default as CardiovascularIcon } from './icons/survey/cardiovascular.svg';
+export { default as StressIcon } from './icons/survey/stress.svg';
+export { default as AntioxidantIcon } from './icons/survey/antioxidant.svg';
+export { default as HairHealthIcon } from './icons/survey/hair.svg';
+export { default as WomenHealthIcon } from './icons/survey/womenhealth.svg';
+export { default as ExercisePerformanceIcon } from './icons/survey/exercise.svg';
 
 /* condition */
 export { default as ConditionVitalityIcon } from './icons/condition-vitality.svg';
