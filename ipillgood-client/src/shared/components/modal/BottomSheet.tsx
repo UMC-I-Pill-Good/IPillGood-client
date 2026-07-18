@@ -1,3 +1,5 @@
+'use client';
+
 import { Drawer } from 'vaul';
 
 interface BottomSheetProps {
