@@ -11,6 +11,7 @@ import {
   ItemCard,
   HealthConcernCard,
   SearchBar,
+  BottomSheet,
 } from '@/shared/components';
 import { Header } from '@/shared/layout';
 import { Bone, Brain, ChevronLeft, HeartPulse, X } from 'lucide-react';
@@ -28,6 +29,7 @@ const ExamplePage = () => {
   const [isToggled, setIsToggled] = useState(false);
   const [selectedHealthConcern, setSelectedHealthConcern] = useState('heart');
   const [searchValue, setSearchValue] = useState('');
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   return (
     <div className='flex flex-col gap-4'>
@@ -44,6 +46,13 @@ const ExamplePage = () => {
         >
           모달 오픈
         </button>
+        <button
+          onClick={() => setSheetOpen(true)}
+          className='bg-blue-500 text-white px-4 py-2 rounded'
+        >
+          바텀시트 오픈
+        </button>
+
         <TextButton type='button' text='텍스트' variant='primary' size='xl' className='w-88.5' />
         <TextButton type='button' text='텍스트' variant='primary' size='lg' className='w-63.5' />
         <TextButton type='button' text='텍스트' variant='primary' size='md' className='w-63.5' />
@@ -78,6 +87,9 @@ const ExamplePage = () => {
             onCancel={() => setModalOpen(false)}
           />
         )}
+        <BottomSheet open={sheetOpen} onOpenChange={setSheetOpen}>
+          <div className='bg-amber-200 rounded-2xl p-10'>테스트</div>
+        </BottomSheet>
 
         <Input label='이메일' type='email' placeholder='이메일을 입력해주세요.' />
         <Input label='비밀번호' type='password' placeholder='비밀번호를 입력해주세요.' />
