@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
 import { cva } from 'class-variance-authority';
+import { BottomSheet } from '@/shared/components';
 import {
   AGE_OPTIONS,
   CERTIFICATION_OPTIONS,
@@ -63,26 +63,6 @@ const RankingFilterBottomSheet = ({
   onReset,
   onApply,
 }: RankingFilterBottomSheetProps) => {
-  useEffect(() => {
-    if (!open) return;
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
-
-    document.body.style.overflow = 'hidden';
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = '';
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [onClose, open]);
-
-  if (!open) return null;
-
   const updateDraftFilters = (filters: Partial<RankingFilterState>) => {
     onDraftFiltersChange({
       ...draftFilters,
@@ -107,120 +87,113 @@ const RankingFilterBottomSheet = ({
   );
 
   return (
-    <div
-      className='fixed inset-0 z-[60] flex items-end justify-center bg-black/30'
-      role='presentation'
-      onMouseDown={onClose}
+    <BottomSheet
+      open={open}
+      onOpenChange={(nextOpen) => {
+        if (!nextOpen) onClose();
+      }}
+      overlayClassName='z-[60] bg-black/30'
+      contentClassName='ranking-filter-sheet z-[60] flex h-[34.75rem] max-h-[calc(100dvh-2rem)] flex-col justify-between bg-background'
+      handleWrapperClassName='m-0 flex h-6 w-full shrink-0 items-center justify-center bg-transparent py-2.5'
+      handleClassName='h-1 w-[9.5625rem] bg-neutral-500'
     >
-      <section
-        role='dialog'
-        aria-modal='true'
-        aria-labelledby='ranking-filter-title'
-        className='ranking-filter-sheet flex h-[34.75rem] max-h-[calc(100dvh-2rem)] w-full max-w-110 flex-col justify-between rounded-t-[2.5rem] bg-background px-5 pb-4'
-        onMouseDown={(event) => event.stopPropagation()}
-      >
-        <div className='flex h-6 shrink-0 items-center justify-center px-[7.5rem] py-2.5'>
-          <span className='h-1 w-full rounded-full bg-neutral-500' />
+      <div className='flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto'>
+        <h2 className='typo-body-5 text-black'>
+          필터
+        </h2>
+
+        <div className='flex flex-col gap-6'>
+          <fieldset className='flex flex-col gap-1'>
+            <legend className='text-base font-medium leading-normal text-black'>
+              연령대
+            </legend>
+            <div className='flex flex-wrap gap-2'>
+              {AGE_OPTIONS.map((option) =>
+                renderOption(option, draftFilters.ageGroup === option, () =>
+                  updateDraftFilters({ ageGroup: option }),
+                ),
+              )}
+            </div>
+          </fieldset>
+
+          <fieldset className='flex flex-col gap-1'>
+            <legend className='text-base font-medium leading-normal text-black'>
+              성별
+            </legend>
+            <div className='flex flex-wrap gap-2'>
+              {GENDER_OPTIONS.map((option) =>
+                renderOption(
+                  option,
+                  genderToOption(draftFilters.gender) === option,
+                  () =>
+                    updateDraftFilters({ gender: optionToGender(option) }),
+                ),
+              )}
+            </div>
+          </fieldset>
+
+          <fieldset className='flex flex-col gap-1'>
+            <legend className='text-base font-medium leading-normal text-black'>
+              식약처 인증
+            </legend>
+            <div className='flex flex-wrap gap-2'>
+              {CERTIFICATION_OPTIONS.map((option) =>
+                renderOption(
+                  option,
+                  certificationToOption(draftFilters.certification) === option,
+                  () =>
+                    updateDraftFilters({
+                      certification: optionToCertification(option),
+                    }),
+                ),
+              )}
+            </div>
+          </fieldset>
+
+          <fieldset className='flex flex-col gap-1'>
+            <legend className='text-base font-medium leading-normal text-black'>
+              건강 고민
+            </legend>
+            <div className='flex flex-col gap-2'>
+              {HEALTH_CONCERN_ROWS.map((row) => (
+                <div key={row.join('-')} className='flex flex-wrap gap-2'>
+                  {row.map((option) =>
+                    renderOption(
+                      option,
+                      draftFilters.healthConcern === option,
+                      () =>
+                        updateDraftFilters({
+                          healthConcern:
+                            draftFilters.healthConcern === option
+                              ? null
+                              : option,
+                        }),
+                    ),
+                  )}
+                </div>
+              ))}
+            </div>
+          </fieldset>
         </div>
+      </div>
 
-        <div className='flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto'>
-          <h2 id='ranking-filter-title' className='typo-body-5 text-black'>
-            필터
-          </h2>
-
-          <div className='flex flex-col gap-6'>
-            <fieldset className='flex flex-col gap-1'>
-              <legend className='text-base font-medium leading-normal text-black'>
-                연령대
-              </legend>
-              <div className='flex flex-wrap gap-2'>
-                {AGE_OPTIONS.map((option) =>
-                  renderOption(option, draftFilters.ageGroup === option, () =>
-                    updateDraftFilters({ ageGroup: option }),
-                  ),
-                )}
-              </div>
-            </fieldset>
-
-            <fieldset className='flex flex-col gap-1'>
-              <legend className='text-base font-medium leading-normal text-black'>
-                성별
-              </legend>
-              <div className='flex flex-wrap gap-2'>
-                {GENDER_OPTIONS.map((option) =>
-                  renderOption(
-                    option,
-                    genderToOption(draftFilters.gender) === option,
-                    () =>
-                      updateDraftFilters({ gender: optionToGender(option) }),
-                  ),
-                )}
-              </div>
-            </fieldset>
-
-            <fieldset className='flex flex-col gap-1'>
-              <legend className='text-base font-medium leading-normal text-black'>
-                식약처 인증
-              </legend>
-              <div className='flex flex-wrap gap-2'>
-                {CERTIFICATION_OPTIONS.map((option) =>
-                  renderOption(
-                    option,
-                    certificationToOption(draftFilters.certification) === option,
-                    () =>
-                      updateDraftFilters({
-                        certification: optionToCertification(option),
-                      }),
-                  ),
-                )}
-              </div>
-            </fieldset>
-
-            <fieldset className='flex flex-col gap-1'>
-              <legend className='text-base font-medium leading-normal text-black'>
-                건강 고민
-              </legend>
-              <div className='flex flex-col gap-2'>
-                {HEALTH_CONCERN_ROWS.map((row) => (
-                  <div key={row.join('-')} className='flex flex-wrap gap-2'>
-                    {row.map((option) =>
-                      renderOption(
-                        option,
-                        draftFilters.healthConcern === option,
-                        () =>
-                          updateDraftFilters({
-                            healthConcern:
-                              draftFilters.healthConcern === option
-                                ? null
-                                : option,
-                          }),
-                      ),
-                    )}
-                  </div>
-                ))}
-              </div>
-            </fieldset>
-          </div>
-        </div>
-
-        <div className='grid shrink-0 grid-cols-2 gap-3 pt-4'>
-          <button
-            type='button'
-            className='h-10 rounded-[0.625rem] border border-secondary-600 bg-transparent px-2 py-1 typo-caption-2 text-secondary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary-600'
-            onClick={onReset}
-          >
-            초기화
-          </button>
-          <button
-            type='button'
-            className='h-10 rounded-lg bg-primary-600 p-2.5 typo-caption-2 text-white shadow-[4px_4px_2px_rgba(0,0,0,0.15)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600'
-            onClick={onApply}
-          >
-            적용하기
-          </button>
-        </div>
-      </section>
-    </div>
+      <div className='grid shrink-0 grid-cols-2 gap-3 pt-4'>
+        <button
+          type='button'
+          className='h-10 rounded-[0.625rem] border border-secondary-600 bg-transparent px-2 py-1 typo-caption-2 text-secondary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary-600'
+          onClick={onReset}
+        >
+          초기화
+        </button>
+        <button
+          type='button'
+          className='h-10 rounded-lg bg-primary-600 p-2.5 typo-caption-2 text-white shadow-[4px_4px_2px_rgba(0,0,0,0.15)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600'
+          onClick={onApply}
+        >
+          적용하기
+        </button>
+      </div>
+    </BottomSheet>
   );
 };
 
