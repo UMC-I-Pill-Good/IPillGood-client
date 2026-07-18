@@ -2,25 +2,11 @@
 
 import { SelectionCard } from '@/shared/components';
 import { StepHeader } from '@/shared/layout';
-import { useState } from 'react';
 import { healthConcernItems } from '../constants/healthConcern.constants';
+import useSelectable from '../hooks/useSelectable';
 
 const HealthConcernStep = () => {
-  const [selectedHealthConcerns, setSelectedHealthConcerns] = useState<string[]>([]);
-
-  const handleSelect = (id: string) => {
-    setSelectedHealthConcerns((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((item) => item !== id);
-      }
-
-      if (prev.length >= 3) {
-        return prev;
-      }
-
-      return [...prev, id];
-    });
-  };
+  const { selectedItems, handleSelect } = useSelectable({ max: 3 });
 
   return (
     <section>
@@ -36,7 +22,7 @@ const HealthConcernStep = () => {
             id={id}
             label={label}
             icon={icon}
-            isSelected={selectedHealthConcerns.includes(id)}
+            isSelected={selectedItems.includes(id)}
             onClick={handleSelect}
             className='w-full'
           />

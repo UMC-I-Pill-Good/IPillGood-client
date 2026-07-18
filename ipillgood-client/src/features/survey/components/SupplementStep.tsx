@@ -2,21 +2,11 @@
 
 import { SelectionCard } from '@/shared/components';
 import { StepHeader } from '@/shared/layout';
-import { useState } from 'react';
 import { supplementItems } from '../constants/supplement.constants';
+import useSelectable from '../hooks/useSelectable';
 
 const SupplementStep = () => {
-  const [selectedSupplements, setSelectedSupplements] = useState<string[]>([]);
-
-  const handleSelect = (id: string) => {
-    setSelectedSupplements((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((item) => item !== id);
-      }
-
-      return [...prev, id];
-    });
-  };
+  const { selectedItems, handleSelect } = useSelectable();
 
   return (
     <section className='pb-8'>
@@ -32,7 +22,7 @@ const SupplementStep = () => {
             id={id}
             label={label}
             image={image}
-            isSelected={selectedSupplements.includes(id)}
+            isSelected={selectedItems.includes(id)}
             onClick={handleSelect}
             className='w-full h-32 rounded-[20px]'
           />
