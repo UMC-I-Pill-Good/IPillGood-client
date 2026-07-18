@@ -9,7 +9,7 @@ import {
   ToggleButton,
   Input,
   ItemCard,
-  HealthConcernCard,
+  SelectionCard,
   SearchBar,
   BottomSheet,
 } from '@/shared/components';
@@ -104,12 +104,11 @@ const ExamplePage = () => {
         />
 
         <div className='grid grid-cols-3 gap-2'>
-          {healthConcernItems.map(({ id, label, icon }) => (
-            <HealthConcernCard
+          {healthConcernItems.map(({ id, label }) => (
+            <SelectionCard
               key={id}
               id={id}
               label={label}
-              icon={icon}
               isSelected={selectedHealthConcern === id}
               onClick={setSelectedHealthConcern}
               className='w-full'
