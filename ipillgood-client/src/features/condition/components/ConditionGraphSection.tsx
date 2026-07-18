@@ -7,7 +7,7 @@ import { useConditionStore } from '../store/useConditionStore';
 import {
     type ConditionGraphPointType,
 } from '../types/condition';
-import ConditionWeekDetailModal from './ConditionWeekDetailModal';
+import ConditionWeekDetailModal from './condition-week-detail-modal/ConditionWeekDetailModal';
 
 import {
     DUMMY_CONDITION_GRAPH_DATA,

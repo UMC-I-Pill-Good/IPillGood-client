@@ -1,7 +1,9 @@
-import ConditionGraphSection from '@/features/condition/components/ConditionGraphSection';
-import ConditionHealthStatusSection from '@/features/condition/components/ConditionHealthStatusSection';
-import ConditionStatusBanner from '@/features/condition/components/ConditionStatusBanner';
-import ConditionSummarySection from '@/features/condition/components/ConditionSummarySection';
+import {
+  ConditionGraphSection,
+  ConditionHealthStatusSection,
+  ConditionStatusBanner,
+  ConditionSummarySection,
+} from '@/features/condition/components';
 
 const ConditionCheckPage = () => {
   return (
