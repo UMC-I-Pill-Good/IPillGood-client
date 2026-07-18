@@ -1,6 +1,5 @@
 import { TextButton } from '@/shared/components';
 import { StepHeader } from '@/shared/layout';
-
 import { useState } from 'react';
 import { healthStateQuestions } from '../constants/healthState.constants';
 

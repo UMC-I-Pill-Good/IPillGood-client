@@ -1,6 +1,6 @@
 'use client';
 
-import { HealthConcernCard } from '@/shared/components';
+import { SelectionCard } from '@/shared/components';
 import { StepHeader } from '@/shared/layout';
 import { useState } from 'react';
 import { healthConcernItems } from '../constants/healthConcern.constants';
@@ -31,7 +31,7 @@ const HealthConcernStep = () => {
 
       <div className='mt-2 grid grid-cols-4 gap-2'>
         {healthConcernItems.map(({ id, label, icon }) => (
-          <HealthConcernCard
+          <SelectionCard
             key={id}
             id={id}
             label={label}
