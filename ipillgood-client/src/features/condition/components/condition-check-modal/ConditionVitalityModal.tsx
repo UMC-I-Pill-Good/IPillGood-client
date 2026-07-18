@@ -58,7 +58,7 @@ const ConditionVitalityModal = ({
         onClick={handleModalClick}
       >
         {/* Upper Content */}
-        <div className='flex w-full flex-col items-start gap-8'>
+        <div className='flex w-full flex-col items-start gap-8' style={{ fontFamily: 'Pretendard, sans-serif' }}>
           {/* Header */}
           <header className='flex h-9 w-full items-center justify-between px-5'>
             <button
@@ -112,6 +112,7 @@ const ConditionVitalityModal = ({
           type='button'
           className='flex h-9 w-[319px] items-center justify-center gap-2.5 rounded-lg bg-primary-600 px-2 py-1 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'
           onClick={handleNext}
+          style={{ fontFamily: 'Pretendard, sans-serif' }}
         >
           <span className='typo-body-10 text-center text-white'>
             다음(1/2)

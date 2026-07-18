@@ -63,7 +63,7 @@ const VitalityOptionButton = ({
         {renderIcon()}
       </span>
 
-      <span className='flex w-full flex-col items-center gap-1'>
+      <span className='flex w-full flex-col items-center gap-1' style={{ fontFamily: 'Pretendard, sans-serif' }}>
         <span className='typo-caption-6 text-center text-[#111111] leading-none'>
           {score}
         </span>

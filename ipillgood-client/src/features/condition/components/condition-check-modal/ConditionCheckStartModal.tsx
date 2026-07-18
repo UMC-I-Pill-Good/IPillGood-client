@@ -55,7 +55,7 @@ const ConditionCheckStartModal = ({
           <button
             type='button'
             aria-label='팝업 닫기'
-            className='glass flex size-9 shrink-0 items-center justify-center rounded-full border border-white p-[10px] text-[#7E8387] shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] aspect-square'
+            className='glass flex size-9 shrink-0 items-center justify-center rounded-full border border-white p-[10px] text-neutral-800 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] aspect-square'
             onClick={onClose}
           >
             <CloseIcon className='size-6 shrink-0' />
@@ -71,11 +71,11 @@ const ConditionCheckStartModal = ({
             </div>
 
             <div className='flex h-[63px] w-full flex-col items-center gap-2'>
-              <h2 className='h-[21px] text-center text-[18px] font-semibold leading-none text-[#111111]'>
+              <h2 className='typo-body-5 h-[21px] text-center text-[#111111]'>
                 이번 주 컨디션 체크
               </h2>
 
-              <p className='h-[34px] whitespace-pre-line text-center text-[14px] font-medium leading-none text-[#616569]'>
+              <p className='typo-caption-2 h-[34px] whitespace-pre-line text-center text-neutral-800'>
                 {'일주일에 한 번, 이번 주를 마무리하며\n내 몸 상태를 체크해 보세요!'}
               </p>
             </div>
@@ -105,10 +105,10 @@ const ConditionCheckStartModal = ({
         <div className='flex h-[52px] w-full px-5 pt-4'>
           <button
             type='button'
-            className='flex h-9 w-full items-center justify-center gap-2.5 rounded-lg bg-[#7F99FF] px-2 py-1 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'
+            className='flex h-9 w-full items-center justify-center gap-2.5 rounded-lg bg-primary-600 px-2 py-1 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'
             onClick={onStart}
           >
-            <span className='text-[16px] font-medium leading-none text-white'>
+            <span className='typo-body-10 text-center text-white'>
               컨디션 체크 시작하기
             </span>
           </button>

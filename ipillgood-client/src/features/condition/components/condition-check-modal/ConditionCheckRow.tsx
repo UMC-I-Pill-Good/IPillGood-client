@@ -6,7 +6,11 @@ interface ConditionCheckRowProps {
   value: string;
 }
 
-const ConditionCheckRow = ({ icon: Icon, label, value }: ConditionCheckRowProps) => {
+const ConditionCheckRow = ({
+  icon: Icon,
+  label,
+  value,
+}: ConditionCheckRowProps) => {
   return (
     <div className='flex h-6 w-full items-center justify-between'>
       {/* Left Group */}
@@ -15,13 +19,13 @@ const ConditionCheckRow = ({ icon: Icon, label, value }: ConditionCheckRowProps)
           <Icon className='size-6 shrink-0' />
         </div>
 
-        <span className='text-[16px] font-medium leading-none text-[#111111]'>
+        <span className='typo-body-10 text-[#111111]'>
           {label}
         </span>
       </div>
 
       {/* Right Value */}
-      <span className='text-[12px] font-medium leading-none text-[#7E8387]'>
+      <span className='typo-caption-6 text-neutral-800'>
         {value}
       </span>
     </div>
