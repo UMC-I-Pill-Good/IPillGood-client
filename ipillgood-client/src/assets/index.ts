@@ -36,6 +36,8 @@ export { default as AntioxidantIcon } from './icons/survey/antioxidant.svg';
 export { default as HairHealthIcon } from './icons/survey/hair.svg';
 export { default as WomenHealthIcon } from './icons/survey/womenhealth.svg';
 export { default as ExercisePerformanceIcon } from './icons/survey/exercise.svg';
+export { default as MinusCircleIcon } from './icons/survey/minusCircle.svg';
+export { default as HorizonIcon } from './icons/survey/horizon.svg';
 
 /* condition */
 export { default as ConditionVitalityIcon } from './icons/condition-vitality.svg';

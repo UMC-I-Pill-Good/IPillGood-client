@@ -3,7 +3,6 @@
 import Image, { type StaticImageData } from 'next/image';
 import { cva } from 'class-variance-authority';
 import type { ComponentType, SVGProps } from 'react';
-
 import { cn } from '@/shared/utils/cn';
 
 interface SelectionCardProps {
@@ -70,9 +69,7 @@ const SelectionCard = ({
         </span>
       )}
 
-      <span className='typo-caption-2 leading-4! flex min-w-0 items-center justify-center break-keep text-center whitespace-normal'>
-        {label}
-      </span>
+      <span className='typo-caption-2 leading-4! whitespace-pre-line'>{label}</span>
     </button>
   );
 };

@@ -12,17 +12,15 @@ const SupplementStep = () => {
     <section className='pb-8'>
       <StepHeader
         title='현재 섭취 중인 영양제가 있나요?'
-        desc={'현재 섭취 중인 영양제를 선택해주세요. (복수 선택 가능)'}
+        desc={'현재 섭취 중인 영양제를 선택해주세요.\n (복수 선택 가능)'}
       />
 
       <div className='mt-2 grid grid-cols-3 gap-2'>
-        {supplementItems.map(({ id, label, image }) => (
+        {supplementItems.map((item) => (
           <SelectionCard
-            key={id}
-            id={id}
-            label={label}
-            image={image}
-            isSelected={selectedItems.includes(id)}
+            key={item.id}
+            {...item}
+            isSelected={selectedItems.includes(item.id)}
             onClick={handleSelect}
             className='w-full h-32 rounded-[20px]'
           />
