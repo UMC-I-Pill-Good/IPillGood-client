@@ -47,8 +47,9 @@ const ConditionCheckStartModal = ({
         role='dialog'
         aria-modal='true'
         aria-label='컨디션 체크 시작 팝업'
-        className='flex h-[422px] w-[351px] flex-col rounded-[20px] border border-white bg-white py-4 shadow-[4px_4px_40px_0_rgba(126,131,135,0.2)]'
+        className='flex w-[351px] flex-col rounded-[20px] border border-white bg-white py-4 shadow-[4px_4px_40px_0_rgba(126,131,135,0.2)]'
         onClick={handleModalClick}
+        style={{ fontFamily: 'Pretendard, sans-serif' }}
       >
         {/* Header */}
         <header className='flex h-9 w-full items-center justify-end px-5'>
@@ -63,26 +64,26 @@ const ConditionCheckStartModal = ({
         </header>
 
         {/* Body */}
-        <div className='flex h-[302px] w-full flex-col items-center gap-4 px-5 py-4'>
+        <div className='flex w-full flex-col items-center gap-4 px-5 py-4'>
           {/* Intro Section */}
-          <div className='flex h-[150px] w-full flex-col items-center gap-2'>
-            <div className='flex h-[79px] w-[184px] items-center justify-center'>
+          <div className='flex w-full flex-col items-center gap-2'>
+            <div className='flex items-center justify-center py-1'>
               <ConditionCheckCircleIcon className='size-[79px] shrink-0' />
             </div>
 
-            <div className='flex h-[63px] w-full flex-col items-center gap-2'>
-              <h2 className='typo-body-5 h-[21px] text-center text-[#111111]'>
+            <div className='flex w-full flex-col items-center gap-2'>
+              <h2 className='typo-body-5 text-center text-[#111111]'>
                 이번 주 컨디션 체크
               </h2>
 
-              <p className='typo-caption-2 h-[34px] whitespace-pre-line text-center text-neutral-800'>
+              <p className='typo-caption-2 whitespace-pre-line text-center text-neutral-800'>
                 {'일주일에 한 번, 이번 주를 마무리하며\n내 몸 상태를 체크해 보세요!'}
               </p>
             </div>
           </div>
 
           {/* Condition rows */}
-          <div className='flex h-[104px] w-full flex-col items-center justify-center gap-2 rounded-lg py-2'>
+          <div className='flex w-full flex-col items-center justify-center gap-2 rounded-lg py-2'>
             <ConditionCheckRow
               icon={ConditionVitalityIcon}
               label='활력'
@@ -102,11 +103,12 @@ const ConditionCheckStartModal = ({
         </div>
 
         {/* Footer */}
-        <div className='flex h-[52px] w-full px-5 pt-4'>
+        <div className='flex w-full px-5 pt-4'>
           <button
             type='button'
             className='flex h-9 w-full items-center justify-center gap-2.5 rounded-lg bg-primary-600 px-2 py-1 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'
             onClick={onStart}
+            style={{ fontFamily: 'Pretendard, sans-serif' }}
           >
             <span className='typo-body-10 text-center text-white'>
               컨디션 체크 시작하기

@@ -11,6 +11,9 @@ import TimeWheelPicker from './TimeWheelPicker';
 
 interface ConditionSleepTimeModalProps {
   isOpen: boolean;
+  initialHours?: number;
+  initialMinutes?: number;
+  isSubmitting?: boolean;
   onBack: () => void;
   onClose: () => void;
   onComplete: (sleepTime: { hours: number; minutes: number }) => void;
@@ -18,12 +21,15 @@ interface ConditionSleepTimeModalProps {
 
 const ConditionSleepTimeModal = ({
   isOpen,
+  initialHours = 7,
+  initialMinutes = 30,
+  isSubmitting = false,
   onBack,
   onClose,
   onComplete,
 }: ConditionSleepTimeModalProps) => {
-  const [selectedHour, setSelectedHour] = useState<number>(7);
-  const [selectedMinute, setSelectedMinute] = useState<number>(30);
+  const [selectedHour, setSelectedHour] = useState<number>(initialHours);
+  const [selectedMinute, setSelectedMinute] = useState<number>(initialMinutes);
 
   useScrollLock();
   useEscapeKey(onClose);
@@ -49,6 +55,7 @@ const ConditionSleepTimeModal = ({
   };
 
   const handleComplete = () => {
+    if (isSubmitting) return;
     onComplete({ hours: selectedHour, minutes: selectedMinute });
   };
 
@@ -64,9 +71,10 @@ const ConditionSleepTimeModal = ({
         aria-label='평균 수면 시간 선택 팝업'
         className='flex w-[351px] flex-col items-center justify-center gap-8 rounded-[20px] border border-white bg-white py-4 shadow-[4px_4px_40px_0_rgba(126,131,135,0.2)]'
         onClick={handleModalClick}
+        style={{ fontFamily: 'Pretendard, sans-serif' }}
       >
         {/* Upper Content */}
-        <div className='flex w-full flex-col gap-8' style={{ fontFamily: 'Pretendard, sans-serif' }}>
+        <div className='flex w-full flex-col gap-8'>
           {/* Header */}
           <header className='flex h-9 w-full items-center justify-between px-5'>
             <button
@@ -74,6 +82,7 @@ const ConditionSleepTimeModal = ({
               aria-label='이전 단계로 이동'
               className='glass flex size-9 shrink-0 items-center justify-center rounded-full border border-white p-[10px] text-neutral-800 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] aspect-square'
               onClick={onBack}
+              disabled={isSubmitting}
             >
               <ChevronLeftIcon className='h-[21px] w-[22px] shrink-0' />
             </button>
@@ -83,6 +92,7 @@ const ConditionSleepTimeModal = ({
               aria-label='팝업 닫기'
               className='glass flex size-9 shrink-0 items-center justify-center rounded-full border border-white p-[10px] text-neutral-800 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] aspect-square'
               onClick={onClose}
+              disabled={isSubmitting}
             >
               <CloseIcon className='size-6 shrink-0' />
             </button>
@@ -97,7 +107,7 @@ const ConditionSleepTimeModal = ({
             {/* Time & Minute Wheel Group */}
             <div className='flex h-24 w-full items-center justify-center gap-5'>
               {/* Hour Wheel Group */}
-              <div className='flex h-24 w-[126px] items-center gap-1'>
+              <div className='flex h-24 items-center gap-1'>
                 <TimeWheelPicker
                   values={HOURS_LIST}
                   selectedValue={selectedHour}
@@ -111,7 +121,7 @@ const ConditionSleepTimeModal = ({
               </div>
 
               {/* Minute Wheel Group */}
-              <div className='flex h-24 w-[109px] items-center gap-1'>
+              <div className='flex h-24 items-center gap-1'>
                 <TimeWheelPicker
                   values={MINUTES_LIST}
                   selectedValue={selectedMinute}
@@ -128,16 +138,19 @@ const ConditionSleepTimeModal = ({
         </div>
 
         {/* Footer CTA Button */}
-        <button
-          type='button'
-          className='flex h-9 w-[311px] items-center justify-center gap-2.5 rounded-lg bg-primary-600 px-2 py-1 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'
-          onClick={handleComplete}
-          style={{ fontFamily: 'Pretendard, sans-serif' }}
-        >
-          <span className='typo-body-10 text-center text-white'>
-            완료(2/2)
-          </span>
-        </button>
+        <div className='flex w-full px-5'>
+          <button
+            type='button'
+            className='flex h-9 w-full items-center justify-center gap-2.5 rounded-lg bg-primary-600 px-2 py-1 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] disabled:opacity-60'
+            onClick={handleComplete}
+            disabled={isSubmitting}
+            style={{ fontFamily: 'Pretendard, sans-serif' }}
+          >
+            <span className='typo-body-10 text-center text-white'>
+              {isSubmitting ? '저장 중...' : '완료(2/2)'}
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   );

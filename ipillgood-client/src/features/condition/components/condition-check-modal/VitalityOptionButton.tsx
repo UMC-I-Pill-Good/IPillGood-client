@@ -54,7 +54,7 @@ const VitalityOptionButton = ({
     >
       <span
         className={clsx(
-          'flex size-[34px] items-center justify-center rounded-[17px] pt-2 px-[7px] pb-[6px] transition-all duration-200 shadow-sm',
+          'flex size-[34px] items-center justify-center rounded-full pt-2 px-[7px] pb-[6px] transition-all duration-200 shadow-sm',
           isSelected
             ? 'scale-110 border-2 border-[#92E4C2] bg-white text-[#92E4C2] [&_path]:fill-[#92E4C2] shadow-md'
             : 'bg-[#92E4C2] text-white [&_path]:fill-white',
@@ -68,7 +68,7 @@ const VitalityOptionButton = ({
           {score}
         </span>
 
-        <span className='typo-caption-7 w-full whitespace-nowrap text-center text-[#111111] leading-none' style={{ lineHeight: '10px' }}>
+        <span className='typo-caption-7 w-full whitespace-nowrap text-center text-[#111111] leading-3'>
           {label}
         </span>
       </span>
