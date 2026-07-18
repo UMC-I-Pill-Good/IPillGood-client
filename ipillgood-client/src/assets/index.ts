@@ -24,8 +24,6 @@ export { default as ConditionScore3Icon } from './icons/ConditionScore3Icon.svg'
 export { default as ConditionScore4Icon } from './icons/ConditionScore4Icon.svg';
 export { default as ConditionScore5Icon } from './icons/ConditionScore5Icon.svg';
 export { default as MascotThumbsUpIcon } from './icons/MascotThumbsUpIcon.svg';
-export { default as ChevronLeftIcon } from './icons/chevron-left.svg';
-export { default as CloseIcon } from './icons/x-close.svg';
 
 // home
 export { default as HeaderLogoIcon } from './icons/header-logo.svg';
