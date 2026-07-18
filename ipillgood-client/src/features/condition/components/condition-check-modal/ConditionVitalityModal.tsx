@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, type MouseEvent } from 'react';
-import { ChevronLeftIcon, CloseIcon } from '@/assets';
+import { IconButton, TextButton } from '@/shared/components';
 import { useEscapeKey, useScrollLock } from '@/shared/hooks';
+import { ChevronLeft, X } from 'lucide-react';
 import { VITALITY_OPTION_LIST } from '../../constants/conditionPopup';
 import VitalityOptionButton from './VitalityOptionButton';
 
@@ -62,25 +63,19 @@ const ConditionVitalityModal = ({
       >
         {/* Upper Content */}
         <div className='flex w-full flex-col items-start gap-8'>
-          {/* Header */}
+          {/* Header - 공통 IconButton 사용 */}
           <header className='flex h-9 w-full items-center justify-between px-5'>
-            <button
-              type='button'
-              aria-label='이전 단계로 이동'
-              className='glass flex size-9 shrink-0 items-center justify-center rounded-full border border-white p-[10px] text-neutral-800 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] aspect-square'
+            <IconButton
+              icon={<ChevronLeft size={24} className='text-[#7E8387]' />}
+              ariaLabel='이전 단계로 이동'
               onClick={onBack}
-            >
-              <ChevronLeftIcon className='h-[21px] w-[22px] shrink-0' />
-            </button>
+            />
 
-            <button
-              type='button'
-              aria-label='팝업 닫기'
-              className='glass flex size-9 shrink-0 items-center justify-center rounded-full border border-white p-[10px] text-neutral-800 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] aspect-square'
+            <IconButton
+              icon={<X size={24} className='text-[#7E8387]' />}
+              ariaLabel='팝업 닫기'
               onClick={onClose}
-            >
-              <CloseIcon className='size-6 shrink-0' />
-            </button>
+            />
           </header>
 
           {/* Question & Rating List Section */}
@@ -110,18 +105,16 @@ const ConditionVitalityModal = ({
           </section>
         </div>
 
-        {/* Footer CTA Button */}
+        {/* Footer - 공통 TextButton 사용 */}
         <div className='flex w-full px-5'>
-          <button
+          <TextButton
             type='button'
-            className='flex h-9 w-full items-center justify-center gap-2.5 rounded-lg bg-primary-600 px-2 py-1 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'
+            text='다음(1/2)'
+            variant='primary'
+            size='md'
+            className='w-full'
             onClick={handleNext}
-            style={{ fontFamily: 'Pretendard, sans-serif' }}
-          >
-            <span className='typo-body-10 text-center text-white'>
-              다음(1/2)
-            </span>
-          </button>
+          />
         </div>
       </div>
     </div>

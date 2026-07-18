@@ -2,6 +2,7 @@
 
 import { useState, useEffect, type MouseEvent } from 'react';
 import { ConditionIntakeIcon, ConditionSleepIcon, ConditionVitalityIcon } from '@/assets';
+import { IconButton } from '@/shared/components';
 import { useEscapeKey, useScrollLock } from '@/shared/hooks';
 import { X } from 'lucide-react';
 import { getConditionWeekDetail } from '../../api/getConditionWeekDetail';
@@ -85,14 +86,11 @@ const ConditionWeekDetailModal = ({
             {month}월 {weekLabel} 컨디션
           </h3>
 
-          <button
-            type='button'
-            aria-label='컨디션 상세 모달 닫기'
-            className='flex size-9 shrink-0 items-center justify-center rounded-full border border-white bg-white/50 text-neutral-800 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] backdrop-blur-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600'
+          <IconButton
+            icon={<X size={24} className='text-neutral-800' />}
+            ariaLabel='컨디션 상세 모달 닫기'
             onClick={onClose}
-          >
-            <X aria-hidden='true' size={24} strokeWidth={2} />
-          </button>
+          />
         </div>
 
         <div className='flex h-[69px] w-full shrink-0 items-start justify-between'>
