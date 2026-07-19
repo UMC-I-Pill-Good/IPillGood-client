@@ -1,4 +1,7 @@
 @theme {
+  --color-black: #111111;
+  --color-white: #ffffff;
+
   /* Primary / Blue */
   --color-primary-100: #f2f5ff;
   --color-primary-200: #d7dfff;
