@@ -82,10 +82,8 @@ const RankingFilterBottomSheet = ({
       onOpenChange={(nextOpen) => {
         if (!nextOpen) onClose();
       }}
-      handleWrapperClassName='mx-0 my-2.5 flex h-1 w-full shrink-0 items-center justify-center'
-      handleClassName='h-1 w-[9.5625rem]'
     >
-      <div className='flex h-[32.25rem] max-h-[calc(100dvh-4.5rem)] min-h-0 flex-col justify-between overflow-visible bg-white'>
+      <div className='flex h-[32.25rem] max-h-[calc(100dvh-4.5rem)] min-h-0 flex-col justify-between overflow-visible bg-background'>
         <div className='flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto'>
           <h2 className='typo-body-5 text-black'>
             필터
