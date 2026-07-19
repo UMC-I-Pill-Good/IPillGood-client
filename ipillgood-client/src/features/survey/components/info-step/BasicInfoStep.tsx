@@ -7,9 +7,9 @@ import { useState } from 'react';
 import DatePickerBottomSheet from './DatePickerBottomSheet';
 import { TextButton } from '@/shared/components';
 import {
-  birthYearOptions,
   jobOptions,
   periodOptions,
+  yearOptions,
 } from '@/features/survey/constants/basicInfo.constants';
 import { useAtom } from 'jotai';
 import { genderAtom } from '@/features/survey/atoms/survey.atom';
@@ -58,7 +58,7 @@ const BasicInfoStep = () => {
 
           {isYearOpen && (
             <DropdownMenu
-              options={birthYearOptions}
+              options={yearOptions}
               value={year}
               onSelect={(selected) => {
                 setYear(selected);

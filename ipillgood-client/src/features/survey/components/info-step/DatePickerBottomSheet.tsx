@@ -1,6 +1,6 @@
 import { DateValue } from '@/features/survey/types/survey';
 import { monthOptions, yearOptions } from '@/features/survey/constants/basicInfo.constants';
-import { BottomSheet } from '@/shared/components';
+import { BottomSheet, TextButton } from '@/shared/components';
 import { WheelSelectDate } from './WeelSelectDate';
 
 interface DatePickerBottomSheetProps {
@@ -34,8 +34,8 @@ const DatePickerBottomSheet = ({
   };
 
   return (
-    <BottomSheet open={open} onOpenChange={onOpenChange} className='bg-white'>
-      <div className='mt-8 pb-2 flex items-stretch gap-4'>
+    <BottomSheet open={open} onOpenChange={onOpenChange}>
+      <div className='mt-8 mb-5 flex items-stretch gap-4'>
         <WheelSelectDate options={yearOptions} value={value.year} onChange={handleYearChange} />
         <WheelSelectDate options={monthOptions} value={value.month} onChange={handleMonthChange} />
         <WheelSelectDate
@@ -44,6 +44,14 @@ const DatePickerBottomSheet = ({
           onChange={(day) => onChange({ ...value, day })}
         />
       </div>
+
+      <TextButton
+        type='submit'
+        text='선택 완료'
+        size='xl'
+        className=' w-full'
+        onClick={() => onOpenChange(false)}
+      />
     </BottomSheet>
   );
 };
