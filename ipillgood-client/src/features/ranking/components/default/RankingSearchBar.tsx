@@ -32,10 +32,10 @@ const RankingSearchBar = ({
             <button
               type='button'
               aria-label='필터 열기'
-              className='inline-flex size-[1.625rem] shrink-0 items-center justify-center text-primary-500'
+              className='inline-flex size-5 shrink-0 items-center justify-center self-center text-primary-500'
               onClick={onFilterClick}
             >
-              <FilterIcon aria-hidden='true' className='size-[1.625rem]' />
+              <FilterIcon aria-hidden='true' className='block size-5' />
             </button>
           ) : undefined
         }

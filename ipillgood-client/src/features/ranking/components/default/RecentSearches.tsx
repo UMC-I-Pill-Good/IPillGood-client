@@ -34,7 +34,7 @@ const RecentSearches = ({
             key={searchTerm}
             className='flex h-8 items-start justify-end'
           >
-            <span className='glass h-8 rounded-full bg-white/50 px-4 typo-caption-2 text-neutral-800 shadow-[0_4px_4px_rgba(126,131,135,0.1)]'>
+            <span className='glass flex h-8 items-center justify-center rounded-full bg-white/50 px-4 typo-caption-2 text-neutral-800 shadow-[0_4px_4px_rgba(126,131,135,0.1)]'>
               {searchTerm}
             </span>
             <button

@@ -1,7 +1,6 @@
 'use client';
 
 import { BottomSheet, TextButton } from '@/shared/components';
-import { cn } from '@/shared/utils/cn';
 import {
   AGE_OPTIONS,
   CERTIFICATION_OPTIONS,
@@ -60,20 +59,19 @@ const RankingFilterBottomSheet = ({
     isSelected: boolean,
     onClick: () => void,
   ) => (
-    <button
+    <TextButton
       key={option}
       type='button'
-      aria-pressed={isSelected}
-      className={cn(
-        'inline-flex h-8 shrink-0 items-center justify-center rounded-[0.625rem] px-4 py-1 typo-caption-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600',
+      text={option}
+      size='sm'
+      variant={isSelected ? 'secondary' : 'assistive'}
+      className={
         isSelected
-          ? 'bg-secondary-600 text-white shadow-none backdrop-blur-none'
-          : 'border border-white bg-white/70 text-neutral-800 shadow-[4px_4px_4px_rgba(155,161,255,0.1)] backdrop-blur-xl saturate-150 hover:bg-secondary-600/80 hover:text-white active:bg-secondary-600 active:text-white',
-      )}
+          ? 'h-8 rounded-[0.625rem] px-4 py-1 text-white shadow-none backdrop-blur-none'
+          : 'h-8 rounded-[0.625rem] border border-white bg-white/70 px-4 py-1 text-neutral-800 shadow-[4px_4px_4px_rgba(155,161,255,0.1)] saturate-150'
+      }
       onClick={onClick}
-    >
-      {option}
-    </button>
+    />
   );
 
   return (
@@ -84,7 +82,7 @@ const RankingFilterBottomSheet = ({
       }}
     >
       <div className='flex h-[32.25rem] max-h-[calc(100dvh-4.5rem)] min-h-0 flex-col justify-between overflow-visible bg-background'>
-        <div className='flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto'>
+        <div className='thin-scrollbar flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto pb-12'>
           <h2 className='typo-body-5 text-black'>
             필터
           </h2>

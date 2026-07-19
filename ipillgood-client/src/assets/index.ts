@@ -28,4 +28,4 @@ export { default as HeaderLogoIcon } from './icons/header-logo.svg';
 export { default as SupplementBottleIcon } from './icons/supplement-bottle.svg';
 export { default as CapsuleIcon } from './icons/capsule.svg';
 export { default as CapsuleGrayIcon } from './icons/capsule-gray.svg';
-export { default as Omega3BottleIcon } from './icons/S오메가3.svg';
+export { default as Omega3BottleIcon } from './icons/omega3-bottle.svg';
