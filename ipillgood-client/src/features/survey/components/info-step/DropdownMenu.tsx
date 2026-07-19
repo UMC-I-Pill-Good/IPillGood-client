@@ -1,3 +1,4 @@
+import { useEscapeKey } from '@/shared/hooks';
 import { cn } from '@/shared/utils/cn';
 
 interface DropdownMenuProps<T extends string | number> {
@@ -5,6 +6,7 @@ interface DropdownMenuProps<T extends string | number> {
   value: T;
   onSelect: (value: T) => void;
   className?: string;
+  onClose: () => void;
 }
 
 const DropdownMenu = <T extends string | number>({
@@ -12,7 +14,10 @@ const DropdownMenu = <T extends string | number>({
   value,
   onSelect,
   className,
+  onClose,
 }: DropdownMenuProps<T>) => {
+  useEscapeKey(onClose);
+
   return (
     <div
       className={cn(

@@ -1,13 +1,15 @@
 'use client';
 
 import { HorizonIcon, MinusCircleIcon } from '@/assets';
-import { SelectionCard } from '@/shared/components';
+import { BottomSheet, SelectionCard, TextButton } from '@/shared/components';
 import { StepHeader } from '@/shared/layout';
-import { supplementItems } from '../constants/supplement.constants';
+import { otherSupplementItems, supplementItems } from '../constants/supplement.constants';
 import useSelectable from '../hooks/useSelectable';
+import { useState } from 'react';
 
 const SupplementStep = () => {
   const { selectedItems, handleSelect } = useSelectable();
+  const [isOpenSheet, setIsOpenSheet] = useState(false);
 
   return (
     <section className='pb-8'>
@@ -32,9 +34,7 @@ const SupplementStep = () => {
           label='기타'
           icon={HorizonIcon}
           isSelected={false}
-          onClick={() => {
-            // TODO: 바텀시트 열기
-          }}
+          onClick={() => setIsOpenSheet(true)}
           className='h-32 w-full rounded-[20px]'
           hasIconBackground={false}
         />
@@ -49,6 +49,26 @@ const SupplementStep = () => {
           hasIconBackground={false}
         />
       </div>
+
+      <BottomSheet open={isOpenSheet} onOpenChange={() => setIsOpenSheet(false)}>
+        <div className='mt-8 flex flex-col space-y-4 pb-4'>
+          <h1 className='typo-body-1 text-center'>기타 영양제 리스트</h1>
+
+          <div className='grid grid-cols-3 gap-2 overflow-y-auto thin-scrollbar h-120 pb-4'>
+            {otherSupplementItems.map((item) => (
+              <SelectionCard
+                key={item.id}
+                {...item}
+                isSelected={selectedItems.includes(item.id)}
+                onClick={handleSelect}
+                className='h-32 w-full rounded-[20px]'
+              />
+            ))}
+          </div>
+
+          <TextButton type='submit' text='선택 완료' size='xl' className=' w-full' />
+        </div>
+      </BottomSheet>
     </section>
   );
 };

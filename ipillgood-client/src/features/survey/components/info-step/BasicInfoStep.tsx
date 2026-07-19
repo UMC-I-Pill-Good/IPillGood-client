@@ -15,12 +15,12 @@ import { useAtom } from 'jotai';
 import { genderAtom } from '@/features/survey/atoms/survey.atom';
 
 const BasicInfoStep = () => {
-  const [isYearOpen, setIsYearOpen] = useState(false);
+  const [isYearOpen, setIsYearOpenDropDown] = useState(false);
   const [year, setYear] = useState(2026);
 
   const [gender, setGender] = useAtom(genderAtom);
-  const [isPeriodOpen, setIsPeriodOpen] = useState(false);
-  const [isBeginOpen, setIsBeginOpen] = useState(false);
+  const [isPeriodOpenDropDown, setIsPeriodOpenDropDown] = useState(false);
+  const [isOpenDateSheet, setIsOpenDateSheet] = useState(false);
   const [period, setPeriod] = useState(30);
   const [selectedDate, setSelectedDate] = useState({
     year: 2026,
@@ -33,8 +33,8 @@ const BasicInfoStep = () => {
   return (
     <section
       onClick={() => {
-        setIsYearOpen(false);
-        setIsPeriodOpen(false);
+        setIsYearOpenDropDown(false);
+        setIsPeriodOpenDropDown(false);
       }}
     >
       <StepHeader title='기본 정보를 알려주세요!' desc='나에게 맞는 영양제를 추천해드릴게요.' />
@@ -47,8 +47,8 @@ const BasicInfoStep = () => {
         <div onClick={(e) => e.stopPropagation()} className='flex items-center gap-1 relative'>
           <button
             type='button'
-            className='bg-primary/80 inline-flex items-center justify-center gap-1 typo-body-10 rounded-lg pr-3 pl-4 h-8 w-25 text-white shadow-[0_4px_4px_rgba(126,131,135,0.1)] transition hover:bg-primary-700 active:bg-primary-800 shirnk-0'
-            onClick={() => setIsYearOpen((prev) => !prev)}
+            className='bg-primary/80 inline-flex items-center justify-center gap-1 typo-body-10 rounded-lg pr-3 pl-4 h-8 w-25 outline-none text-white shadow-[0_4px_4px_rgba(126,131,135,0.1)] transition hover:bg-primary-700 active:bg-primary-800 shirnk-0'
+            onClick={() => setIsYearOpenDropDown((prev) => !prev)}
           >
             {year}
             <ChevronDown
@@ -62,9 +62,10 @@ const BasicInfoStep = () => {
               value={year}
               onSelect={(selected) => {
                 setYear(selected);
-                setIsYearOpen(false);
+                setIsYearOpenDropDown(false);
               }}
               className='w-25 left-0'
+              onClose={() => setIsYearOpenDropDown(false)}
             />
           )}
 
@@ -136,26 +137,27 @@ const BasicInfoStep = () => {
               <p className='typo-caption-2'>생리 주기</p>
               <button
                 type='button'
-                className='ring ring-primary text-primary inline-flex items-center justify-center gap-1 typo-caption-2 rounded-[20px] pr-2 pl-2.5 h-7 w-18 transition hover:bg-primary-400 hover:text-white hover:ring-none active:text-white active:bg-primary shirnk-0 whitespace-nowrap'
-                onClick={() => setIsPeriodOpen((prev) => !prev)}
+                className='ring ring-primary text-primary inline-flex items-center justify-center gap-1 typo-caption-2 rounded-[20px] pr-2 pl-2.5 h-7 w-18 outline-none transition hover:bg-primary-400 hover:text-white hover:ring-none active:text-white active:bg-primary shirnk-0 whitespace-nowrap'
+                onClick={() => setIsPeriodOpenDropDown((prev) => !prev)}
               >
                 {period}일
                 <ChevronDown
                   className={clsx(
                     'transition-transform duration-300',
-                    isPeriodOpen && 'rotate-180',
+                    isPeriodOpenDropDown && 'rotate-180',
                   )}
                 />
               </button>
 
-              {isPeriodOpen && (
+              {isPeriodOpenDropDown && (
                 <DropdownMenu
                   options={periodOptions}
                   value={period}
                   onSelect={(selected) => {
                     setPeriod(selected);
-                    setIsPeriodOpen(false);
+                    setIsPeriodOpenDropDown(false);
                   }}
+                  onClose={() => setIsPeriodOpenDropDown(false)}
                   className='w-18 right-0'
                 />
               )}
@@ -164,8 +166,8 @@ const BasicInfoStep = () => {
               <p className='typo-caption-2'>마지막 생리 시작일</p>
               <button
                 type='button'
-                className='ring ring-primary text-primary inline-flex items-center justify-center gap-1.5 typo-caption-2 rounded-[20px] pr-2 pl-2.5 h-7 w-28 transition hover:bg-primary-400 hover:text-white hover:ring-none active:text-white active:bg-primary shirnk-0 whitespace-nowrap'
-                onClick={() => setIsBeginOpen((prev) => !prev)}
+                className='ring ring-primary text-primary inline-flex items-center justify-center gap-1.5 typo-caption-2 rounded-[20px] pr-2 pl-2.5 h-7 w-28 outline-none transition hover:bg-primary-400 hover:text-white hover:ring-none active:text-white active:bg-primary shirnk-0 whitespace-nowrap'
+                onClick={() => setIsOpenDateSheet((prev) => !prev)}
               >
                 {selectedDate.year}.{String(selectedDate.month).padStart(2, '0')}.
                 {String(selectedDate.day).padStart(2, '0')}
@@ -195,9 +197,9 @@ const BasicInfoStep = () => {
       </section>
 
       <DatePickerBottomSheet
-        open={isBeginOpen}
+        open={isOpenDateSheet}
         value={selectedDate}
-        onOpenChange={setIsBeginOpen}
+        onOpenChange={setIsOpenDateSheet}
         onChange={setSelectedDate}
       />
     </section>

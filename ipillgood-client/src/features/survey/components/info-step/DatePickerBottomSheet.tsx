@@ -34,8 +34,8 @@ const DatePickerBottomSheet = ({
   };
 
   return (
-    <BottomSheet open={open} onOpenChange={onOpenChange}>
-      <div className='mt-6 flex items-stretch gap-4'>
+    <BottomSheet open={open} onOpenChange={onOpenChange} className='bg-white'>
+      <div className='mt-8 pb-2 flex items-stretch gap-4'>
         <WheelSelectDate options={yearOptions} value={value.year} onChange={handleYearChange} />
         <WheelSelectDate options={monthOptions} value={value.month} onChange={handleMonthChange} />
         <WheelSelectDate
