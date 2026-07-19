@@ -53,17 +53,17 @@ export const healthConcernItems = [
   },
   {
     id: 'bone',
-    label: '뼈/관절 건강',
+    label: '뼈/관절',
     icon: BoneJointIcon,
   },
   {
     id: 'blood',
-    label: '혈압/혈관 건강',
+    label: '혈압/혈관',
     icon: CardiovascularIcon,
   },
   {
     id: 'stress',
-    label: '스트레스 관리',
+    label: '스트레스',
     icon: StressIcon,
   },
   {
@@ -73,7 +73,7 @@ export const healthConcernItems = [
   },
   {
     id: 'hair',
-    label: '탈모/모발 건강',
+    label: '탈모/모발',
     icon: HairHealthIcon,
   },
   {
@@ -83,7 +83,7 @@ export const healthConcernItems = [
   },
   {
     id: 'exercise',
-    label: '운동 능력 향상',
+    label: '운동 능력',
     icon: ExercisePerformanceIcon,
   },
 ];

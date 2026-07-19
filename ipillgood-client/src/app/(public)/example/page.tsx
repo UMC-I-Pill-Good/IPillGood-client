@@ -54,6 +54,14 @@ const ExamplePage = () => {
         </button>
 
         <TextButton type='button' text='텍스트' variant='primary' size='xl' className='w-88.5' />
+        <TextButton type='button' text='텍스트' variant='semantic' size='xl' className='w-88.5' />
+        <TextButton
+          type='button'
+          text='텍스트'
+          variant='semanticOutline'
+          size='xl'
+          className='w-88.5'
+        />
         <TextButton type='button' text='텍스트' variant='primary' size='lg' className='w-63.5' />
         <TextButton type='button' text='텍스트' variant='primary' size='md' className='w-63.5' />
         <TextButton

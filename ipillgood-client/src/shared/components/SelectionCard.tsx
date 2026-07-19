@@ -17,7 +17,7 @@ interface SelectionCardProps {
 }
 
 const selectionCardVariants = cva(
-  'group flex glass h-28 min-w-0 flex-col items-center gap-2 rounded-2xl bg-white/50 px-3 py-3 text-center transition-all hover:border-transparent hover:bg-secondary/50 active:bg-secondary/70',
+  'group flex glass h-28 min-w-0 flex-col items-center gap-2 rounded-2xl bg-white/50 p-3 text-center transition-all hover:border-transparent hover:bg-secondary/50 active:bg-secondary/70',
   {
     variants: {
       selected: {
