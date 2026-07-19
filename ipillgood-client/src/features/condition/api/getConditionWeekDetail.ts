@@ -1,7 +1,7 @@
 import { type ConditionWeekDetailResponse } from '../types/condition';
 
 /**
- * 전달받은 YYYY-MM-DD 주 시작일로부터 6일 후의 주 종료일을 계산합니다.
+ * 전달받은 YYYY-MM-DD 주 시작일로부터 6일 후의 주 종료일을 UTC 기준으로 안전하게 계산합니다.
  */
 const calculateWeekEndDate = (startDateStr: string): string => {
   try {
@@ -9,10 +9,11 @@ const calculateWeekEndDate = (startDateStr: string): string => {
     if (isNaN(date.getTime())) {
       return '2026-05-31';
     }
-    date.setDate(date.getDate() + 6);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+    // 타임존 시차에 따른 날짜 밀림 방지를 위해 UTC 전용 메서드 사용
+    date.setUTCDate(date.getUTCDate() + 6);
+    const year = date.getUTCFullYear();
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(date.getUTCDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   } catch {
     return '2026-05-31';
