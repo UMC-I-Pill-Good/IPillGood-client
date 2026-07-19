@@ -9,7 +9,7 @@ const HealthConcernStep = () => {
   const { selectedItems, handleSelect } = useSelectable({ max: 3 });
 
   return (
-    <section>
+    <section className='pb-8'>
       <StepHeader
         title='평소 건강 고민이 무엇인가요?'
         desc='관심 분야를 선택해주세요. (최대 3개 선택)'

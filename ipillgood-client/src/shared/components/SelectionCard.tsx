@@ -13,6 +13,7 @@ interface SelectionCardProps {
   isSelected: boolean;
   onClick: (id: string) => void;
   className?: string;
+  hasIconBackground?: boolean;
 }
 
 const selectionCardVariants = cva(
@@ -31,16 +32,33 @@ const selectionCardVariants = cva(
 );
 
 const iconVariants = cva(
-  'flex h-[54px] w-[54px] shrink-0 items-center justify-center rounded-full transition-colors',
+  'flex h-[54px] w-[54px] shrink-0 items-center justify-center transition-colors',
   {
     variants: {
       selected: {
-        true: 'bg-secondary/30',
-        false: 'bg-secondary-200 group-hover:bg-secondary/30 group-active:bg-secondary/40',
+        true: '',
+        false: '',
+      },
+      hasIconBackground: {
+        true: 'rounded-full',
+        false: '',
       },
     },
+    compoundVariants: [
+      {
+        selected: true,
+        hasIconBackground: true,
+        className: 'bg-secondary/30',
+      },
+      {
+        selected: false,
+        hasIconBackground: true,
+        className: 'bg-secondary-200 group-hover:bg-secondary/30 group-active:bg-secondary/40',
+      },
+    ],
     defaultVariants: {
       selected: false,
+      hasIconBackground: true,
     },
   },
 );
@@ -53,6 +71,7 @@ const SelectionCard = ({
   isSelected,
   onClick,
   className,
+  hasIconBackground = true,
 }: SelectionCardProps) => {
   return (
     <button
@@ -64,7 +83,12 @@ const SelectionCard = ({
       {image ? (
         <Image src={image} alt={label} className='' />
       ) : (
-        <span className={iconVariants({ selected: isSelected })} aria-hidden='true'>
+        <span
+          className={iconVariants({
+            selected: isSelected,
+            hasIconBackground,
+          })}
+        >
           {Icon && <Icon />}
         </span>
       )}

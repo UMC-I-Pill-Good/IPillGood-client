@@ -1,4 +1,3 @@
-import { HorizonIcon, MinusCircleIcon } from '@/assets';
 import vitaminImage from '@/assets/images/vitamin.png';
 
 export const supplementItems = [
@@ -20,6 +19,4 @@ export const supplementItems = [
   { id: 'folic-acid', label: '엽산', image: vitaminImage },
   { id: 'arginine', label: '아르기닌', image: vitaminImage },
   { id: 'biotin', label: '비오틴', image: vitaminImage },
-  { id: 'etc', label: '기타', icon: HorizonIcon },
-  { id: 'none', label: '섭취 중인\n영양제 없음', icon: MinusCircleIcon },
 ];
