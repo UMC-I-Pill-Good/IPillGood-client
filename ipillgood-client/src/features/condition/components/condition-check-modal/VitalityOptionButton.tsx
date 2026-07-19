@@ -46,6 +46,7 @@ const VitalityOptionButton = ({
     <button
       type='button'
       aria-label={`${score}점 ${label}`}
+      aria-pressed={isSelected}
       onClick={handleSelect}
       className={clsx(
         'flex min-w-0 flex-1 flex-col items-center justify-center gap-2 transition-transform duration-200 active:scale-95',
@@ -63,11 +64,13 @@ const VitalityOptionButton = ({
         {renderIcon()}
       </span>
 
-      <span className='flex w-full flex-col items-center gap-1' style={{ fontFamily: 'Pretendard, sans-serif' }}>
+      <span
+        className='flex w-full flex-col items-center gap-1'
+        style={{ fontFamily: 'Pretendard, sans-serif' }}
+      >
         <span className='typo-caption-6 text-center text-[#111111] leading-none'>
           {score}
         </span>
-
         <span className='typo-caption-7 w-full whitespace-nowrap text-center text-[#111111] leading-3'>
           {label}
         </span>

@@ -33,13 +33,16 @@ const ConditionSleepTimeModal = ({
   const [selectedMinute, setSelectedMinute] = useState<number>(initialMinutes);
 
   useScrollLock();
-  useEscapeKey(onClose);
+  // 제출(POST) 중에는 ESC 닫기 방지
+  useEscapeKey(isSubmitting ? () => {} : onClose);
 
   if (!isOpen) {
     return null;
   }
 
+  // 제출(POST) 중에는 바깥 배경 클릭 닫기 방지
   const handleBackdropClick = () => {
+    if (isSubmitting) return;
     onClose();
   };
 

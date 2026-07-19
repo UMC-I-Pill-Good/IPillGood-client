@@ -8,7 +8,7 @@ interface ConditionState {
   setSelectedWeekIndex: (index: number | null) => void;
   closeModal: () => void;
 
-  // 홈 요약 데이터 상태
+  // 홈 요약 데이터 상태 (1회만 API로 호출)
   homeSummaryData: ConditionHomeSummaryResult;
   setHomeSummaryData: (data: ConditionHomeSummaryResult) => void;
   markWeekCompleted: () => void;
@@ -32,14 +32,15 @@ const DEFAULT_VITALITY_SCORE = 3;
 const DEFAULT_SLEEP_HOURS = 7;
 const DEFAULT_SLEEP_MINUTES = 30;
 
+// API 로드 전/실패 시 가짜 유저 데이터를 기본값으로 보여주지 않도록 초기화
 const DEFAULT_HOME_SUMMARY: ConditionHomeSummaryResult = {
   currentWeekCompleted: false,
   monthlyGraph: [],
   monthlySummary: {
-    avgVitalityScore: 3.0,
-    avgSleepHours: 4.5,
-    intakeDays: 3,
-    intakeTotalDays: 7,
+    avgVitalityScore: null,
+    avgSleepHours: null,
+    intakeDays: 0,
+    intakeTotalDays: 0,
   },
 };
 

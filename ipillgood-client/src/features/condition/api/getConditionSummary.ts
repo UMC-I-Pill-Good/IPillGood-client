@@ -20,6 +20,7 @@ export const getConditionSummary = async (
         { weekNo: 2, weekStartDate: '2026-05-11', conditionScore: 3.1 },
         { weekNo: 3, weekStartDate: '2026-05-18', conditionScore: 4.0 },
         { weekNo: 4, weekStartDate: '2026-05-25', conditionScore: 3.8 },
+        { weekNo: 5, weekStartDate: '2026-06-01', conditionScore: 5.0 },
       ],
       monthlySummary: {
         avgVitalityScore: 3.0,

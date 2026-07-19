@@ -21,11 +21,16 @@ interface ConditionGraphSvgProps {
 const ConditionGraphSvg = ({
   currentMonth,
   graphPointList,
-  graphLinePoints,
   hoveredPointIndex,
   onHoverPoint,
   onSelectPoint,
 }: ConditionGraphSvgProps) => {
+  // points 좌표 배열을 SVG d 파스(Path) 문자열 명령어로 변환 (M x y L x y ...)
+  const pathD = [
+    `M ${AXIS_LEFT} ${AXIS_BOTTOM}`,
+    ...graphPointList.map(({ x, y }) => `L ${x} ${y}`),
+  ].join(' ');
+
   return (
     <svg
       role='group'
@@ -80,14 +85,15 @@ const ConditionGraphSvg = ({
         strokeWidth='1'
       />
 
-      {/* 꺾은선 다각형 타일 */}
-      <polyline
-        points={graphLinePoints}
+      {/* 꺾은선 패스 (d 경로가 바뀔 때 선도 점과 똑같이 부드럽게 스르륵 올라가는 모션) */}
+      <path
+        d={pathD}
         fill='none'
         stroke='var(--color-neutral-800)'
         strokeWidth='1'
         strokeLinecap='round'
         strokeLinejoin='round'
+        style={{ transition: 'd 0.5s cubic-bezier(0.4, 0, 0.2, 1)' }}
       />
 
       {/* 주차별 데이터 포인트 점 및 호버 효과 */}
@@ -103,10 +109,11 @@ const ConditionGraphSvg = ({
               stroke='#B1B8BE'
               strokeWidth='1.5'
               pointerEvents='none'
+              style={{ transition: 'all 0.3s ease-out' }}
             />
           )}
 
-          {/* 데이터 포인트 점 */}
+          {/* 데이터 포인트 점 (위치 변화 시 점과 선이 완벽 동기화되어 상승) */}
           <circle
             cx={condition.x}
             cy={condition.y}
@@ -116,14 +123,12 @@ const ConditionGraphSvg = ({
                 ? '#6580EE'
                 : 'var(--primary, #7F99FF)'
             }
-            style={
-              hoveredPointIndex === index
-                ? {
-                    filter:
-                      'drop-shadow(0px 0px 5px rgba(126, 131, 135, 0.61))',
-                  }
-                : undefined
-            }
+            style={{
+              transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+              ...(hoveredPointIndex === index
+                ? { filter: 'drop-shadow(0px 0px 5px rgba(126, 131, 135, 0.61))' }
+                : {}),
+            }}
             pointerEvents='none'
           />
 
@@ -134,6 +139,7 @@ const ConditionGraphSvg = ({
             width='24'
             height='24'
             className='overflow-visible'
+            style={{ transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)' }}
           >
             <button
               type='button'

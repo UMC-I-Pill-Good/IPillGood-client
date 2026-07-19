@@ -4,7 +4,6 @@ import ConditionSummaryCard from './ConditionSummaryCard';
 import { useConditionFlow } from '../../hooks/useConditionFlow';
 
 interface ConditionSummarySectionProps {
-  dateRange?: string;
   averageVitality?: number;
   averageSleepHours?: number;
   intakeDays?: number;
@@ -12,7 +11,6 @@ interface ConditionSummarySectionProps {
 }
 
 const ConditionSummarySection = ({
-  dateRange = '5/1~5/7',
   averageVitality: propVitality,
   averageSleepHours: propSleep,
   intakeDays: propIntakeDays,
@@ -21,10 +19,11 @@ const ConditionSummarySection = ({
   const { homeSummaryData } = useConditionFlow();
   const { monthlySummary } = homeSummaryData;
 
-  const averageVitality = propVitality ?? monthlySummary.avgVitalityScore ?? 3;
-  const averageSleepHours = propSleep ?? monthlySummary.avgSleepHours ?? 4.5;
-  const intakeDays = propIntakeDays ?? monthlySummary.intakeDays;
-  const totalDays = propTotalDays ?? monthlySummary.intakeTotalDays;
+  // 초기 0/null 상태일 때 강제로 3, 4.5로 덮어쓰지 않고 0으로 일치
+  const averageVitality = propVitality ?? monthlySummary.avgVitalityScore ?? 0;
+  const averageSleepHours = propSleep ?? monthlySummary.avgSleepHours ?? 0;
+  const intakeDays = propIntakeDays ?? monthlySummary.intakeDays ?? 0;
+  const totalDays = propTotalDays ?? monthlySummary.intakeTotalDays ?? 7;
 
   return (
     <section className='flex w-full flex-col gap-2 px-5 pt-4 pb-0'>
@@ -32,10 +31,6 @@ const ConditionSummarySection = ({
         <h2 className='typo-body-5 whitespace-nowrap text-[#111111]'>
           이번 달 컨디션 요약
         </h2>
-
-        <p className='typo-caption-7 whitespace-nowrap text-[#757575]'>
-          ({dateRange})
-        </p>
       </div>
 
       <div className='grid h-[91px] w-full grid-cols-3 gap-2'>

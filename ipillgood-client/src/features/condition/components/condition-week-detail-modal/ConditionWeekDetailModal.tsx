@@ -32,28 +32,32 @@ const ConditionWeekDetailModal = ({
   useScrollLock();
   useEscapeKey(onClose);
 
-  const [detailData, setDetailData] = useState<ConditionWeekDetailResult>({
-    weekStartDate,
-    weekEndDate: '',
-    conditionScore: vitality,
-    avgSleepHours: sleepHours,
-    intakeCompletedDays: intakeDays,
-    intakeTotalDays: totalDays,
-  });
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [detailData, setDetailData] = useState<ConditionWeekDetailResult | null>(null);
 
   // GET /conditions/{weekStartDate} 특정 주차 상세 API 연동
   useEffect(() => {
+    let isMounted = true;
     if (!weekStartDate) return;
 
     getConditionWeekDetail(weekStartDate)
       .then((res) => {
-        if (res.isSuccess && res.result) {
+        if (isMounted && res.isSuccess && res.result) {
           setDetailData(res.result);
         }
       })
       .catch((err) => {
         console.error('특정 주차 컨디션 상세 조회 중 오류:', err);
+      })
+      .finally(() => {
+        if (isMounted) {
+          setIsLoading(false);
+        }
       });
+
+    return () => {
+      isMounted = false;
+    };
   }, [weekStartDate]);
 
   const handleBackdropClick = () => {
@@ -64,10 +68,26 @@ const ConditionWeekDetailModal = ({
     event.stopPropagation();
   };
 
-  const displayVitality = detailData.conditionScore ?? vitality;
-  const displaySleepHours = detailData.avgSleepHours ?? sleepHours;
-  const displayIntakeDays = detailData.intakeCompletedDays ?? intakeDays;
-  const displayTotalDays = detailData.intakeTotalDays ?? totalDays;
+  // API가 로드된 경우 API의 값을 우선 사용하고, null인 경우 '-'로 명확히 표시
+  const displayVitality = isLoading
+    ? vitality
+    : detailData?.conditionScore !== undefined
+      ? detailData.conditionScore ?? '-'
+      : vitality;
+
+  const displaySleepHours = isLoading
+    ? sleepHours
+    : detailData?.avgSleepHours !== undefined
+      ? detailData.avgSleepHours ?? '-'
+      : sleepHours;
+
+  const displayIntakeDays = isLoading
+    ? intakeDays
+    : detailData?.intakeCompletedDays ?? intakeDays;
+
+  const displayTotalDays = isLoading
+    ? totalDays
+    : detailData?.intakeTotalDays ?? totalDays;
 
   return (
     <div

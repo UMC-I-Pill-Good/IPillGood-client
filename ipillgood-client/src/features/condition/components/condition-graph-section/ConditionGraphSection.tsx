@@ -3,13 +3,13 @@
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useConditionStore } from '../../store/useConditionStore';
+import { useConditionFlow } from '../../hooks/useConditionFlow';
 
 import { type ConditionGraphPointType } from '../../types/condition';
 import ConditionWeekDetailModal from '../condition-week-detail-modal/ConditionWeekDetailModal';
 import ConditionGraphSvg from './ConditionGraphSvg';
 
 import {
-  DUMMY_CONDITION_GRAPH_DATA,
   CURRENT_MONTH,
   AXIS_LEFT,
   AXIS_BOTTOM,
@@ -21,29 +21,58 @@ const getScoreY = (score: number) => {
   return AXIS_BOTTOM - score * SCORE_INTERVAL;
 };
 
-const graphPointList: ConditionGraphPointType[] =
-  DUMMY_CONDITION_GRAPH_DATA.map((condition, index) => ({
-    ...condition,
-    x: WEEK_X_POSITION_LIST[index] ?? AXIS_LEFT,
-    y: getScoreY(condition.score),
-  }));
-
-const graphLinePoints = [
-  `${AXIS_LEFT},${AXIS_BOTTOM}`,
-  ...graphPointList.map(({ x, y }) => `${x},${y}`),
-].join(' ');
-
 const ConditionGraphSection = () => {
   const { selectedWeekIndex, setSelectedWeekIndex, closeModal } =
     useConditionStore();
+  const { homeSummaryData } = useConditionFlow();
   const [hoveredPointIndex, setHoveredPointIndex] = useState<number | null>(
     null,
   );
 
+  const monthlyGraphData = homeSummaryData.monthlyGraph;
+
+  // 초기 0일 때/로드 전 일관된 0점 기본 데이터 렌더링
+  const sourceGraphData =
+    monthlyGraphData && monthlyGraphData.length > 0
+      ? monthlyGraphData.map((item) => {
+          const score = item.conditionScore ?? 0;
+          return {
+            weekLabel: `${item.weekNo}주차`,
+            weekNo: item.weekNo,
+            weekStartDate: item.weekStartDate,
+            score,
+            vitality: score,
+            sleepHours: 0,
+            intakeDays: 0,
+            totalDays: 7,
+          };
+        })
+      : [1, 2, 3, 4, 5].map((weekNo) => ({
+          weekLabel: `${weekNo}주차`,
+          weekNo,
+          weekStartDate: undefined,
+          score: 0,
+          vitality: 0,
+          sleepHours: 0,
+          intakeDays: 0,
+          totalDays: 7,
+        }));
+
+  const graphPointList: ConditionGraphPointType[] = sourceGraphData.map(
+    (condition, index) => ({
+      ...condition,
+      x: WEEK_X_POSITION_LIST[index] ?? AXIS_LEFT,
+      y: getScoreY(condition.score),
+    }),
+  );
+
+  const graphLinePoints = [
+    `${AXIS_LEFT},${AXIS_BOTTOM}`,
+    ...graphPointList.map(({ x, y }) => `${x},${y}`),
+  ].join(' ');
+
   const selectedPoint =
-    selectedWeekIndex !== null
-      ? DUMMY_CONDITION_GRAPH_DATA[selectedWeekIndex]
-      : null;
+    selectedWeekIndex !== null ? sourceGraphData[selectedWeekIndex] : null;
 
   const handlePointClick = (index: number) => {
     setSelectedWeekIndex(index);
@@ -102,12 +131,12 @@ const ConditionGraphSection = () => {
         </div>
       </section>
 
-      {/* 특정 주차 상세 모달 */}
-      {selectedPoint && (
+      {/* 선택된 주차의 시작일(weekStartDate)이 존재할 때만 상세 모달 렌더링 */}
+      {selectedPoint && selectedPoint.weekStartDate && (
         <ConditionWeekDetailModal
           month={CURRENT_MONTH}
           weekLabel={selectedPoint.weekLabel}
-          weekStartDate={selectedPoint.weekStartDate ?? '2026-05-25'}
+          weekStartDate={selectedPoint.weekStartDate}
           vitality={selectedPoint.vitality}
           sleepHours={selectedPoint.sleepHours}
           intakeDays={selectedPoint.intakeDays}
