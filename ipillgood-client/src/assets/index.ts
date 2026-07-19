@@ -39,6 +39,9 @@ export { default as WomenHealthIcon } from './icons/survey/womenhealth.svg';
 export { default as ExercisePerformanceIcon } from './icons/survey/exercise.svg';
 export { default as MinusCircleIcon } from './icons/survey/minusCircle.svg';
 export { default as HorizonIcon } from './icons/survey/horizon.svg';
+export { default as CheckCircleIcon } from './icons/survey/check-circle.svg';
+export { default as BiggerBadgeIcon } from './icons/survey/badge-bigger.svg';
+export { default as BulbIcon } from './icons/survey/bulb.svg';
 
 /* condition */
 export { default as ConditionVitalityIcon } from './icons/condition-vitality.svg';

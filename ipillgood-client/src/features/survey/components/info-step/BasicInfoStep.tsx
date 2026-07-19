@@ -179,7 +179,9 @@ const BasicInfoStep = () => {
       </section>
 
       <section className='pb-4 space-y-2'>
-        <h5 className='typo-body-5 ml-1'>3. 직군을 선택해주세요.</h5>
+        <h5 className='typo-body-5 ml-1'>
+          3. 직군을 선택해주세요. <span className='text-semantic'>*</span>
+        </h5>
 
         <div className='flex flex-wrap items-center gap-2 mt-3'>
           {jobOptions.map((option) => (

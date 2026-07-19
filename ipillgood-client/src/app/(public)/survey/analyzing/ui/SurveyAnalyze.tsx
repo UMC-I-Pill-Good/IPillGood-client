@@ -4,6 +4,8 @@ import { Background } from '@/app/(public)/(landing)/ui/Background';
 import Image from 'next/image';
 import ManhwaImage from '@/assets/images/manhwa.png';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const container = {
   hidden: {},
@@ -29,6 +31,16 @@ const item = {
 };
 
 const SurveyAnalyzePage = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.push('/survey/result');
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [router]);
+
   return (
     <main className='relative isolate flex h-screen justify-center overflow-hidden bg-[linear-gradient(225deg,#CBD6FF_0%,#92A8FF_59%,#92A8FF_80%,#7590ff_100%)] p-5'>
       <Background />
