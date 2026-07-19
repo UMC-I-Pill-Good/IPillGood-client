@@ -1,4 +1,4 @@
-import SortDropdown from './SortDropdown';
+import SortDropdownTrigger from './SortDropdownTrigger';
 import type { RankingUiSort } from '../../types/ranking';
 
 interface RankingToolbarProps {
@@ -18,7 +18,7 @@ const RankingToolbar = ({
           *실시간 구매 데이터 기반
         </p>
       </div>
-      <SortDropdown selectedSort={selectedSort} onSortChange={onSortChange} />
+      <SortDropdownTrigger selectedSort={selectedSort} onSortChange={onSortChange} />
     </section>
   );
 };

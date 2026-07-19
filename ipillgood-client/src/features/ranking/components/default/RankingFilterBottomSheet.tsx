@@ -67,8 +67,8 @@ const RankingFilterBottomSheet = ({
       variant={isSelected ? 'secondary' : 'assistive'}
       className={
         isSelected
-          ? 'h-8 rounded-[0.625rem] px-4 py-1 text-white shadow-none backdrop-blur-none'
-          : 'h-8 rounded-[0.625rem] border border-white bg-white/70 px-4 py-1 text-neutral-800 shadow-[4px_4px_4px_rgba(155,161,255,0.1)] saturate-150'
+          ? 'h-8 px-4 py-1 text-white shadow-none backdrop-blur-none'
+          : 'h-8 bg-white/70 px-4 py-1 text-neutral-800 shadow-[4px_4px_4px_rgba(155,161,255,0.1)] saturate-150'
       }
       onClick={onClick}
     />

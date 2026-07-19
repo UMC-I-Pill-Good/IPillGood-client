@@ -9,12 +9,15 @@ import {
 import type { RankingUiSort } from '../../types/ranking';
 import DropdownOptionMenu from './DropdownOptionMenu';
 
-interface SortDropdownProps {
+interface SortDropdownTriggerProps {
   selectedSort: RankingUiSort;
   onSortChange: (sort: RankingUiSort) => void;
 }
 
-const SortDropdown = ({ selectedSort, onSortChange }: SortDropdownProps) => {
+const SortDropdownTrigger = ({
+  selectedSort,
+  onSortChange,
+}: SortDropdownTriggerProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -73,4 +76,4 @@ const SortDropdown = ({ selectedSort, onSortChange }: SortDropdownProps) => {
   );
 };
 
-export default SortDropdown;
+export default SortDropdownTrigger;
