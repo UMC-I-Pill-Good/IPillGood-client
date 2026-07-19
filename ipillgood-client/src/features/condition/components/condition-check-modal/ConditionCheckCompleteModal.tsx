@@ -4,12 +4,11 @@ import { type MouseEvent } from 'react';
 import { MascotThumbsUpIcon } from '@/assets';
 import { IconButton, TextButton } from '@/shared/components';
 import { useEscapeKey, useScrollLock } from '@/shared/hooks';
-import { ChevronLeft, X } from 'lucide-react';
+import { X } from 'lucide-react';
 
 interface ConditionCheckCompleteModalProps {
   isOpen: boolean;
   userName?: string;
-  onBack: () => void;
   onClose: () => void;
   onViewGraph: () => void;
 }
@@ -17,7 +16,6 @@ interface ConditionCheckCompleteModalProps {
 const ConditionCheckCompleteModal = ({
   isOpen,
   userName = '00',
-  onBack,
   onClose,
   onViewGraph,
 }: ConditionCheckCompleteModalProps) => {
@@ -50,14 +48,8 @@ const ConditionCheckCompleteModal = ({
         onClick={handleModalClick}
         style={{ fontFamily: 'Pretendard, sans-serif' }}
       >
-        {/* Header - 공통 IconButton 사용 */}
-        <header className='flex h-9 w-full items-center justify-between px-5'>
-          <IconButton
-            icon={<ChevronLeft size={24} className='text-[#7E8387]' />}
-            ariaLabel='이전 단계로 이동'
-            onClick={onBack}
-          />
-
+        {/* Header - 4단계는 제출 완료 화면이므로 뒤로가기 버튼 없이 우측 X 닫기 버튼만 렌더링 */}
+        <header className='flex h-9 w-full items-center justify-end px-5'>
           <IconButton
             icon={<X size={24} className='text-[#7E8387]' />}
             ariaLabel='팝업 닫기'
@@ -80,12 +72,9 @@ const ConditionCheckCompleteModal = ({
 
             {/* Sub Info Message */}
             <p className='w-full text-center leading-normal'>
-              {/* 00님: Pretendard 18px Medium #7F99FF */}
               <span className='typo-body-5 text-primary-600'>{userName}님</span>
-              {/* 조사 '의': Pretendard 16px Regular #7E8387 */}
               <span className='typo-body-10 font-normal text-neutral-800'>의</span>
               <br />
-              {/* 안내 문장: Pretendard 16px Regular #7E8387 */}
               <span className='typo-body-10 font-normal text-neutral-800'>
                 월별 컨디션 변화를 확인해 보세요!
               </span>

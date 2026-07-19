@@ -26,7 +26,6 @@ const ConditionCheckModals = ({
     handleNextVitalityStep,
     handleBackToVitality,
     handleCompleteSleepStep,
-    handleBackToSleep,
     handleViewGraph,
   } = useConditionFlow();
 
@@ -71,12 +70,11 @@ const ConditionCheckModals = ({
         />
       )}
 
-      {/* 4단계 완료 축하 마스코트 팝업 모달 */}
+      {/* 4단계 완료 축하 마스코트 팝업 모달 (제출 완료 화면이므로 뒤로가기 불필요) */}
       {checkStep === 4 && (
         <ConditionCheckCompleteModal
           isOpen={true}
           userName={userName}
-          onBack={handleBackToSleep}
           onClose={closeCheckModal}
           onViewGraph={handleViewGraph}
         />
