@@ -1,10 +1,10 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
-import RatingStarIcon from '@/assets/icons/fi-rr-star.svg';
-import MedicineBottleImage from '@/assets/icons/S오메가3.svg';
+import { Omega3BottleIcon, RatingStarIcon } from '@/assets';
 import { Chip } from '@/shared/components';
-import type { RankingItemDto } from '../types/ranking';
+import type { RankingItemDto } from '../../types/ranking';
 import RankingBadge from './RankingBadge';
 
 interface SupplementProductCardProps {
@@ -27,19 +27,19 @@ const SupplementProductCard = ({
       <RankingBadge rank={displayRank} />
 
       <div className='flex min-w-0 flex-1 items-center gap-3 overflow-visible'>
-        <div className='ranking-medicine-image flex shrink-0 items-center justify-center overflow-visible'>
+        <div className='flex h-[4.375rem] w-[2.6875rem] shrink-0 items-center justify-center overflow-visible'>
           {shouldShowImage ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={imageUrl}
               alt={`${item.productName} 상품 이미지`}
-              className='ranking-medicine-image object-contain'
+              className='h-[4.375rem] w-[2.6875rem] object-contain'
               onError={() => setHasImageError(true)}
             />
           ) : (
-            <MedicineBottleImage
+            <Omega3BottleIcon
               aria-hidden='true'
-              className='ranking-medicine-image overflow-visible'
+              className='h-[4.375rem] w-[2.6875rem] overflow-visible'
             />
           )}
         </div>
@@ -50,13 +50,13 @@ const SupplementProductCard = ({
               <p className='min-w-0 flex-1 truncate typo-caption-6 text-black'>
                 {item.brand ?? ''}
               </p>
-              <button
-                type='button'
+              <Link
+                href='/'
                 aria-label={`${item.productName} 더보기`}
                 className='inline-flex shrink-0 items-center whitespace-nowrap typo-caption-7 text-neutral-800'
               >
                 더보기
-              </button>
+              </Link>
             </div>
 
             <h2 className='w-full truncate typo-body-9 text-black'>
@@ -75,6 +75,9 @@ const SupplementProductCard = ({
                 </span>
               </div>
             </div>
+            <p className='typo-caption-6 text-neutral-800'>
+              {item.price.toLocaleString('ko-KR')}원
+            </p>
           </div>
 
           <div className='flex w-full items-center justify-between'>

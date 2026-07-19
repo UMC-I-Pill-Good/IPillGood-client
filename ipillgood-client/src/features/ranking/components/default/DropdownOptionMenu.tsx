@@ -19,7 +19,7 @@ const DropdownOptionMenu = <T extends string>({
     <div
       role='listbox'
       className={cn(
-        'ranking-dropdown-glass absolute right-0 top-full z-20 mt-1 h-auto overflow-hidden rounded-lg p-0',
+        'glass absolute right-0 top-full z-20 mt-1 flex h-auto flex-col overflow-hidden rounded-lg bg-white/80 p-0 shadow-[4px_4px_12px_rgba(126,131,135,0.16)]',
         className,
       )}
     >

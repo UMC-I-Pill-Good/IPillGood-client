@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import DropdownIcon from '@/assets/icons/dropdown.svg';
+import { DropdownIcon } from '@/assets';
 import {
   RANKING_UI_SORT_LABELS,
   RANKING_UI_SORT_OPTIONS,
-} from '../constants/sortOptions';
-import type { RankingUiSort } from '../types/ranking';
+} from '../../constants/sortOptions';
+import type { RankingUiSort } from '../../types/ranking';
 import DropdownOptionMenu from './DropdownOptionMenu';
 
 interface SortDropdownProps {
@@ -51,7 +51,7 @@ const SortDropdown = ({ selectedSort, onSortChange }: SortDropdownProps) => {
     <div ref={dropdownRef} className='relative shrink-0'>
       <button
         type='button'
-        className='ranking-control-glass inline-flex h-8 shrink-0 items-center justify-center gap-1 whitespace-nowrap rounded-lg p-2 typo-caption-2 text-neutral-800'
+        className='glass h-8 rounded-lg bg-transparent p-2 typo-caption-2 text-neutral-800 shadow-[4px_4px_4px_rgba(155,161,255,0.1)]'
         aria-label='정렬 방식'
         aria-haspopup='listbox'
         aria-expanded={isOpen}

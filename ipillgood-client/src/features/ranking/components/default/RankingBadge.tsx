@@ -19,7 +19,7 @@ const RankingBadge = ({ rank }: RankingBadgeProps) => {
 
   return (
     <div
-      className='ranking-badge-container flex shrink-0 items-center justify-center overflow-visible'
+      className='flex h-6 w-[1.3125rem] shrink-0 items-center justify-center overflow-visible'
       aria-label={`${rank}위`}
     >
       {isTopRank ? (
@@ -32,7 +32,7 @@ const RankingBadge = ({ rank }: RankingBadgeProps) => {
           <span className='relative mr-[-0.1875rem] size-[1.1875rem] shrink-0 overflow-visible'>
             <BadgeIcon
               aria-hidden='true'
-              className='ranking-badge-mark absolute left-[29.17%] top-[8.33%] block overflow-visible'
+              className='absolute left-[29.17%] top-[8.33%] block h-[0.9895625rem] w-[0.4948125rem] overflow-visible'
             />
           </span>
           <span className='shrink-0 typo-body-2 leading-normal'>

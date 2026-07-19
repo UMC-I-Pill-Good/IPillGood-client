@@ -1,7 +1,7 @@
-import RankingPageContent from '@/features/ranking/components/RankingPageContent';
+import RankingContainer from '@/features/ranking/components/default/RankingContainer';
 
 const RankingPage = () => {
-  return <RankingPageContent />;
+  return <RankingContainer />;
 };
 
 export default RankingPage;

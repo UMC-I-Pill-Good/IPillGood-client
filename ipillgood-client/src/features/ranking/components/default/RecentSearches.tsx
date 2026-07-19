@@ -1,6 +1,6 @@
 'use client';
 
-import CrossSmallIcon from '@/assets/icons/fi-rr-cross-small.svg';
+import { CrossSmallIcon } from '@/assets';
 
 interface RecentSearchesProps {
   searches: string[];
@@ -34,7 +34,7 @@ const RecentSearches = ({
             key={searchTerm}
             className='flex h-8 items-start justify-end'
           >
-            <span className='ranking-chip-glass inline-flex h-8 items-center justify-center rounded-full px-4 typo-caption-2 text-neutral-800'>
+            <span className='glass h-8 rounded-full bg-white/50 px-4 typo-caption-2 text-neutral-800 shadow-[0_4px_4px_rgba(126,131,135,0.1)]'>
               {searchTerm}
             </span>
             <button

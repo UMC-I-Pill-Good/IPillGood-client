@@ -1,5 +1,5 @@
 import SortDropdown from './SortDropdown';
-import type { RankingUiSort } from '../types/ranking';
+import type { RankingUiSort } from '../../types/ranking';
 
 interface RankingToolbarProps {
   selectedSort: RankingUiSort;

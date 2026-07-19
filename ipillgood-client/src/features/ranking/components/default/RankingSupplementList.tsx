@@ -1,4 +1,4 @@
-import type { RankingItemDto } from '../types/ranking';
+import type { RankingItemDto } from '../../types/ranking';
 import SupplementProductCard from './SupplementProductCard';
 
 interface RankingSupplementListProps {
