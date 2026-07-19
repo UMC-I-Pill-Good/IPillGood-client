@@ -8,7 +8,9 @@ import useSelectable from '../hooks/useSelectable';
 import { useState } from 'react';
 
 const SupplementStep = () => {
-  const { selectedItems, handleSelect } = useSelectable();
+  const { selectedItems, handleSelect } = useSelectable({
+    exclusiveId: 'none',
+  });
   const [isOpenSheet, setIsOpenSheet] = useState(false);
 
   return (
@@ -66,7 +68,13 @@ const SupplementStep = () => {
             ))}
           </div>
 
-          <TextButton type='submit' text='선택 완료' size='xl' className=' w-full' />
+          <TextButton
+            type='submit'
+            text='선택 완료'
+            size='xl'
+            className=' w-full'
+            onClick={() => setIsOpenSheet(false)}
+          />
         </div>
       </BottomSheet>
     </section>
