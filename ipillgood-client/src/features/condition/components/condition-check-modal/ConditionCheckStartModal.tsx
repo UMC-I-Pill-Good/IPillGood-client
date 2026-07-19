@@ -1,6 +1,6 @@
 'use client';
 
-import { type MouseEvent } from 'react';
+import { useRef } from 'react';
 import {
   ConditionCheckCircleIcon,
   ConditionVitalityIcon,
@@ -8,7 +8,7 @@ import {
   ConditionIntakeIcon,
 } from '@/assets';
 import { IconButton, TextButton } from '@/shared/components';
-import { useEscapeKey, useScrollLock } from '@/shared/hooks';
+import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
 import { X } from 'lucide-react';
 import ConditionCheckRow from './ConditionCheckRow';
 
@@ -23,33 +23,26 @@ const ConditionCheckStartModal = ({
   onClose,
   onStart,
 }: ConditionCheckStartModalProps) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+
   useScrollLock();
   useEscapeKey(onClose);
+  useOutsideClick(contentRef, onClose);
 
   if (!isOpen) {
     return null;
   }
 
-  const handleBackdropClick = () => {
-    onClose();
-  };
-
-  const handleModalClick = (event: MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-  };
-
   return (
     <div
       className='fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-5'
-      onClick={handleBackdropClick}
-      role='presentation'
+      role='dialog'
+      aria-modal='true'
+      aria-label='컨디션 체크 시작 팝업'
     >
       <div
-        role='dialog'
-        aria-modal='true'
-        aria-label='컨디션 체크 시작 팝업'
+        ref={contentRef}
         className='flex w-[351px] flex-col rounded-[20px] border border-white bg-white py-4 shadow-[4px_4px_40px_0_rgba(126,131,135,0.2)]'
-        onClick={handleModalClick}
         style={{ fontFamily: 'Pretendard, sans-serif' }}
       >
         {/* Header - 공통 IconButton 사용 */}
@@ -58,8 +51,7 @@ const ConditionCheckStartModal = ({
             icon={<X size={24} className='text-[#7E8387]' />}
             ariaLabel='팝업 닫기'
             onClick={onClose}
-          >
-          </IconButton>
+          />
         </header>
 
         {/* Body */}

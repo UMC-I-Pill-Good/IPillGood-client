@@ -15,8 +15,8 @@ const ConditionCheckRow = ({
     <div className='flex h-6 w-full items-center justify-between'>
       {/* Left Group */}
       <div className='flex h-6 items-center gap-2'>
-        <div className='relative size-6 shrink-0 flex items-center justify-center'>
-          <Icon className='size-6 shrink-0' />
+        <div className='flex size-6 shrink-0 items-center justify-center'>
+          <Icon className='shrink-0' />
         </div>
 
         <span className='typo-body-10 text-[#111111]'>

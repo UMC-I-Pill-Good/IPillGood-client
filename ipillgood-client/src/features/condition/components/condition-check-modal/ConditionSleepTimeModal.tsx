@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, type MouseEvent } from 'react';
+import { useRef, useState } from 'react';
 import { IconButton, TextButton } from '@/shared/components';
-import { useEscapeKey, useScrollLock } from '@/shared/hooks';
+import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
 import { ChevronLeft, X } from 'lucide-react';
 import {
   HOURS_LIST,
@@ -29,26 +29,18 @@ const ConditionSleepTimeModal = ({
   onClose,
   onComplete,
 }: ConditionSleepTimeModalProps) => {
+  const contentRef = useRef<HTMLDivElement>(null);
   const [selectedHour, setSelectedHour] = useState<number>(initialHours);
   const [selectedMinute, setSelectedMinute] = useState<number>(initialMinutes);
 
   useScrollLock();
-  // 제출(POST) 중에는 ESC 닫기 방지
+  // 제출(POST) 중에는 ESC 닫기 및 바깥 클릭 닫기 방지
   useEscapeKey(isSubmitting ? () => {} : onClose);
+  useOutsideClick(contentRef, isSubmitting ? () => {} : onClose);
 
   if (!isOpen) {
     return null;
   }
-
-  // 제출(POST) 중에는 바깥 배경 클릭 닫기 방지
-  const handleBackdropClick = () => {
-    if (isSubmitting) return;
-    onClose();
-  };
-
-  const handleModalClick = (event: MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-  };
 
   const handleSelectHour = (hour: number) => {
     setSelectedHour(hour);
@@ -66,15 +58,13 @@ const ConditionSleepTimeModal = ({
   return (
     <div
       className='fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-5'
-      onClick={handleBackdropClick}
-      role='presentation'
+      role='dialog'
+      aria-modal='true'
+      aria-label='평균 수면 시간 선택 팝업'
     >
       <div
-        role='dialog'
-        aria-modal='true'
-        aria-label='평균 수면 시간 선택 팝업'
+        ref={contentRef}
         className='flex w-[351px] flex-col items-center justify-center gap-8 rounded-[20px] border border-white bg-white py-4 shadow-[4px_4px_40px_0_rgba(126,131,135,0.2)]'
-        onClick={handleModalClick}
         style={{ fontFamily: 'Pretendard, sans-serif' }}
       >
         {/* Upper Content */}

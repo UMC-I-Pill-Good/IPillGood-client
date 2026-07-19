@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, type MouseEvent } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ConditionIntakeIcon, ConditionSleepIcon, ConditionVitalityIcon } from '@/assets';
 import { IconButton } from '@/shared/components';
-import { useEscapeKey, useScrollLock } from '@/shared/hooks';
+import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
 import { X } from 'lucide-react';
 import { getConditionWeekDetail } from '../../api/getConditionWeekDetail';
 import { type ConditionWeekDetailResult } from '../../types/condition';
@@ -29,8 +29,11 @@ const ConditionWeekDetailModal = ({
   totalDays,
   onClose,
 }: ConditionWeekDetailModalProps) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+
   useScrollLock();
   useEscapeKey(onClose);
+  useOutsideClick(contentRef, onClose);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [detailData, setDetailData] = useState<ConditionWeekDetailResult | null>(null);
@@ -60,14 +63,6 @@ const ConditionWeekDetailModal = ({
     };
   }, [weekStartDate]);
 
-  const handleBackdropClick = () => {
-    onClose();
-  };
-
-  const handleModalClick = (event: MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-  };
-
   // API가 로드된 경우 API의 값을 우선 사용하고, null인 경우 '-'로 명확히 표시
   const displayVitality = isLoading
     ? vitality
@@ -92,14 +87,12 @@ const ConditionWeekDetailModal = ({
   return (
     <div
       className='fixed inset-0 z-50 flex items-center justify-center bg-neutral-800/30'
-      onClick={handleBackdropClick}
-      role='presentation'
+      role='dialog'
+      aria-modal='true'
     >
       <div
-        role='dialog'
-        aria-modal='true'
+        ref={contentRef}
         className='flex h-[153px] w-[264px] flex-col gap-4 rounded-[20px] bg-white px-5 py-4 shadow-[4px_4px_40px_0_rgba(126,131,135,0.2)]'
-        onClick={handleModalClick}
       >
         <div className='flex h-9 w-full shrink-0 items-center justify-between'>
           <h3 className='typo-body-5 whitespace-nowrap text-[#111111]'>
