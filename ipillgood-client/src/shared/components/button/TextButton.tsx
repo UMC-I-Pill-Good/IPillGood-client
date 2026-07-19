@@ -11,9 +11,9 @@ const textButtonVariants = cva(
         secondary:
           'bg-secondary-600 text-white hover:bg-secondary-700 active:bg-secondary-800 backdrop-blur-xl',
         assistive:
-          'bg-white text-neutral-800 hover:bg-secondary-600/80 hover:text-white active:bg-secondary-600 active:text-white backdrop-blur-xl ring ring-white hover:ring-0 active:ring-0',
+          'bg-white text-neutral-800 hover:bg-secondary/70 hover:text-white active:bg-secondary-600 active:text-white backdrop-blur-xl ring ring-white hover:ring-transparent active:ring-transparent',
         outline:
-          'ring ring-secondary-600 text-secondary rounded-[10px] hover:bg-secondary-300 hover:text-white hover:ring-0 active:ring-0 active:bg-secondary-600 active:text-white backdrop-blur-xl',
+          'ring ring-secondary-600 text-secondary rounded-[10px] hover:bg-secondary/70 hover:text-white hover:ring-transparent active:ring-transparent active:bg-secondary-600 active:text-white backdrop-blur-xl',
       },
       size: {
         xl: 'typo-body-2 h-13',

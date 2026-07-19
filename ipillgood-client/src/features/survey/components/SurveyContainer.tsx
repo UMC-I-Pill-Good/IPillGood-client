@@ -33,6 +33,8 @@ const SurveyContainer = () => {
 
     // TODO: 설문 제출 API
     console.log('설문 완료');
+
+    router.push('/survey/analyzing');
   };
 
   return (

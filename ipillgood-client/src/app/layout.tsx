@@ -15,13 +15,6 @@ const pretendard = localFont({
   variable: '--font-pretendard',
 });
 
-const dmSans = localFont({
-  src: '../assets/fonts/DMSans-VariableFont_opsz,wght.ttf',
-  display: 'swap',
-  weight: '100 900',
-  variable: '--font-dm-sans',
-});
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ko'>
-      <body className={`${pretendard.variable} ${dmSans.variable} antialiased`}>
+      <body className={`${pretendard.variable} antialiased`}>
         <QueryProvider>{children}</QueryProvider>
       </body>
     </html>

@@ -137,7 +137,7 @@ const BasicInfoStep = () => {
               <p className='typo-caption-2'>생리 주기</p>
               <button
                 type='button'
-                className='ring ring-primary text-primary inline-flex items-center justify-center gap-1 typo-caption-2 rounded-[20px] pr-2 pl-2.5 h-7 w-18 outline-none transition hover:bg-primary-400 hover:text-white hover:ring-none active:text-white active:bg-primary shirnk-0 whitespace-nowrap'
+                className='ring ring-primary text-primary inline-flex items-center justify-center gap-1 typo-caption-2 rounded-[20px] pr-2 pl-2.5 h-7 w-18 outline-none transition hover:bg-primary-400 hover:text-white hover:ring-transparent active:text-white active:bg-primary shirnk-0 whitespace-nowrap'
                 onClick={() => setIsPeriodOpenDropDown((prev) => !prev)}
               >
                 {period}일
@@ -166,7 +166,7 @@ const BasicInfoStep = () => {
               <p className='typo-caption-2'>마지막 생리 시작일</p>
               <button
                 type='button'
-                className='ring ring-primary text-primary inline-flex items-center justify-center gap-1.5 typo-caption-2 rounded-[20px] pr-2 pl-2.5 h-7 w-28 outline-none transition hover:bg-primary-400 hover:text-white hover:ring-none active:text-white active:bg-primary shirnk-0 whitespace-nowrap'
+                className='ring ring-primary text-primary inline-flex items-center justify-center gap-1.5 typo-caption-2 rounded-[20px] pr-2 pl-2.5 h-7 w-28 outline-none transition hover:bg-primary-400 hover:text-white hover:ring-transparent active:text-white active:bg-primary shirnk-0 whitespace-nowrap'
                 onClick={() => setIsOpenDateSheet((prev) => !prev)}
               >
                 {selectedDate.year}.{String(selectedDate.month).padStart(2, '0')}.
