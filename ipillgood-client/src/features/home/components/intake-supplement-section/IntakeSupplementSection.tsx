@@ -29,7 +29,7 @@ const IntakeSupplementSection = () => {
         {/* TODO: 캐비닛 페이지로 이동 */}
         <Link href='/home' className='transition hover:brightness-90'>
           <div className='relative'>
-            <SupplementBottleIcon />
+            <SupplementBottleIcon width={43} height={70} />
             <div className='absolute left-1/2 -translate-x-1/2 top-7 flex flex-col items-center justify-center text-neutral-800 gap-1'>
               <Plus size={12} />
               <span className='typo-caption-6 leading-none!'>추가</span>

@@ -60,9 +60,12 @@ export { default as ConditionScore4Icon } from './icons/ConditionScore4Icon.svg'
 export { default as ConditionScore5Icon } from './icons/ConditionScore5Icon.svg';
 export { default as MascotThumbsUpIcon } from './icons/MascotThumbsUpIcon.svg';
 
-// home
+/* home */
 export { default as HeaderLogoIcon } from './icons/header-logo.svg';
 export { default as SupplementBottleIcon } from './icons/supplement-bottle.svg';
 export { default as CapsuleIcon } from './icons/capsule.svg';
 export { default as CapsuleGrayIcon } from './icons/capsule-gray.svg';
 export { default as Omega3BottleIcon } from './icons/omega3-bottle.svg';
+
+/* cabinet */
+export { default as EmptyBottleIcon } from './icons/cabinet/empty-bottle.svg';

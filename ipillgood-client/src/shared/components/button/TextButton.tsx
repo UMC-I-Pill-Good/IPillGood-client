@@ -53,6 +53,7 @@ const TextButton = ({
   return (
     <button
       type={type}
+      aria-label={text}
       onClick={onClick}
       disabled={disabled}
       className={cn(textButtonVariants({ size, variant }), className)}
