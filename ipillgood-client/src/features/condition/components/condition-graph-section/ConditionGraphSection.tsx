@@ -85,10 +85,17 @@ const ConditionGraphSection = () => {
   return (
     <>
       <section className='flex w-full flex-col px-5 py-4'>
-        <div className='flex w-full flex-col gap-2.5'>
-          <h2 className='typo-body-5 text-[#111111]'>
-            {CURRENT_MONTH}월 컨디션 변화 그래프
-          </h2>
+        {/* 헤더 타이틀과 카드의 간격: 8px (gap-2) */}
+        <div className='flex w-full flex-col gap-2'>
+          {/* 제목 텍스트와 보조 문구의 간격: 4px (gap-1) */}
+          <div className='flex w-full flex-col items-start gap-1'>
+            <h2 className='text-[18px] font-semibold leading-normal text-[#111111]'>
+              {CURRENT_MONTH}월 컨디션 변화 그래프
+            </h2>
+            <p className='text-[12px] font-medium leading-normal text-[#5DB791]'>
+              각 주차의 점을 클릭해 상세 정보를 확인해 보세요!
+            </p>
+          </div>
 
           <div className='relative h-[258px] w-full overflow-hidden rounded-[20px] border border-white bg-white/70 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'>
             {/* 상단 월 이동 헤더 */}
