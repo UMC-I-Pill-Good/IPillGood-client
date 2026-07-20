@@ -4,7 +4,9 @@ import { useState } from 'react';
 import { healthStateQuestions } from '@/features/survey/constants/healthState.constants';
 
 const HealthStateStep = () => {
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({});
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>(
+    Object.fromEntries(healthStateQuestions.map((question) => [question.id, ['없음']])),
+  );
 
   const handleSelect = (questionId: string, option: string) => {
     setSelectedOptions((prev) => {
@@ -18,11 +20,13 @@ const HealthStateStep = () => {
       // 다른 옵션 선택 시 "없음" 제거
       const next = current.filter((item) => item !== '없음');
 
+      const updated = next.includes(option)
+        ? next.filter((item) => item !== option)
+        : [...next, option];
+
       return {
         ...prev,
-        [questionId]: next.includes(option)
-          ? next.filter((item) => item !== option)
-          : [...next, option],
+        [questionId]: updated.length === 0 ? ['없음'] : updated,
       };
     });
   };

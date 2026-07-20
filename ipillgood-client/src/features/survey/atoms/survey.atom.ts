@@ -13,3 +13,10 @@ export const selectedDateAtom = atom({
   month: 7,
   day: 17,
 });
+
+export const lifestyleAtom = atom<Record<string, string>>({
+  smoking: '비흡연',
+  drinking: '비음주',
+  eating: '혼합',
+  workout: '거의 안 함',
+});
