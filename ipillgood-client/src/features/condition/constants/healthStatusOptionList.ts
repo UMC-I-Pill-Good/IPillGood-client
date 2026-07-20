@@ -88,6 +88,7 @@ export const HEALTH_SYSTEM_OPTION_LIST: HealthSystemType[] = [
     key: 'IMMUNE',
     label: '신체 방어\n및 면역계',
     icon: ImmuneDefenseIcon,
+    isTwoLine: true,
     bodyPartList: [
       { key: 'IMMUNITY', label: '면역' },
       { key: 'ANTIOXIDANT', label: '항산화' },
@@ -108,6 +109,7 @@ export const HEALTH_SYSTEM_OPTION_LIST: HealthSystemType[] = [
     key: 'REPRODUCTIVE',
     label: '생식\n및 비뇨계',
     icon: ReproductiveIcon,
+    isTwoLine: true,
     bodyPartList: [
       { key: 'PROSTATE', label: '전립선' },
       { key: 'URINATION', label: '배뇨' },

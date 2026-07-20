@@ -65,4 +65,5 @@ export type HealthSystemType = {
   label: string;
   icon: ComponentType<SVGProps<SVGSVGElement>>;
   bodyPartList: HealthBodyPartType[];
+  isTwoLine?: boolean; // 12px 2줄 줄바꿈 적용 여부 플래그
 };

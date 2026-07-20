@@ -89,10 +89,10 @@ const ConditionGraphSection = () => {
         <div className='flex w-full flex-col gap-2'>
           {/* 제목 텍스트와 보조 문구의 간격: 4px (gap-1) */}
           <div className='flex w-full flex-col items-start gap-1'>
-            <h2 className='text-[18px] font-semibold leading-normal text-[#111111]'>
+            <h2 className='text-[18px] font-semibold leading-normal text-black'>
               {CURRENT_MONTH}월 컨디션 변화 그래프
             </h2>
-            <p className='text-[12px] font-medium leading-normal text-[#5DB791]'>
+            <p className='text-[12px] font-medium leading-normal text-point-900'>
               각 주차의 점을 클릭해 상세 정보를 확인해 보세요!
             </p>
           </div>
@@ -108,7 +108,7 @@ const ConditionGraphSection = () => {
                 <ChevronLeft aria-hidden='true' size={24} strokeWidth={1.5} />
               </button>
 
-              <p className='typo-body-10 w-6 text-center text-[#111111]'>
+              <p className='typo-body-10 w-6 text-center text-black'>
                 {CURRENT_MONTH}월
               </p>
 
