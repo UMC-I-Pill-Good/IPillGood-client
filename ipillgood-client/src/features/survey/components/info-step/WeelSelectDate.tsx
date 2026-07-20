@@ -72,6 +72,9 @@ export const WheelSelectDate = ({ options, value, onChange }: WheelColumnProps) 
     >
       <div
         ref={scrollRef}
+        role='listbox'
+        aria-label='날짜 선택'
+        aria-activedescendant={`wheel-option-${value}`}
         onScroll={handleScroll}
         className='h-full overflow-y-auto snap-y snap-mandatory hide-scrollbar'
         style={{ paddingTop: PADDING, paddingBottom: PADDING }}
@@ -80,6 +83,9 @@ export const WheelSelectDate = ({ options, value, onChange }: WheelColumnProps) 
           <button
             key={option}
             type='button'
+            id={`wheel-option-${option}`}
+            role='option'
+            aria-selected={option === value}
             onClick={() => handleItemClick(option, index)}
             className='flex w-full items-center justify-center snap-center'
             style={{ height: ITEM_HEIGHT }}
@@ -98,6 +104,7 @@ export const WheelSelectDate = ({ options, value, onChange }: WheelColumnProps) 
 
       {/* 가운데 선택 줄 표시선 - 스크롤과 무관하게 고정 */}
       <div
+        aria-hidden='true'
         className='pointer-events-none absolute left-0 right-0 border-y border-neutral-400'
         style={{ top: PADDING, height: ITEM_HEIGHT }}
       />

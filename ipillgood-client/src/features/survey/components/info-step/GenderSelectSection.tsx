@@ -36,9 +36,12 @@ const GenderSelectSection = () => {
         2. 성별을 선택해주세요. <span className='text-semantic'>*</span>
       </h5>
 
-      <article className='flex items-center gap-2'>
+      <article role='radiogroup' aria-labelledby='gender-label' className='flex items-center gap-2'>
         <button
           type='button'
+          role='radio'
+          aria-checked={gender === 'woman'}
+          aria-label='여성'
           onClick={() => setGender('woman')}
           className={clsx(
             'group flex flex-1 flex-col items-center justify-center gap-2 rounded-[20px] border no-center-glass h-33 transition',
@@ -53,13 +56,16 @@ const GenderSelectSection = () => {
               gender === 'woman' && 'bg-secondary/30',
             )}
           >
-            <WomanIcon />
+            <WomanIcon aria-hidden='true' />
           </div>
           <p className='typo-body-10'>여성</p>
         </button>
 
         <button
           type='button'
+          role='radio'
+          aria-checked={gender === 'man'}
+          aria-label='남성'
           onClick={() => setGender('man')}
           className={clsx(
             'group flex flex-1 flex-col items-center justify-center gap-2 rounded-[20px] border no-center-glass h-33 transition',
@@ -74,7 +80,7 @@ const GenderSelectSection = () => {
               gender === 'man' && 'bg-secondary/30',
             )}
           >
-            <ManIcon />
+            <ManIcon aria-hidden='true' />
           </div>
 
           <p className='typo-body-10'>남성</p>
@@ -94,11 +100,16 @@ const GenderSelectSection = () => {
             <p className='typo-caption-2'>생리 주기</p>
             <button
               type='button'
+              aria-label='생리 주기 선택'
+              aria-haspopup='listbox'
+              aria-expanded={isPeriodOpenDropDown}
+              aria-controls='period-dropdown'
               className='ring ring-primary text-primary inline-flex items-center justify-center gap-1 typo-caption-2 rounded-[20px] pr-2 pl-2.5 h-7 w-18 outline-none transition hover:bg-primary-400 hover:text-white hover:ring-transparent active:text-white active:bg-primary shirnk-0 whitespace-nowrap'
               onClick={() => setIsPeriodOpenDropDown((prev) => !prev)}
             >
               {period}일
               <ChevronDown
+                aria-hidden='true'
                 className={clsx(
                   'transition-transform duration-300',
                   isPeriodOpenDropDown && 'rotate-180',
@@ -123,12 +134,15 @@ const GenderSelectSection = () => {
             <p className='typo-caption-2'>마지막 생리 시작일</p>
             <button
               type='button'
+              aria-label='마지막 생리 시작일 선택'
+              aria-haspopup='dialog'
+              aria-expanded={isOpenDateSheet}
               className='ring ring-primary text-primary inline-flex items-center justify-center gap-1.5 typo-caption-2 rounded-[20px] pr-2 pl-2.5 h-7 w-28 outline-none transition hover:bg-primary-400 hover:text-white hover:ring-transparent active:text-white active:bg-primary shirnk-0 whitespace-nowrap'
               onClick={() => setIsOpenDateSheet((prev) => !prev)}
             >
               {selectedDate.year}.{String(selectedDate.month).padStart(2, '0')}.
               {String(selectedDate.day).padStart(2, '0')}
-              <CalendarIcon className='transition-colors mb-0.5' />
+              <CalendarIcon aria-hidden='true' className='transition-colors mb-0.5' />
             </button>
           </div>
         </article>

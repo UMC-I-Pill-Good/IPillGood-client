@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { ChevronDown } from 'lucide-react';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import DropdownMenu from './DropdownMenu';
 import { yearOptions } from '../../constants/basicInfo.constants';
 import { useOutsideClick } from '@/shared/hooks';
@@ -28,6 +28,9 @@ const BirthYearSection = () => {
       >
         <button
           type='button'
+          aria-haspopup='listbox'
+          aria-expanded={isYearOpenDropdown}
+          aria-controls='birth-year-dropdown'
           className='bg-primary/80 inline-flex items-center justify-center gap-1 typo-body-10 rounded-lg pr-3 pl-4 h-8 w-25 outline-none text-white shadow-[0_4px_4px_rgba(126,131,135,0.1)] transition hover:bg-primary-700 active:bg-primary-800 shirnk-0'
           onClick={() => setIsYearOpenDropdown((prev) => !prev)}
         >
