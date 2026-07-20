@@ -11,7 +11,6 @@ import { useHealthStatusSelection } from '../../hooks/useHealthStatusSelection';
 const HealthStatusSelection = () => {
   const router = useRouter();
 
-  // 비즈니스 및 상태 로직 커스텀 훅
   const {
     selectedSystemKey,
     selectedBodyPartKey,
@@ -36,25 +35,24 @@ const HealthStatusSelection = () => {
       {/* 2. 상단 안내 영역 */}
       <section className='flex w-full flex-col gap-2.5 px-5 pt-4 pb-0 box-sizing-border'>
         <div className='inline-flex items-baseline gap-1.5'>
-          <h1 className='text-[20px] font-semibold text-black leading-tight'>
+          <h1 className='text-xl font-semibold text-black leading-tight'>
             궁금한 건강 상태 선택
           </h1>
-          <span className='text-[14px] font-normal text-neutral-800'>
+          <span className='text-sm font-normal text-neutral-800'>
             (단일 선택)
           </span>
         </div>
 
-        <p className='text-[16px] font-medium text-point-900 leading-normal'>
+        <p className='text-base font-medium text-point-900 leading-normal'>
           어떤 부위가 궁금하세요?
         </p>
       </section>
 
-      {/* 3. 건강 고민 대분류 카드 섹션 (공통 SelectionCard 4열 Grid) */}
+      {/* 3. 건강 고민 대분류 카드 섹션 */}
       <section className='flex w-full justify-center px-5 py-4 box-sizing-border'>
         <div className='grid w-full max-w-[349px] grid-cols-4 gap-2'>
           {HEALTH_SYSTEM_OPTION_LIST.map((system) => {
             const isSelected = selectedSystemKey === system.key;
-            // 정적 데이터의 isTwoLine 속성을 읽어 12px 2줄 내림 여부 결정
             const isTwoLine12px = Boolean(system.isTwoLine);
 
             return (
@@ -71,8 +69,8 @@ const HealthStatusSelection = () => {
                     ? 'bg-secondary-500! text-white! [&_span:last-child]:text-white! [&_span:last-child]:font-semibold'
                     : 'bg-white/60! text-black! [&_span:last-child]:text-black!',
                   isTwoLine12px
-                    ? '[&_span:last-child]:text-[12px]! [&_span:last-child]:leading-[1.2] [&_span:last-child]:whitespace-pre-line! [&_span:last-child]:text-center!'
-                    : '[&_span:last-child]:text-[14px]! [&_span:last-child]:leading-tight [&_span:last-child]:whitespace-nowrap!',
+                    ? '[&_span:last-child]:text-xs! [&_span:last-child]:leading-[1.2] [&_span:last-child]:whitespace-pre-line! [&_span:last-child]:text-center!'
+                    : '[&_span:last-child]:text-sm! [&_span:last-child]:leading-tight [&_span:last-child]:whitespace-nowrap!',
                 )}
               />
             );
@@ -82,7 +80,7 @@ const HealthStatusSelection = () => {
 
       {/* 4. 세부 부위 상세 선택 제목 및 칩 리스트 */}
       <section className='flex w-full flex-col px-5 pt-4 pb-0 box-sizing-border'>
-        <h2 className='w-full text-[20px] font-semibold text-black leading-tight'>
+        <h2 className='w-full text-xl font-semibold text-black leading-tight'>
           더 자세한 부위를 선택해 주세요.
         </h2>
 
@@ -114,7 +112,7 @@ const HealthStatusSelection = () => {
           size='lg'
           disabled={!isFormValid || isPending}
           onClick={handleComplete}
-          className='h-[52px] w-full max-w-[353px] rounded-lg bg-primary-600 text-white shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] disabled:bg-neutral-300 disabled:opacity-60'
+          className='h-13 w-full max-w-[353px] rounded-lg bg-primary-600 text-white shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] disabled:bg-neutral-300 disabled:opacity-60'
         />
       </div>
     </div>

@@ -35,28 +35,28 @@ const ConditionGraphSection = () => {
   const sourceGraphData =
     monthlyGraphData && monthlyGraphData.length > 0
       ? monthlyGraphData.map((item) => {
-          const score = item.conditionScore ?? 0;
-          return {
-            weekLabel: `${item.weekNo}주차`,
-            weekNo: item.weekNo,
-            weekStartDate: item.weekStartDate,
-            score,
-            vitality: score,
-            sleepHours: 0,
-            intakeDays: 0,
-            totalDays: 7,
-          };
-        })
-      : [1, 2, 3, 4, 5].map((weekNo) => ({
-          weekLabel: `${weekNo}주차`,
-          weekNo,
-          weekStartDate: undefined,
-          score: 0,
-          vitality: 0,
+        const score = item.conditionScore ?? 0;
+        return {
+          weekLabel: `${item.weekNo}주차`,
+          weekNo: item.weekNo,
+          weekStartDate: item.weekStartDate,
+          score,
+          vitality: score,
           sleepHours: 0,
           intakeDays: 0,
           totalDays: 7,
-        }));
+        };
+      })
+      : [1, 2, 3, 4, 5].map((weekNo) => ({
+        weekLabel: `${weekNo}주차`,
+        weekNo,
+        weekStartDate: undefined,
+        score: 0,
+        vitality: 0,
+        sleepHours: 0,
+        intakeDays: 0,
+        totalDays: 7,
+      }));
 
   const graphPointList: ConditionGraphPointType[] = sourceGraphData.map(
     (condition, index) => ({
@@ -85,19 +85,17 @@ const ConditionGraphSection = () => {
   return (
     <>
       <section className='flex w-full flex-col px-5 py-4'>
-        {/* 헤더 타이틀과 카드의 간격: 8px (gap-2) */}
         <div className='flex w-full flex-col gap-2'>
-          {/* 제목 텍스트와 보조 문구의 간격: 4px (gap-1) */}
           <div className='flex w-full flex-col items-start gap-1'>
-            <h2 className='text-[18px] font-semibold leading-normal text-black'>
+            <h2 className='text-lg font-semibold leading-normal text-black'>
               {CURRENT_MONTH}월 컨디션 변화 그래프
             </h2>
-            <p className='text-[12px] font-medium leading-normal text-point-900'>
+            <p className='text-xs font-medium leading-normal text-point-900'>
               각 주차의 점을 클릭해 상세 정보를 확인해 보세요!
             </p>
           </div>
 
-          <div className='relative h-[258px] w-full overflow-hidden rounded-[20px] border border-white bg-white/70 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'>
+          <div className='relative h-[258px] w-full overflow-hidden rounded-2xl border border-white bg-white/70 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'>
             {/* 상단 월 이동 헤더 */}
             <div className='absolute left-1/2 top-[11px] flex h-6 w-[283px] -translate-x-1/2 items-center justify-between'>
               <button

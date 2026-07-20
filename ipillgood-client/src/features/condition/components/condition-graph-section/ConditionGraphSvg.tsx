@@ -25,7 +25,6 @@ const ConditionGraphSvg = ({
   onHoverPoint,
   onSelectPoint,
 }: ConditionGraphSvgProps) => {
-  // points 좌표 배열을 SVG d 파스(Path) 문자열 명령어로 변환 (M x y L x y ...)
   const pathD = [
     `M ${AXIS_LEFT} ${AXIS_BOTTOM}`,
     ...graphPointList.map(({ x, y }) => `L ${x} ${y}`),
@@ -85,7 +84,7 @@ const ConditionGraphSvg = ({
         strokeWidth='1'
       />
 
-      {/* 꺾은선 패스 (d 경로가 바뀔 때 선도 점과 똑같이 부드럽게 스르륵 올라가는 모션) */}
+      {/* 꺾은선 패스 */}
       <path
         d={pathD}
         fill='none'
@@ -99,7 +98,6 @@ const ConditionGraphSvg = ({
       {/* 주차별 데이터 포인트 점 및 호버 효과 */}
       {graphPointList.map((condition, index) => (
         <g key={condition.weekLabel}>
-          {/* 호버 시 세로 가이드라인 */}
           {hoveredPointIndex === index && (
             <line
               x1={condition.x}
@@ -113,7 +111,7 @@ const ConditionGraphSvg = ({
             />
           )}
 
-          {/* 데이터 포인트 점 (위치 변화 시 점과 선이 완벽 동기화되어 상승) */}
+          {/* 데이터 포인트 점 */}
           <circle
             cx={condition.x}
             cy={condition.y}
