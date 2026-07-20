@@ -3,8 +3,11 @@
 import { HorizonIcon, MinusCircleIcon } from '@/assets';
 import { BottomSheet, SelectionCard, TextButton } from '@/shared/components';
 import { StepHeader } from '@/shared/layout';
-import { otherSupplementItems, supplementItems } from '../constants/supplement.constants';
-import useSelectable from '../hooks/useSelectable';
+import {
+  otherSupplementItems,
+  supplementItems,
+} from '@/features/survey/constants/supplement.constants';
+import useSelectable from '@/features/survey/hooks/useSelectable';
 import { useState } from 'react';
 
 const SupplementStep = () => {

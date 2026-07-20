@@ -2,8 +2,8 @@
 
 import { SelectionCard } from '@/shared/components';
 import { StepHeader } from '@/shared/layout';
-import { healthConcernItems } from '../constants/healthConcern.constants';
-import useSelectable from '../hooks/useSelectable';
+import { healthConcernItems } from '@/features/survey/constants/healthConcern.constants';
+import useSelectable from '@/features/survey/hooks/useSelectable';
 
 const HealthConcernStep = () => {
   const { selectedItems, handleSelect } = useSelectable({ max: 3 });

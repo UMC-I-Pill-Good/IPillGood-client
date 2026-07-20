@@ -1,7 +1,7 @@
 import { TextButton } from '@/shared/components';
 import { StepHeader } from '@/shared/layout';
 import { useState } from 'react';
-import { healthStateQuestions } from '../constants/healthState.constants';
+import { healthStateQuestions } from '@/features/survey/constants/healthState.constants';
 
 const HealthStateStep = () => {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({});

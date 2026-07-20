@@ -2,8 +2,8 @@ import { TextButton } from '@/shared/components';
 import { StepHeader } from '@/shared/layout';
 import { useAtomValue } from 'jotai';
 import { useState } from 'react';
-import { genderAtom } from '../atoms/survey.atom';
-import { lifestyleOptions } from '../constants/lifestyle.constants';
+import { genderAtom } from '@/features/survey/atoms/survey.atom';
+import { lifestyleOptions } from '@/features/survey/constants/lifestyle.constants';
 
 const LifestyleStep = () => {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});

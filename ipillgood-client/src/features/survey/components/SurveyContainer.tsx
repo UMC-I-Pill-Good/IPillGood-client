@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import StepNavigation from './StepNavigation';
 import BasicInfoStep from './info-step/BasicInfoStep';
 import { TextButton } from '@/shared/components';
-import LifestyleStep from './LifestyleStep';
+import LifestyleStep from './lifestyle-step/LifestyleStep';
 import HealthStateStep from './HealthStateStep';
 import HealthConcernStep from './HealthConcernStep';
 import SupplementStep from './SupplementStep';
