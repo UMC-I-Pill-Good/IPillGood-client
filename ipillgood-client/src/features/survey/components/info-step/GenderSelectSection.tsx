@@ -1,13 +1,13 @@
 'use clinet';
 
 import { useAtom } from 'jotai';
-import { genderAtom } from '../../atoms/survey.atom';
+import { genderAtom } from '@/features/survey/atoms/survey.atom';
 import clsx from 'clsx';
 import { CalendarIcon, ManIcon, WomanIcon } from '@/assets';
 import { ChevronDown } from 'lucide-react';
 import DropdownMenu from './DropdownMenu';
 import { useRef, useState } from 'react';
-import { periodOptions } from '../../constants/basicInfo.constants';
+import { periodOptions } from '@/features/survey/constants/basicInfo.constants';
 import DatePickerBottomSheet from './DatePickerBottomSheet';
 import { useOutsideClick } from '@/shared/hooks';
 
