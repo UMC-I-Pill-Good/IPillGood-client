@@ -3,7 +3,7 @@ import {
     ConditionSleepIcon,
     ConditionVitalityIcon,
 } from '@/assets';
-import { type ConditionSummaryType } from '../types/condition';
+import { type ConditionSummaryType } from '../../types/condition';
 
 interface ConditionSummaryIconProps {
     type: ConditionSummaryType;

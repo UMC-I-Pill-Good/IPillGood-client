@@ -1,4 +1,4 @@
-import { type ConditionSummaryType } from '../types/condition';
+import { type ConditionSummaryType } from '../../types/condition';
 import ConditionSummaryIcon from './ConditionSummaryIcon';
 import ConditionSummaryValue from './ConditionSummaryValue';
 

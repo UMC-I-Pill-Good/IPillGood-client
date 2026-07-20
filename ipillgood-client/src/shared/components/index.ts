@@ -20,5 +20,5 @@ export { default as ItemCard } from './ItemCard';
 /* search */
 export { SearchBar } from './SearchBar';
 
-/* SelectionCard */
+/* selectionCard */
 export { default as SelectionCard } from './SelectionCard';

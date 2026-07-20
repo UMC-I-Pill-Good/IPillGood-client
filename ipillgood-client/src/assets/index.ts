@@ -1,5 +1,10 @@
 export { default as BadgeIcon } from './icons/badge.svg';
 export { default as CabinetIcon } from './icons/cabinet.svg';
+export { default as DropdownIcon } from './icons/dropdown.svg';
+export { default as CrossSmallIcon } from './icons/fi-rr-cross-small.svg';
+export { default as SearchIcon } from './icons/fi-rr-search.svg';
+export { default as RatingStarIcon } from './icons/fi-rr-star.svg';
+export { default as FilterIcon } from './icons/filter.svg';
 export { default as MascotIcon } from './icons/mascot-default.svg';
 export { default as MascotHeartIcon } from './icons/mascot-heart.svg';
 export { default as MascotSearchIcon } from './icons/mascot-search.svg';
@@ -47,9 +52,17 @@ export { default as BulbIcon } from './icons/survey/bulb.svg';
 export { default as ConditionVitalityIcon } from './icons/condition-vitality.svg';
 export { default as ConditionSleepIcon } from './icons/condition-sleep.svg';
 export { default as ConditionIntakeIcon } from './icons/condition-intake.svg';
+export { default as ConditionCheckCircleIcon } from './icons/ConditionCheckCircleIcon.svg';
+export { default as ConditionScore1Icon } from './icons/ConditionScore1Icon.svg';
+export { default as ConditionScore2Icon } from './icons/ConditionScore2Icon.svg';
+export { default as ConditionScore3Icon } from './icons/ConditionScore3Icon.svg';
+export { default as ConditionScore4Icon } from './icons/ConditionScore4Icon.svg';
+export { default as ConditionScore5Icon } from './icons/ConditionScore5Icon.svg';
+export { default as MascotThumbsUpIcon } from './icons/MascotThumbsUpIcon.svg';
 
 // home
 export { default as HeaderLogoIcon } from './icons/header-logo.svg';
 export { default as SupplementBottleIcon } from './icons/supplement-bottle.svg';
 export { default as CapsuleIcon } from './icons/capsule.svg';
 export { default as CapsuleGrayIcon } from './icons/capsule-gray.svg';
+export { default as Omega3BottleIcon } from './icons/omega3-bottle.svg';
