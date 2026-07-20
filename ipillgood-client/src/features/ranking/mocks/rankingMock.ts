@@ -18,6 +18,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         reviewCount: 234,
         price: 22000,
         ingredientTags: ['오메가 3'],
+        isCertified: true,
       },
       {
         rank: 2,

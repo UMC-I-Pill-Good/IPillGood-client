@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Omega3BottleIcon, RatingStarIcon } from '@/assets';
+import { Omega3BottleIcon, RatingStarIcon, ValidBadgeIcon } from '@/assets';
 import { Chip } from '@/shared/components';
 import type { RankingItemDto } from '../../types/ranking';
 import RankingBadge from './RankingBadge';
@@ -27,7 +27,13 @@ const SupplementProductCard = ({
       <RankingBadge rank={displayRank} />
 
       <div className='flex min-w-0 flex-1 items-center gap-3 overflow-visible'>
-        <div className='flex h-[4.375rem] w-[2.6875rem] shrink-0 items-center justify-center overflow-visible'>
+        <div className='relative flex h-[4.375rem] w-[2.6875rem] shrink-0 items-center justify-center overflow-visible'>
+          {item.isCertified && (
+            <ValidBadgeIcon
+              aria-hidden='true'
+              className='absolute -left-[0.5625rem] -top-[0.78125rem] z-10 h-[1.3125rem] w-[1.375rem]'
+            />
+          )}
           {shouldShowImage ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img

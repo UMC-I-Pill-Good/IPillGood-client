@@ -32,6 +32,7 @@ export interface RankingItemDto {
   reviewCount: number;
   price: number;
   ingredientTags: string[] | null;
+  isCertified?: boolean;
 }
 
 export interface RankingResultDto {

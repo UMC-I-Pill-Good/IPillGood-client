@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { INITIAL_RECENT_SEARCHES } from '../../constants/recentSearches';
 import { getMockRanking } from '../../services/rankingMockService';
@@ -15,6 +16,7 @@ import RankingToolbar from './RankingToolbar';
 import RecentSearches from './RecentSearches';
 
 const RankingContainer = () => {
+  const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
   const [submittedSearchTerm, setSubmittedSearchTerm] = useState('');
   const [recentSearches, setRecentSearches] = useState<string[]>([
@@ -96,7 +98,10 @@ const RankingContainer = () => {
   };
 
   const handleSubmitSearch = () => {
-    if (!searchValue.trim()) return;
+    const nextSearchTerm = searchValue.trim();
+    if (!nextSearchTerm) return;
+
+    router.push(`/ranking/result?search=${encodeURIComponent(nextSearchTerm)}`);
   };
 
   return (

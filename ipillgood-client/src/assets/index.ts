@@ -5,6 +5,7 @@ export { default as CrossSmallIcon } from './icons/fi-rr-cross-small.svg';
 export { default as SearchIcon } from './icons/fi-rr-search.svg';
 export { default as RatingStarIcon } from './icons/fi-rr-star.svg';
 export { default as FilterIcon } from './icons/filter.svg';
+export { default as ValidBadgeIcon } from './icons/valid.svg';
 export { default as MascotIcon } from './icons/mascot-default.svg';
 export { default as MascotHeartIcon } from './icons/mascot-heart.svg';
 export { default as MascotSearchIcon } from './icons/mascot-search.svg';
