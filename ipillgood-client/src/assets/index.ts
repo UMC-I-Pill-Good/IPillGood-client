@@ -59,6 +59,13 @@ export { default as ConditionScore3Icon } from './icons/ConditionScore3Icon.svg'
 export { default as ConditionScore4Icon } from './icons/ConditionScore4Icon.svg';
 export { default as ConditionScore5Icon } from './icons/ConditionScore5Icon.svg';
 export { default as MascotThumbsUpIcon } from './icons/MascotThumbsUpIcon.svg';
+export { default as NervousIcon } from './icons/nervous.svg';
+export { default as DigestiveIcon } from './icons/digestive.svg';
+export { default as EndocrineIcon } from './icons/endocrine.svg';
+export { default as ConditionCardiovascularIcon } from './icons/cardiovascular.svg';
+export { default as ImmuneDefenseIcon } from './icons/immune-defense.svg';
+export { default as MuscleIcon } from './icons/muscle.svg';
+export { default as ReproductiveIcon } from './icons/reproductive.svg';
 
 // home
 export { default as HeaderLogoIcon } from './icons/header-logo.svg';
