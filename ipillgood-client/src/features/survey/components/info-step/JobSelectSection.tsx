@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
 import { jobOptions } from '@/features/survey/constants/basicInfo.constants';
 import { TextButton } from '@/shared/components';
+import { useAtom } from 'jotai';
+import { selectedJobAtom } from '@/features/survey/atoms/survey.atom';
 
 const JobSelectSection = () => {
-  const [selectedJob, setSelectedJob] = useState('');
+  const [selectedJob, setSelectedJob] = useAtom(selectedJobAtom);
+
   return (
     <section className='pb-4 space-y-2'>
       <h5 className='typo-body-5 ml-1'>

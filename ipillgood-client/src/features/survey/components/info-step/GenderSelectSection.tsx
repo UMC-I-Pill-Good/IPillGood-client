@@ -1,7 +1,7 @@
 'use clinet';
 
 import { useAtom } from 'jotai';
-import { genderAtom } from '@/features/survey/atoms/survey.atom';
+import { genderAtom, periodAtom, selectedDateAtom } from '@/features/survey/atoms/survey.atom';
 import clsx from 'clsx';
 import { CalendarIcon, ManIcon, WomanIcon } from '@/assets';
 import { ChevronDown } from 'lucide-react';
@@ -13,16 +13,11 @@ import { useOutsideClick } from '@/shared/hooks';
 
 const GenderSelectSection = () => {
   const [gender, setGender] = useAtom(genderAtom);
+  const [period, setPeriod] = useAtom(periodAtom);
+  const [selectedDate, setSelectedDate] = useAtom(selectedDateAtom);
+
   const [isPeriodOpenDropDown, setIsPeriodOpenDropDown] = useState(false);
-  const [period, setPeriod] = useState(30);
-
   const [isOpenDateSheet, setIsOpenDateSheet] = useState(false);
-
-  const [selectedDate, setSelectedDate] = useState({
-    year: 2026,
-    month: 7,
-    day: 17,
-  });
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +27,7 @@ const GenderSelectSection = () => {
 
   return (
     <section className='space-y-2 py-8'>
-      <h5 className='typo-body-5 ml-1'>
+      <h5 id='gender-label' className='typo-body-5 ml-1'>
         2. 성별을 선택해주세요. <span className='text-semantic'>*</span>
       </h5>
 
@@ -119,6 +114,7 @@ const GenderSelectSection = () => {
 
             {isPeriodOpenDropDown && (
               <DropdownMenu
+                id='period-dropdown'
                 options={periodOptions}
                 value={period}
                 onSelect={(selected) => {

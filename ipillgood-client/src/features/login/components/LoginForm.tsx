@@ -23,6 +23,7 @@ const LoginForm = () => {
     });
 
     // login API 호출
+    router.push('survey');
   };
 
   return (
@@ -65,13 +66,7 @@ const LoginForm = () => {
           />
         </div>
 
-        <TextButton
-          type='submit'
-          text='로그인'
-          size='xl'
-          className='w-full mt-2.5'
-          onClick={() => router.push('survey')}
-        />
+        <TextButton type='submit' text='로그인' size='xl' className='w-full mt-2.5' />
       </form>
 
       <div className='my-4 flex items-center gap-2'>

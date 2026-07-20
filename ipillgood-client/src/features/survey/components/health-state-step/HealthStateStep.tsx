@@ -10,11 +10,19 @@ const HealthStateStep = () => {
     setSelectedOptions((prev) => {
       const current = prev[questionId] ?? [];
 
+      // "없음" 선택 시 다른 옵션 초기화
+      if (option === '없음') {
+        return { ...prev, [questionId]: current.includes('없음') ? [] : ['없음'] };
+      }
+
+      // 다른 옵션 선택 시 "없음" 제거
+      const next = current.filter((item) => item !== '없음');
+
       return {
         ...prev,
-        [questionId]: current.includes(option)
-          ? current.filter((item) => item !== option)
-          : [...current, option],
+        [questionId]: next.includes(option)
+          ? next.filter((item) => item !== option)
+          : [...next, option],
       };
     });
   };

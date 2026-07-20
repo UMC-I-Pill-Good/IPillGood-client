@@ -2,12 +2,14 @@ import clsx from 'clsx';
 import { ChevronDown } from 'lucide-react';
 import { useRef, useState } from 'react';
 import DropdownMenu from './DropdownMenu';
-import { yearOptions } from '../../constants/basicInfo.constants';
+import { yearOptions } from '@/features/survey/constants/basicInfo.constants';
 import { useOutsideClick } from '@/shared/hooks';
+import { useAtom } from 'jotai';
+import { birthYearAtom } from '@/features/survey/atoms/survey.atom';
 
 const BirthYearSection = () => {
   const [isYearOpenDropdown, setIsYearOpenDropdown] = useState(false);
-  const [year, setYear] = useState(2026);
+  const [year, setYear] = useAtom(birthYearAtom);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -45,6 +47,7 @@ const BirthYearSection = () => {
 
         {isYearOpenDropdown && (
           <DropdownMenu
+            id='birth-year-dropdown'
             options={yearOptions}
             value={year}
             onSelect={(selected) => {

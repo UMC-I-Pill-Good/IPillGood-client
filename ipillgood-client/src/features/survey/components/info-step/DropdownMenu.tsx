@@ -2,6 +2,7 @@ import { useEscapeKey } from '@/shared/hooks';
 import { cn } from '@/shared/utils/cn';
 
 interface DropdownMenuProps<T extends string | number> {
+  id?: string;
   options: T[];
   value: T;
   onSelect: (value: T) => void;
@@ -10,6 +11,7 @@ interface DropdownMenuProps<T extends string | number> {
 }
 
 const DropdownMenu = <T extends string | number>({
+  id,
   options,
   value,
   onSelect,
@@ -20,7 +22,7 @@ const DropdownMenu = <T extends string | number>({
 
   return (
     <div
-      id='dropdown'
+      id={id}
       role='listbox'
       className={cn(
         'absolute top-full z-50 mt-1 max-h-50 no-center-glass rounded-lg border border-white bg-white/80 shadow-lg backdrop-blur-2xl divide-y divide-neutral-200 overflow-y-auto thin-scrollbar',
