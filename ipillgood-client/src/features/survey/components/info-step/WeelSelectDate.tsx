@@ -13,35 +13,43 @@ interface WheelColumnProps {
 
 export const WheelSelectDate = ({ options, value, onChange }: WheelColumnProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const isProgrammaticScroll = useRef(false);
+  const isProgrammaticScroll = useRef(false); // 값 변경으로 인한 스크롤인지, 사용자 스크롤인지 구분하기 위한 플래그
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
+  // 현재 선택된 값 위치로 휠 스크롤 동기화
   useEffect(() => {
     if (!scrollRef.current) return;
     const index = options.indexOf(value);
     if (index === -1) return;
 
+    // 프로그램에서 발생한 스크롤은 onScroll 이벤트를 무시
     isProgrammaticScroll.current = true;
     scrollRef.current.scrollTo({ top: index * ITEM_HEIGHT, behavior: 'auto' });
+
+    // 다음 프레임부터는 다시 사용자 스크롤을 감지
     requestAnimationFrame(() => {
       isProgrammaticScroll.current = false;
     });
   }, [value, options]);
 
+  // 스크롤이 멈추면 가장 가까운 항목으로 스냅하여 선택
   const handleScroll = () => {
     if (isProgrammaticScroll.current || !scrollRef.current) return;
-    clearTimeout(timeoutRef.current);
+    clearTimeout(timeoutRef.current); // 스크롤 중에는 타이머를 계속 초기화하여 마지막 이벤트만 처리
 
     timeoutRef.current = setTimeout(() => {
       if (!scrollRef.current) return;
+
+      // 현재 스크롤 위치를 가장 가까운 옵션 인덱스로 변환
       const index = Math.round(scrollRef.current.scrollTop / ITEM_HEIGHT);
       const clamped = Math.min(Math.max(index, 0), options.length - 1);
       const selected = options[clamped];
 
+      // 선택 값이 변경되면 부모 상태 업데이트
       if (selected !== undefined && selected !== value) {
         onChange(selected);
       } else {
-        scrollRef.current.scrollTo({ top: clamped * ITEM_HEIGHT, behavior: 'smooth' });
+        scrollRef.current.scrollTo({ top: clamped * ITEM_HEIGHT, behavior: 'smooth' }); // 이미 선택된 값이라면 중앙으로 다시 정렬
       }
     }, 120);
   };

@@ -16,7 +16,7 @@ const DropdownMenu = <T extends string | number>({
   className,
   onClose,
 }: DropdownMenuProps<T>) => {
-  useEscapeKey(onClose);
+  useEscapeKey(onClose); // ESC 키 입력 시 드롭다운 닫기
 
   return (
     <div

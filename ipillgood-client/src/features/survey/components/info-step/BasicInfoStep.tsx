@@ -6,18 +6,12 @@ import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import DatePickerBottomSheet from './DatePickerBottomSheet';
 import { TextButton } from '@/shared/components';
-import {
-  jobOptions,
-  periodOptions,
-  yearOptions,
-} from '@/features/survey/constants/basicInfo.constants';
+import { jobOptions, periodOptions } from '@/features/survey/constants/basicInfo.constants';
 import { useAtom } from 'jotai';
 import { genderAtom } from '@/features/survey/atoms/survey.atom';
+import BirthYearSection from './BirthYearSection';
 
 const BasicInfoStep = () => {
-  const [isYearOpen, setIsYearOpenDropDown] = useState(false);
-  const [year, setYear] = useState(2026);
-
   const [gender, setGender] = useAtom(genderAtom);
   const [isPeriodOpenDropDown, setIsPeriodOpenDropDown] = useState(false);
   const [isOpenDateSheet, setIsOpenDateSheet] = useState(false);
@@ -31,47 +25,10 @@ const BasicInfoStep = () => {
   const [selectedJob, setSelectedJob] = useState('');
 
   return (
-    <section
-      onClick={() => {
-        setIsYearOpenDropDown(false);
-        setIsPeriodOpenDropDown(false);
-      }}
-    >
+    <section>
       <StepHeader title='기본 정보를 알려주세요!' desc='나에게 맞는 영양제를 추천해드릴게요.' />
 
-      <section className='mt-2 flex flex-col items-start gap-2'>
-        <h5 className='typo-body-5 ml-1'>
-          1. 출생 연도를 선택해주세요.<span className='text-semantic'>*</span>
-        </h5>
-
-        <div onClick={(e) => e.stopPropagation()} className='flex items-center gap-1 relative'>
-          <button
-            type='button'
-            className='bg-primary/80 inline-flex items-center justify-center gap-1 typo-body-10 rounded-lg pr-3 pl-4 h-8 w-25 outline-none text-white shadow-[0_4px_4px_rgba(126,131,135,0.1)] transition hover:bg-primary-700 active:bg-primary-800 shirnk-0'
-            onClick={() => setIsYearOpenDropDown((prev) => !prev)}
-          >
-            {year}
-            <ChevronDown
-              className={clsx('transition-transform duration-300', isYearOpen && 'rotate-180')}
-            />
-          </button>
-
-          {isYearOpen && (
-            <DropdownMenu
-              options={yearOptions}
-              value={year}
-              onSelect={(selected) => {
-                setYear(selected);
-                setIsYearOpenDropDown(false);
-              }}
-              className='w-25 left-0'
-              onClose={() => setIsYearOpenDropDown(false)}
-            />
-          )}
-
-          <span className='typo-body-6 text-neutral'>년생</span>
-        </div>
-      </section>
+      <BirthYearSection />
 
       <section className='space-y-2 py-8'>
         <h5 className='typo-body-5 ml-1'>

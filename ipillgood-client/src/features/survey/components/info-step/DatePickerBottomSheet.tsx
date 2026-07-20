@@ -16,18 +16,21 @@ const DatePickerBottomSheet = ({
   onOpenChange,
   onChange,
 }: DatePickerBottomSheetProps) => {
-  const getDaysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate();
+  const getDaysInMonth = (year: number, month: number) => new Date(year, month, 0).getDate(); // 선택한 연도/월에 맞는 날짜 개수 계산
 
+  // 선택한 연도와 월에 맞는 날짜 목록 생성
   const dayOptions = Array.from(
     { length: getDaysInMonth(value.year, value.month) },
     (_, i) => i + 1,
   );
 
+  // 연도 변경 시 해당 월의 최대 일수를 넘지 않도록 보정
   const handleYearChange = (year: number) => {
     const maxDay = getDaysInMonth(year, value.month);
     onChange({ ...value, year, day: Math.min(value.day, maxDay) });
   };
 
+  // 월 변경 시 해당 월의 최대 일수를 넘지 않도록 보정
   const handleMonthChange = (month: number) => {
     const maxDay = getDaysInMonth(value.year, month);
     onChange({ ...value, month, day: Math.min(value.day, maxDay) });
