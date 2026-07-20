@@ -1,4 +1,4 @@
-'use clinet';
+'use client';
 
 import { useAtom } from 'jotai';
 import { genderAtom, periodAtom, selectedDateAtom } from '@/features/survey/atoms/survey.atom';

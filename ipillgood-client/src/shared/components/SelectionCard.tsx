@@ -93,7 +93,7 @@ const SelectionCard = ({
         </span>
       )}
 
-      <span className='typo-caption-2 leading-4! whitespace-pre-line'>{label}</span>
+      <span className='typo-caption-2 leading-4! whitespace-pre'>{label}</span>
     </button>
   );
 };
