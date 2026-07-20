@@ -5,9 +5,9 @@ import StepNavigation from './StepNavigation';
 import BasicInfoStep from './info-step/BasicInfoStep';
 import { TextButton } from '@/shared/components';
 import LifestyleStep from './lifestyle-step/LifestyleStep';
-import HealthStateStep from './HealthStateStep';
-import HealthConcernStep from './HealthConcernStep';
-import SupplementStep from './SupplementStep';
+import HealthStateStep from './health-state-step/HealthStateStep';
+import HealthConcernStep from './health-concern-step/HealthConcernStep';
+import SupplementStep from './supplement-step/SupplementStep';
 
 const SurveyContainer = () => {
   const router = useRouter();
