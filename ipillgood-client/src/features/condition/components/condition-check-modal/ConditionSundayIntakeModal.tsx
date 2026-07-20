@@ -25,7 +25,7 @@ const ConditionSundayIntakeModal = ({
 
   return (
     <div
-      className='fixed inset-0 z-50 flex items-center justify-center bg-neutral-800/20 px-4'
+      className='fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4'
       role='dialog'
       aria-modal='true'
       aria-labelledby='sunday-warning-title'
@@ -36,7 +36,7 @@ const ConditionSundayIntakeModal = ({
         ref={contentRef}
         className='flex w-full max-w-[310px] flex-col items-center justify-center gap-5 rounded-2xl bg-white px-7.5 py-6 shadow-[4px_4px_40px_0_rgba(0,0,0,0.12)]'
       >
-        {/* 1. 텍스트 안내 영역 (Tailwind 표준 text-base, text-xs) */}
+        {/* 1. 텍스트 안내 영역 (시맨틱 색상 토큰 text-black, text-semantic-600 적용) */}
         <div className='flex flex-col items-center justify-center gap-2 text-center'>
           <h3
             id='sunday-warning-title'
@@ -52,7 +52,7 @@ const ConditionSundayIntakeModal = ({
           </p>
         </div>
 
-        {/* 2. 하단 버튼 영역 */}
+        {/* 2. 하단 버튼 영역 (시맨틱 색상 토큰 border-secondary-600, text-secondary-600, bg-primary-600 적용) */}
         <div className='flex w-full items-center justify-center gap-2.5'>
           <TextButton
             type='button'

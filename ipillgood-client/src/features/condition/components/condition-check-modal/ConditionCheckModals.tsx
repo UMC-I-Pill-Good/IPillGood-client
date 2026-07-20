@@ -35,12 +35,14 @@ const ConditionCheckModals = ({
 
   return (
     <>
-      {/* 0단계 일요일 영양제 미섭취 경고 모달 */}
-      <ConditionSundayIntakeModal
-        isOpen={isSundayModalOpen}
-        onClose={closeSundayModal}
-        onContinue={handleContinueFromSunday}
-      />
+      {/* 0단계 일요일 영양제 미섭취 경고 모달 (isSundayModalOpen 일 때만 렌더링하여 스크롤 락 방지) */}
+      {isSundayModalOpen && (
+        <ConditionSundayIntakeModal
+          isOpen={true}
+          onClose={closeSundayModal}
+          onContinue={handleContinueFromSunday}
+        />
+      )}
 
       {/* 컨디션 체크 시작/진행 모달들 */}
       {isCheckModalOpen && (
