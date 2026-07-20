@@ -9,7 +9,7 @@ import {
   ToggleButton,
   Input,
   ItemCard,
-  HealthConcernCard,
+  SelectionCard,
   SearchBar,
   BottomSheet,
 } from '@/shared/components';
@@ -18,9 +18,9 @@ import { Bone, Brain, ChevronLeft, HeartPulse, X } from 'lucide-react';
 import { useState } from 'react';
 
 const healthConcernItems = [
-  { id: 'heart', label: '심혈관', icon: <HeartPulse size={30} /> },
-  { id: 'brain', label: '두뇌', icon: <Brain size={30} /> },
-  { id: 'bone', label: '뼈 건강', icon: <Bone size={30} /> },
+  { id: 'heart', label: '심혈관', icon: HeartPulse },
+  { id: 'brain', label: '두뇌', icon: Brain },
+  { id: 'bone', label: '뼈 건강', icon: Bone },
 ];
 
 const ExamplePage = () => {
@@ -105,7 +105,7 @@ const ExamplePage = () => {
 
         <div className='grid grid-cols-3 gap-2'>
           {healthConcernItems.map(({ id, label, icon }) => (
-            <HealthConcernCard
+            <SelectionCard
               key={id}
               id={id}
               label={label}

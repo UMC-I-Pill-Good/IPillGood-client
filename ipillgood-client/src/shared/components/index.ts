@@ -20,5 +20,5 @@ export { default as ItemCard } from './ItemCard';
 /* search */
 export { SearchBar } from './SearchBar';
 
-/* healthConcernCard */
-export { default as HealthConcernCard } from './HealthConcernCard';
+/* selectionCard */
+export { default as SelectionCard } from './SelectionCard';

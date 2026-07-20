@@ -22,6 +22,13 @@ export { default as NaverIcon } from './icons/naver.svg';
 export { default as ConditionVitalityIcon } from './icons/condition-vitality.svg';
 export { default as ConditionSleepIcon } from './icons/condition-sleep.svg';
 export { default as ConditionIntakeIcon } from './icons/condition-intake.svg';
+export { default as ConditionCheckCircleIcon } from './icons/ConditionCheckCircleIcon.svg';
+export { default as ConditionScore1Icon } from './icons/ConditionScore1Icon.svg';
+export { default as ConditionScore2Icon } from './icons/ConditionScore2Icon.svg';
+export { default as ConditionScore3Icon } from './icons/ConditionScore3Icon.svg';
+export { default as ConditionScore4Icon } from './icons/ConditionScore4Icon.svg';
+export { default as ConditionScore5Icon } from './icons/ConditionScore5Icon.svg';
+export { default as MascotThumbsUpIcon } from './icons/MascotThumbsUpIcon.svg';
 
 // home
 export { default as HeaderLogoIcon } from './icons/header-logo.svg';
