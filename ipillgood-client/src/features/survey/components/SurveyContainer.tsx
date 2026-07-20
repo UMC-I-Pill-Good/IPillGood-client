@@ -1,8 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import StepNavigation from './StepNavigation';
-import { useState } from 'react';
 import BasicInfoStep from './info-step/BasicInfoStep';
 import { TextButton } from '@/shared/components';
 import LifestyleStep from './LifestyleStep';
@@ -12,8 +11,9 @@ import SupplementStep from './SupplementStep';
 
 const SurveyContainer = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const [step, setStep] = useState(1); // 초기 설문 단계
+  const step = Number(searchParams.get('step') ?? 1);
 
   // 이전 단계로 이동 (1단계에서는 이전 페이지로 이동)
   const handleBack = () => {
@@ -22,12 +22,12 @@ const SurveyContainer = () => {
       return;
     }
 
-    setStep((prev) => prev - 1);
+    router.push(`/survey?step=${step - 1}`);
   };
 
   const handleNext = () => {
     if (step < 5) {
-      setStep((prev) => prev + 1);
+      router.push(`/survey?step=${step + 1}`);
       return;
     }
 
