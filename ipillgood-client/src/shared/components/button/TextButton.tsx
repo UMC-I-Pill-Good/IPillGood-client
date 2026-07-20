@@ -9,11 +9,15 @@ const textButtonVariants = cva(
         primary:
           'bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800 backdrop-blur-xl',
         secondary:
-          'bg-secondary-600 text-white hover:bg-secondary-700 active:bg-secondary-800 backdrop-blur-xl',
+          'bg-secondary-600 text-white hover:bg-secondary-700 active:bg-secondary-800 backdrop-blur-xl border border-transparent',
         assistive:
-          'bg-white text-neutral-800 hover:bg-secondary-600/80 hover:text-white active:bg-secondary-600 active:text-white backdrop-blur-xl ring ring-white hover:ring-0 active:ring-0',
+          'bg-white text-neutral-800 hover:bg-secondary/70 hover:text-white active:bg-secondary-600 active:text-white backdrop-blur-xl border border-white hover:border-transparent',
         outline:
-          'ring ring-secondary-600 text-secondary-600/70 rounded-[10px] hover:bg-secondary-300 hover:text-white hover:ring-0 active:ring-0 active:bg-secondary-600 active:text-white backdrop-blur-xl',
+          'border border-secondary-600 text-secondary rounded-[10px] hover:bg-secondary/70 hover:text-white hover:border-transparent active:bg-secondary-600 backdrop-blur-xl',
+        semantic:
+          'bg-semantic-500 text-white hover:bg-semantic-600 active:bg-semantic-700 backdrop-blur-xl',
+        semanticOutline:
+          'border border-semantic-500 text-semantic-500 hover:bg-semantic-200 hover:text-white hover:border-transparent active:bg-semantic-300 active backdrop-blur-xl',
       },
       size: {
         xl: 'typo-body-2 h-13',

@@ -1,0 +1,40 @@
+import vitaminImage from '@/assets/images/vitamin.png';
+
+export const supplementItems = [
+  { id: 'multivitamin', label: '종합비타민', image: vitaminImage },
+  { id: 'vitamin-d', label: '비타민D', image: vitaminImage },
+  { id: 'vitamin-c', label: '비타민C', image: vitaminImage },
+  { id: 'vitamin-b', label: '비타민B', image: vitaminImage },
+  { id: 'omega3', label: '오메가3', image: vitaminImage },
+  { id: 'magnesium', label: '마그네슘', image: vitaminImage },
+  { id: 'calcium', label: '칼슘', image: vitaminImage },
+  { id: 'probiotics', label: '프로바이오틱스', image: vitaminImage },
+  { id: 'zinc', label: '아연', image: vitaminImage },
+  { id: 'iron', label: '철분', image: vitaminImage },
+  { id: 'milk-thistle', label: '밀크씨슬', image: vitaminImage },
+  { id: 'lutein', label: '루테인', image: vitaminImage },
+  { id: 'collagen', label: '콜라겐', image: vitaminImage },
+  { id: 'hong-sam', label: '홍삼', image: vitaminImage },
+  { id: 'taurine', label: '타우린', image: vitaminImage },
+  { id: 'folic-acid', label: '엽산', image: vitaminImage },
+  { id: 'arginine', label: '아르기닌', image: vitaminImage },
+  { id: 'biotin', label: '비오틴', image: vitaminImage },
+];
+
+export const otherSupplementItems = [
+  { id: 'dietary-fiber', label: '식이섬유', image: vitaminImage },
+  { id: 'omega-6', label: '오메가 6', image: vitaminImage },
+  { id: 'rhus-verniciflua', label: '옻나무 추출분말\n(개별인정원료)', image: vitaminImage },
+  { id: 'soy-isoflavone', label: '대두이소플라본', image: vitaminImage },
+  { id: 'glucosamine', label: '글루코사민', image: vitaminImage },
+  { id: 'garcinia', label: '가르시니아캄보지아\n추출물', image: vitaminImage },
+  { id: 'yam-extract', label: '야마 추출물\n(개별인정원료)', image: vitaminImage },
+  { id: 'cranberry', label: '크랜베리 추출물\n(개별인정원료)', image: vitaminImage },
+  { id: 'coenzyme-q10', label: '코엔자임 Q10', image: vitaminImage },
+  { id: 'creatine', label: '크레아틴', image: vitaminImage },
+  { id: 'ginseng', label: '인삼', image: vitaminImage },
+  { id: 'saw-palmetto', label: '쏘팔메토', image: vitaminImage },
+  { id: 'ginkgo', label: '은행잎 추출물', image: vitaminImage },
+  { id: 'ashwagandha', label: '아쉬간다 추출물\n(개별인정원료)', image: vitaminImage },
+  { id: 'psa', label: '폴리감마글루탐산', image: vitaminImage },
+];

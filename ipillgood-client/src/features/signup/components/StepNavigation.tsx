@@ -18,7 +18,7 @@ const StepNavigation = ({ step, onBack }: StepNavigationProps) => {
             key={item}
             className={clsx(
               'h-1 flex-1 rounded-full',
-              step >= item ? 'bg-primary-600' : 'bg-neutral-500',
+              step >= item ? 'bg-primary' : 'bg-neutral-500',
             )}
           />
         ))}
