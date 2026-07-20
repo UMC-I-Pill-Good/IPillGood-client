@@ -11,12 +11,15 @@ export const useConditionFlow = () => {
     setHomeSummaryData,
     markWeekCompleted,
     isCheckModalOpen,
+    isSundayModalOpen,
     checkStep,
     vitalityScore,
     sleepHours,
     sleepMinutes,
     openCheckModal,
+    forceOpenCheckModal,
     closeCheckModal,
+    closeSundayModal,
     setCheckStep,
     setVitalityScore,
     setSleepTime,
@@ -39,8 +42,14 @@ export const useConditionFlow = () => {
     }
   }, [homeSummaryData.monthlyGraph.length, setHomeSummaryData]);
 
+  // 컨디션 체크 시작 핸들러 (스토어 전역 openCheckModal에서 일요일 여부 자동 판단)
   const handleOpenStartModal = () => {
     openCheckModal(1);
+  };
+
+  // 일요일 경고 모달에서 '계속하기' 클릭 시 정상 체크 팝업 오픈
+  const handleContinueFromSunday = () => {
+    forceOpenCheckModal(1);
   };
 
   const handleStartCheck = () => {
@@ -96,13 +105,16 @@ export const useConditionFlow = () => {
   return {
     homeSummaryData,
     isCheckModalOpen,
+    isSundayModalOpen,
     checkStep,
     vitalityScore,
     sleepHours,
     sleepMinutes,
     isSubmitting,
     closeCheckModal,
+    closeSundayModal,
     handleOpenStartModal,
+    handleContinueFromSunday,
     handleStartCheck,
     handleBackToStart,
     handleNextVitalityStep,

@@ -15,13 +15,17 @@ interface ConditionState {
 
   // 컨디션 체크 팝업 모달 전역 상태 및 입력 데이터
   isCheckModalOpen: boolean;
+  isSundayModalOpen: boolean;
   checkStep: ConditionCheckStep;
   vitalityScore: number;
   sleepHours: number;
   sleepMinutes: number;
 
   openCheckModal: (step?: ConditionCheckStep) => void;
+  forceOpenCheckModal: (step?: ConditionCheckStep) => void;
   closeCheckModal: () => void;
+  openSundayModal: () => void;
+  closeSundayModal: () => void;
   setCheckStep: (step: ConditionCheckStep) => void;
   setVitalityScore: (score: number) => void;
   setSleepTime: (hours: number, minutes: number) => void;
@@ -60,22 +64,38 @@ export const useConditionStore = create<ConditionState>((set) => ({
     })),
 
   isCheckModalOpen: false,
+  isSundayModalOpen: false,
   checkStep: 1,
   vitalityScore: DEFAULT_VITALITY_SCORE,
   sleepHours: DEFAULT_SLEEP_HOURS,
   sleepMinutes: DEFAULT_SLEEP_MINUTES,
 
-  openCheckModal: (step = 1) =>
-    set({ isCheckModalOpen: true, checkStep: step }),
+  // 전역 팝업 오픈 요청 시 자동 일요일 판단 감지 (new Date().getDay() === 0)
+  openCheckModal: (step = 1) => {
+    const isTodaySunday = new Date().getDay() === 0;
+    if (isTodaySunday) {
+      set({ isSundayModalOpen: true, isCheckModalOpen: false, checkStep: step });
+    } else {
+      set({ isSundayModalOpen: false, isCheckModalOpen: true, checkStep: step });
+    }
+  },
+
+  // 일요일 경고 모달에서 '계속하기' 클릭 시 무조건 체크 팝업 오픈
+  forceOpenCheckModal: (step = 1) =>
+    set({ isSundayModalOpen: false, isCheckModalOpen: true, checkStep: step }),
 
   closeCheckModal: () =>
     set({
       isCheckModalOpen: false,
+      isSundayModalOpen: false,
       checkStep: 1,
       vitalityScore: DEFAULT_VITALITY_SCORE,
       sleepHours: DEFAULT_SLEEP_HOURS,
       sleepMinutes: DEFAULT_SLEEP_MINUTES,
     }),
+
+  openSundayModal: () => set({ isSundayModalOpen: true }),
+  closeSundayModal: () => set({ isSundayModalOpen: false }),
 
   setCheckStep: (step) => set({ checkStep: step }),
 
