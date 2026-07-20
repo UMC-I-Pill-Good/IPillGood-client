@@ -138,7 +138,10 @@ const GenderSelectSection = () => {
               aria-haspopup='dialog'
               aria-expanded={isOpenDateSheet}
               className='ring ring-primary text-primary inline-flex items-center justify-center gap-1.5 typo-caption-2 rounded-[20px] pr-2 pl-2.5 h-7 w-28 outline-none transition hover:bg-primary-400 hover:text-white hover:ring-transparent active:text-white active:bg-primary shirnk-0 whitespace-nowrap'
-              onClick={() => setIsOpenDateSheet((prev) => !prev)}
+              onClick={(e) => {
+                e.currentTarget.blur();
+                setIsOpenDateSheet((prev) => !prev);
+              }}
             >
               {selectedDate.year}.{String(selectedDate.month).padStart(2, '0')}.
               {String(selectedDate.day).padStart(2, '0')}

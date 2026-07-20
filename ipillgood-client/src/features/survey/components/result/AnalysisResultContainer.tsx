@@ -1,21 +1,16 @@
 'use client';
 
-import { IconButton, TextButton } from '@/shared/components';
+import { TextButton } from '@/shared/components';
 import RecommendationList from './RecommendationList';
 import { BulbIcon, CheckCircleIcon } from '@/assets';
 import { useRouter } from 'next/navigation';
-import { X } from 'lucide-react';
 
 const AnalysisResultContainer = () => {
   const router = useRouter();
 
   return (
     <main className='flex flex-1 min-h-screen flex-col py-4 px-5'>
-      <section className='flex justify-end py-4'>
-        <IconButton ariaLabel='분석 취소 버튼' icon={<X />} />
-      </section>
-
-      <section className='flex flex-col items-center justify-center py-4'>
+      <section className='flex flex-col items-center justify-center mt-18 py-4'>
         <CheckCircleIcon />
         <h5 className='typo-body-1 mt-5'>설문이 완료되었어요!</h5>
         <h5 className='typo-body-1 mt-2'>
@@ -31,7 +26,7 @@ const AnalysisResultContainer = () => {
 
       <RecommendationList />
 
-      <section className='py-4 pb-8'>
+      <section className='py-4 pb-20'>
         <div className='bg-point-200 rounded-[20px] p-4'>
           <article className='flex items-center gap-1'>
             <div className='bg-white rounded-full p-1 inline-flex items-center justify-center'>
