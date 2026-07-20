@@ -26,7 +26,7 @@ const ConditionStatusBanner = ({
   return (
     <section className='flex w-full flex-col items-center justify-center gap-2.5 px-5 pb-2 pt-4'>
       {isCompleted ? (
-        /* 1. 체크 완료 배너 */
+        /* 1. 체크 완료 배너 (h-[77px] 고정 높이) */
         <div
           className={clsx(
             'relative flex h-[77px] w-full items-center rounded-2xl bg-primary-300 py-4 pl-[68px] pr-12 text-left gap-2',
@@ -51,10 +51,10 @@ const ConditionStatusBanner = ({
           </div>
         </div>
       ) : (
-        /* 2. 체크 미완료 배너 */
+        /* 2. 체크 미완료 배너 (h-[148px] 고정 높이로 상하 여백 넉넉하게 확장) */
         <div
           className={clsx(
-            'relative flex w-full flex-col items-center rounded-2xl bg-primary-300 pt-2 pb-3.5 px-3 text-left shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
+            'relative flex h-[148px] w-full flex-col items-center justify-between rounded-2xl bg-primary-300 pt-3 pb-4 px-3 text-left shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
           )}
         >
           {/* 상단 텍스트 및 마스코트 헤더 영역 */}
@@ -63,7 +63,7 @@ const ConditionStatusBanner = ({
               <p className='h-6 text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
                 {title}
               </p>
-              <p className='text-xs font-medium leading-tight tracking-normal text-white whitespace-nowrap mt-0.5'>
+              <p className='text-xs font-medium leading-tight tracking-normal text-white whitespace-nowrap mt-1'>
                 매주 일요일에 컨디션 체크 알림을 보내드려요!
                 <br />
                 매주 체크하고, 변화를 기록해 보세요.
@@ -79,7 +79,7 @@ const ConditionStatusBanner = ({
             </div>
           </div>
 
-          {/* 공통 TextButton */}
+          {/* 공통 TextButton (text-lg, h-10.5 적용) */}
           <TextButton
             type='button'
             text='이번 주 컨디션 체크하러 가기'
