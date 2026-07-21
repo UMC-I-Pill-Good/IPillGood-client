@@ -3,7 +3,6 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FilterIcon } from '@/assets';
-import { SearchBar } from '@/shared/components';
 import { saveRecentKeyword } from '../../api/recentSearch';
 import { useRankingInfiniteProducts } from '../../hooks/useRankingInfiniteProducts';
 import type { RankingUiSort } from '../../types/ranking';
@@ -18,6 +17,7 @@ import {
   toRankingQueryParams,
 } from '../../utils/rankingFilterQuery';
 import RankingFilterBottomSheet from '../default/RankingFilterBottomSheet';
+import RankingSearchBar from '../default/RankingSearchBar';
 import RankingSupplementList from '../default/RankingSupplementList';
 import SortDropdownTrigger from '../default/SortDropdownTrigger';
 import RankingResultEmptyState from './RankingResultEmptyState';
@@ -203,28 +203,15 @@ const RankingResultContainer = () => {
 
   return (
     <main className='flex min-h-dvh w-full flex-col overflow-x-hidden px-5 pb-24 pt-4'>
-      <section className='flex w-full items-center gap-3'>
-        <SearchBar
+      <section className='flex w-full items-center gap-1'>
+        <RankingSearchBar
           value={searchValue}
           onChange={setSearchValue}
           onSearch={handleSubmitSearch}
-          placeholder='브랜드, 영양 성분을 검색해 보세요.'
-          className='h-12 flex-1 rounded-2xl bg-white px-3 py-3 text-primary-600 shadow-none backdrop-blur-none'
-          inputClassName='min-w-0 px-1 typo-body-11 placeholder:text-neutral-800'
-          searchIconClassName='size-5'
-          searchIconSize={20}
-          rightElement={
-            !searchValue.trim() ? (
-              <button
-                type='button'
-                aria-label='필터 열기'
-                className='inline-flex size-5 shrink-0 items-center justify-center self-center text-primary-500'
-                onClick={handleOpenFilter}
-              >
-                <FilterIcon aria-hidden='true' className='block size-5' />
-              </button>
-            ) : undefined
-          }
+          onFilterClick={handleOpenFilter}
+          className='flex-1'
+          searchBarClassName='h-11'
+          showFilterButton={searchValue.trim() === submittedSearchTerm.trim()}
         />
         <button
           type='button'
@@ -262,7 +249,7 @@ const RankingResultContainer = () => {
           <div ref={loadMoreRef} className='h-px w-full' />
         </section>
       ) : (
-        <section className='mt-7 flex w-full flex-col gap-3'>
+        <section className='mt-6 flex w-full flex-col gap-2'>
           <div className='flex w-full items-center justify-between gap-3'>
             <div className='flex min-w-0 items-end gap-1'>
               <h1 className='typo-body-5 text-black'>검색 결과</h1>
