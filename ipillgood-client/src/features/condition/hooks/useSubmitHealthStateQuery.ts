@@ -1,10 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
-import { submitHealthStateQuery } from '../api/submitHealthStateQuery';
-import type { SubmitHealthStateQueryRequestType } from '../types/healthStatus';
+import { postHealthStateQuery } from '../api/postHealthStateQuery';
+import type { SubmitHealthStateQueryRequestType, SubmitHealthStateQueryResponse } from '../types/healthStatus';
 
 export const useSubmitHealthStateQuery = () => {
-  return useMutation({
-    mutationFn: (request: SubmitHealthStateQueryRequestType) =>
-      submitHealthStateQuery(request),
+  return useMutation<SubmitHealthStateQueryResponse, Error, SubmitHealthStateQueryRequestType>({
+    mutationFn: (request) => postHealthStateQuery(request),
   });
 };

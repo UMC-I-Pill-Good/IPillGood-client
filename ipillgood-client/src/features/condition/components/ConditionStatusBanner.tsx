@@ -34,10 +34,10 @@ const ConditionStatusBanner = ({
           )}
         >
           <div className='flex flex-1 flex-col justify-center gap-0.5 mt-[3px] min-w-0'>
-            <p className='h-6 text-xl font-semibold text-primary-700 leading-none tracking-normal'>
+            <p className='h-6 text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
               {title}
             </p>
-            <p className='h-[17px] text-sm font-medium text-white leading-none tracking-normal'>
+            <p className='h-[17px] text-sm font-medium text-white leading-none whitespace-nowrap tracking-normal'>
               매주 체크하고, 변화를 기록해보세요.
             </p>
           </div>
@@ -51,7 +51,7 @@ const ConditionStatusBanner = ({
           </div>
         </div>
       ) : (
-        /* 2. 체크 미완료 배너 */
+        /* 2. 체크 미완료 배너 (팀원 피드백대로 whitespace-nowrap 완벽 복원) */
         <div
           className={clsx(
             'relative flex h-[148px] w-full flex-col items-center justify-between rounded-2xl bg-primary-300 pt-3 pb-4 px-3 text-left shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
@@ -60,10 +60,10 @@ const ConditionStatusBanner = ({
           {/* 상단 텍스트 및 마스코트 헤더 영역 */}
           <div className='flex w-full items-center pr-10 gap-2'>
             <div className='flex flex-1 flex-col justify-center min-w-0 ml-[58px]'>
-              <p className='h-6 text-xl font-semibold text-primary-700 leading-none tracking-normal'>
+              <p className='h-6 text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
                 {title}
               </p>
-              <p className='text-xs font-medium leading-tight tracking-normal text-white mt-1'>
+              <p className='text-xs font-medium leading-tight tracking-normal text-white whitespace-nowrap mt-1'>
                 매주 일요일에 컨디션 체크 알림을 보내드려요!
                 <br />
                 매주 체크하고, 변화를 기록해 보세요.

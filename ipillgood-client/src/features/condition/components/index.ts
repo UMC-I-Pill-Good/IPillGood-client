@@ -9,6 +9,4 @@ export { default as ConditionSleepTimeModal } from './condition-check-modal/Cond
 export { default as ConditionCheckCompleteModal } from './condition-check-modal/ConditionCheckCompleteModal';
 export { default as ConditionCheckModals } from './condition-check-modal/ConditionCheckModals';
 export { default as HealthStatusSelection } from './health-status/HealthStatusSelection';
-export { default as HealthMinorConcernChip } from './health-status/HealthMinorConcernChip';
-
-
+export { default as HealthMinorConcernButton } from './health-status/HealthMinorConcernButton';
