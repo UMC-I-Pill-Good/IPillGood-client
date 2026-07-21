@@ -19,7 +19,6 @@ const ConditionSummarySection = ({
   const { homeSummaryData } = useConditionFlow();
   const { monthlySummary } = homeSummaryData;
 
-  // 초기 0/null 상태일 때 강제로 3, 4.5로 덮어쓰지 않고 0으로 일치
   const averageVitality = propVitality ?? monthlySummary.avgVitalityScore ?? 0;
   const averageSleepHours = propSleep ?? monthlySummary.avgSleepHours ?? 0;
   const intakeDays = propIntakeDays ?? monthlySummary.intakeDays ?? 0;

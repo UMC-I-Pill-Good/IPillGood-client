@@ -63,7 +63,6 @@ const ConditionWeekDetailModal = ({
     };
   }, [weekStartDate]);
 
-  // API가 로드된 경우 API의 값을 우선 사용하고, null인 경우 '-'로 명확히 표시
   const displayVitality = isLoading
     ? vitality
     : detailData?.conditionScore !== undefined
