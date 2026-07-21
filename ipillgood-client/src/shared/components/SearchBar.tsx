@@ -25,7 +25,7 @@ export const SearchBar = ({
   className,
   inputClassName,
   searchIconClassName,
-  searchIconSize = 28,
+  searchIconSize = 20,
 }: SearchBarProps) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter' || e.nativeEvent.isComposing) return; // IME 조합 중 엔터 오작동 방지
@@ -36,7 +36,7 @@ export const SearchBar = ({
   return (
     <div
       className={cn(
-        'flex h-12 w-full items-center justify-between gap-1 rounded-[10px] border border-white bg-white/70 px-3 py-3 text-[#4680FE] backdrop-blur-xs',
+        'flex h-11 w-full items-center justify-between gap-1 rounded-[10px] border border-white bg-white/90 px-3 py-3 text-[#4680FE] backdrop-blur-xs',
         className,
       )}
     >
@@ -52,7 +52,7 @@ export const SearchBar = ({
         placeholder={placeholder}
         aria-label={placeholder}
         className={cn(
-          'flex-1 bg-transparent typo-body-2 outline-none placeholder:text-neutral-500',
+          'flex-1 bg-transparent outline-none typo-body-10 placeholder:text-neutral-500 placeholder:font-normal',
           inputClassName,
         )}
       />

@@ -1,6 +1,7 @@
 import magnesium from '@/assets/images/magnesium.png';
+import { CabinetItem } from '../types/cabinet';
 
-export const cabinetItems = [
+export const cabinetItems: CabinetItem[] = [
   { id: 1, image: magnesium, name: '마그네슘' },
   { id: 2, image: magnesium, name: '루테인' },
   { id: 3, image: magnesium, name: '비타민D' },
