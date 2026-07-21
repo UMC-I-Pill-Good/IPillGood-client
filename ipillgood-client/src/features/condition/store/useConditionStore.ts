@@ -15,7 +15,7 @@ interface ConditionState {
   // 이번 주 컨디션 체크 상태 (API로 호출)
   currentWeekStatus: ConditionCurrentWeekResult;
   setCurrentWeekStatus: (status: ConditionCurrentWeekResult) => void;
-  markWeekCompleted: () => void;
+  markWeekCompleted: (recordId: number) => void;
 
   // 컨디션 체크 팝업 모달 전역 상태 및 입력 데이터
   isCheckModalOpen: boolean;
@@ -74,11 +74,12 @@ export const useConditionStore = create<ConditionState>((set) => ({
 
   currentWeekStatus: DEFAULT_CURRENT_WEEK_STATUS,
   setCurrentWeekStatus: (status) => set({ currentWeekStatus: status }),
-  markWeekCompleted: () =>
+  markWeekCompleted: (recordId: number) =>
     set((state) => ({
       currentWeekStatus: {
         ...state.currentWeekStatus,
         checked: true,
+        recordId,
       },
     })),
 

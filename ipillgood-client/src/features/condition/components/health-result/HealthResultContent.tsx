@@ -20,7 +20,7 @@ const HealthResultInner = () => {
 
   if (!isValid) {
     return (
-      <div className='mx-auto min-h-dvh w-full max-w-[393px] bg-background pb-24 flex flex-col overflow-x-hidden'>
+      <div className='mx-auto min-h-dvh w-full max-w-110 bg-background pb-24 flex flex-col overflow-x-hidden'>
         <Header
           title='건강 상태 결과'
           showBackButton={true}
@@ -37,7 +37,7 @@ const HealthResultInner = () => {
 
   if (isLoading) {
     return (
-      <div className='mx-auto min-h-dvh w-full max-w-[393px] bg-background pb-24 flex flex-col overflow-x-hidden'>
+      <div className='mx-auto min-h-dvh w-full max-w-110 bg-background pb-24 flex flex-col overflow-x-hidden'>
         <Header
           title={`궁금 상태: ${majorCategoryLabel} - ${minorCategoryLabel}`}
           showBackButton={true}
@@ -54,7 +54,7 @@ const HealthResultInner = () => {
 
   if (error || !data) {
     return (
-      <div className='mx-auto min-h-dvh w-full max-w-[393px] bg-background pb-24 flex flex-col overflow-x-hidden'>
+      <div className='mx-auto min-h-dvh w-full max-w-110 bg-background pb-24 flex flex-col overflow-x-hidden'>
         <Header
           title={`궁금 상태: ${majorCategoryLabel} - ${minorCategoryLabel}`}
           showBackButton={true}
@@ -70,7 +70,7 @@ const HealthResultInner = () => {
   }
 
   return (
-    <div className='min-h-dvh w-full bg-background pb-24 flex flex-col items-stretch overflow-x-hidden'>
+    <div className='mx-auto min-h-dvh w-full max-w-110 bg-background pb-24 flex flex-col items-stretch overflow-x-hidden'>
       {/* 1. Header */}
       <Header
         title={`궁금 상태: ${majorCategoryLabel} - ${minorCategoryLabel}`}
