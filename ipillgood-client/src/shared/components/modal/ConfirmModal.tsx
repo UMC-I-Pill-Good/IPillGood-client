@@ -61,7 +61,7 @@ const ConfirmModal = ({
             variant='primary'
             size='sm'
             onClick={onConfirm}
-            className='flex-1'
+            className='flex-1 shadow-[4px_4px_2px_rgba(0,0,0,0.15)]'
           />
         </div>
       </div>
