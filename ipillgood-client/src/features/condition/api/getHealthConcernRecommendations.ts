@@ -15,10 +15,6 @@ export const getHealthConcernRecommendations = async ({
   majorCategory,
   minorCategory,
 }: GetHealthConcernRecommendationsParams): Promise<HealthConcernRecommendationsResponse> => {
-  console.log(
-    `API GET /api/v1/health-concerns/recommendations 호출 - majorCategory: ${majorCategory}, minorCategory: ${minorCategory}`,
-  );
-
   // 더미 데이터 반환 (API 연동 전 클라이언트 사전 테스트용)
   return {
     isSuccess: true,

@@ -117,8 +117,8 @@ export const useConditionFlow = () => {
         sleepMinutes: sleepTime.minutes,
       });
 
-      if (response.isSuccess) {
-        markWeekCompleted();
+      if (response.isSuccess && response.result) {
+        markWeekCompleted(response.result.recordId);
         setCheckStep(4);
       }
     } catch (error) {

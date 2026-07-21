@@ -53,6 +53,7 @@ const ConditionGraphSection = () => {
       weekLabel: `${weekNo}주차`,
       weekNo,
       weekStartDate: undefined,
+      recordId: undefined,
       score: null, // 데이터가 없는 주차는 null로 처리하여 점/선을 그리지 않음
       vitality: 0,
       sleepHours: 0,

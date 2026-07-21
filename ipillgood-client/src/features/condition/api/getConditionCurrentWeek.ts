@@ -6,7 +6,7 @@ import { type ConditionCurrentWeekResponse } from '../types/condition';
 export const getConditionCurrentWeek = async (): Promise<ConditionCurrentWeekResponse> => {
   console.log('API GET /api/v1/conditions/current-week 호출');
 
-  // 더미 데이터 반환 (API 연동 전 클라이언트 사전 테스트용)
+  // 더미 데이터 반환
   return {
     isSuccess: true,
     code: 'SUCCESS200_1',
