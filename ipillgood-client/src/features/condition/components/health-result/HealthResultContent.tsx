@@ -1,12 +1,11 @@
 'use client';
 
-import { Suspense } from 'react';
 import { Header } from '@/shared/layout/Header';
 import { useHealthResultFlow } from '../../hooks/useHealthResultFlow';
 import HealthDeclineCauseSection from './HealthDeclineCauseSection';
 import RecommendedIngredientSection from './RecommendedIngredientSection';
 
-const HealthResultInner = () => {
+const HealthResultContent = () => {
   const {
     majorCategoryLabel,
     minorCategoryLabel,
@@ -86,20 +85,6 @@ const HealthResultInner = () => {
       {/* 3. 추천 성분 섹션 */}
       <RecommendedIngredientSection ingredientList={data.recommendedIngredients} />
     </div>
-  );
-};
-
-const HealthResultContent = () => {
-  return (
-    <Suspense
-      fallback={
-        <div className='flex min-h-dvh w-full items-center justify-center bg-[#F2F6FF]'>
-          <div className='text-center text-neutral-500 typo-body-5'>로딩 중...</div>
-        </div>
-      }
-    >
-      <HealthResultInner />
-    </Suspense>
   );
 };
 
