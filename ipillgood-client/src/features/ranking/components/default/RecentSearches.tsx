@@ -1,10 +1,11 @@
 'use client';
 
 import { CrossSmallIcon } from '@/assets';
+import type { RecentKeywordDto } from '../../types/recentSearch';
 
 interface RecentSearchesProps {
-  searches: string[];
-  onRemove: (searchTerm: string) => void;
+  searches: RecentKeywordDto[];
+  onRemove: (keywordId: number) => void;
   onClear: () => void;
 }
 
@@ -29,19 +30,19 @@ const RecentSearches = ({
       </div>
 
       <div className='flex flex-wrap items-center gap-3'>
-        {searches.map((searchTerm) => (
+        {searches.map(({ keywordId, keyword }) => (
           <div
-            key={searchTerm}
+            key={keywordId}
             className='flex h-8 items-start justify-end'
           >
             <span className='glass flex h-8 items-center justify-center rounded-full bg-white/50 px-4 typo-caption-2 text-neutral-800 shadow-[0_4px_4px_rgba(126,131,135,0.1)]'>
-              {searchTerm}
+              {keyword}
             </span>
             <button
               type='button'
-              aria-label={`${searchTerm} 최근 검색어 삭제`}
+              aria-label={`${keyword} 최근 검색어 삭제`}
               className='inline-flex size-4 shrink-0 items-center justify-center text-neutral-800'
-              onClick={() => onRemove(searchTerm)}
+              onClick={() => onRemove(keywordId)}
             >
               <CrossSmallIcon aria-hidden='true' className='size-4' />
             </button>

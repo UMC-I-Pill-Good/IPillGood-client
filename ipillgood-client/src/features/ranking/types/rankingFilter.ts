@@ -39,5 +39,5 @@ export const DEFAULT_RANKING_FILTERS: RankingFilterState = {
   ageGroup: '전체',
   gender: undefined,
   certification: 'ALL',
-  healthConcern: '신경계',
+  healthConcern: null,
 };

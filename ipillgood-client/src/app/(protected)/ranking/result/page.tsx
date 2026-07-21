@@ -1,7 +1,12 @@
-import RankingResultSkeletonContainer from '@/features/ranking/components/result/RankingResultSkeletonContainer';
+import { Suspense } from 'react';
+import RankingResultContainer from '@/features/ranking/components/result/RankingResultContainer';
 
 const RankingResultPage = () => {
-  return <RankingResultSkeletonContainer />;
+  return (
+    <Suspense>
+      <RankingResultContainer />
+    </Suspense>
+  );
 };
 
 export default RankingResultPage;

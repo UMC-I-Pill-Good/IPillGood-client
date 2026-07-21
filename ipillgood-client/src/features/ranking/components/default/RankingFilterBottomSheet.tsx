@@ -12,14 +12,14 @@ import {
 import type { RankingGender } from '../../types/ranking';
 
 const genderToOption = (gender?: RankingGender) => {
-  if (gender === 'M') return '남성';
-  if (gender === 'F') return '여성';
+  if (gender === 'MALE') return '남성';
+  if (gender === 'FEMALE') return '여성';
   return '전체';
 };
 
 const optionToGender = (option: (typeof GENDER_OPTIONS)[number]) => {
-  if (option === '남성') return 'M';
-  if (option === '여성') return 'F';
+  if (option === '남성') return 'MALE';
+  if (option === '여성') return 'FEMALE';
   return undefined;
 };
 

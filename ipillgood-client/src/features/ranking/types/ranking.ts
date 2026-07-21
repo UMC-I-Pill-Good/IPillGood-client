@@ -1,18 +1,36 @@
-export type RankingGender = 'M' | 'F';
+export type RankingGender = 'MALE' | 'FEMALE';
 
-export type RankingApiSort = 'POPULAR' | 'PRICE_HIGH' | 'PRICE_LOW';
+export type RankingAgeGroup =
+  | 'TEENS'
+  | 'TWENTIES'
+  | 'THIRTIES'
+  | 'FORTIES'
+  | 'FIFTIES_AND_ABOVE';
 
-export type RankingUiSort = 'REVIEW_COUNT' | 'RATING';
+export type HealthConcernMajorCategory =
+  | 'NERVOUS_SYSTEM'
+  | 'SENSORY_SYSTEM'
+  | 'DIGESTIVE_METABOLISM'
+  | 'ENDOCRINE_SYSTEM'
+  | 'CARDIOVASCULAR_SYSTEM'
+  | 'IMMUNE_SYSTEM'
+  | 'MUSCULAR_SYSTEM'
+  | 'REPRODUCTIVE_URINARY_SYSTEM';
+
+export type RankingApiSort = 'REVIEW_COUNT' | 'RATING';
+
+export type RankingUiSort = RankingApiSort;
 
 export interface RankingQueryParams {
-  ageGroup?: string;
-  gender?: RankingGender;
-  intakeType?: string;
-  ingredientId?: number;
-  healthConcern?: string;
+  keyword?: string;
   sort?: RankingApiSort;
-  page?: number;
+  ageGroups?: RankingAgeGroup[];
+  gender?: RankingGender;
+  mfdsCertified?: boolean;
+  healthConcernMajorCategories?: HealthConcernMajorCategory[];
+  ingredientIds?: number[];
   size?: number;
+  cursor?: string;
 }
 
 export interface ApiResponse<T> {
@@ -22,22 +40,25 @@ export interface ApiResponse<T> {
   result: T | null;
 }
 
-export interface RankingItemDto {
-  rank: number;
+export interface ProductSearchItemDto {
   productId: number;
-  brand: string | null;
   productName: string;
+  brand: string;
   imageUrl: string | null;
-  rating: number;
+  mfdsCertified: boolean;
+  ingredientName: string;
+  ratingAverage: number | null;
   reviewCount: number;
-  price: number;
-  ingredientTags: string[] | null;
-  isCertified?: boolean;
+  ingredientTags: string[];
 }
 
 export interface RankingResultDto {
+  keyword: string | null;
+  products: ProductSearchItemDto[];
+  size: number;
+  totalElements: number;
   hasNext: boolean;
-  items: RankingItemDto[];
+  nextCursor: string | null;
 }
 
 export type RankingApiResponse = ApiResponse<RankingResultDto>;

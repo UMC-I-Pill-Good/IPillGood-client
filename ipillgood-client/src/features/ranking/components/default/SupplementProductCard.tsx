@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Omega3BottleIcon, RatingStarIcon, ValidBadgeIcon } from '@/assets';
 import { Chip } from '@/shared/components';
-import type { RankingItemDto } from '../../types/ranking';
+import type { ProductSearchItemDto } from '../../types/ranking';
 import RankingBadge from './RankingBadge';
 
 interface SupplementProductCardProps {
-  item: RankingItemDto;
+  item: ProductSearchItemDto;
   displayRank: number;
 }
 
@@ -19,8 +19,8 @@ const SupplementProductCard = ({
   const [hasImageError, setHasImageError] = useState(false);
   const imageUrl = item.imageUrl?.trim();
   const shouldShowImage = Boolean(imageUrl) && !hasImageError;
-  const ingredientTags = item.ingredientTags ?? [];
-  const visibleIngredientTags = ingredientTags.slice(0, 1);
+  const visibleIngredientTags = [item.ingredientName].filter(Boolean);
+  const ratingAverage = item.ratingAverage ?? 0;
 
   return (
     <article className='ranking-product-card flex w-full items-center justify-center gap-3 px-5 py-4'>
@@ -28,7 +28,7 @@ const SupplementProductCard = ({
 
       <div className='flex min-w-0 flex-1 items-center gap-3 overflow-visible'>
         <div className='relative flex h-[4.375rem] w-[2.6875rem] shrink-0 items-center justify-center overflow-visible'>
-          {item.isCertified && (
+          {item.mfdsCertified && (
             <ValidBadgeIcon
               aria-hidden='true'
               className='absolute -left-[0.5625rem] -top-[0.78125rem] z-10 h-[1.3125rem] w-[1.375rem]'
@@ -54,7 +54,7 @@ const SupplementProductCard = ({
           <div className='flex w-full flex-col gap-1'>
             <div className='flex w-full items-center justify-between gap-2'>
               <p className='min-w-0 flex-1 truncate typo-caption-6 text-black'>
-                {item.brand ?? ''}
+                {item.brand}
               </p>
               <Link
                 href='/'
@@ -76,14 +76,11 @@ const SupplementProductCard = ({
                   aria-hidden='true'
                 />
                 <span className='min-w-0 truncate'>
-                  {item.rating.toFixed(1)} (
+                  {ratingAverage.toFixed(1)} (
                   {item.reviewCount.toLocaleString('ko-KR')})
                 </span>
               </div>
             </div>
-            <p className='typo-caption-6 text-neutral-800'>
-              {item.price.toLocaleString('ko-KR')}원
-            </p>
           </div>
 
           <div className='flex w-full items-center justify-between'>
@@ -92,7 +89,6 @@ const SupplementProductCard = ({
                 key={tag}
                 text={tag}
                 variant='point'
-                className='bg-[#92E4C2]'
               />
             ))}
           </div>
