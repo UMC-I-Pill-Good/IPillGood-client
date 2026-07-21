@@ -6,6 +6,7 @@ export { default as ToggleButton } from './button/ToggleButton';
 
 /* modal */
 export { default as ConfirmModal } from './modal/ConfirmModal';
+export { default as ModalShell } from './modal/ModalShell';
 export { default as BottomSheet } from './modal/BottomSheet';
 
 /* chip */
