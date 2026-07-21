@@ -52,7 +52,7 @@ const ConditionSundayIntakeModal = ({
           </p>
         </div>
 
-        {/* 2. 하단 버튼 영역 (시맨틱 색상 토큰 border-secondary-600, text-secondary-600, bg-primary-600 적용) */}
+        {/* 2. 하단 버튼 영역 */}
         <div className='flex w-full items-center justify-center gap-2.5'>
           <TextButton
             type='button'
@@ -60,7 +60,7 @@ const ConditionSundayIntakeModal = ({
             variant='outline'
             size='sm'
             onClick={onClose}
-            className='h-8 flex-1 rounded-lg border border-secondary-600 text-secondary-600 shadow-none hover:bg-secondary-100'
+            className='flex-1'
           />
           <TextButton
             type='button'
@@ -68,7 +68,7 @@ const ConditionSundayIntakeModal = ({
             variant='primary'
             size='sm'
             onClick={onContinue}
-            className='h-8 flex-1 rounded-lg bg-primary-600 text-white shadow-none hover:bg-primary-700'
+            className='flex-1'
           />
         </div>
       </div>
