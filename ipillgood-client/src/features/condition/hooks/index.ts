@@ -1,4 +1,4 @@
 export * from './useConditionFlow';
-export * from './useHealthConcernList';
-export * from './useSubmitHealthStateQuery';
+export * from './useHealthConcernRecommendations';
+export * from './useHealthResultFlow';
 export * from './useHealthStatusSelection';
