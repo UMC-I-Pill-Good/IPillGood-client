@@ -29,46 +29,49 @@ const ConditionGraphSection = () => {
     null,
   );
 
-  const monthlyGraphData = homeSummaryData.monthlyGraph;
+  const monthlyGraphData = homeSummaryData.records;
 
-  // 초기 0일 때/로드 전 일관된 0점 기본 데이터 렌더링
-  const sourceGraphData =
-    monthlyGraphData && monthlyGraphData.length > 0
-      ? monthlyGraphData.map((item) => {
-        const score = item.conditionScore ?? 0;
-        return {
-          weekLabel: `${item.weekNo}주차`,
-          weekNo: item.weekNo,
-          weekStartDate: item.weekStartDate,
-          score,
-          vitality: score,
-          sleepHours: 0,
-          intakeDays: 0,
-          totalDays: 7,
-        };
-      })
-      : [1, 2, 3, 4, 5].map((weekNo) => ({
+  // 초기 0일 때/로드 전 일관된 0점 기본 데이터 렌더링 (항상 5주차 라벨 및 좌표 보장)
+  const sourceGraphData = Array.from({ length: 5 }, (_, index) => {
+    const weekNo = index + 1;
+    const item = monthlyGraphData && monthlyGraphData[index];
+    if (item) {
+      const score = item.conditionScore;
+      return {
         weekLabel: `${weekNo}주차`,
         weekNo,
-        weekStartDate: undefined,
-        score: 0,
-        vitality: 0,
+        weekStartDate: item.weekStartOn,
+        recordId: item.recordId,
+        score,
+        vitality: score ?? 0,
         sleepHours: 0,
         intakeDays: 0,
         totalDays: 7,
-      }));
+      };
+    }
+    return {
+      weekLabel: `${weekNo}주차`,
+      weekNo,
+      weekStartDate: undefined,
+      score: null, // 데이터가 없는 주차는 null로 처리하여 점/선을 그리지 않음
+      vitality: 0,
+      sleepHours: 0,
+      intakeDays: 0,
+      totalDays: 7,
+    };
+  });
 
   const graphPointList: ConditionGraphPointType[] = sourceGraphData.map(
     (condition, index) => ({
       ...condition,
       x: WEEK_X_POSITION_LIST[index] ?? AXIS_LEFT,
-      y: getScoreY(condition.score),
+      y: condition.score !== null ? getScoreY(condition.score) : AXIS_BOTTOM,
     }),
   );
 
   const graphLinePoints = [
     `${AXIS_LEFT},${AXIS_BOTTOM}`,
-    ...graphPointList.map(({ x, y }) => `${x},${y}`),
+    ...graphPointList.filter(({ score }) => score !== null).map(({ x, y }) => `${x},${y}`),
   ].join(' ');
 
   const selectedPoint =
@@ -136,11 +139,12 @@ const ConditionGraphSection = () => {
         </div>
       </section>
 
-      {/* 선택된 주차의 시작일(weekStartDate)이 존재할 때만 상세 모달 렌더링 */}
-      {selectedPoint && selectedPoint.weekStartDate && (
+      {/* 선택된 주차의 recordId가 존재할 때만 상세 모달 렌더링 */}
+      {selectedPoint && selectedPoint.recordId !== undefined && (
         <ConditionWeekDetailModal
           month={CURRENT_MONTH}
           weekLabel={selectedPoint.weekLabel}
+          recordId={selectedPoint.recordId}
           weekStartDate={selectedPoint.weekStartDate}
           vitality={selectedPoint.vitality}
           sleepHours={selectedPoint.sleepHours}

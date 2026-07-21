@@ -25,9 +25,10 @@ const ConditionGraphSvg = ({
   onHoverPoint,
   onSelectPoint,
 }: ConditionGraphSvgProps) => {
+  const validPoints = graphPointList.filter((p) => p.score !== null);
   const pathD = [
     `M ${AXIS_LEFT} ${AXIS_BOTTOM}`,
-    ...graphPointList.map(({ x, y }) => `L ${x} ${y}`),
+    ...validPoints.map(({ x, y }) => `L ${x} ${y}`),
   ].join(' ');
 
   return (
@@ -96,60 +97,64 @@ const ConditionGraphSvg = ({
       />
 
       {/* 주차별 데이터 포인트 점 및 호버 효과 */}
-      {graphPointList.map((condition, index) => (
-        <g key={condition.weekLabel}>
-          {hoveredPointIndex === index && (
-            <line
-              x1={condition.x}
-              y1={AXIS_BOTTOM}
-              x2={condition.x}
-              y2={condition.y}
-              stroke='#B1B8BE'
-              strokeWidth='1.5'
+      {graphPointList.map((condition, index) => {
+        if (condition.score === null) return null; // 데이터가 없는 주차는 점/선을 그리지 않음
+
+        return (
+          <g key={condition.weekLabel}>
+            {hoveredPointIndex === index && (
+              <line
+                x1={condition.x}
+                y1={AXIS_BOTTOM}
+                x2={condition.x}
+                y2={condition.y}
+                stroke='#B1B8BE'
+                strokeWidth='1.5'
+                pointerEvents='none'
+                style={{ transition: 'all 0.3s ease-out' }}
+              />
+            )}
+
+            {/* 데이터 포인트 점 */}
+            <circle
+              cx={condition.x}
+              cy={condition.y}
+              r={hoveredPointIndex === index ? 4.87 : 3}
+              fill={
+                hoveredPointIndex === index
+                  ? '#6580EE'
+                  : 'var(--primary, #7F99FF)'
+              }
+              style={{
+                transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                ...(hoveredPointIndex === index
+                  ? { filter: 'drop-shadow(0px 0px 5px rgba(126, 131, 135, 0.61))' }
+                  : {}),
+              }}
               pointerEvents='none'
-              style={{ transition: 'all 0.3s ease-out' }}
             />
-          )}
 
-          {/* 데이터 포인트 점 */}
-          <circle
-            cx={condition.x}
-            cy={condition.y}
-            r={hoveredPointIndex === index ? 4.87 : 3}
-            fill={
-              hoveredPointIndex === index
-                ? '#6580EE'
-                : 'var(--primary, #7F99FF)'
-            }
-            style={{
-              transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-              ...(hoveredPointIndex === index
-                ? { filter: 'drop-shadow(0px 0px 5px rgba(126, 131, 135, 0.61))' }
-                : {}),
-            }}
-            pointerEvents='none'
-          />
-
-          {/* 클릭 상호작용 히트박스 버튼 */}
-          <foreignObject
-            x={condition.x - 12}
-            y={condition.y - 12}
-            width='24'
-            height='24'
-            className='overflow-visible'
-            style={{ transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)' }}
-          >
-            <button
-              type='button'
-              aria-label={`${condition.weekLabel} 컨디션 점수 ${condition.score}점 상세 보기`}
-              className='size-6 rounded-full bg-transparent focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary-600'
-              onMouseEnter={() => onHoverPoint(index)}
-              onMouseLeave={() => onHoverPoint(null)}
-              onClick={() => onSelectPoint(index)}
-            />
-          </foreignObject>
-        </g>
-      ))}
+            {/* 클릭 상호작용 히트박스 버튼 */}
+            <foreignObject
+              x={condition.x - 12}
+              y={condition.y - 12}
+              width='24'
+              height='24'
+              className='overflow-visible'
+              style={{ transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)' }}
+            >
+              <button
+                type='button'
+                aria-label={`${condition.weekLabel} 컨디션 점수 ${condition.score}점 상세 보기`}
+                className='size-6 rounded-full bg-transparent focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary-600'
+                onMouseEnter={() => onHoverPoint(index)}
+                onMouseLeave={() => onHoverPoint(null)}
+                onClick={() => onSelectPoint(index)}
+              />
+            </foreignObject>
+          </g>
+        );
+      })}
 
       {/* X축 주차 라벨 */}
       {graphPointList.map(({ weekLabel, x }) => (

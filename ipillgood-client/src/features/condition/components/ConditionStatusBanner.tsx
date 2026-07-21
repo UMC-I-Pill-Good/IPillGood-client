@@ -14,9 +14,9 @@ const ConditionStatusBanner = ({
   isCompleted: propIsCompleted,
   onOpenConditionCheck: propOnOpen,
 }: ConditionStatusBannerProps = {}) => {
-  const { homeSummaryData, handleOpenStartModal } = useConditionFlow();
+  const { currentWeekStatus, handleOpenStartModal } = useConditionFlow();
 
-  const isCompleted = propIsCompleted ?? homeSummaryData.currentWeekCompleted;
+  const isCompleted = propIsCompleted ?? currentWeekStatus.checked;
   const onOpenConditionCheck = propOnOpen ?? handleOpenStartModal;
 
   const title = isCompleted
