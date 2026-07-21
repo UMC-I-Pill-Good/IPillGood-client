@@ -11,13 +11,13 @@ const ConditionHealthStatusSection = () => {
         <section className='flex w-full flex-col px-5 py-4'>
             <div
                 className={clsx(
-                    'flex h-[113px] w-full flex-col items-center justify-center gap-3 overflow-hidden rounded-[20px] p-3',
-                    'bg-primary-600/20',
+                    'glass !h-[113px] !w-full !flex !flex-col items-center justify-center gap-3 overflow-hidden rounded-[20px] p-3',
+                    '!bg-primary-600/35',
                     'shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
                 )}
             >
                 <div className='flex h-[37px] w-full flex-col items-center gap-1'>
-                    <h2 className='typo-body-9 flex h-[19px] w-full items-center justify-center text-center text-[#111111]'>
+                    <h2 className='typo-body-9 flex h-[19px] w-full items-center justify-center text-center text-black'>
                         궁금한 건강 상태가 있으신가요?
                     </h2>
 
