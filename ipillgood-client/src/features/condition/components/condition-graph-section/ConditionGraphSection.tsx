@@ -105,7 +105,7 @@ const ConditionGraphSection = () => {
               <button
                 type='button'
                 aria-label='이전 달 보기'
-                className='flex size-6 items-center justify-center text-neutral-900'
+                className='flex size-6 items-center justify-center text-neutral-900 transition-all rounded-full hover:bg-neutral-100/70 active:bg-neutral-200/70'
               >
                 <ChevronLeft aria-hidden='true' size={24} strokeWidth={1.5} />
               </button>
@@ -117,7 +117,7 @@ const ConditionGraphSection = () => {
               <button
                 type='button'
                 aria-label='다음 달 보기'
-                className='flex size-6 items-center justify-center text-neutral-900'
+                className='flex size-6 items-center justify-center text-neutral-900 transition-all rounded-full hover:bg-neutral-100/70 active:bg-neutral-200/70'
               >
                 <ChevronRight aria-hidden='true' size={24} strokeWidth={1.5} />
               </button>
