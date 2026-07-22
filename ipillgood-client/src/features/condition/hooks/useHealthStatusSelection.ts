@@ -1,14 +1,13 @@
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { HEALTH_SYSTEM_OPTION_LIST } from '../constants/healthStatusOptionList';
-import { useSubmitHealthStateQuery } from './useSubmitHealthStateQuery';
 
 export const useHealthStatusSelection = () => {
+  const router = useRouter();
+
   // 대분류 및 소분류 선택 상태 (단일 선택)
   const [selectedSystemKey, setSelectedSystemKey] = useState<string | null>(null);
   const [selectedBodyPartKey, setSelectedBodyPartKey] = useState<string | null>(null);
-
-  // TanStack Query Mutation 훅 (API 제출 연동 준비)
-  const { mutate: submitQuery, isPending } = useSubmitHealthStateQuery();
 
   // 상단 대분류 카드 클릭 핸들러
   const handleSystemSelect = (systemKey: string) => {
@@ -34,21 +33,15 @@ export const useHealthStatusSelection = () => {
       (part) => part.key === selectedBodyPartKey,
     );
 
-    console.log('건강 상태 선택 제출:', {
-      selectedSystemKey,
-      selectedBodyPartKey,
-      selectedPart,
-    });
+    if (selectedPart) {
+      const queryParams = new URLSearchParams({
+        majorCategory: selectedSystemKey,
+        majorCategoryLabel: selectedSystem.label.replace('\n', ' '),
+        minorCategory: selectedBodyPartKey,
+        minorCategoryLabel: selectedPart.label,
+      }).toString();
 
-    if (selectedPart?.healthConcernId) {
-      submitQuery(
-        { healthConcernId: selectedPart.healthConcernId },
-        {
-          onSuccess: () => {
-            console.log('건강 상태 제출 성공');
-          },
-        },
-      );
+      router.push(`/condition/health-status/result?${queryParams}`);
     }
   };
 
@@ -62,6 +55,6 @@ export const useHealthStatusSelection = () => {
     handleBodyPartSelect,
     handleComplete,
     isFormValid,
-    isPending,
+    isPending: false,
   };
 };

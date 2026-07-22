@@ -10,3 +10,4 @@ export { default as ConditionCheckCompleteModal } from './condition-check-modal/
 export { default as ConditionCheckModals } from './condition-check-modal/ConditionCheckModals';
 export { default as HealthStatusSelection } from './health-status/HealthStatusSelection';
 export { default as HealthMinorConcernButton } from './health-status/HealthMinorConcernButton';
+export { default as HealthResultContent } from './health-result/HealthResultContent';

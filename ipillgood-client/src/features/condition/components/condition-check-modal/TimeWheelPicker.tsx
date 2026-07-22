@@ -76,39 +76,43 @@ const TimeWheelPicker = ({
   };
 
   return (
-    <div
-      ref={containerRef}
-      role='listbox'
-      aria-label={ariaLabel}
-      onScroll={handleScroll}
-      className='hide-scrollbar flex h-24 w-[87px] snap-y snap-mandatory flex-col overflow-y-auto scroll-smooth py-8'
-    >
-      {values.map((value, index) => {
-        const isSelected = value === selectedValue;
+    <div className='relative h-24 w-[87px]'>
+      {/* 가운데 선택 표시 선 (absolute 고정!) */}
+      <div className='pointer-events-none absolute left-0 right-0 top-8 bottom-8 border-y border-[#C1C6CB]' />
 
-        return (
-          <button
-            key={value}
-            type='button'
-            role='option'
-            aria-selected={isSelected}
-            onClick={() => handleItemClick(value, index)}
-            className={clsx(
-              'flex h-8 w-full shrink-0 snap-center flex-col items-center justify-center gap-2.5 px-2.5 py-1 transition-colors',
-              isSelected
-                ? 'border-y border-[#C1C6CB] text-[#3474FF]'
-                : 'border-y border-transparent text-[#7E8387]',
-            )}
-          >
-            <span
-              className='text-center text-xl font-medium leading-normal'
-              style={{ fontFamily: 'Pretendard, sans-serif' }}
+      {/* 스크롤 피커 바퀴 */}
+      <div
+        ref={containerRef}
+        role='listbox'
+        aria-label={ariaLabel}
+        onScroll={handleScroll}
+        className='hide-scrollbar flex h-full w-full snap-y snap-mandatory flex-col overflow-y-auto scroll-smooth py-8'
+      >
+        {values.map((value, index) => {
+          const isSelected = value === selectedValue;
+
+          return (
+            <button
+              key={value}
+              type='button'
+              role='option'
+              aria-selected={isSelected}
+              onClick={() => handleItemClick(value, index)}
+              className={clsx(
+                'flex h-8 w-full shrink-0 snap-center flex-col items-center justify-center gap-2.5 px-2.5 py-1 transition-colors',
+                isSelected ? 'text-[#3474FF]' : 'text-[#7E8387]',
+              )}
             >
-              {value}
-            </span>
-          </button>
-        );
-      })}
+              <span
+                className='text-center text-xl font-medium leading-normal'
+                style={{ fontFamily: 'Pretendard, sans-serif' }}
+              >
+                {value}
+              </span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 };

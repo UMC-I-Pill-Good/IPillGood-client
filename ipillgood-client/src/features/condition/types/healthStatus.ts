@@ -1,56 +1,28 @@
 import type { ComponentType, SVGProps } from 'react';
 
-// 1. GET /health-converns (건강 고민 대분류/소분류 목록 조회)
-export type HealthMinorConcernType = {
-  healthConcernId: number;
-  minorCategory: string;
-  minorCategoryName: string;
-};
-
-export type HealthMajorCategoryType = {
-  majorCategory: string;
-  majorCategoryName: string;
-  minorConcerns: HealthMinorConcernType[];
-};
-
-export type HealthConcernListResultType = {
-  majorCategories: HealthMajorCategoryType[];
-};
-
-export type HealthConcernListResponse = {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: HealthConcernListResultType;
-};
-
-// 2. POST /health-state-queries (궁금한 건강 상태 질의 제출)
-export type SubmitHealthStateQueryRequestType = {
-  healthConcernId: number;
-};
-
-export type HealthRecommendationType = {
+// 1. GET /api/v1/health-concerns/recommendations (건강 상태 추천 성분 조회)
+export type IngredientSummary = {
   ingredientId: number;
-  ingredientName: string;
-  imageUrl: string | null;
+  name: string;
   description: string;
-  tags: string[];
-  alreadyInCabinet: boolean;
+  imageKey: string;
+  effectKeywords: string[];
+  inCabinet: boolean;
 };
 
-export type SubmitHealthStateQueryResultType = {
+export type HealthConcernRecommendationsResult = {
   healthConcernId: number;
-  majorCategoryName: string;
-  minorCategoryName: string;
+  majorCategory: string;
+  minorCategory: string;
   declineCause: string;
-  recommendations: HealthRecommendationType[];
+  recommendedIngredients: IngredientSummary[];
 };
 
-export type SubmitHealthStateQueryResponse = {
+export type HealthConcernRecommendationsResponse = {
   isSuccess: boolean;
   code: string;
   message: string;
-  result: SubmitHealthStateQueryResultType;
+  result: HealthConcernRecommendationsResult;
 };
 
 // 3. UI 정적 객체 기반 렌더링용 타입
