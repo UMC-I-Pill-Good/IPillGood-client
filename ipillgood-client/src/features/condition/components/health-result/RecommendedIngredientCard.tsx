@@ -54,11 +54,11 @@ const RecommendedIngredientCard = ({
           {/* 성분명과 추천 이유 텍스트 영역에만 왼쪽 들여쓰기 pl-1 부여 */}
           <div className='flex min-w-0 flex-col items-start gap-2 w-full pl-1'>
             {/* 성분명 행 */}
-            <div className='flex min-h-[21px] w-full min-w-0 items-center justify-between'>
+            <div className='flex w-full min-w-0 items-center justify-between'>
               <h3 className='min-w-0 typo-body-5 text-black truncate leading-none'>
                 {ingredient.name}
               </h3>
-              <span className='flex h-[21px] w-[22px] shrink-0 items-center justify-center'>
+              <span className='flex size-6 shrink-0 items-center justify-center transition-all rounded-full hover:bg-neutral-100/70 active:bg-neutral-200/70'>
                 <ChevronRight
                   aria-hidden='true'
                   className='size-5 text-neutral-800'
@@ -67,11 +67,11 @@ const RecommendedIngredientCard = ({
             </div>
 
             {/* 추천 이유 */}
-            <div className='flex min-w-0 flex-col items-start gap-1 w-full'>
+            <div className='flex min-w-0 flex-col items-start gap-0.5 w-full'>
               <span className='w-full typo-body-10 text-primary-700 leading-none'>
                 추천 이유
               </span>
-              <p className='w-full whitespace-pre-line break-keep typo-caption-7 text-black leading-normal'>
+              <p className='w-full whitespace-pre-line break-keep typo-caption-7 text-black leading-tight'>
                 {ingredient.description}
               </p>
             </div>
