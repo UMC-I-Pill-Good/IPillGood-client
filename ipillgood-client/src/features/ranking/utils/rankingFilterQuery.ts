@@ -6,15 +6,15 @@ import type {
 import {
   AGE_OPTIONS,
   DEFAULT_RANKING_FILTERS,
+  GENDER_OPTIONS,
   HEALTH_CONCERN_ROWS,
-  type AgeFilter,
-  type HealthConcernFilter,
-  type RankingFilterState,
-} from '../types/rankingFilter';
+} from '../constants/rankingFilter';
+import type { AgeFilter, HealthConcernFilter, RankingFilterState } from '../types/rankingFilter';
+import type { RankingGender } from '../types/ranking';
 
-export interface RankingFilterRequestOptions {
+type RankingFilterRequestOptions = {
   mfdsCertified?: boolean;
-}
+};
 
 const HEALTH_CONCERN_OPTIONS = HEALTH_CONCERN_ROWS.flat();
 const AGE_GROUP_BY_OPTION: Partial<Record<AgeFilter, RankingAgeGroup>> = {
@@ -25,14 +25,13 @@ const AGE_GROUP_BY_OPTION: Partial<Record<AgeFilter, RankingAgeGroup>> = {
   '50대 이상': 'FIFTIES_AND_ABOVE',
 };
 
-const AGE_OPTION_BY_GROUP: Record<RankingAgeGroup, Exclude<AgeFilter, '전체'>> =
-  {
-    TEENS: '10대',
-    TWENTIES: '20대',
-    THIRTIES: '30대',
-    FORTIES: '40대',
-    FIFTIES_AND_ABOVE: '50대 이상',
-  };
+const AGE_OPTION_BY_GROUP: Record<RankingAgeGroup, Exclude<AgeFilter, '전체'>> = {
+  TEENS: '10대',
+  TWENTIES: '20대',
+  THIRTIES: '30대',
+  FORTIES: '40대',
+  FIFTIES_AND_ABOVE: '50대 이상',
+};
 
 const HEALTH_CATEGORY_BY_OPTION: Record<
   Exclude<HealthConcernFilter, null>,
@@ -63,20 +62,36 @@ const HEALTH_OPTION_BY_CATEGORY: Record<
 };
 
 const isAgeFilter = (value: string | null): value is AgeFilter =>
-  AGE_OPTIONS.includes(value as AgeFilter);
+  AGE_OPTIONS.some((option) => option === value);
 
-const isHealthConcernFilter = (
-  value: string | null,
-): value is Exclude<HealthConcernFilter, null> =>
-  HEALTH_CONCERN_OPTIONS.includes(
-    value as Exclude<HealthConcernFilter, null>,
-  );
+const isHealthConcernFilter = (value: string | null): value is Exclude<HealthConcernFilter, null> =>
+  HEALTH_CONCERN_OPTIONS.some((option) => option === value);
+
+export const isRankingAgeGroup = (value: string): value is RankingAgeGroup =>
+  Object.hasOwn(AGE_OPTION_BY_GROUP, value);
+
+export const isHealthConcernMajorCategory = (value: string): value is HealthConcernMajorCategory =>
+  Object.hasOwn(HEALTH_OPTION_BY_CATEGORY, value);
+
+export const genderToOption = (gender?: RankingGender) => {
+  if (gender === 'MALE') return '남성';
+  if (gender === 'FEMALE') return '여성';
+  return '전체';
+};
+
+export const optionToGender = (
+  option: (typeof GENDER_OPTIONS)[number],
+): RankingGender | undefined => {
+  if (option === '남성') return 'MALE';
+  if (option === '여성') return 'FEMALE';
+  return undefined;
+};
 
 export const toRankingQueryParams = (
   filters: RankingFilterState,
 ): Pick<
   RankingQueryParams,
-  'ageGroups' | 'gender' | 'healthConcernMajorCategories'
+  'ageGroups' | 'gender' | 'healthConcernMajorCategories' | 'ingredientIds'
 > => {
   const ageGroup = AGE_GROUP_BY_OPTION[filters.ageGroup];
   const healthConcernMajorCategory = filters.healthConcern
@@ -89,14 +104,14 @@ export const toRankingQueryParams = (
     healthConcernMajorCategories: healthConcernMajorCategory
       ? [healthConcernMajorCategory]
       : undefined,
+    ingredientIds: filters.ingredientIds.length ? filters.ingredientIds : undefined,
   };
 };
 
 export const toRankingFilterRequestOptions = (
   filters: RankingFilterState,
 ): RankingFilterRequestOptions => ({
-  mfdsCertified:
-    filters.certification === 'CERTIFIED_ONLY' ? true : undefined,
+  mfdsCertified: filters.certification === 'CERTIFIED_ONLY' ? true : undefined,
 });
 
 export const getRankingFiltersFromSearchParams = (
@@ -104,22 +119,20 @@ export const getRankingFiltersFromSearchParams = (
 ): RankingFilterState => {
   const ageGroup = searchParams.get('ageGroups');
   const gender = searchParams.get('gender');
-  const healthConcernMajorCategory = searchParams.get(
-    'healthConcernMajorCategories',
-  );
-  const ageOption = ageGroup
-    ? AGE_OPTION_BY_GROUP[ageGroup as RankingAgeGroup]
-    : undefined;
-  const healthConcernOption = healthConcernMajorCategory
-    ? HEALTH_OPTION_BY_CATEGORY[
-        healthConcernMajorCategory as HealthConcernMajorCategory
-      ]
-    : undefined;
+  const healthConcernMajorCategory = searchParams.get('healthConcernMajorCategories');
+  const ingredientIds = (searchParams.get('ingredientIds') ?? '')
+    .split(',')
+    .map(Number)
+    .filter((ingredientId) => Number.isInteger(ingredientId) && ingredientId > 0);
+  const ageOption =
+    ageGroup && isRankingAgeGroup(ageGroup) ? AGE_OPTION_BY_GROUP[ageGroup] : undefined;
+  const healthConcernOption =
+    healthConcernMajorCategory && isHealthConcernMajorCategory(healthConcernMajorCategory)
+      ? HEALTH_OPTION_BY_CATEGORY[healthConcernMajorCategory]
+      : undefined;
 
   const nextAgeGroup: AgeFilter =
-    ageOption && isAgeFilter(ageOption)
-      ? ageOption
-      : DEFAULT_RANKING_FILTERS.ageGroup;
+    ageOption && isAgeFilter(ageOption) ? ageOption : DEFAULT_RANKING_FILTERS.ageGroup;
   const nextHealthConcern: HealthConcernFilter =
     healthConcernOption && isHealthConcernFilter(healthConcernOption)
       ? healthConcernOption
@@ -127,15 +140,13 @@ export const getRankingFiltersFromSearchParams = (
 
   return {
     ageGroup: nextAgeGroup,
-    gender:
-      gender === 'MALE' || gender === 'FEMALE'
-        ? gender
-        : DEFAULT_RANKING_FILTERS.gender,
+    gender: gender === 'MALE' || gender === 'FEMALE' ? gender : DEFAULT_RANKING_FILTERS.gender,
     certification:
       searchParams.get('mfdsCertified') === 'true'
         ? 'CERTIFIED_ONLY'
         : DEFAULT_RANKING_FILTERS.certification,
     healthConcern: nextHealthConcern,
+    ingredientIds,
   };
 };
 
@@ -158,5 +169,8 @@ export const appendRankingFilterSearchParams = (
   }
   if (requestOptions.mfdsCertified) {
     searchParams.set('mfdsCertified', String(requestOptions.mfdsCertified));
+  }
+  if (queryParams.ingredientIds?.length) {
+    searchParams.set('ingredientIds', queryParams.ingredientIds.join(','));
   }
 };

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   clearRecentKeywords,
   deleteRecentKeyword,
@@ -11,12 +11,12 @@ import {
 import { useRankingInfiniteProducts } from '../../hooks/useRankingInfiniteProducts';
 import type { RankingUiSort } from '../../types/ranking';
 import type { RecentKeywordDto } from '../../types/recentSearch';
-import {
-  DEFAULT_RANKING_FILTERS,
-  type RankingFilterState,
-} from '../../types/rankingFilter';
+import { DEFAULT_RANKING_FILTERS } from '../../constants/rankingFilter';
+import type { RankingFilterState } from '../../types/rankingFilter';
 import {
   appendRankingFilterSearchParams,
+  toRankingFilterRequestOptions,
+  toRankingQueryParams,
 } from '../../utils/rankingFilterQuery';
 import RankingResultSkeletonCard from '../result/RankingResultSkeletonCard';
 import RankingFilterBottomSheet from './RankingFilterBottomSheet';
@@ -34,30 +34,19 @@ const RankingContainer = () => {
   const [searchValue, setSearchValue] = useState('');
   const [submittedSearchTerm, setSubmittedSearchTerm] = useState('');
   const [recentSearches, setRecentSearches] = useState<RecentKeywordDto[]>([]);
-  const [selectedSort, setSelectedSort] =
-    useState<RankingUiSort>('REVIEW_COUNT');
+  const [selectedSort, setSelectedSort] = useState<RankingUiSort>('REVIEW_COUNT');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const appliedFiltersRef = useRef<RankingFilterState>(DEFAULT_RANKING_FILTERS);
-  const [draftFilters, setDraftFilters] = useState<RankingFilterState>(
-    DEFAULT_RANKING_FILTERS,
-  );
-  const rankingQueryParams = useMemo(
-    () => ({
-      size: 20,
-      sort: selectedSort,
-      keyword: submittedSearchTerm,
-    }),
-    [selectedSort, submittedSearchTerm],
-  );
-  const {
-    hasNext,
-    isInitialLoading,
-    isLoadingMore,
-    items,
-    loadMore,
-    message,
-    resetLoadingState,
-  } = useRankingInfiniteProducts({ queryParams: rankingQueryParams });
+  const [appliedFilters, setAppliedFilters] = useState<RankingFilterState>(DEFAULT_RANKING_FILTERS);
+  const [draftFilters, setDraftFilters] = useState<RankingFilterState>(DEFAULT_RANKING_FILTERS);
+  const rankingQueryParams = {
+    size: 20,
+    sort: selectedSort,
+    keyword: submittedSearchTerm,
+    ...toRankingQueryParams(appliedFilters),
+    ...toRankingFilterRequestOptions(appliedFilters),
+  };
+  const { hasNext, isInitialLoading, isLoadingMore, items, loadMore, message, resetLoadingState } =
+    useRankingInfiniteProducts({ queryParams: rankingQueryParams });
 
   useEffect(() => {
     let isMounted = true;
@@ -100,6 +89,7 @@ const RankingContainer = () => {
   const handleChangeSearchValue = (value: string) => {
     setSearchValue(value);
     if (!value.trim()) {
+      resetLoadingState();
       setSubmittedSearchTerm('');
     }
   };
@@ -121,7 +111,7 @@ const RankingContainer = () => {
   };
 
   const handleOpenFilter = () => {
-    setDraftFilters(appliedFiltersRef.current);
+    setDraftFilters(appliedFilters);
     setIsFilterOpen(true);
   };
 
@@ -130,7 +120,8 @@ const RankingContainer = () => {
   };
 
   const handleApplyFilter = () => {
-    appliedFiltersRef.current = draftFilters;
+    resetLoadingState();
+    setAppliedFilters(draftFilters);
     setIsFilterOpen(false);
   };
 
@@ -144,22 +135,29 @@ const RankingContainer = () => {
   const handleSubmitSearch = async () => {
     const nextSearchTerm = searchValue.trim();
     if (!nextSearchTerm) return;
-    const recentKeywordResponse = await saveRecentKeyword(nextSearchTerm);
+    try {
+      const recentKeywordResponse = await saveRecentKeyword(nextSearchTerm);
+      const savedKeyword = recentKeywordResponse.result;
 
-    const savedKeyword = recentKeywordResponse.result;
-
-    if (recentKeywordResponse.isSuccess && savedKeyword) {
-      setRecentSearches((prevSearches) => [
-        savedKeyword,
-        ...prevSearches.filter((item) => item.keyword !== savedKeyword.keyword),
-      ].slice(0, 10));
+      if (recentKeywordResponse.isSuccess && savedKeyword) {
+        setRecentSearches((prevSearches) =>
+          [
+            savedKeyword,
+            ...prevSearches.filter((item) => item.keyword !== savedKeyword.keyword),
+          ].slice(0, 10),
+        );
+      } else {
+        console.error('Failed to save recent keyword', recentKeywordResponse.message);
+      }
+    } catch (error) {
+      console.error('Failed to save recent keyword', error);
     }
 
     const searchParams = new URLSearchParams({
       search: nextSearchTerm,
     });
 
-    appendRankingFilterSearchParams(searchParams, appliedFiltersRef.current);
+    appendRankingFilterSearchParams(searchParams, appliedFilters);
     router.push(`/ranking/result?${searchParams.toString()}`);
   };
 
@@ -175,19 +173,16 @@ const RankingContainer = () => {
       </section>
 
       {!submittedSearchTerm && (
-          <RecentSearches
-            searches={recentSearches}
-            onRemove={handleRemoveRecentSearch}
-            onClear={handleClearRecentSearches}
-          />
+        <RecentSearches
+          searches={recentSearches}
+          onRemove={handleRemoveRecentSearch}
+          onClear={handleClearRecentSearches}
+        />
       )}
 
       <section className='w-full px-5 py-4'>
         <div className='flex w-full flex-col gap-3'>
-          <RankingToolbar
-            selectedSort={selectedSort}
-            onSortChange={handleSortChange}
-          />
+          <RankingToolbar selectedSort={selectedSort} onSortChange={handleSortChange} />
           {isInitialLoading ? (
             <section
               className='flex w-full flex-col gap-3'
@@ -211,12 +206,9 @@ const RankingContainer = () => {
                   aria-label='랭킹 데이터를 추가로 불러오는 중'
                   aria-busy='true'
                 >
-                  {Array.from(
-                    { length: RANKING_LOAD_MORE_SKELETON_CARD_COUNT },
-                    (_, index) => (
-                      <RankingResultSkeletonCard key={index} />
-                    ),
-                  )}
+                  {Array.from({ length: RANKING_LOAD_MORE_SKELETON_CARD_COUNT }, (_, index) => (
+                    <RankingResultSkeletonCard key={index} />
+                  ))}
                 </section>
               )}
               <div ref={loadMoreRef} className='h-px w-full' />

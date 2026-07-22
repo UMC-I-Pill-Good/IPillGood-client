@@ -4,17 +4,17 @@ import { cn } from '@/shared/utils/cn';
 import TextButton from '../button/TextButton';
 import BottomSheet from './BottomSheet';
 
-export interface FilterBottomSheetOption {
+type FilterBottomSheetOption = {
   label: string;
   isSelected: boolean;
   onClick: () => void;
-}
+};
 
-export interface FilterBottomSheetGroup {
+export type FilterBottomSheetGroup = {
   title: string;
   options?: FilterBottomSheetOption[];
   optionRows?: FilterBottomSheetOption[][];
-}
+};
 
 interface FilterBottomSheetProps {
   open: boolean;
@@ -66,9 +66,7 @@ const FilterBottomSheet = ({
                           type='button'
                           text={option.label}
                           size='sm'
-                          variant={
-                            option.isSelected ? 'secondary' : 'assistive'
-                          }
+                          variant={option.isSelected ? 'secondary' : 'assistive'}
                           className={cn(
                             'h-8 px-4 py-1',
                             option.isSelected

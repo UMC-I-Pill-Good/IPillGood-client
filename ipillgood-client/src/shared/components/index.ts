@@ -8,10 +8,7 @@ export { default as ToggleButton } from './button/ToggleButton';
 export { default as ConfirmModal } from './modal/ConfirmModal';
 export { default as BottomSheet } from './modal/BottomSheet';
 export { default as FilterBottomSheet } from './modal/FilterBottomSheet';
-export type {
-  FilterBottomSheetGroup,
-  FilterBottomSheetOption,
-} from './modal/FilterBottomSheet';
+export type { FilterBottomSheetGroup } from './modal/FilterBottomSheet';
 
 /* chip */
 export { default as Chip } from './Chip';

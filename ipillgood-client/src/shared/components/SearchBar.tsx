@@ -1,7 +1,7 @@
 'use client';
 
 import { Search } from 'lucide-react';
-import { KeyboardEvent } from 'react';
+import type { KeyboardEvent } from 'react';
 import { cn } from '@/shared/utils/cn';
 import { FilterIcon } from '@/assets';
 
@@ -14,6 +14,7 @@ interface SearchBarProps {
   isFilterButton?: boolean;
   className?: string;
   inputClassName?: string;
+  filterButtonClassName?: string;
 }
 
 export const SearchBar = ({
@@ -25,6 +26,7 @@ export const SearchBar = ({
   isFilterButton = true,
   className,
   inputClassName,
+  filterButtonClassName,
 }: SearchBarProps) => {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter' || e.nativeEvent.isComposing) return; // IME 조합 중 엔터 오작동 방지
@@ -39,7 +41,14 @@ export const SearchBar = ({
         className,
       )}
     >
-      <Search size={20} aria-hidden='true' className='shrink-0 text-primary' />
+      <button
+        type='button'
+        onClick={onSearch}
+        aria-label='검색 실행'
+        className='flex size-5 shrink-0 items-center justify-center text-primary'
+      >
+        <Search size={20} aria-hidden='true' />
+      </button>
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -52,7 +61,15 @@ export const SearchBar = ({
         )}
       />
       {isFilterButton && (
-        <button type='button' onClick={onFilter} aria-label='필터'>
+        <button
+          type='button'
+          onClick={onFilter}
+          aria-label='필터'
+          className={cn(
+            'flex size-5 shrink-0 items-center justify-center text-primary',
+            filterButtonClassName,
+          )}
+        >
           <FilterIcon />
         </button>
       )}

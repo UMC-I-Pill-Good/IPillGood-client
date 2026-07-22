@@ -1,11 +1,6 @@
 export type RankingGender = 'MALE' | 'FEMALE';
 
-export type RankingAgeGroup =
-  | 'TEENS'
-  | 'TWENTIES'
-  | 'THIRTIES'
-  | 'FORTIES'
-  | 'FIFTIES_AND_ABOVE';
+export type RankingAgeGroup = 'TEENS' | 'TWENTIES' | 'THIRTIES' | 'FORTIES' | 'FIFTIES_AND_ABOVE';
 
 export type HealthConcernMajorCategory =
   | 'NERVOUS_SYSTEM'
@@ -21,7 +16,7 @@ export type RankingApiSort = 'REVIEW_COUNT' | 'RATING';
 
 export type RankingUiSort = RankingApiSort;
 
-export interface RankingQueryParams {
+export type RankingQueryParams = {
   keyword?: string;
   sort?: RankingApiSort;
   ageGroups?: RankingAgeGroup[];
@@ -31,16 +26,16 @@ export interface RankingQueryParams {
   ingredientIds?: number[];
   size?: number;
   cursor?: string;
-}
+};
 
-export interface ApiResponse<T> {
+export type ApiResponse<T> = {
   isSuccess: boolean;
   code: string;
   message: string;
   result: T | null;
-}
+};
 
-export interface ProductSearchItemDto {
+export type ProductSearchItemDto = {
   productId: number;
   productName: string;
   brand: string;
@@ -50,22 +45,15 @@ export interface ProductSearchItemDto {
   ratingAverage: number | null;
   reviewCount: number;
   ingredientTags: string[];
-}
+};
 
-export interface RankingResultDto {
+export type RankingResultDto = {
   keyword: string | null;
   products: ProductSearchItemDto[];
   size: number;
   totalElements: number;
   hasNext: boolean;
   nextCursor: string | null;
-}
+};
 
 export type RankingApiResponse = ApiResponse<RankingResultDto>;
-
-export interface RankingErrorResponse {
-  isSuccess: false;
-  code: string;
-  message: string;
-  result: null;
-}

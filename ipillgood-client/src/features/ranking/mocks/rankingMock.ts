@@ -5,12 +5,12 @@ import type {
   RankingGender,
 } from '../types/ranking';
 
-interface RankingMockFilterMeta {
+type RankingMockFilterMeta = {
   ageGroups: RankingAgeGroup[];
   genders: RankingGender[];
   healthConcernMajorCategories: HealthConcernMajorCategory[];
   ingredientIds: number[];
-}
+};
 
 // TODO: 영양제 상품 목록 조회 API 구현 후 실제 API 호출 결과로 교체
 export const MOCK_RANKING_RESPONSE: RankingApiResponse = {

@@ -1,30 +1,14 @@
 'use client';
 
-import {
-  FilterBottomSheet,
-  type FilterBottomSheetGroup,
-} from '@/shared/components';
-import type { RankingGender } from '../../types/ranking';
+import { FilterBottomSheet, type FilterBottomSheetGroup } from '@/shared/components';
 import {
   AGE_OPTIONS,
   CERTIFICATION_OPTIONS,
   GENDER_OPTIONS,
   HEALTH_CONCERN_ROWS,
-  type CertificationFilter,
-  type RankingFilterState,
-} from '../../types/rankingFilter';
-
-const genderToOption = (gender?: RankingGender) => {
-  if (gender === 'MALE') return '남성';
-  if (gender === 'FEMALE') return '여성';
-  return '전체';
-};
-
-const optionToGender = (option: (typeof GENDER_OPTIONS)[number]) => {
-  if (option === '남성') return 'MALE';
-  if (option === '여성') return 'FEMALE';
-  return undefined;
-};
+} from '../../constants/rankingFilter';
+import type { CertificationFilter, RankingFilterState } from '../../types/rankingFilter';
+import { genderToOption, optionToGender } from '../../utils/rankingFilterQuery';
 
 const certificationToOption = (certification: CertificationFilter) =>
   certification === 'CERTIFIED_ONLY' ? '인증 제품만' : '전체';
@@ -78,8 +62,7 @@ const RankingFilterBottomSheet = ({
       title: '식약처 인증',
       options: CERTIFICATION_OPTIONS.map((option) => ({
         label: option,
-        isSelected:
-          certificationToOption(draftFilters.certification) === option,
+        isSelected: certificationToOption(draftFilters.certification) === option,
         onClick: () =>
           updateDraftFilters({
             certification: optionToCertification(option),
@@ -94,8 +77,7 @@ const RankingFilterBottomSheet = ({
           isSelected: draftFilters.healthConcern === option,
           onClick: () =>
             updateDraftFilters({
-              healthConcern:
-                draftFilters.healthConcern === option ? null : option,
+              healthConcern: draftFilters.healthConcern === option ? null : option,
             }),
         })),
       ),

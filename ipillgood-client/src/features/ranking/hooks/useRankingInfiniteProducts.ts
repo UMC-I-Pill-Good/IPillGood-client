@@ -1,13 +1,30 @@
+'use client';
+
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getRanking } from '../api/getRanking';
 import type { ProductSearchItemDto, RankingQueryParams } from '../types/ranking';
+import { isHealthConcernMajorCategory, isRankingAgeGroup } from '../utils/rankingFilterQuery';
 
 const DEFAULT_PAGE_SIZE = 20;
 
-interface UseRankingInfiniteProductsParams {
+type UseRankingInfiniteProductsParams = {
   queryParams: RankingQueryParams;
   requestKey?: number;
-}
+};
+
+const getRankingQueryArrays = (
+  ageGroupsKey: string,
+  healthConcernsKey: string,
+  ingredientIdsKey: string,
+) => ({
+  ageGroups: ageGroupsKey ? ageGroupsKey.split(',').filter(isRankingAgeGroup) : undefined,
+  healthConcernMajorCategories: healthConcernsKey
+    ? healthConcernsKey.split(',').filter(isHealthConcernMajorCategory)
+    : undefined,
+  ingredientIds: ingredientIdsKey
+    ? ingredientIdsKey.split(',').map(Number).filter(Number.isFinite)
+    : undefined,
+});
 
 export const useRankingInfiniteProducts = ({
   queryParams,
@@ -23,7 +40,10 @@ export const useRankingInfiniteProducts = ({
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  const pageSize = queryParams.size ?? DEFAULT_PAGE_SIZE;
+  const { gender, keyword, mfdsCertified, size = DEFAULT_PAGE_SIZE, sort } = queryParams;
+  const ageGroupsKey = queryParams.ageGroups?.join(',') ?? '';
+  const healthConcernsKey = queryParams.healthConcernMajorCategories?.join(',') ?? '';
+  const ingredientIdsKey = queryParams.ingredientIds?.join(',') ?? '';
 
   const resetLoadingState = useCallback(() => {
     requestIdRef.current += 1;
@@ -38,13 +58,18 @@ export const useRankingInfiniteProducts = ({
   }, []);
 
   useEffect(() => {
-    const requestId = requestIdRef.current;
+    const requestId = ++requestIdRef.current;
     let isMounted = true;
     isRequestingRef.current = true;
+    const arrayParams = getRankingQueryArrays(ageGroupsKey, healthConcernsKey, ingredientIdsKey);
 
     getRanking({
-      ...queryParams,
-      size: pageSize,
+      keyword,
+      sort,
+      gender,
+      mfdsCertified,
+      ...arrayParams,
+      size,
       cursor: undefined,
     })
       .then((response) => {
@@ -85,29 +110,34 @@ export const useRankingInfiniteProducts = ({
       isMounted = false;
     };
   }, [
-    pageSize,
-    queryParams,
+    ageGroupsKey,
+    gender,
+    healthConcernsKey,
+    ingredientIdsKey,
+    keyword,
+    mfdsCertified,
     requestKey,
+    size,
+    sort,
   ]);
 
   const loadMore = useCallback(() => {
-    if (
-      !hasNext ||
-      !nextCursor ||
-      isInitialLoading ||
-      isLoadingMore ||
-      isRequestingRef.current
-    ) {
+    if (!hasNext || !nextCursor || isInitialLoading || isLoadingMore || isRequestingRef.current) {
       return;
     }
 
     const requestId = requestIdRef.current;
     isRequestingRef.current = true;
     setIsLoadingMore(true);
+    const arrayParams = getRankingQueryArrays(ageGroupsKey, healthConcernsKey, ingredientIdsKey);
 
     getRanking({
-      ...queryParams,
-      size: pageSize,
+      keyword,
+      sort,
+      gender,
+      mfdsCertified,
+      ...arrayParams,
+      size,
       cursor: nextCursor,
     })
       .then((response) => {
@@ -118,10 +148,7 @@ export const useRankingInfiniteProducts = ({
           return;
         }
 
-        setItems((prevItems) => [
-          ...prevItems,
-          ...(response.result?.products ?? []),
-        ]);
+        setItems((prevItems) => [...prevItems, ...(response.result?.products ?? [])]);
         setTotalElements(response.result?.totalElements ?? 0);
         setNextCursor(response.result?.nextCursor ?? null);
         setHasNext(response.result?.hasNext ?? false);
@@ -143,8 +170,14 @@ export const useRankingInfiniteProducts = ({
     isInitialLoading,
     isLoadingMore,
     nextCursor,
-    pageSize,
-    queryParams,
+    ageGroupsKey,
+    gender,
+    healthConcernsKey,
+    ingredientIdsKey,
+    keyword,
+    mfdsCertified,
+    size,
+    sort,
   ]);
 
   return {
