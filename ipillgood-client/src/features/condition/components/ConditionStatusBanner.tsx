@@ -14,9 +14,9 @@ const ConditionStatusBanner = ({
   isCompleted: propIsCompleted,
   onOpenConditionCheck: propOnOpen,
 }: ConditionStatusBannerProps = {}) => {
-  const { homeSummaryData, handleOpenStartModal } = useConditionFlow();
+  const { currentWeekStatus, handleOpenStartModal } = useConditionFlow();
 
-  const isCompleted = propIsCompleted ?? homeSummaryData.currentWeekCompleted;
+  const isCompleted = propIsCompleted ?? currentWeekStatus.checked;
   const onOpenConditionCheck = propOnOpen ?? handleOpenStartModal;
 
   const title = isCompleted
@@ -59,7 +59,7 @@ const ConditionStatusBanner = ({
         >
           {/* 상단 텍스트 및 마스코트 헤더 영역 */}
           <div className='flex w-full items-center pr-10 gap-2'>
-            <div className='flex flex-1 flex-col justify-center min-w-0 ml-[58px]'>
+            <div className='flex flex-1 flex-col justify-center min-w-0 ml-[48px] mt-1'>
               <p className='h-6 text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
                 {title}
               </p>
@@ -85,7 +85,7 @@ const ConditionStatusBanner = ({
             text='이번 주 컨디션 체크하러 가기'
             size='lg'
             onClick={onOpenConditionCheck}
-            className='mt-1 h-10.5 w-full max-w-[264px] rounded-lg bg-primary-600 text-white text-lg font-medium shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] hover:bg-primary-700'
+            className='mt-1 h-10.5 w-full max-w-[290px] rounded-lg bg-primary-600 text-white text-lg font-medium shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] hover:bg-primary-700'
           />
         </div>
       )}
