@@ -1,6 +1,6 @@
+import { ModalShell } from '@/shared/components';
 import { DayIntakeItemType } from '../../types/intakeDayDetail.type';
 import CheckboxList from '../CheckboxList';
-import ModalShell from '../ModalShell';
 
 interface DayIntakeListModalProps {
   date: string;

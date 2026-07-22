@@ -1,8 +1,7 @@
 'use client';
 
-import { TextButton } from '@/shared/components';
+import { ModalShell, TextButton } from '@/shared/components';
 import CheckboxList from '../CheckboxList';
-import ModalShell from '../ModalShell';
 import { useIntakeCheck } from '../../hooks/useIntakeCheck';
 
 interface IntakeCheckModalProps {

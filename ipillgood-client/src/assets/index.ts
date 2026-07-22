@@ -5,6 +5,7 @@ export { default as CrossSmallIcon } from './icons/fi-rr-cross-small.svg';
 export { default as SearchIcon } from './icons/fi-rr-search.svg';
 export { default as RatingStarIcon } from './icons/fi-rr-star.svg';
 export { default as FilterIcon } from './icons/filter.svg';
+export { default as MascotBigIcon } from './icons/mascot-big.svg';
 export { default as ValidBadgeIcon } from './icons/valid.svg';
 export { default as MascotIcon } from './icons/mascot-default.svg';
 export { default as MascotHeartIcon } from './icons/mascot-heart.svg';
@@ -74,3 +75,8 @@ export { default as SupplementBottleIcon } from './icons/supplement-bottle.svg';
 export { default as CapsuleIcon } from './icons/capsule.svg';
 export { default as CapsuleGrayIcon } from './icons/capsule-gray.svg';
 export { default as Omega3BottleIcon } from './icons/omega3-bottle.svg';
+
+// my
+export { default as WarningIcon } from './icons/warning.svg';
+export { default as QuestionIcon } from './icons/question-mark.svg';
+export { default as MascotProfileIcon } from './icons/mascot-profile.svg';
