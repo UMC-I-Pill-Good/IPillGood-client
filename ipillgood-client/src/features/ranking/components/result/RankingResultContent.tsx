@@ -10,6 +10,7 @@ import RankingResultEmptyState from './RankingResultEmptyState';
 import RankingResultSkeletonCard from './RankingResultSkeletonCard';
 
 const SKELETON_CARD_LOAD_COUNT = 4;
+const MAX_SKELETON_CARD_COUNT = 12;
 const LOAD_MORE_SKELETON_CARD_COUNT = 2;
 
 type RankingResultContentData = {
@@ -58,7 +59,9 @@ const RankingResultContent = ({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
-          setSkeletonCardCount((count) => count + SKELETON_CARD_LOAD_COUNT);
+          setSkeletonCardCount((count) =>
+            Math.min(count + SKELETON_CARD_LOAD_COUNT, MAX_SKELETON_CARD_COUNT),
+          );
         }
       },
       { rootMargin: '160px 0px' },
@@ -69,7 +72,8 @@ const RankingResultContent = ({
 
   useEffect(() => {
     const target = loadMoreRef.current;
-    if (!hasNext || viewState === 'loading' || isLoadingMore || !target) return;
+    if (!hasNext || viewState === 'loading' || viewState === 'error' || isLoadingMore || !target)
+      return;
     const observer = new IntersectionObserver(([entry]) => entry?.isIntersecting && onLoadMore(), {
       rootMargin: '160px 0px',
     });

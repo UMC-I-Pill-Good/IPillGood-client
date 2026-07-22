@@ -32,7 +32,6 @@ const RankingContainer = () => {
   const router = useRouter();
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const [searchValue, setSearchValue] = useState('');
-  const [submittedSearchTerm, setSubmittedSearchTerm] = useState('');
   const [recentSearches, setRecentSearches] = useState<RecentKeywordDto[]>([]);
   const [selectedSort, setSelectedSort] = useState<RankingUiSort>('REVIEW_COUNT');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -41,7 +40,7 @@ const RankingContainer = () => {
   const rankingQueryParams = {
     size: 20,
     sort: selectedSort,
-    keyword: submittedSearchTerm,
+    keyword: '',
     ...toRankingQueryParams(appliedFilters),
     ...toRankingFilterRequestOptions(appliedFilters),
   };
@@ -88,10 +87,6 @@ const RankingContainer = () => {
 
   const handleChangeSearchValue = (value: string) => {
     setSearchValue(value);
-    if (!value.trim()) {
-      resetLoadingState();
-      setSubmittedSearchTerm('');
-    }
   };
 
   const handleRemoveRecentSearch = async (keywordId: number) => {
@@ -172,13 +167,11 @@ const RankingContainer = () => {
         />
       </section>
 
-      {!submittedSearchTerm && (
-        <RecentSearches
-          searches={recentSearches}
-          onRemove={handleRemoveRecentSearch}
-          onClear={handleClearRecentSearches}
-        />
-      )}
+      <RecentSearches
+        searches={recentSearches}
+        onRemove={handleRemoveRecentSearch}
+        onClear={handleClearRecentSearches}
+      />
 
       <section className='w-full px-5 py-4'>
         <div className='flex w-full flex-col gap-3'>

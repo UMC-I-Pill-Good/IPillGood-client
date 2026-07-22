@@ -26,6 +26,7 @@ const getActiveFilterCount = (filters: RankingFilterState) =>
 export const useRankingResult = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const searchParamsKey = searchParams.toString();
   const initialSearchTerm = searchParams.get('search') ?? searchParams.get('keyword') ?? '';
   const initialFilters = getRankingFiltersFromSearchParams(
     new URLSearchParams(searchParams.toString()),
@@ -38,6 +39,19 @@ export const useRankingResult = () => {
   const [appliedFilters, setAppliedFilters] = useState<RankingFilterState>(initialFilters);
   const [draftFilters, setDraftFilters] = useState<RankingFilterState>(initialFilters);
   const [skeletonCardCount, setSkeletonCardCount] = useState(INITIAL_SKELETON_CARD_COUNT);
+  const [lastSearchParamsKey, setLastSearchParamsKey] = useState(searchParamsKey);
+
+  if (searchParamsKey !== lastSearchParamsKey) {
+    const nextSearchParams = new URLSearchParams(searchParamsKey);
+    const nextSearchTerm = nextSearchParams.get('search') ?? nextSearchParams.get('keyword') ?? '';
+    const nextFilters = getRankingFiltersFromSearchParams(nextSearchParams);
+
+    setLastSearchParamsKey(searchParamsKey);
+    setSearchValue(nextSearchTerm);
+    setSubmittedSearchTerm(nextSearchTerm);
+    setAppliedFilters(nextFilters);
+    setDraftFilters(nextFilters);
+  }
   const rankingQueryParams = {
     size: 20,
     sort: selectedSort,

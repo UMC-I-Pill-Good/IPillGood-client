@@ -26,10 +26,13 @@ const SupplementProductCard = ({ item, displayRank }: SupplementProductCardProps
       <div className='flex min-w-0 flex-1 items-center gap-3 overflow-visible'>
         <div className='relative flex h-[4.375rem] w-[2.6875rem] shrink-0 items-center justify-center overflow-visible'>
           {item.mfdsCertified && (
-            <ValidBadgeIcon
-              aria-hidden='true'
-              className='absolute -left-[0.5625rem] -top-[0.78125rem] z-10 h-[1.3125rem] w-[1.375rem]'
-            />
+            <>
+              <ValidBadgeIcon
+                aria-hidden='true'
+                className='absolute -left-[0.5625rem] -top-[0.78125rem] z-10 h-[1.3125rem] w-[1.375rem]'
+              />
+              <span className='sr-only'>식약처 인증 제품</span>
+            </>
           )}
           {shouldShowImage ? (
             // eslint-disable-next-line @next/next/no-img-element
