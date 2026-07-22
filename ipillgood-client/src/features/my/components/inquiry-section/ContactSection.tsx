@@ -18,7 +18,7 @@ const ContactSection = ({
       {showTitle && <h2 className='typo-body-5 text-black'>문의하기</h2>}
 
       <ContactCard title='이메일'>
-        <p>ipillgood_umc10th@naver.com</p>
+        <a href='mailto:ipillgood_umc10th@naver.com'>ipillgood_umc10th@naver.com</a>
       </ContactCard>
 
       {showHours && (
