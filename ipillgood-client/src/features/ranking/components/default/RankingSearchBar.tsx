@@ -1,13 +1,17 @@
 'use client';
 
-import { FilterIcon } from '@/assets';
+import { X } from 'lucide-react';
 import { SearchBar } from '@/shared/components';
+import { cn } from '@/shared/utils/cn';
 
 interface RankingSearchBarProps {
   value: string;
   onChange: (value: string) => void;
   onFilterClick?: () => void;
   onSearch?: () => void;
+  className?: string;
+  searchBarClassName?: string;
+  showFilterButton?: boolean;
 }
 
 const RankingSearchBar = ({
@@ -15,37 +19,42 @@ const RankingSearchBar = ({
   onChange,
   onFilterClick,
   onSearch,
+  className,
+  searchBarClassName,
+  showFilterButton,
 }: RankingSearchBarProps) => {
+  const hasValue = Boolean(value.trim());
+  const shouldShowFilterButton = showFilterButton ?? !hasValue;
+
   return (
-    <div className='relative'>
+    <div className={cn('relative', className)}>
       <SearchBar
         value={value}
         onChange={onChange}
         onSearch={onSearch}
+        onFilter={onFilterClick}
         placeholder='브랜드, 영양 성분을 검색해 보세요.'
-        className='h-12 w-full rounded-2xl bg-white px-3 py-3 text-primary-600 shadow-none backdrop-blur-none'
-        inputClassName='min-w-0 px-1 typo-body-11 placeholder:text-neutral-800'
-        searchIconClassName='size-5'
-        searchIconSize={20}
-        rightElement={
-          !value.trim() ? (
-            <button
-              type='button'
-              aria-label='필터 열기'
-              className='inline-flex size-5 shrink-0 items-center justify-center self-center text-primary-500'
-              onClick={onFilterClick}
-            >
-              <FilterIcon aria-hidden='true' className='block size-5' />
-            </button>
-          ) : undefined
-        }
+        className={cn(
+          'h-12 w-full rounded-2xl bg-white px-3 py-3 text-primary-600 shadow-none backdrop-blur-none [&>button]:size-[1.625rem] [&>button]:text-primary-500 [&>button>svg]:block [&>button>svg]:size-[1.625rem]',
+          searchBarClassName,
+        )}
+        filterButtonClassName='translate-x-1 translate-y-1'
+        inputClassName={cn(
+          'min-w-0 px-1 typo-body-11 placeholder:text-neutral-800',
+          !shouldShowFilterButton && 'pr-9',
+        )}
+        isFilterButton={shouldShowFilterButton}
       />
-      <button
-        type='button'
-        aria-label='검색 실행'
-        className='absolute left-3 top-1/2 z-10 size-5 -translate-y-1/2'
-        onClick={onSearch}
-      />
+      {!shouldShowFilterButton && (
+        <button
+          type='button'
+          aria-label='검색어 지우기'
+          className='absolute right-3 top-1/2 z-10 flex size-6 -translate-y-1/2 items-center justify-center text-neutral-800'
+          onClick={() => onChange('')}
+        >
+          <X aria-hidden='true' className='size-6' />
+        </button>
+      )}
     </div>
   );
 };

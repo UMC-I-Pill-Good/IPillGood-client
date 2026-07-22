@@ -7,7 +7,7 @@ interface RankingBadgeProps {
 
 const rankColorClassName: Record<number, string> = {
   1: 'text-primary-600',
-  2: 'text-[#92E4C2]',
+  2: 'text-point-700',
   3: 'text-secondary-600',
 };
 

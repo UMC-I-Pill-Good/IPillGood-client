@@ -40,6 +40,7 @@
     "eslint-config-next": "16.2.9",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.6",
+    "msw": "^2.15.0",
     "prettier": "^3.9.1",
     "tailwindcss": "^4",
     "typescript": "^5"
@@ -47,5 +48,10 @@
   "allowScripts": {
     "sharp@0.34.5": true,
     "unrs-resolver@1.12.2": true
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }
