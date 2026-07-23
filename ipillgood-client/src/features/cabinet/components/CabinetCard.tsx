@@ -9,7 +9,6 @@ interface CabinetCardProps {
 const CabinetCard = ({ item }: CabinetCardProps) => {
   return (
     <Link
-      key={item.id}
       href='/'
       className='flex items-center justify-center rounded-[20px] bg-[#F5F6FF]/20 h-35 transition hover:brightness-90 shadow-[inset_4px_4px_20px_rgba(155,161,255,0.2),4px_4px_4px_rgba(255,255,255,0.2)]'
     >

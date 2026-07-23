@@ -2,14 +2,9 @@ import { EmptyBottleIcon } from '@/assets';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 
-interface EmptyCabinetCardProps {
-  key: number;
-}
-
-const EmptyCabinetCard = ({ key }: EmptyCabinetCardProps) => {
+const EmptyCabinetCard = () => {
   return (
     <Link
-      key={`empty-${key}`}
       href='/cabinet/supplement-add'
       className='flex items-center justify-center rounded-[20px] transition hover:brightness-90 bg-[#F5F6FF]/20 shadow-[inset_4px_4px_20px_rgba(155,161,255,0.2),4px_4px_4px_rgba(255,255,255,0.2)]'
     >

@@ -5,7 +5,7 @@ import { genderAtom, periodAtom, selectedDateAtom } from '@/features/survey/atom
 import clsx from 'clsx';
 import { CalendarIcon, ManIcon, WomanIcon } from '@/assets';
 import { ChevronDown } from 'lucide-react';
-import DropdownMenu from './DropdownMenu';
+import DropdownMenu from '@/shared/components/DropdownMenu';
 import { useRef, useState } from 'react';
 import { periodOptions } from '@/features/survey/constants/basicInfo.constants';
 import DatePickerBottomSheet from './DatePickerBottomSheet';
