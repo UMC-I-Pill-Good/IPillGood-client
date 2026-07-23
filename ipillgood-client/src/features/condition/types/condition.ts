@@ -2,7 +2,7 @@ export type ConditionGraphDataType = {
   weekLabel: string;
   weekNo?: number;
   weekStartDate?: string;
-  score: number;
+  score: number | null;
   vitality: number;
   sleepHours: number;
   intakeDays: number;
@@ -16,21 +16,25 @@ export type ConditionGraphPointType = ConditionGraphDataType & {
 
 export type ConditionSummaryType = 'vitality' | 'sleep' | 'intake';
 
-// 1. POST /conditions (이번 주 컨디션 체크 제출)
+// 1. POST /api/v1/conditions/weekly-records (주간 컨디션 체크 저장)
 export type ConditionCheckRequest = {
-  conditionScore: number;
+  vitalityScore: number;
   sleepHours: number;
   sleepMinutes: number;
 };
 
 export type ConditionCheckResult = {
-  conditionCheckId: number;
-  weekStartDate: string;
+  recordId: number;
+  weekStartOn: string;
+  weekEndOn: string;
+  checkedOn: string;
+  vitalityScore: number;
+  sleepHours: number;
+  sleepMinutes: number;
   sleepScore: number;
-  intakeDays: number;
+  intakeDaysCount: number;
   intakeScore: number;
   conditionScore: number;
-  completedAt: string;
 };
 
 export type ConditionCheckResponse = {
@@ -40,41 +44,44 @@ export type ConditionCheckResponse = {
   result: ConditionCheckResult;
 };
 
-// 2. GET /conditions/summary (컨디션 홈 화면 조회)
-export type MonthlyGraphItem = {
-  weekNo: number;
-  weekStartDate: string;
+// 2. GET /api/v1/conditions/monthly-records (월 컨디션 그래프 조회)
+export type ConditionWeeklySummary = {
+  recordId: number;
+  weekStartOn: string;
+  weekEndOn: string;
   conditionScore: number | null;
 };
 
-export type MonthlySummary = {
-  avgVitalityScore: number | null;
-  avgSleepHours: number | null;
-  intakeDays: number;
-  intakeTotalDays: number;
+export type ConditionMonthlyRecordsResult = {
+  year: number;
+  month: number;
+  averageConditionScore: number | null;
+  averageVitalityScore: number | null;
+  averageSleepHours: number | null;
+  averageIntakeDaysCount: number | null;
+  records: ConditionWeeklySummary[];
 };
 
-export type ConditionHomeSummaryResult = {
-  currentWeekCompleted: boolean;
-  monthlyGraph: MonthlyGraphItem[];
-  monthlySummary: MonthlySummary;
-};
-
-export type ConditionHomeSummaryResponse = {
+export type ConditionMonthlyRecordsResponse = {
   isSuccess: boolean;
   code: string;
   message: string;
-  result: ConditionHomeSummaryResult;
+  result: ConditionMonthlyRecordsResult;
 };
 
-// 3. GET /conditions/{weekStartDate} (특정 주차 컨디션 상세 조회)
+// 3. GET /api/v1/conditions/weekly-records/{recordId} (주차 상세 조회)
 export type ConditionWeekDetailResult = {
-  weekStartDate: string;
-  weekEndDate: string;
-  conditionScore: number | null;
-  avgSleepHours: number | null;
-  intakeCompletedDays: number;
-  intakeTotalDays: number;
+  recordId: number;
+  weekStartOn: string;
+  weekEndOn: string;
+  checkedOn: string;
+  vitalityScore: number;
+  sleepHours: number;
+  sleepMinutes: number;
+  sleepScore: number;
+  intakeDaysCount: number;
+  intakeScore: number;
+  conditionScore: number;
 };
 
 export type ConditionWeekDetailResponse = {
@@ -83,3 +90,55 @@ export type ConditionWeekDetailResponse = {
   message: string;
   result: ConditionWeekDetailResult;
 };
+
+// 4. GET /api/v1/conditions/current-week (이번 주 컨디션 체크 상태 조회)
+export type ConditionCurrentWeekResult = {
+  today: string;
+  weekStartOn: string;
+  weekEndOn: string;
+  isSunday: boolean;
+  checkAvailable: boolean;
+  checked: boolean;
+  recordId: number | null;
+  autoPopupAvailable: boolean;
+  autoShownAt: string | null;
+  dismissedAt: string | null;
+  sundayIntakeWarningRequired: boolean;
+};
+
+export type ConditionCurrentWeekResponse = {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: ConditionCurrentWeekResult;
+};
+
+// 5. POST /api/v1/conditions/popup-logs/auto-shown (컨디션 팝업 자동 노출 기록)
+export type ConditionPopupAutoShownResult = {
+  popupLogId: number;
+  weekStartOn: string;
+  autoShownAt: string;
+};
+
+export type ConditionPopupAutoShownResponse = {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: ConditionPopupAutoShownResult;
+};
+
+// 6. PATCH /api/v1/conditions/popup-logs/current-week/dismissed (컨디션 팝업 닫힘 기록)
+export type ConditionPopupDismissedResult = {
+  popupLogId: number;
+  weekStartOn: string;
+  dismissedAt: string;
+};
+
+export type ConditionPopupDismissedResponse = {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: ConditionPopupDismissedResult;
+};
+
+

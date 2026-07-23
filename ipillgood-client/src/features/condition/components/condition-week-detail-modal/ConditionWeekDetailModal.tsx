@@ -11,7 +11,8 @@ import { type ConditionWeekDetailResult } from '../../types/condition';
 interface ConditionWeekDetailModalProps {
   month: number;
   weekLabel: string;
-  weekStartDate: string;
+  recordId: number;
+  weekStartDate?: string;
   vitality: number;
   sleepHours: number;
   intakeDays: number;
@@ -22,7 +23,7 @@ interface ConditionWeekDetailModalProps {
 const ConditionWeekDetailModal = ({
   month,
   weekLabel,
-  weekStartDate,
+  recordId,
   vitality,
   sleepHours,
   intakeDays,
@@ -38,12 +39,12 @@ const ConditionWeekDetailModal = ({
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [detailData, setDetailData] = useState<ConditionWeekDetailResult | null>(null);
 
-  // GET /conditions/{weekStartDate} 특정 주차 상세 API 연동
+  // GET /api/v1/conditions/weekly-records/{recordId} 특정 주차 상세 API 연동
   useEffect(() => {
     let isMounted = true;
-    if (!weekStartDate) return;
+    if (recordId === undefined) return;
 
-    getConditionWeekDetail(weekStartDate)
+    getConditionWeekDetail(recordId)
       .then((res) => {
         if (isMounted && res.isSuccess && res.result) {
           setDetailData(res.result);
@@ -61,28 +62,32 @@ const ConditionWeekDetailModal = ({
     return () => {
       isMounted = false;
     };
-  }, [weekStartDate]);
+  }, [recordId]);
 
-  // API가 로드된 경우 API의 값을 우선 사용하고, null인 경우 '-'로 명확히 표시
+  const formatScore = (val: number | null | undefined): string => {
+    if (val === undefined || val === null) return '-';
+    return Number(val).toFixed(1);
+  };
+
   const displayVitality = isLoading
-    ? vitality
+    ? formatScore(vitality)
     : detailData?.conditionScore !== undefined
-      ? detailData.conditionScore ?? '-'
-      : vitality;
+      ? formatScore(detailData.conditionScore)
+      : formatScore(vitality);
 
   const displaySleepHours = isLoading
     ? sleepHours
-    : detailData?.avgSleepHours !== undefined
-      ? detailData.avgSleepHours ?? '-'
+    : detailData?.sleepHours !== undefined
+      ? detailData.sleepHours ?? '-'
       : sleepHours;
 
   const displayIntakeDays = isLoading
     ? intakeDays
-    : detailData?.intakeCompletedDays ?? intakeDays;
+    : detailData?.intakeDaysCount ?? intakeDays;
 
   const displayTotalDays = isLoading
     ? totalDays
-    : detailData?.intakeTotalDays ?? totalDays;
+    : 7; // 주간 섭취 기록 일수 분모는 7일 기준이므로 7로 고정
 
   return (
     <div

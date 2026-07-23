@@ -17,13 +17,16 @@ const ConditionSummarySection = ({
   totalDays: propTotalDays,
 }: ConditionSummarySectionProps = {}) => {
   const { homeSummaryData } = useConditionFlow();
-  const { monthlySummary } = homeSummaryData;
 
-  // 초기 0/null 상태일 때 강제로 3, 4.5로 덮어쓰지 않고 0으로 일치
-  const averageVitality = propVitality ?? monthlySummary.avgVitalityScore ?? 0;
-  const averageSleepHours = propSleep ?? monthlySummary.avgSleepHours ?? 0;
-  const intakeDays = propIntakeDays ?? monthlySummary.intakeDays ?? 0;
-  const totalDays = propTotalDays ?? monthlySummary.intakeTotalDays ?? 7;
+  const formatScore = (val: number | null | undefined): number => {
+    if (val === undefined || val === null) return 0;
+    return Number(Number(val).toFixed(1));
+  };
+
+  const averageVitality = propVitality ?? formatScore(homeSummaryData.averageVitalityScore);
+  const averageSleepHours = propSleep ?? formatScore(homeSummaryData.averageSleepHours);
+  const intakeDays = propIntakeDays ?? formatScore(homeSummaryData.averageIntakeDaysCount);
+  const totalDays = propTotalDays ?? 7;
 
   return (
     <section className='flex w-full flex-col gap-2 px-5 pt-4 pb-0'>

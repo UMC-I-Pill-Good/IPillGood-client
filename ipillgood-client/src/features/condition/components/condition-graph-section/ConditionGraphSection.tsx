@@ -29,46 +29,50 @@ const ConditionGraphSection = () => {
     null,
   );
 
-  const monthlyGraphData = homeSummaryData.monthlyGraph;
+  const monthlyGraphData = homeSummaryData.records;
 
-  // 초기 0일 때/로드 전 일관된 0점 기본 데이터 렌더링
-  const sourceGraphData =
-    monthlyGraphData && monthlyGraphData.length > 0
-      ? monthlyGraphData.map((item) => {
-          const score = item.conditionScore ?? 0;
-          return {
-            weekLabel: `${item.weekNo}주차`,
-            weekNo: item.weekNo,
-            weekStartDate: item.weekStartDate,
-            score,
-            vitality: score,
-            sleepHours: 0,
-            intakeDays: 0,
-            totalDays: 7,
-          };
-        })
-      : [1, 2, 3, 4, 5].map((weekNo) => ({
-          weekLabel: `${weekNo}주차`,
-          weekNo,
-          weekStartDate: undefined,
-          score: 0,
-          vitality: 0,
-          sleepHours: 0,
-          intakeDays: 0,
-          totalDays: 7,
-        }));
+  // 초기 0일 때/로드 전 일관된 0점 기본 데이터 렌더링 (항상 5주차 라벨 및 좌표 보장)
+  const sourceGraphData = Array.from({ length: 5 }, (_, index) => {
+    const weekNo = index + 1;
+    const item = monthlyGraphData && monthlyGraphData[index];
+    if (item) {
+      const score = item.conditionScore;
+      return {
+        weekLabel: `${weekNo}주차`,
+        weekNo,
+        weekStartDate: item.weekStartOn,
+        recordId: item.recordId,
+        score,
+        vitality: score ?? 0,
+        sleepHours: 0,
+        intakeDays: 0,
+        totalDays: 7,
+      };
+    }
+    return {
+      weekLabel: `${weekNo}주차`,
+      weekNo,
+      weekStartDate: undefined,
+      recordId: undefined,
+      score: null, // 데이터가 없는 주차는 null로 처리하여 점/선을 그리지 않음
+      vitality: 0,
+      sleepHours: 0,
+      intakeDays: 0,
+      totalDays: 7,
+    };
+  });
 
   const graphPointList: ConditionGraphPointType[] = sourceGraphData.map(
     (condition, index) => ({
       ...condition,
       x: WEEK_X_POSITION_LIST[index] ?? AXIS_LEFT,
-      y: getScoreY(condition.score),
+      y: condition.score !== null ? getScoreY(condition.score) : AXIS_BOTTOM,
     }),
   );
 
   const graphLinePoints = [
     `${AXIS_LEFT},${AXIS_BOTTOM}`,
-    ...graphPointList.map(({ x, y }) => `${x},${y}`),
+    ...graphPointList.filter(({ score }) => score !== null).map(({ x, y }) => `${x},${y}`),
   ].join(' ');
 
   const selectedPoint =
@@ -85,30 +89,35 @@ const ConditionGraphSection = () => {
   return (
     <>
       <section className='flex w-full flex-col px-5 py-4'>
-        <div className='flex w-full flex-col gap-2.5'>
-          <h2 className='typo-body-5 text-[#111111]'>
-            {CURRENT_MONTH}월 컨디션 변화 그래프
-          </h2>
+        <div className='flex w-full flex-col gap-2'>
+          <div className='flex w-full flex-col items-start gap-1'>
+            <h2 className='text-lg font-semibold leading-normal text-black'>
+              {CURRENT_MONTH}월 컨디션 변화 그래프
+            </h2>
+            <p className='text-xs font-medium leading-normal text-point-900'>
+              각 주차의 점을 클릭해 상세 정보를 확인해 보세요!
+            </p>
+          </div>
 
-          <div className='relative h-[258px] w-full overflow-hidden rounded-[20px] border border-white bg-white/70 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'>
+          <div className='relative h-[258px] w-full overflow-hidden rounded-2xl border border-white bg-white/70 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'>
             {/* 상단 월 이동 헤더 */}
             <div className='absolute left-1/2 top-[11px] flex h-6 w-[283px] -translate-x-1/2 items-center justify-between'>
               <button
                 type='button'
                 aria-label='이전 달 보기'
-                className='flex size-6 items-center justify-center text-neutral-900'
+                className='flex size-6 items-center justify-center text-neutral-900 transition-all rounded-full hover:bg-neutral-100/70 active:bg-neutral-200/70'
               >
                 <ChevronLeft aria-hidden='true' size={24} strokeWidth={1.5} />
               </button>
 
-              <p className='typo-body-10 w-6 text-center text-[#111111]'>
+              <p className='typo-body-10 w-6 text-center text-black'>
                 {CURRENT_MONTH}월
               </p>
 
               <button
                 type='button'
                 aria-label='다음 달 보기'
-                className='flex size-6 items-center justify-center text-neutral-900'
+                className='flex size-6 items-center justify-center text-neutral-900 transition-all rounded-full hover:bg-neutral-100/70 active:bg-neutral-200/70'
               >
                 <ChevronRight aria-hidden='true' size={24} strokeWidth={1.5} />
               </button>
@@ -131,11 +140,12 @@ const ConditionGraphSection = () => {
         </div>
       </section>
 
-      {/* 선택된 주차의 시작일(weekStartDate)이 존재할 때만 상세 모달 렌더링 */}
-      {selectedPoint && selectedPoint.weekStartDate && (
+      {/* 선택된 주차의 recordId가 존재할 때만 상세 모달 렌더링 */}
+      {selectedPoint && selectedPoint.recordId !== undefined && (
         <ConditionWeekDetailModal
           month={CURRENT_MONTH}
           weekLabel={selectedPoint.weekLabel}
+          recordId={selectedPoint.recordId}
           weekStartDate={selectedPoint.weekStartDate}
           vitality={selectedPoint.vitality}
           sleepHours={selectedPoint.sleepHours}

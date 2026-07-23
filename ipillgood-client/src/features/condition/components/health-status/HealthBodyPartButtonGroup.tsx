@@ -1,0 +1,48 @@
+'use client';
+
+import type { HealthSystemType } from '../../types/healthStatus';
+import HealthMinorConcernButton from './HealthMinorConcernButton';
+
+interface HealthBodyPartButtonGroupProps {
+  selectedSystem?: HealthSystemType;
+  selectedBodyPartKey: string | null;
+  onSelectBodyPart: (bodyPartKey: string) => void;
+}
+
+/**
+ * 선택된 대분류에 따른 세부 신체 부위 버튼 그룹 렌더링 전담 컴포넌트
+ */
+const HealthBodyPartButtonGroup = ({
+  selectedSystem,
+  selectedBodyPartKey,
+  onSelectBodyPart,
+}: HealthBodyPartButtonGroupProps) => {
+  return (
+    <section className='flex w-full flex-col px-5 pt-4 pb-0 box-border'>
+      <h2 className='w-full text-xl font-semibold text-black leading-tight'>
+        더 자세한 부위를 선택해 주세요.
+      </h2>
+
+      {/* 팀원 피드백: max 너비(max-w-[353px]) 제거 */}
+      <div className='flex w-full flex-wrap items-start content-start justify-start gap-2.5 py-4'>
+        {selectedSystem ? (
+          selectedSystem.bodyPartList.map((part) => (
+            <HealthMinorConcernButton
+              key={part.key}
+              id={part.key}
+              label={part.label}
+              isSelected={selectedBodyPartKey === part.key}
+              onClick={onSelectBodyPart}
+            />
+          ))
+        ) : (
+          <p className='text-sm text-neutral-800 py-2'>
+            상단에서 궁금한 신체 계통을 선택해 주세요.
+          </p>
+        )}
+      </div>
+    </section>
+  );
+};
+
+export default HealthBodyPartButtonGroup;

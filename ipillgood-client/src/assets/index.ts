@@ -5,6 +5,8 @@ export { default as CrossSmallIcon } from './icons/fi-rr-cross-small.svg';
 export { default as SearchIcon } from './icons/fi-rr-search.svg';
 export { default as RatingStarIcon } from './icons/fi-rr-star.svg';
 export { default as FilterIcon } from './icons/filter.svg';
+export { default as MascotBigIcon } from './icons/mascot-big.svg';
+export { default as ValidBadgeIcon } from './icons/valid.svg';
 export { default as MascotIcon } from './icons/mascot-default.svg';
 export { default as MascotHeartIcon } from './icons/mascot-heart.svg';
 export { default as MascotSearchIcon } from './icons/mascot-search.svg';
@@ -59,6 +61,13 @@ export { default as ConditionScore3Icon } from './icons/ConditionScore3Icon.svg'
 export { default as ConditionScore4Icon } from './icons/ConditionScore4Icon.svg';
 export { default as ConditionScore5Icon } from './icons/ConditionScore5Icon.svg';
 export { default as MascotThumbsUpIcon } from './icons/MascotThumbsUpIcon.svg';
+export { default as NervousIcon } from './icons/nervous.svg';
+export { default as DigestiveIcon } from './icons/digestive.svg';
+export { default as EndocrineIcon } from './icons/endocrine.svg';
+export { default as ConditionCardiovascularIcon } from './icons/cardiovascular.svg';
+export { default as ImmuneDefenseIcon } from './icons/immune-defense.svg';
+export { default as MuscleIcon } from './icons/muscle.svg';
+export { default as ReproductiveIcon } from './icons/reproductive.svg';
 
 /* home */
 export { default as HeaderLogoIcon } from './icons/header-logo.svg';
@@ -69,3 +78,8 @@ export { default as Omega3BottleIcon } from './icons/omega3-bottle.svg';
 
 /* cabinet */
 export { default as EmptyBottleIcon } from './icons/cabinet/empty-bottle.svg';
+
+// my
+export { default as WarningIcon } from './icons/warning.svg';
+export { default as QuestionIcon } from './icons/question-mark.svg';
+export { default as MascotProfileIcon } from './icons/mascot-profile.svg';

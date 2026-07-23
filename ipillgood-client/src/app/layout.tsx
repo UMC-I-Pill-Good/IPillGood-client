@@ -1,6 +1,7 @@
 import localFont from 'next/font/local';
 import './globals.css';
 import { Metadata } from 'next';
+import { MswProvider } from '@/app/_providers/MswProvider';
 import { QueryProvider } from '@/app/_providers/QueryProvider';
 
 export const metadata: Metadata = {
@@ -23,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body className={`${pretendard.variable} antialiased`}>
-        <QueryProvider>{children}</QueryProvider>
+        <MswProvider>
+          <QueryProvider>{children}</QueryProvider>
+        </MswProvider>
       </body>
     </html>
   );
