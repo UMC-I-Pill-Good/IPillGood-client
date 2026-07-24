@@ -16,7 +16,7 @@ const CabinetAddPage = () => {
 
       <CabinetGrid mode='add' />
 
-      <section className='mt-auto px-5'>
+      <section className='mt-auto px-5 pt-4'>
         <TextButton
           type='button'
           text='저장하기'

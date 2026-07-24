@@ -79,6 +79,7 @@ export { default as Omega3BottleIcon } from './icons/omega3-bottle.svg';
 /* cabinet */
 export { default as EmptyBottleIcon } from './icons/cabinet/empty-bottle.svg';
 export { default as CheckShieldIcon } from './icons/cabinet/check-shield.svg';
+export { default as WarningCircleIcon } from './icons/cabinet/warning-circle.svg';
 
 // my
 export { default as WarningIcon } from './icons/warning.svg';

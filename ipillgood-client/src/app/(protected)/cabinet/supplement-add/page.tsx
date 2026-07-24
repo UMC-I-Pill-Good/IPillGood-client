@@ -1,5 +1,6 @@
 'use client';
 
+import InteractionWarningModal from '@/features/cabinet/components/modal/InteractionWarningModal';
 import SupplementCard from '@/features/cabinet/components/supplement-add/SupplementCard';
 import { supplementList } from '@/features/cabinet/mocks/supplement.mocks';
 import { SearchBar, TextButton } from '@/shared/components';
@@ -46,6 +47,7 @@ const SupplementAddPage = () => {
   const [sort, setSort] = useState('후기 많은 순');
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
 
   const toggle = (id: number) => {
     setSelectedIds((prev) => (prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]));
@@ -182,8 +184,24 @@ const SupplementAddPage = () => {
         }}
       />
       <section className='px-5 mt-auto'>
-        <TextButton type='button' text='캐비닛에 추가하기' size='xl' className='w-full' />
+        <TextButton
+          type='button'
+          text='캐비닛에 추가하기'
+          size='xl'
+          className='w-full'
+          onClick={() => setIsWarningModalOpen(true)}
+        />
       </section>
+
+      {isWarningModalOpen && (
+        <InteractionWarningModal
+          onCancel={() => setIsWarningModalOpen(false)}
+          onConfirm={() => {
+            // 삭제 API 호출
+            setIsWarningModalOpen(false);
+          }}
+        />
+      )}
     </main>
   );
 };
