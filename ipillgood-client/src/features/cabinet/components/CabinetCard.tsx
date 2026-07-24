@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { CabinetItem } from '../types/cabinet';
 import { CheckShieldIcon } from '@/assets';
 import { Check } from 'lucide-react';
@@ -15,19 +14,13 @@ interface CabinetCardProps {
 const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
   if (mode === 'default') {
     return (
-      <Link
-        href='/'
-        className={clsx(
-          'group relative flex h-35 items-center justify-center rounded-[20px]',
-          !item.isTaking && 'cursor-pointer',
-        )}
+      <button
+        type='button'
+        onClick={onClick}
+        aria-label='알림 설정 바텀시트 열기'
+        className='group relative flex h-35 items-center justify-center rounded-[20px]'
       >
-        <div
-          className={clsx(
-            'absolute inset-0 rounded-[20px] bg-[#F5F6FF]/20 shadow-[inset_4px_4px_20px_rgba(155,161,255,0.2),4px_4px_4px_rgba(255,255,255,0.2)]',
-            !item.isTaking && 'transition group-hover:brightness-85',
-          )}
-        />
+        <div className='absolute inset-0 rounded-[20px] transition group-hover:brightness-85 bg-[#F5F6FF]/20 shadow-[inset_4px_4px_20px_rgba(155,161,255,0.2),4px_4px_4px_rgba(255,255,255,0.2)]' />
 
         {item.isTaking && (
           <div className='absolute -top-3 z-10 flex h-6 items-center justify-center rounded-full bg-secondary px-3 text-white typo-caption-2'>
@@ -43,7 +36,7 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
             식약처
           </div>
         )}
-      </Link>
+      </button>
     );
   }
 
@@ -60,7 +53,7 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
       <div
         className={clsx(
           'absolute inset-0 rounded-[20px] bg-[#F5F6FF]/20 shadow-[inset_4px_4px_20px_rgba(155,161,255,0.2),4px_4px_4px_rgba(255,255,255,0.2)]',
-          (mode === 'delete' || !item.isTaking) && 'transition group-hover:brightness-90',
+          (mode === 'delete' || !item.isTaking) && 'transition group-hover:brightness-85',
         )}
       />
 

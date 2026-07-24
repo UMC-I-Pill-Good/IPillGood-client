@@ -1,13 +1,8 @@
-'use client';
-
 import { CabinetGrid } from '@/features/cabinet/components';
-import { TextButton } from '@/shared/components';
+import AddButtonSection from '@/features/cabinet/components/cabinet-add/AddButtonSection';
 import { Header } from '@/shared/layout';
-import { useRouter } from 'next/navigation';
 
 const CabinetAddPage = () => {
-  const router = useRouter();
-
   return (
     <main className='flex min-h-dvh flex-col pb-24'>
       <Header showBackButton={false} title='내 캐비닛' />
@@ -16,15 +11,7 @@ const CabinetAddPage = () => {
 
       <CabinetGrid mode='add' />
 
-      <section className='mt-auto px-5 pt-4'>
-        <TextButton
-          type='button'
-          text='저장하기'
-          size='xl'
-          className='w-full'
-          onClick={() => router.replace('/cabinet')}
-        />
-      </section>
+      <AddButtonSection />
     </main>
   );
 };

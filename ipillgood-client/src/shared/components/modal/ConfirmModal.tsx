@@ -12,7 +12,7 @@ interface ConfirmModalProps {
   cancelLabel?: string;
   onConfirm: () => void;
   onCancel: () => void;
-  contentClassName: string;
+  contentClassName?: string;
 }
 
 const ConfirmModal = ({
