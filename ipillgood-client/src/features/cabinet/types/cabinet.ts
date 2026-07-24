@@ -4,4 +4,6 @@ export interface CabinetItem {
   id: number;
   image: StaticImageData;
   name: string;
+  isTaking: boolean;
+  isCertified: boolean;
 }
