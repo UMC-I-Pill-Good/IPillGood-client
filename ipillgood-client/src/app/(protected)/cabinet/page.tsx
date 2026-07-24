@@ -9,7 +9,7 @@ const CabinetPage = () => {
 
       <CabinetActions />
 
-      <CabinetGrid />
+      <CabinetGrid mode='default' />
     </main>
   );
 };

@@ -137,7 +137,7 @@ button:disabled {
       rgba(255, 255, 255, 0.58) 0%,
       rgba(255, 255, 255, 0.4) 36%,
       rgba(255, 255, 255, 0.3) 64%,
-      rgba(255, 255, 255, 0.18) 100%
+      rgba(255, 255, 255, 0.18) 80%
     );
 
     -webkit-backdrop-filter: blur(12px) saturate(165%) contrast(105%);
