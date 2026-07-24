@@ -1,5 +1,7 @@
 'use client';
 
+import SupplementCard from '@/features/cabinet/components/supplement-add/SupplementCard';
+import { supplementList } from '@/features/cabinet/mocks/supplement.mocks';
 import { SearchBar, TextButton } from '@/shared/components';
 import DropdownMenu from '@/shared/components/DropdownMenu';
 import FilterBottomSheet from '@/shared/components/modal/FilterBottomSheet';
@@ -43,6 +45,11 @@ const SupplementAddPage = () => {
 
   const [sort, setSort] = useState('후기 많은 순');
   const [isSortOpen, setIsSortOpen] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+
+  const toggle = (id: number) => {
+    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]));
+  };
 
   const filterGroups = [
     {
@@ -104,7 +111,7 @@ const SupplementAddPage = () => {
   ];
 
   return (
-    <main className='min-h-dvh pb-24'>
+    <main className='flex min-h-dvh flex-col pb-24'>
       <Header title='영양제 이름' />
       <p className='typo-body-10 px-5 py-4'>캐비닛에 추가하고 싶은 영양제를 선택해 주세요.</p>
       <div className='px-5 pb-4'>
@@ -113,6 +120,7 @@ const SupplementAddPage = () => {
           onChange={setValue}
           placeholder='영양제를 검색해주세요.'
           onFilter={() => setIsFilterOpen(true)}
+          className='h-12.5'
         />
       </div>
 
@@ -146,7 +154,16 @@ const SupplementAddPage = () => {
           </div>
         </article>
 
-        <article></article>
+        <article className='mt-2 space-y-2'>
+          {supplementList.map((item) => (
+            <SupplementCard
+              key={item.id}
+              item={item}
+              checked={selectedIds.includes(item.id)}
+              onCheck={() => toggle(item.id)}
+            />
+          ))}
+        </article>
       </section>
       <FilterBottomSheet
         open={isFilterOpen}
@@ -164,7 +181,9 @@ const SupplementAddPage = () => {
           setIsFilterOpen(false);
         }}
       />
-      <TextButton type='button' text='캐비닛에 추가하기' size='xl' className='w-full mt-auto' />
+      <section className='px-5 mt-auto'>
+        <TextButton type='button' text='캐비닛에 추가하기' size='xl' className='w-full' />
+      </section>
     </main>
   );
 };

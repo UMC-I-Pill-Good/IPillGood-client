@@ -7,7 +7,7 @@ const chipVariant = cva(
   {
     variants: {
       variant: {
-        secondary: 'bg-secondary-500 text-white typo-caption-2 h-8',
+        secondary: 'bg-secondary text-white typo-caption-2 h-8',
         point: 'bg-point-700 text-white typo-caption-6 h-6',
       },
       icon: {
