@@ -4,7 +4,7 @@ import { CabinetGrid } from '@/features/cabinet/components';
 
 const CabinetPage = () => {
   return (
-    <main>
+    <main className='pb-24'>
       <Header showBackButton={false} title='내 캐비닛' />
 
       <CabinetActions />

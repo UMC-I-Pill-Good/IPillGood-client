@@ -1,6 +1,6 @@
 'use client';
 
-import { SearchBar } from '@/shared/components';
+import { SearchBar, TextButton } from '@/shared/components';
 import DropdownMenu from '@/shared/components/DropdownMenu';
 import FilterBottomSheet from '@/shared/components/modal/FilterBottomSheet';
 import { Header } from '@/shared/layout';
@@ -10,11 +10,31 @@ import { useState } from 'react';
 
 const SORT_OPTIONS = ['후기 많은 순', '평점 높은 순'] as const;
 
+const AGE_OPTIONS = ['전체', '10대', '20대', '30대', '40대', '50대 이상'];
+const GENDER_OPTIONS = ['전체', '남성', '여성'];
+const HEALTH_OPTIONS = [
+  '신경계',
+  '감각계',
+  '소화 대사계',
+  '내분비계',
+  '심혈관계',
+  '신체방어 및 면역계',
+  '근육계',
+  '생식 및 비뇨계',
+];
+
+type DraftFilters = {
+  ageGroup: string;
+  gender: string | undefined;
+  certification: string;
+  healthConcern: string | null;
+};
+
 const SupplementAddPage = () => {
   const [value, setValue] = useState('');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const [draftFilters, setDraftFilters] = useState({
+  const [draftFilters, setDraftFilters] = useState<DraftFilters>({
     ageGroup: '전체',
     gender: undefined,
     certification: 'ALL',
@@ -24,8 +44,67 @@ const SupplementAddPage = () => {
   const [sort, setSort] = useState('후기 많은 순');
   const [isSortOpen, setIsSortOpen] = useState(false);
 
+  const filterGroups = [
+    {
+      title: '연령대',
+      options: AGE_OPTIONS.map((option) => ({
+        label: option,
+        isSelected: draftFilters.ageGroup === option,
+        onClick: () =>
+          setDraftFilters((prev) => ({
+            ...prev,
+            ageGroup: option,
+          })),
+      })),
+    },
+    {
+      title: '성별',
+      options: GENDER_OPTIONS.map((option) => ({
+        label: option,
+        isSelected: draftFilters.gender === option,
+        onClick: () =>
+          setDraftFilters((prev) => ({
+            ...prev,
+            gender: option,
+          })),
+      })),
+    },
+    {
+      title: '식약처 인증',
+      options: [
+        {
+          label: '인증 제품만',
+          isSelected: draftFilters.certification === 'CERTIFIED',
+          onClick: () =>
+            setDraftFilters((prev) => ({
+              ...prev,
+              certification: prev.certification === 'CERTIFIED' ? 'ALL' : 'CERTIFIED',
+            })),
+        },
+      ],
+    },
+    {
+      title: '건강 고민',
+      optionRows: [
+        HEALTH_OPTIONS.slice(0, 3),
+        HEALTH_OPTIONS.slice(3, 6),
+        HEALTH_OPTIONS.slice(6),
+      ].map((row) =>
+        row.map((option) => ({
+          label: option,
+          isSelected: draftFilters.healthConcern === option,
+          onClick: () =>
+            setDraftFilters((prev) => ({
+              ...prev,
+              healthConcern: option,
+            })),
+        })),
+      ),
+    },
+  ];
+
   return (
-    <main>
+    <main className='min-h-dvh pb-24'>
       <Header title='영양제 이름' />
       <p className='typo-body-10 px-5 py-4'>캐비닛에 추가하고 싶은 영양제를 선택해 주세요.</p>
       <div className='px-5 pb-4'>
@@ -69,6 +148,23 @@ const SupplementAddPage = () => {
 
         <article></article>
       </section>
+      <FilterBottomSheet
+        open={isFilterOpen}
+        onClose={() => setIsFilterOpen(false)}
+        groups={filterGroups}
+        onReset={() =>
+          setDraftFilters({
+            ageGroup: '전체',
+            gender: '전체',
+            certification: 'ALL',
+            healthConcern: null,
+          })
+        }
+        onApply={() => {
+          setIsFilterOpen(false);
+        }}
+      />
+      <TextButton type='button' text='캐비닛에 추가하기' size='xl' className='w-full mt-auto' />
     </main>
   );
 };
