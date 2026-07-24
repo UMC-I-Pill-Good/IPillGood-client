@@ -197,9 +197,9 @@ const SupplementAddPage = () => {
         <InteractionWarningModal
           onCancel={() => setIsWarningModalOpen(false)}
           onConfirm={() => {
-            // 삭제 API 호출
             setIsWarningModalOpen(false);
           }}
+          isdDplication={true}
         />
       )}
     </main>
