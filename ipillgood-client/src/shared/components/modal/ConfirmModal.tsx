@@ -3,6 +3,7 @@
 import { useRef, type ReactNode } from 'react';
 import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
 import TextButton from '../button/TextButton';
+import { cn } from '@/shared/utils';
 
 interface ConfirmModalProps {
   title: ReactNode;
@@ -11,6 +12,7 @@ interface ConfirmModalProps {
   cancelLabel?: string;
   onConfirm: () => void;
   onCancel: () => void;
+  contentClassName: string;
 }
 
 const ConfirmModal = ({
@@ -20,6 +22,7 @@ const ConfirmModal = ({
   cancelLabel = '아니요',
   onConfirm,
   onCancel,
+  contentClassName,
 }: ConfirmModalProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -42,7 +45,10 @@ const ConfirmModal = ({
         <p id='confirm-modal-title' className='text-center typo-body-9 mb-2'>
           {title}
         </p>
-        <p id='confirm-modal-content' className='text-center typo-caption-6 text-neutral-800'>
+        <p
+          id='confirm-modal-content'
+          className={cn('text-center typo-caption-6 text-neutral-800', contentClassName)}
+        >
           {content}
         </p>
 
@@ -53,7 +59,7 @@ const ConfirmModal = ({
             variant='outline'
             size='sm'
             onClick={onCancel}
-            className='flex-1'
+            className='flex-1 shadow-none'
           />
           <TextButton
             type='button'

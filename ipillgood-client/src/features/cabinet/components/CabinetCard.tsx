@@ -79,7 +79,7 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
           )}
 
           {isSelected && (
-            <div className='absolute -right-1 -top-1 z-10 flex h-5 w-5 items-center justify-center rounded-full bg-semantic text-white'>
+            <div className='absolute no-center-glass border-none -right-1 -top-1 z-10 flex h-5 w-5 items-center justify-center rounded-full bg-semantic text-white'>
               <Check size={12} strokeWidth={3} />
             </div>
           )}
