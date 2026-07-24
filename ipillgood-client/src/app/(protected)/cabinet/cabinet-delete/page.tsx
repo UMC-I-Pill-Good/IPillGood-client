@@ -19,7 +19,7 @@ const CabinetDeletePage = () => {
       <section className='mt-auto px-5'>
         <TextButton
           type='button'
-          text='저장하기'
+          text='삭제하기'
           size='xl'
           className='w-full'
           onClick={() => router.replace('/cabinet')}

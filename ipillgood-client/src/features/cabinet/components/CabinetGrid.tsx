@@ -13,7 +13,7 @@ const MAX_COUNT = 9;
 
 const CabinetGrid = ({ mode }: CabinetGridProps) => {
   const [selectedIds, setSelectedIds] = useState<number[]>(
-    cabinetItems.filter((item) => item.isTaking).map((item) => item.id),
+    mode === 'add' ? cabinetItems.filter((item) => item.isTaking).map((item) => item.id) : [],
   );
 
   const handleSelect = (id: number) => {

@@ -9,4 +9,5 @@ export const cabinetItems: CabinetItem[] = [
   { id: 5, image: magnesium, name: '아연', isTaking: false, isCertified: false },
   { id: 6, image: magnesium, name: '엽산', isTaking: true, isCertified: true },
   { id: 7, image: magnesium, name: '프로바이오틱스', isTaking: false, isCertified: true },
+  { id: 8, image: magnesium, name: '뀨꺄껴꾜', isTaking: false, isCertified: false },
 ];
