@@ -19,7 +19,7 @@ const matchesSearchTerm = (
   const searchableText = [
     item.brand,
     item.productName,
-    item.ingredientName,
+    ...item.ingredientName,
     ...item.ingredientTags,
   ]
     .join(' ')
