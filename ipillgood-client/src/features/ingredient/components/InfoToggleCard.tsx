@@ -18,6 +18,7 @@ const InfoToggleCard = ({ title, icon, items }: InfoToggleCardProps) => {
         <button
           type='button'
           onClick={() => setIsExpanded((prev) => !prev)}
+          aria-expanded={isExpanded}
           className='typo-caption-7 text-neutral-800'
         >
           {isExpanded ? '그만 보기' : '자세히 보기'}
