@@ -80,3 +80,9 @@ export { default as Omega3BottleIcon } from './icons/omega3-bottle.svg';
 export { default as WarningIcon } from './icons/warning.svg';
 export { default as QuestionIcon } from './icons/question-mark.svg';
 export { default as MascotProfileIcon } from './icons/mascot-profile.svg';
+
+// ingredient
+export { default as BanIcon } from './icons/ban.svg';
+export { default as NoFoodIcon } from './icons/no-food.svg';
+export { default as ClockIcon } from './icons/clock.svg';
+export { default as ForkKnifeIcon } from './icons/fork-knife.svg';
