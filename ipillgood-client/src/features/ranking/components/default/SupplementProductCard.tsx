@@ -83,7 +83,7 @@ const SupplementProductCard = ({ item, displayRank }: SupplementProductCardProps
             <div className='flex w-full items-center justify-between gap-2'>
               <p className='min-w-0 flex-1 truncate typo-caption-6 text-black'>{item.brand}</p>
               <Link
-                href={`/ranking/products/${item.productId}`}
+                href={`/product/${item.productId}`}
                 aria-label={`${item.productName} 더보기`}
                 className='inline-flex shrink-0 items-center whitespace-nowrap typo-caption-7 text-neutral-800'
               >

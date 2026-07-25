@@ -46,7 +46,7 @@ const SupplementDetailSummaryCard = ({
         </div>
 
         {showReviewButton && (
-          <Link href={`/ranking/products/${product.productId}/reviews`}>
+          <Link href={`/product/${product.productId}/reviews`}>
             <TextButton type='button' text='후기 보기' variant='primary' size='sm' className='px-3' />
           </Link>
         )}

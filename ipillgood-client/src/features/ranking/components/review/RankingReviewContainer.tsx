@@ -270,7 +270,7 @@ const ReviewCard = ({ review, productId, onDelete }: ReviewCardProps) => {
           </button>
           {isMenuOpen && (
             <div className='absolute bottom-8 right-0 z-10 flex h-24 w-[81px] flex-col items-start overflow-hidden rounded-[8px] border border-white bg-white/80 shadow-md backdrop-blur-[20px]'>
-              <button type='button' className='flex h-8 w-full items-center justify-center gap-1 border-b border-neutral-300 px-2 typo-caption-2 text-black' onClick={() => router.push(`/ranking/products/${productId}/reviews/${review.reviewId}/edit`)}>후기 수정</button>
+            <button type='button' className='flex h-8 w-full items-center justify-center gap-1 border-b border-neutral-300 px-2 typo-caption-2 text-black' onClick={() => router.push(`/product/${productId}/reviews/${review.reviewId}/edit`)}>후기 수정</button>
               <button type='button' className='flex h-8 w-full items-center justify-center gap-1 border-b border-neutral-300 px-2 typo-caption-2 text-neutral-800' onClick={() => { setIsMenuOpen(false); setIsDeleteModalOpen(true); }}>후기 삭제</button>
               <button type='button' className='flex h-8 w-full items-center justify-center gap-1 px-2 typo-caption-2 text-neutral-800' onClick={() => setIsMenuOpen(false)}>취소</button>
             </div>
