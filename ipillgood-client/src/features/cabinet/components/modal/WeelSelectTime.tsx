@@ -138,6 +138,8 @@ export const WheelSelectTime = <T extends string | number>({
     });
   };
 
+  const activeIndex = isLoop ? middleOffset + options.indexOf(value) : options.indexOf(value);
+
   return (
     <div
       className='relative flex-1 overflow-hidden'
@@ -147,7 +149,7 @@ export const WheelSelectTime = <T extends string | number>({
         ref={scrollRef}
         role='listbox'
         aria-label='시간 선택'
-        aria-activedescendant={`wheel-option-${value}`}
+        aria-activedescendant={`wheel-option-${activeIndex}`}
         onScroll={handleScroll}
         onWheel={handleWheel}
         className='h-full overflow-y-auto snap-y snap-mandatory hide-scrollbar'

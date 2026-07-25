@@ -55,7 +55,7 @@ const SupplementDetailBottomSheet = ({
                 <p className='typo-body-10'>복용 시간</p>
                 <button
                   type='button'
-                  aria-label='복용 주기 선택 모달 열기'
+                  aria-label='복용 시간 선택 모달 열기'
                   className='text-neutral transition hover:brightness-75'
                   onClick={() => setIsOpenIntakeTimeModal(true)}
                 >
@@ -67,7 +67,7 @@ const SupplementDetailBottomSheet = ({
                 <p className='typo-body-10'>복용 주기</p>
                 <button
                   type='button'
-                  aria-label='복용 시간 선택 모달 열기'
+                  aria-label='복용 주기 선택 모달 열기'
                   className='text-neutral flex items-center transition hover:brightness-75'
                   onClick={() => setIsOpenIntakeCycleModal(true)}
                 >

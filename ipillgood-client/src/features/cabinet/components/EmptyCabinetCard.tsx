@@ -10,7 +10,7 @@ const EmptyCabinetCard = ({ mode }: EmptyCabinetCardProps) => {
   return mode === 'default' ? (
     <Link
       href='/cabinet/supplement-add'
-      className='flex items-center justify-center rounded-[20px] transition hover:brightness-90 py-3 bg-[#F5F6FF]/20 shadow-[inset_4px_4px_20px_rgba(155,161,255,0.2),4px_4px_4px_rgba(255,255,255,0.2)]'
+      className='flex items-center justify-center rounded-[20px] h-35 transition hover:brightness-90 bg-[#F5F6FF]/20 shadow-[inset_4px_4px_20px_rgba(155,161,255,0.2),4px_4px_4px_rgba(255,255,255,0.2)]'
     >
       <div className='relative translate-y-1'>
         <EmptyBottleIcon className='mb-2 text-[#D7D7D7]' />
