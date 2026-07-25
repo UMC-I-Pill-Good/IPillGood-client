@@ -35,7 +35,10 @@ const IntakeTimeModal = ({ onConfirm, onCancel }: IntakeTimeModalProps) => {
       role='dialog'
       aria-modal='true'
     >
-      <div ref={contentRef} className='relative w-full max-w-88 rounded-[20px] bg-white px-8 py-8'>
+      <div
+        ref={contentRef}
+        className='relative w-full max-w-88 rounded-[20px] bg-white px-7.5 py-6'
+      >
         <div className='absolute right-6 top-6'>
           <IconButton icon={<X size={22} />} ariaLabel='모달 닫기' onClick={onCancel} />
         </div>
@@ -58,7 +61,7 @@ const IntakeTimeModal = ({ onConfirm, onCancel }: IntakeTimeModalProps) => {
           </section>
         </section>
 
-        <TextButton type='button' text='확인' className='w-full mt-4' onClick={onConfirm} />
+        <TextButton type='button' text='확인' className='w-full mt-8' onClick={onConfirm} />
       </div>
     </div>,
     document.body,
