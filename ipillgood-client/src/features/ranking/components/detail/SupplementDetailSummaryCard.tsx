@@ -29,7 +29,7 @@ const SupplementDetailSummaryCard = ({
               text='식약처 인증'
               variant='point'
               icon
-              className='!h-6 !px-1.5 !shadow-none text-[12px] text-point-100 [&>span]:mr-0.5 [&>span>svg]:h-[11px] [&>span>svg]:w-[9px]'
+              className='!h-6 !gap-1 !px-2 !shadow-none text-[12px] text-point-100 [&>span]:mr-0 [&>span>svg]:h-[11px] [&>span>svg]:w-[9px]'
             />
           )}
 
