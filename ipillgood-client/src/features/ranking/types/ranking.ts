@@ -41,7 +41,7 @@ export type ProductSearchItemDto = {
   brand: string;
   imageUrl: string | null;
   mfdsCertified: boolean;
-  ingredientName: string;
+  ingredientName: string[];
   ratingAverage: number | null;
   reviewCount: number;
   ingredientTags: string[];
@@ -57,3 +57,54 @@ export type RankingResultDto = {
 };
 
 export type RankingApiResponse = ApiResponse<RankingResultDto>;
+
+export type IngredientSummary = {
+  ingredientId: number;
+  name: string;
+  description: string;
+  imageKey: string;
+  effectKeywords: string[];
+};
+
+export type ProductIngredient = IngredientSummary & {
+  adClaimRisk: boolean;
+};
+
+export type RankingProductDetailDto = {
+  productId: number;
+  productName: string;
+  brand: string;
+  thumbnailIngredientImageKey: string | null;
+  description: string;
+  purchaseUrl: string;
+  mfdsCertified: boolean;
+  ratingAverage: number | null;
+  reviewCount: number;
+  inCabinet: boolean;
+  ingredients: ProductIngredient[];
+  adClaimRiskIngredients: IngredientSummary[];
+};
+
+export type RankingProductDetailApiResponse = ApiResponse<RankingProductDetailDto>;
+
+export type RankingProductIngredientsDto = {
+  productId: number;
+  ingredientCount: number;
+  ingredients: IngredientSummary[];
+};
+
+export type RankingProductIngredientsApiResponse = ApiResponse<RankingProductIngredientsDto>;
+
+export type CombinationType = 'GOOD' | 'CAUTION';
+export type CompatibilityItem = {
+  targetIngredientId: number;
+  targetIngredientName: string;
+  type: CombinationType;
+};
+export type RankingProductCompatibilityDto = {
+  productId: number;
+  ownedProductCount: number;
+  goodCombinations: CompatibilityItem[];
+  cautionCombinations: CompatibilityItem[];
+};
+export type RankingProductCompatibilityApiResponse = ApiResponse<RankingProductCompatibilityDto>;
