@@ -32,7 +32,7 @@ const InteractionWarningModal = ({
         <section className='flex flex-col items-center justify-center space-y-4'>
           {!isdDplication ? (
             <>
-              <WarningIcon width={60} heigt={60} />
+              <WarningIcon width={60} height={60} />
 
               <p className='typo-body-1'>병용 금기 처리 알림</p>
 
@@ -59,7 +59,7 @@ const InteractionWarningModal = ({
             </>
           ) : (
             <>
-              <WarningIcon width={60} heigt={60} />
+              <WarningIcon width={60} height={60} />
 
               <p className='typo-body-1'>병용 금기 처리 알림</p>
 
