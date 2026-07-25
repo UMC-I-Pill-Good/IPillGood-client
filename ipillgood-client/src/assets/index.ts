@@ -14,6 +14,8 @@ export { default as MascotSadIcon } from './icons/mascot-sad.svg';
 export { default as LogoIcon } from './icons/logo.svg';
 export { default as EyeIcon } from './icons/eye.svg';
 export { default as EyeOffIcon } from './icons/eyeoff.svg';
+export { default as ModalCalendarIcon } from './icons/modal-calender.svg';
+export { default as ClockIcon } from './icons/clock.svg';
 
 /* login */
 export { default as IdIcon } from './icons/id.svg';

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { BellIcon, TimerOffIcon } from '@/assets';
 import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
+import { IntakeCycleModal, IntakeTimeModal } from '@/shared/components';
 
 interface CabinetDetailBottomSheetProps {
   open: boolean;
@@ -14,7 +15,9 @@ interface CabinetDetailBottomSheetProps {
 }
 
 const CabinetDetailBottomSheet = ({ open, onOpenChange, item }: CabinetDetailBottomSheetProps) => {
-  const [isChecked, setIsChecked] = useState(true);
+  const [isIntake, setIsIntake] = useState(true); // 임시
+  const [isOpenIntakeCycleModal, setIsOpenIntakeCycleModal] = useState(false);
+  const [isOpenIntakeTimeModal, setIsOpenIntakeTimeModal] = useState(false);
 
   if (!item) return null;
 
@@ -41,19 +44,31 @@ const CabinetDetailBottomSheet = ({ open, onOpenChange, item }: CabinetDetailBot
             <section className='space-y-2'>
               <div className='no-center-glass px-5 rounded-[20px] flex items-center justify-between h-13'>
                 <p className='typo-body-10'>복용 알림 ON/OFF</p>
-                <ToggleButton isChecked={isChecked} onClick={() => setIsChecked((prev) => !prev)} />
+                <ToggleButton isChecked={isIntake} onClick={() => setIsIntake((prev) => !prev)} />
               </div>
 
               <div className='no-center-glass px-5 rounded-[20px] flex items-center justify-between h-13'>
                 <p className='typo-body-10'>복용 시간</p>
-                <p className='text-neutral'>오전 08:00</p>
+                <button
+                  type='button'
+                  aria-label='복용 주기 선택 모달 열기'
+                  className='text-neutral transition hover:brightness-75'
+                  onClick={() => setIsOpenIntakeTimeModal(true)}
+                >
+                  오전 08:00
+                </button>
               </div>
 
               <div className='no-center-glass px-5 rounded-[20px] flex items-center justify-between h-13'>
                 <p className='typo-body-10'>복용 주기</p>
-                <p className='text-neutral flex items-center'>
+                <button
+                  type='button'
+                  aria-label='복용 시간 선택 모달 열기'
+                  className='text-neutral flex items-center transition hover:brightness-75'
+                  onClick={() => setIsOpenIntakeCycleModal(true)}
+                >
                   매일 <ChevronRight size={20} />
-                </p>
+                </button>
               </div>
             </section>
           ) : (
@@ -84,6 +99,19 @@ const CabinetDetailBottomSheet = ({ open, onOpenChange, item }: CabinetDetailBot
           </button>
         </section>
       </div>
+      {isOpenIntakeTimeModal && (
+        <IntakeTimeModal
+          onCancel={() => setIsOpenIntakeTimeModal(false)}
+          onConfirm={() => console.log('성공')}
+        />
+      )}
+
+      {isOpenIntakeCycleModal && (
+        <IntakeCycleModal
+          onCancel={() => setIsOpenIntakeCycleModal(false)}
+          onConfirm={() => console.log('성공')}
+        />
+      )}
     </BottomSheet>
   );
 };
