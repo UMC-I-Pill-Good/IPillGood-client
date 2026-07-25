@@ -24,9 +24,9 @@ const SupplementCard = ({ item, checked, onCheck }: Props) => {
 
         <Image src={item.image} alt={item.name} className='w-fit h-22.5 shrink-0' />
 
-        <div className='w-full space-y-0.5'>
+        <div className='w-full'>
           {item.isOwned && <Chip variant='secondary' text='보유 중' className='h-6 mb-1.5' />}
-          <div className='flex items-center justify-between'>
+          <div className='flex items-center justify-between mb-0.5'>
             <p className='typo-caption-6'>{item.company}</p>
             <Link href={'/'} className='typo-caption-6 text-neutral-700 transition hover:underline'>
               더보기
@@ -35,7 +35,7 @@ const SupplementCard = ({ item, checked, onCheck }: Props) => {
 
           <p className='typo-body-9'>{item.name}</p>
 
-          <p className='flex items-center gap-1.5 typo-caption-2 text-neutral'>
+          <p className='flex items-center gap-1.5 typo-caption-6 text-neutral'>
             <RatingStarIcon /> {item.rating} ({item.reviewCount})
           </p>
 
