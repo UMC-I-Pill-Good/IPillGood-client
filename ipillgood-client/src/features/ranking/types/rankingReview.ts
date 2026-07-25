@@ -19,6 +19,29 @@ export type RankingReviewReportResult = {
 
 export type RankingReviewReportApiResponse = ApiResponse<RankingReviewReportResult>;
 
+export type ReviewImageContentType = 'image/jpeg' | 'image/png' | 'image/webp';
+
+export type ReviewImageUploadRequest = {
+  images: {
+    fileName: string;
+    contentType: ReviewImageContentType;
+    displayOrder: number;
+  }[];
+};
+
+export type PresignedReviewUpload = {
+  imageKey: string;
+  presignedUrl: string;
+  displayOrder: number;
+  expiresAt: string;
+};
+
+export type ReviewImageUploadResult = {
+  uploads: PresignedReviewUpload[];
+};
+
+export type ReviewImageUploadApiResponse = ApiResponse<ReviewImageUploadResult>;
+
 export type RankingReviewQuery = {
   productId: number;
   sort?: ReviewSort;

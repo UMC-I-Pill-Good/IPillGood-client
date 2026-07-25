@@ -193,8 +193,10 @@ const ReviewCard = ({ review, productId, onDelete }: ReviewCardProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
-  const [isHelpful, setIsHelpful] = useState(review.helpedByMe);
-  const [helpfulCount, setHelpfulCount] = useState(review.helpfulCount);
+  const [helpfulState, setHelpfulState] = useState({
+    isHelpful: review.helpedByMe,
+    count: review.helpfulCount,
+  });
 
   return (
   <>
@@ -233,7 +235,7 @@ const ReviewCard = ({ review, productId, onDelete }: ReviewCardProps) => {
     <div className='flex gap-2 overflow-x-auto hide-scrollbar'>
         {review.imageKeys.map((imageKey) => (
         <div key={imageKey} className='flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-neutral-300 typo-body-2 text-neutral-800'>
-          {imageKey.startsWith('http') ? (
+          {imageKey.startsWith('http') || imageKey.startsWith('/') ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={imageKey} alt='후기 첨부 이미지' className='size-full object-cover' />
           ) : '사진'}
@@ -247,15 +249,15 @@ const ReviewCard = ({ review, productId, onDelete }: ReviewCardProps) => {
         className='flex items-center gap-1 text-primary-600 typo-caption-6 disabled:cursor-not-allowed disabled:opacity-60'
         onClick={() => {
           if (review.mine) return;
-          setIsHelpful((current) => {
-            setHelpfulCount((count) => count + (current ? -1 : 1));
-            return !current;
-          });
+          setHelpfulState((current) => ({
+            isHelpful: !current.isHelpful,
+            count: current.count + (current.isHelpful ? -1 : 1),
+          }));
         }}
       >
-        <ThumbsUp aria-hidden='true' className='size-4' fill={isHelpful ? 'currentColor' : 'none'} />
+        <ThumbsUp aria-hidden='true' className='size-4' fill={helpfulState.isHelpful ? 'currentColor' : 'none'} />
         <span>도움이 됐어요</span>
-        <span>{helpfulCount}</span>
+        <span>{helpfulState.count}</span>
       </button>
       {review.mine ? (
         <div className='relative ml-auto'>

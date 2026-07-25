@@ -1,4 +1,5 @@
 import type { RankingReviewItem } from '../types/rankingReview';
+import vitaminImage from '@/assets/images/vitamin.png';
 
 export const MOCK_RANKING_REVIEWS: RankingReviewItem[] = [
   {
@@ -9,7 +10,7 @@ export const MOCK_RANKING_REVIEWS: RankingReviewItem[] = [
     reviewerGender: 'MALE',
     rating: 3,
     content: '아침에 일어났을 때 피로감이 줄고, 확실히 컨디션이 좋아진 느낌이에요! 꾸준히 먹어보려구요~',
-    imageKeys: ['photo-1', 'photo-2', 'photo-3'],
+    imageKeys: [`${vitaminImage.src}?review=1`, `${vitaminImage.src}?review=2`, `${vitaminImage.src}?review=3`],
     helpfulCount: 1,
     helpedByMe: false,
     mine: true,
@@ -23,7 +24,7 @@ export const MOCK_RANKING_REVIEWS: RankingReviewItem[] = [
     reviewerGender: 'MALE',
     rating: 3,
     content: '꾸준히 섭취하니 일상 컨디션 관리에 도움이 되는 것 같아요.',
-    imageKeys: ['photo-4', 'photo-5', 'photo-6'],
+    imageKeys: [`${vitaminImage.src}?review=4`, `${vitaminImage.src}?review=5`, `${vitaminImage.src}?review=6`],
     helpfulCount: 3,
     helpedByMe: false,
     mine: false,
@@ -37,7 +38,7 @@ export const MOCK_RANKING_REVIEWS: RankingReviewItem[] = [
     reviewerGender: 'FEMALE',
     rating: 4,
     content: '두 장의 사진을 함께 첨부한 후기 수정 화면을 확인할 수 있어요.',
-    imageKeys: ['photo-7', 'photo-8'],
+    imageKeys: [`${vitaminImage.src}?review=7`, `${vitaminImage.src}?review=8`],
     helpfulCount: 0,
     helpedByMe: false,
     mine: true,
