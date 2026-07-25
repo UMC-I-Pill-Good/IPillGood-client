@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { type ChangeEvent, useEffect, useRef, useState } from 'react';
 import { EmptyRatingStarIcon, FilledRatingStarIcon } from '@/assets';
 import { TextButton } from '@/shared/components';
 import { NavBar } from '@/shared/layout';
@@ -17,6 +17,11 @@ interface RankingReviewEditContainerProps {
   reviewId: number;
 }
 
+type ReviewImagePreview = {
+  id: string;
+  src: string;
+  file?: File;
+};
 
 const RankingReviewEditContainer = ({ productId, reviewId }: RankingReviewEditContainerProps) => {
   const router = useRouter();
@@ -24,6 +29,8 @@ const RankingReviewEditContainer = ({ productId, reviewId }: RankingReviewEditCo
   const [product, setProduct] = useState<RankingProductDetailDto | null>(null);
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(0);
+  const [imagePreviews, setImagePreviews] = useState<ReviewImagePreview[]>([]);
+  const imagePreviewsRef = useRef<ReviewImagePreview[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -38,6 +45,12 @@ const RankingReviewEditContainer = ({ productId, reviewId }: RankingReviewEditCo
       setReview(foundReview);
       setContent(foundReview?.content ?? '');
       setRating(foundReview?.rating ?? 0);
+      setImagePreviews(
+        foundReview?.imageKeys.map((imageKey, index) => ({
+          id: `existing-${index}-${imageKey}`,
+          src: imageKey,
+        })) ?? [],
+      );
       setProduct(productResponse.result);
       setIsLoading(false);
     });
@@ -45,6 +58,40 @@ const RankingReviewEditContainer = ({ productId, reviewId }: RankingReviewEditCo
       active = false;
     };
   }, [productId, reviewId]);
+
+  imagePreviewsRef.current = imagePreviews;
+
+  useEffect(() => {
+    return () => {
+      imagePreviewsRef.current.forEach((image) => {
+        if (image.file) URL.revokeObjectURL(image.src);
+      });
+    };
+  }, []);
+
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const fileList = Array.from(event.target.files ?? []);
+    if (!fileList.length) return;
+
+    setImagePreviews((current) => {
+      const availableCount = Math.max(0, 3 - current.length);
+      const nextImages = fileList.slice(0, availableCount).map((file) => ({
+        id: `${file.name}-${file.lastModified}`,
+        src: URL.createObjectURL(file),
+        file,
+      }));
+      return [...current, ...nextImages];
+    });
+    event.target.value = '';
+  };
+
+  const handleImageRemove = (imageId: string) => {
+    setImagePreviews((current) => {
+      const image = current.find((item) => item.id === imageId);
+      if (image?.file) URL.revokeObjectURL(image.src);
+      return current.filter((item) => item.id !== imageId);
+    });
+  };
 
   const handleSubmit = () => {
     if (!review || !content.trim() || rating === 0 || isSubmitting) return;
@@ -105,19 +152,25 @@ const RankingReviewEditContainer = ({ productId, reviewId }: RankingReviewEditCo
             <span className='typo-caption-7 text-neutral-800'>(선택)</span>
           </div>
           <div className='flex gap-2'>
-            {review.imageKeys.length < 3 && (
+            {imagePreviews.length < 3 && (
               <label className='flex size-32 cursor-pointer items-center justify-center rounded-lg border border-neutral-400 text-5xl font-light text-neutral-500'>
                 +
-                <input type='file' accept='image/*' className='sr-only' />
+                <input type='file' accept='image/*' multiple className='sr-only' onChange={handleImageChange} />
               </label>
             )}
-            {review.imageKeys.map((imageKey) => (
-              <div key={imageKey} className='flex size-32 items-center justify-center overflow-hidden rounded-lg bg-neutral-300 typo-body-2 text-neutral-800'>
-                {imageKey.startsWith('http') ? (
+            {imagePreviews.map((image) => (
+              <button
+                key={image.id}
+                type='button'
+                aria-label='첨부 이미지 삭제'
+                className='relative flex size-32 items-center justify-center overflow-hidden rounded-lg bg-neutral-300 typo-body-2 text-neutral-800'
+                onClick={() => handleImageRemove(image.id)}
+              >
+                {image.src.startsWith('blob:') || image.src.startsWith('http') ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={imageKey} alt='기존 후기 이미지' className='size-full object-cover' />
+                  <img src={image.src} alt='후기 첨부 이미지' className='size-full object-cover' />
                 ) : '사진'}
-              </div>
+              </button>
             ))}
           </div>
           <p className='typo-caption-7 text-neutral-800'>최대 3개 첨부 가능</p>
