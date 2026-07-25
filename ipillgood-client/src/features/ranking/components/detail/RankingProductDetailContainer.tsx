@@ -34,7 +34,7 @@ const RankingProductDetailContainer = async ({ productId }: RankingProductDetail
       <RankingPageHeader title='영양제 더보기' />
 
       <section className='px-5 pb-2 pt-4'>
-        <SupplementDetailSummaryCard product={product} />
+        <SupplementDetailSummaryCard product={product} showReviewButton />
       </section>
 
       <section className='flex w-full flex-col gap-2 px-5 py-2'>

@@ -161,7 +161,7 @@ const RankingReviewEditContainer = ({ productId, reviewId }: RankingReviewEditCo
       <RankingPageHeader title='후기 작성하기' />
       {product && (
         <section className='px-5 pb-2 pt-4'>
-          <SupplementDetailSummaryCard product={product} />
+          <SupplementDetailSummaryCard product={product} showReviewButton />
         </section>
       )}
       <section className='flex flex-col gap-5 px-5 py-5'>

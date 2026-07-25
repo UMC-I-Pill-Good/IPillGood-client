@@ -6,12 +6,12 @@ import SupplementDetailProductImage from './SupplementDetailProductImage';
 
 interface SupplementDetailSummaryCardProps {
   product: RankingProductDetailDto;
-  showReviewButton?: boolean;
+  showReviewButton: boolean;
 }
 
 const SupplementDetailSummaryCard = ({
   product,
-  showReviewButton = true,
+  showReviewButton,
 }: SupplementDetailSummaryCardProps) => {
   const ratingAverage = product.ratingAverage ?? 0;
 
