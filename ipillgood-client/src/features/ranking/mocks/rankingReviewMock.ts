@@ -29,6 +29,20 @@ export const MOCK_RANKING_REVIEWS: RankingReviewItem[] = [
     mine: false,
     createdAt: '2025-06-30T15:00:00',
   },
+  {
+    reviewId: 3,
+    nickname: '유키짱짱',
+    profileImageKey: 'mascot/profile-1.png',
+    reviewerAgeGroup: 'THIRTIES',
+    reviewerGender: 'FEMALE',
+    rating: 4,
+    content: '두 장의 사진을 함께 첨부한 후기 수정 화면을 확인할 수 있어요.',
+    imageKeys: ['photo-7', 'photo-8'],
+    helpfulCount: 0,
+    helpedByMe: false,
+    mine: true,
+    createdAt: '2025-07-01T15:00:00',
+  },
 ];
 
 export const MOCK_EMPTY_RANKING_REVIEW_PRODUCT_ID = 9002;
