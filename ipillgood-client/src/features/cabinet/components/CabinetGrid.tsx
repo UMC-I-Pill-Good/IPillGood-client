@@ -21,8 +21,18 @@ const CabinetGrid = ({ mode }: CabinetGridProps) => {
   const [selectedItem, setSelectedItem] = useState<CabinetItem | null>(null);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
-  const handleSelect = (id: number) => {
-    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]));
+  const handleSelect = (item: CabinetItem) => {
+    if (item.isTaking) return;
+
+    const takingIds = cabinetItems.filter((item) => item.isTaking).map((item) => item.id);
+
+    setSelectedIds((prev) => {
+      if (prev.includes(item.id)) {
+        return takingIds;
+      }
+
+      return [...takingIds, item.id];
+    });
   };
 
   const slots = Array.from({ length: MAX_COUNT }, (_, index) => cabinetItems[index]);
@@ -44,7 +54,7 @@ const CabinetGrid = ({ mode }: CabinetGridProps) => {
                   return;
                 }
 
-                handleSelect(item.id);
+                handleSelect(item);
               }}
             />
           ) : (

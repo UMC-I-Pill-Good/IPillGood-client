@@ -57,10 +57,20 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
         )}
       />
 
-      {mode === 'add' && isSelected && (
-        <div className='absolute -right-1 -top-1 z-10 flex h-5 w-5 items-center justify-center rounded-full bg-secondary text-white'>
-          <Check size={12} strokeWidth={3} />
-        </div>
+      {mode === 'add' && (
+        <>
+          {item.isTaking ? (
+            <div className='absolute -top-3 z-10 flex h-6 items-center justify-center rounded-full bg-secondary px-3 text-white typo-caption-2'>
+              섭취 중
+            </div>
+          ) : (
+            isSelected && (
+              <div className='absolute -right-1 -top-1 z-10 flex h-5 w-5 items-center justify-center rounded-full bg-secondary text-white'>
+                <Check size={12} strokeWidth={3} />
+              </div>
+            )
+          )}
+        </>
       )}
 
       {mode === 'delete' && (
