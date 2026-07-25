@@ -74,7 +74,7 @@ export type RankingProductDetailDto = {
   productId: number;
   productName: string;
   brand: string;
-  thumbnailIngredientImageKey: string | null;
+  imageUrl: string | null;
   description: string;
   purchaseUrl: string;
   mfdsCertified: boolean;

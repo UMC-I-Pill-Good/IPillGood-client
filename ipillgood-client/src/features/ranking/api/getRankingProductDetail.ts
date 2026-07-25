@@ -26,7 +26,7 @@ export const getRankingProductDetail = async (
       productId: product.productId,
       productName: product.productName,
       brand: product.brand,
-      thumbnailIngredientImageKey: product.imageUrl,
+      imageUrl: product.imageUrl,
       description: '텍스트',
       purchaseUrl: 'https://example.com/products/' + product.productId,
       mfdsCertified: product.mfdsCertified,

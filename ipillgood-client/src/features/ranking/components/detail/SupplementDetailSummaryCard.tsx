@@ -18,7 +18,7 @@ const SupplementDetailSummaryCard = ({
   return (
     <article className='flex min-h-[102px] w-full items-center justify-center gap-3 rounded-[20px] bg-primary-600/15 px-5 py-4 shadow-[0_4px_4px_rgba(126,131,135,0.1)]'>
       <SupplementDetailProductImage
-        imageKey={product.thumbnailIngredientImageKey}
+        imageKey={product.imageUrl}
         productName={product.productName}
       />
 
