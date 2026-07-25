@@ -27,3 +27,6 @@ export { SearchBar } from './SearchBar';
 
 /* selectionCard */
 export { default as SelectionCard } from './SelectionCard';
+
+/* DropdownMenu */
+export { default as DropdownMenu } from './DropdownMenu';
