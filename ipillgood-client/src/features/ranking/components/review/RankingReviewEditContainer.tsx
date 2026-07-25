@@ -173,13 +173,13 @@ const RankingReviewEditContainer = ({ productId, reviewId }: RankingReviewEditCo
                 key={index}
                 type='button'
                 aria-label={`${index + 1}점`}
-                className='size-7.5'
+                className='flex size-7.5 items-center justify-center'
                 onClick={() => setRating(index + 1)}
               >
                 {index < rating ? (
-                  <FilledRatingStarIcon className='size-full text-secondary-600' aria-hidden='true' />
+                  <FilledRatingStarIcon className='size-5 scale-150 text-secondary-600' aria-hidden='true' />
                 ) : (
-                  <EmptyRatingStarIcon className='size-full text-neutral-400' aria-hidden='true' />
+                  <EmptyRatingStarIcon className='size-5 scale-150 text-neutral-400' aria-hidden='true' />
                 )}
               </button>
             ))}
