@@ -12,6 +12,7 @@ export { default as FilterBottomSheet } from './modal/FilterBottomSheet';
 export type { FilterBottomSheetGroup } from './modal/FilterBottomSheet';
 export { default as IntakeCycleModal } from './modal/IntakeCycleModal';
 export { default as IntakeTimeModal } from './modal/IntakeTimeModal';
+export { default as SupplementDetailBottomSheet } from './modal/SupplementDetailBottomSheet';
 
 /* chip */
 export { default as Chip } from './Chip';

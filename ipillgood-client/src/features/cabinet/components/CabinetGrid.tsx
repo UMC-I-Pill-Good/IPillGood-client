@@ -5,7 +5,7 @@ import { cabinetItems } from '../mocks/cabinet.mocks';
 import EmptyCabinetCard from './EmptyCabinetCard';
 import CabinetCard from './CabinetCard';
 import { CabinetItem } from '../types/cabinet';
-import CabinetDetailBottomSheet from './modal/CabinetDetailBottomSheet';
+import { SupplementDetailBottomSheet } from '@/shared/components';
 
 interface CabinetGridProps {
   mode: 'default' | 'add' | 'delete';
@@ -53,7 +53,7 @@ const CabinetGrid = ({ mode }: CabinetGridProps) => {
         )}
       </section>
 
-      <CabinetDetailBottomSheet
+      <SupplementDetailBottomSheet
         open={isBottomSheetOpen}
         onOpenChange={setIsBottomSheetOpen}
         item={selectedItem}
