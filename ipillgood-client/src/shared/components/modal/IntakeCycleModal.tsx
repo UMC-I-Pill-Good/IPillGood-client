@@ -5,6 +5,7 @@ import { IconButton, TextButton } from '@/shared/components';
 import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
 import { ChevronDown, X } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import DropdownMenu from '../DropdownMenu';
 import clsx from 'clsx';
 
@@ -13,21 +14,27 @@ interface IntakeCycleModalProps {
   onCancel: () => void;
 }
 
-const cycleOptions = ['매일', '2일에 한 번', '3일에 한 번', '주 1회', '주 2회', '주 3회'] as const;
+const cycleOptions = [
+  '2일에 한 번',
+  '3일에 한 번',
+  '일주일에 한 번',
+  '2주일에 한 번',
+  '매일',
+] as const;
 
 const IntakeCycleModal = ({ onConfirm, onCancel }: IntakeCycleModalProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const [cycle, setCycle] = useState<(typeof cycleOptions)[number]>('2일에 한 번');
+  const [cycle, setCycle] = useState<(typeof cycleOptions)[number]>('매일');
   const [openDropdown, setOpenDropdown] = useState(false);
 
   useScrollLock();
   useEscapeKey(onCancel);
   useOutsideClick(contentRef, onCancel);
 
-  return (
+  return createPortal(
     <div
-      className='fixed inset-0 z-50 flex items-center justify-center bg-black/20 px-4'
+      className='fixed inset-0 z-60 flex items-center justify-center bg-black/20 px-4 pointer-events-auto'
       role='dialog'
       aria-modal='true'
     >
@@ -51,7 +58,7 @@ const IntakeCycleModal = ({ onConfirm, onCancel }: IntakeCycleModalProps) => {
             <button
               type='button'
               onClick={() => setOpenDropdown((prev) => !prev)}
-              className='flex h-9.5 w-full items-center justify-between rounded-lg border border-point px-2 typo-caption-2'
+              className='flex h-9.5 w-full items-center justify-between rounded-lg border border-point-700 px-2 typo-caption-2'
             >
               {cycle}
               <ChevronDown
@@ -72,7 +79,8 @@ const IntakeCycleModal = ({ onConfirm, onCancel }: IntakeCycleModalProps) => {
                   setOpenDropdown(false);
                 }}
                 onClose={() => setOpenDropdown(false)}
-                className='w-full'
+                className='max-h-60'
+                buttonClassName='typo-caption-2 py-3'
               />
             )}
           </div>
@@ -80,9 +88,15 @@ const IntakeCycleModal = ({ onConfirm, onCancel }: IntakeCycleModalProps) => {
           <p className='typo-caption-7 text-neutral'>선택하신 요일을 기반으로 자동 확정됩니다.</p>
         </section>
 
-        <TextButton type='button' text='확인' className='w-full mt-4' />
+        <TextButton
+          type='button'
+          text='확인'
+          className='w-full mt-4'
+          onClick={() => onConfirm(cycle)}
+        />
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };
 
