@@ -49,12 +49,12 @@ const ReportCheckbox = ({ checked }: { checked: boolean }) => (
 
 interface ReviewReportModalProps {
   onCancel: () => void;
-  onSubmit: (reason: ReviewReportReason, detail: string) => void;
+  onSubmit: (reasonList: ReviewReportReason[], detail: string) => void;
 }
 
 const ReviewReportModal = ({ onCancel, onSubmit }: ReviewReportModalProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
-  const [selectedReason, setSelectedReason] = useState<ReviewReportReason>('AD_PROMOTION');
+  const [selectedReasonList, setSelectedReasonList] = useState<ReviewReportReason[]>([]);
   const [content, setContent] = useState('');
 
   useScrollLock();
@@ -68,15 +68,22 @@ const ReviewReportModal = ({ onCancel, onSubmit }: ReviewReportModalProps) => {
         <p className='text-center typo-caption-2 text-neutral-800'>이 후기를 신고하는 이유를 선택해 주세요.</p>
         <div className='flex flex-col gap-2'>
           {REPORT_REASONS.map((reason) => {
-            const checked = selectedReason === reason.value;
+            const isChecked = selectedReasonList.includes(reason.value);
             return (
               <button
                 key={reason.value}
                 type='button'
+                aria-pressed={isChecked}
                 className='flex items-center gap-2 text-left typo-caption-2 text-black'
-                onClick={() => setSelectedReason(reason.value)}
+                onClick={() => {
+                  setSelectedReasonList((current) => (
+                    current.includes(reason.value)
+                      ? current.filter((selectedReason) => selectedReason !== reason.value)
+                      : [...current, reason.value]
+                  ));
+                }}
               >
-                <ReportCheckbox checked={checked} />
+                <ReportCheckbox checked={isChecked} />
                 <span>{reason.label}</span>
               </button>
             );
@@ -94,7 +101,15 @@ const ReviewReportModal = ({ onCancel, onSubmit }: ReviewReportModalProps) => {
         </div>
         <div className='flex w-[261px] items-center justify-center gap-3'>
           <TextButton type='button' text='취소' variant='semanticOutline' size='sm' className='h-8 w-[124px] shrink-0' onClick={onCancel} />
-          <TextButton type='button' text='신고하기' variant='semantic' size='sm' className='h-8 w-[124px] shrink-0 shadow-[4px_4px_2px_rgba(0,0,0,0.15)]' disabled={!selectedReason} onClick={() => { if (selectedReason) onSubmit(selectedReason, content); }} />
+          <TextButton
+            type='button'
+            text='신고하기'
+            variant='semantic'
+            size='sm'
+            className='h-8 w-[124px] shrink-0 shadow-[4px_4px_2px_rgba(0,0,0,0.15)]'
+            disabled={selectedReasonList.length === 0}
+            onClick={() => onSubmit(selectedReasonList, content)}
+          />
         </div>
       </div>
     </div>
