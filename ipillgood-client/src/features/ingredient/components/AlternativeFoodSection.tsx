@@ -1,20 +1,21 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { TextButton } from '@/shared/components';
 import { AlternativeFoodType } from '../types/ingredient';
-import { useAlternativeFoodSection } from '../hooks/useAlternativeFoodSection';
 import AlternativeFoodCard from './AlternativeFoodCard';
 
 interface AlternativeFoodSectionProps {
   alternativeFoods: AlternativeFoodType[];
-  ingredientId: number;
+  name: string;
 }
 
-const AlternativeFoodSection = ({
-  alternativeFoods,
-  ingredientId,
-}: AlternativeFoodSectionProps) => {
-  const { handleSearchClick } = useAlternativeFoodSection(ingredientId);
+const AlternativeFoodSection = ({ alternativeFoods, name }: AlternativeFoodSectionProps) => {
+  const router = useRouter();
+
+  const handleSearchClick = () => {
+    router.push(`/ranking/result?search=${name}`);
+  };
 
   return (
     <section>

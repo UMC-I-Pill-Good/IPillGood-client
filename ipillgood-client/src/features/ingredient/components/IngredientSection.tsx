@@ -36,7 +36,7 @@ const IngredientSection = () => {
         {hasCabinetProduct ? (
           <AddToIntakeGuideSection ingredientId={ingredientId} />
         ) : (
-          <AlternativeFoodSection alternativeFoods={alternativeFoods} ingredientId={ingredientId} />
+          <AlternativeFoodSection alternativeFoods={alternativeFoods} name={name} />
         )}
       </section>
     </>
