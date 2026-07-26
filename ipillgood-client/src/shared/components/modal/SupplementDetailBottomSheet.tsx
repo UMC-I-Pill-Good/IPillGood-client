@@ -95,7 +95,7 @@ const SupplementDetailBottomSheet = ({
         <section className='space-y-2 pt-4'>
           <TextButton type='button' text='영양성분 더보기' size='xl' className='w-full' />
           <TextButton
-            href={`/reviews/reviews-add?productId=${item.id}`}
+            type='button'
             text='후기 작성하기'
             size='xl'
             className='w-full bg-neutral-300 text-neutral hover:brightness-90'

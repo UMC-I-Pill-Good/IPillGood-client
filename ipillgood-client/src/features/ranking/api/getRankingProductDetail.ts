@@ -7,9 +7,9 @@ import type { RankingProductDetailApiResponse } from '../types/ranking';
 export const getRankingProductDetail = async (
   productId: number,
 ): Promise<RankingProductDetailApiResponse> => {
-  const product = MOCK_RANKING_RESPONSE.result?.products.find(
-    (rankingProduct) => rankingProduct.productId === productId,
-  );
+  const productList = MOCK_RANKING_RESPONSE.result?.products ?? [];
+  const product =
+    productList.find((rankingProduct) => rankingProduct.productId === productId) ?? productList[0];
 
   if (!product) {
     return {
@@ -31,18 +31,18 @@ export const getRankingProductDetail = async (
     code: 'SUCCESS200_1',
     message: '영양제 상세 조회에 성공했습니다.',
     result: {
-      productId: product.productId,
+      productId,
       productName: product.productName,
       brand: product.brand,
       imageUrl: product.imageUrl,
       description: '텍스트',
-      purchaseUrl: 'https://example.com/products/' + product.productId,
+      purchaseUrl: 'https://example.com/products/' + productId,
       mfdsCertified: product.mfdsCertified,
       ratingAverage: product.ratingAverage,
       reviewCount: product.reviewCount,
       inCabinet: false,
       ingredients: ingredientNameList.map((ingredientName, index) => ({
-        ingredientId: product.productId * 100 + index,
+        ingredientId: productId * 100 + index,
         name: ingredientName,
         description: '건강 유지에 도움을 줄 수 있습니다.',
         imageKey: product.imageUrl ?? '',

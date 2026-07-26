@@ -82,14 +82,6 @@ export type RankingProductDetailDto = {
 
 export type RankingProductDetailApiResponse = ApiResponse<RankingProductDetailDto>;
 
-export type RankingProductIngredientsDto = {
-  productId: number;
-  ingredientCount: number;
-  ingredients: IngredientSummary[];
-};
-
-export type RankingProductIngredientsApiResponse = ApiResponse<RankingProductIngredientsDto>;
-
 export type CombinationType = 'GOOD' | 'CAUTION';
 export type CompatibilityItem = {
   targetIngredientId: number;

@@ -1,23 +1,7 @@
 import type { AgeGroup, ApiResponse, Gender } from '@/shared/types';
 
 export type ReviewSort = 'LATEST' | 'LIKE_COUNT_DESC';
-export type ReviewAgeGroup = AgeGroup;
-export type ReviewGender = Gender;
 export type ReviewReportReason = 'AD_PROMOTION' | 'ABUSE' | 'FALSE_INFO' | 'PERSONAL_INFO' | 'ETC';
-
-export type RankingReviewReportRequest = {
-  reason: ReviewReportReason;
-  detail?: string | null;
-};
-
-export type RankingReviewReportResult = {
-  reportId: number;
-  reviewId: number;
-  reason: ReviewReportReason;
-  createdAt: string;
-};
-
-export type RankingReviewReportApiResponse = ApiResponse<RankingReviewReportResult>;
 
 export type ReviewImageContentType = 'image/jpeg' | 'image/png' | 'image/webp';
 
@@ -53,8 +37,8 @@ export type RankingReviewItem = {
   reviewId: number;
   nickname: string;
   profileImageKey: string;
-  reviewerAgeGroup: ReviewAgeGroup;
-  reviewerGender: ReviewGender;
+  reviewerAgeGroup: AgeGroup;
+  reviewerGender: Gender;
   rating: number;
   content: string;
   imageKeys: string[];
@@ -90,13 +74,6 @@ export type CreateReviewResult = {
 
 export type CreateReviewApiResponse = ApiResponse<CreateReviewResult>;
 
-export type RankingReviewDeleteResult = {
-  deleted: boolean;
-  reviewId: number;
-};
-
-export type RankingReviewDeleteApiResponse = ApiResponse<RankingReviewDeleteResult>;
-
 export type UpdateRankingReviewRequest = {
   rating?: number | null;
   content?: string | null;
@@ -112,11 +89,3 @@ export type UpdateRankingReviewResult = {
 };
 
 export type UpdateRankingReviewApiResponse = ApiResponse<UpdateRankingReviewResult>;
-
-export type RankingReviewHelpfulResult = {
-  helpful: boolean;
-  reviewId: number;
-  helpfulCount: number;
-};
-
-export type RankingReviewHelpfulApiResponse = ApiResponse<RankingReviewHelpfulResult>;
