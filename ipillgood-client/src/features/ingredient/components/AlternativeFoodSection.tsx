@@ -14,7 +14,7 @@ const AlternativeFoodSection = ({ alternativeFoods, name }: AlternativeFoodSecti
   const router = useRouter();
 
   const handleSearchClick = () => {
-    router.push(`/ranking/result?search=${name}`);
+    router.push(`/ranking/result?search=${encodeURIComponent(name)}`);
   };
 
   return (
