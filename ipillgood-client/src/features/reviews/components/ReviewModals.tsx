@@ -39,7 +39,6 @@ export const ReviewReportModal = ({ onCancel, onSubmit }: ReviewReportModalProps
     <ModalShell
       onClose={onCancel}
       ariaLabel='후기 신고'
-      overlayClassName='bg-neutral-800/50 px-5'
       className='gap-4 border border-white px-5 shadow-[4px_4px_20px_rgba(126,131,135,0.2)]'
     >
       <h2 className='text-center typo-body-5 text-semantic-600'>신고하기</h2>
