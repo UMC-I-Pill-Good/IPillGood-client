@@ -94,12 +94,13 @@ const SupplementDetailBottomSheet = ({
 
         <section className='space-y-2 pt-4'>
           <TextButton type='button' text='영양성분 더보기' size='xl' className='w-full' />
-          <TextButton
+          <button
             type='button'
-            text='후기 작성하기'
-            size='xl'
-            className='w-full bg-neutral-300 text-neutral hover:brightness-90'
-          />
+            aria-label='후기 작성 페이지 이동'
+            className='shrink-0 inline-flex items-center justify-center w-full typo-body-2 h-13 bg-neutral-300 text-neutral hover:brightness-90 active:brightness-80 shadow-[0_4px_4px_rgba(126,131,135,0.1)] transition-all rounded-lg'
+          >
+            후기 작성하기
+          </button>
         </section>
       </div>
       {isOpenIntakeTimeModal && (
