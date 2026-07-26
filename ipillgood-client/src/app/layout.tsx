@@ -1,6 +1,7 @@
 import localFont from 'next/font/local';
 import './globals.css';
 import { Metadata } from 'next';
+import { MswProvider } from '@/app/_providers/MswProvider';
 import { QueryProvider } from '@/app/_providers/QueryProvider';
 
 export const metadata: Metadata = {
@@ -15,13 +16,6 @@ const pretendard = localFont({
   variable: '--font-pretendard',
 });
 
-const dmSans = localFont({
-  src: '../assets/fonts/DMSans-VariableFont_opsz,wght.ttf',
-  display: 'swap',
-  weight: '100 900',
-  variable: '--font-dm-sans',
-});
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,8 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ko'>
-      <body className={`${pretendard.variable} ${dmSans.variable} antialiased`}>
-        <QueryProvider>{children}</QueryProvider>
+      <body className={`${pretendard.variable} antialiased`}>
+        <MswProvider>
+          <QueryProvider>{children}</QueryProvider>
+        </MswProvider>
       </body>
     </html>
   );

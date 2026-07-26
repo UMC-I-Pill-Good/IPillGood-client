@@ -1,5 +1,12 @@
+import { NavBar } from '@/shared/layout';
+
 const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
-  return <div>{children}</div>;
+  return (
+    <div className='mx-auto min-h-dvh w-full max-w-110 bg-background'>
+      {children}
+      <NavBar />
+    </div>
+  );
 };
 
 export default ProtectedLayout;

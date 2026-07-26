@@ -1,0 +1,15 @@
+import ProfileCard from './ProfileCard';
+import LogoutSection from './LogoutButton';
+import MenuListSection from './MenuListSection';
+
+const MySection = () => {
+  return (
+    <section className='flex flex-col pb-18 px-5 pt-6.5 gap-8 flex-1'>
+      <ProfileCard />
+      <MenuListSection />
+      <LogoutSection />
+    </section>
+  );
+};
+
+export default MySection;
