@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { ChevronDown } from 'lucide-react';
 import { useRef, useState } from 'react';
-import DropdownMenu from './DropdownMenu';
+import DropdownMenu from '@/shared/components/DropdownMenu';
 import { yearOptions } from '@/features/survey/constants/basicInfo.constants';
 import { useOutsideClick } from '@/shared/hooks';
 import { useAtom } from 'jotai';
