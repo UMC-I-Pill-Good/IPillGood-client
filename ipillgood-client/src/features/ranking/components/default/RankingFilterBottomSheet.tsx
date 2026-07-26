@@ -1,6 +1,6 @@
 'use client';
 
-import { FilterBottomSheet, type FilterBottomSheetGroup } from '@/shared/components';
+import { FilterBottomSheet } from '@/shared/components';
 import {
   AGE_OPTIONS,
   CERTIFICATION_OPTIONS,
@@ -9,6 +9,7 @@ import {
 } from '../../constants/rankingFilter';
 import type { CertificationFilter, RankingFilterState } from '../../types/rankingFilter';
 import { genderToOption, optionToGender } from '../../utils/rankingFilterQuery';
+import { FilterBottomSheetGroup } from '@/shared/components/modal/FilterBottomSheet';
 
 const certificationToOption = (certification: CertificationFilter) =>
   certification === 'CERTIFIED_ONLY' ? '인증 제품만' : '전체';

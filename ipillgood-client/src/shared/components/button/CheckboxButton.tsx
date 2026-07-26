@@ -4,7 +4,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { cn } from '@/shared/utils';
 
 const checkboxButtonVariants = cva(
-  'inline-flex items-center justify-center rounded-[4px] border transition-all',
+  'inline-flex items-center justify-center rounded-[4px] border transition-all shrink-0',
   {
     variants: {
       size: {
@@ -25,16 +25,17 @@ const checkboxButtonVariants = cva(
 
 interface CheckboxButtonProps extends VariantProps<typeof checkboxButtonVariants> {
   onClick?: () => void;
+  className?: string;
 }
 
-const CheckboxButton = ({ size = 'sm', checked, onClick }: CheckboxButtonProps) => {
+const CheckboxButton = ({ size = 'sm', checked, onClick, className }: CheckboxButtonProps) => {
   return (
     <button
       type='button'
       onClick={onClick}
       role='checkbox'
       aria-checked={!!checked}
-      className={cn(checkboxButtonVariants({ size, checked }))}
+      className={cn(checkboxButtonVariants({ size, checked }), className)}
     >
       <Check size={size === 'sm' ? 12 : 14} strokeWidth={3} />
     </button>

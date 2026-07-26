@@ -96,7 +96,7 @@ export const WheelSelectDate = ({ options, value, onChange }: WheelColumnProps) 
                 option === value ? 'typo-body-5' : 'typo-body-6 text-neutral',
               )}
             >
-              {option}
+              {typeof option === 'number' ? option.toString().padStart(2, '0') : option}
             </span>
           </button>
         ))}
