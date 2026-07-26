@@ -18,6 +18,7 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
         type='button'
         onClick={onClick}
         aria-label='알림 설정 바텀시트 열기'
+        aria-pressed={isSelected}
         className='group relative flex h-35 items-center justify-center rounded-[20px]'
       >
         <div className='absolute inset-0 rounded-[20px] transition group-hover:brightness-85 bg-[#F5F6FF]/20 shadow-[inset_4px_4px_20px_rgba(155,161,255,0.2),4px_4px_4px_rgba(255,255,255,0.2)]' />
