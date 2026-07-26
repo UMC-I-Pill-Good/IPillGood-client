@@ -2,7 +2,7 @@
 
 import useEmblaCarousel from 'embla-carousel-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { type KeyboardEvent, useState } from 'react';
 import { Omega3BottleIcon, RatingStarIcon, ValidBadgeIcon } from '@/assets';
 import { Chip } from '@/shared/components';
 import type { ProductSearchItemDto } from '../../types/ranking';
@@ -17,11 +17,21 @@ interface IngredientNameListProps {
 }
 
 const IngredientNameCarousel = ({ ingredientNameList }: IngredientNameListProps) => {
-  const [emblaRef] = useEmblaCarousel({
+  const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     dragFree: true,
     containScroll: 'trimSnaps',
   });
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      emblaApi?.scrollPrev();
+    }
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      emblaApi?.scrollNext();
+    }
+  };
 
   return (
     <div
@@ -30,6 +40,8 @@ const IngredientNameCarousel = ({ ingredientNameList }: IngredientNameListProps)
       role='region'
       aria-roledescription='carousel'
       aria-label='영양 성분 목록'
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
     >
       <div className='flex gap-1'>
         {ingredientNameList.map((ingredientName) => (

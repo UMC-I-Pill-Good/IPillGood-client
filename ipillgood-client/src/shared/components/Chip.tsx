@@ -47,8 +47,8 @@ const Chip = ({ text, className, variant, icon = false }: ChipProps) => {
   return (
     <div className={cn(chipVariant({ variant, icon }), className)}>
       {icon && (
-        <span className='mr-1'>
-          <BadgeIcon />
+        <span className='mr-1 inline-flex h-2.75 w-2.25 items-center justify-center'>
+          <BadgeIcon className='size-full' />
         </span>
       )}
       {text}

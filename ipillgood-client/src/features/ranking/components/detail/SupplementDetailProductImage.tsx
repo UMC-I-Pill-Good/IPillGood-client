@@ -17,19 +17,19 @@ const SupplementDetailProductImage = ({
 
   if (!shouldShowImage) {
     return (
-      <div className='relative flex h-[90px] w-[60px] shrink-0 items-center justify-center overflow-visible'>
-        <Omega3BottleIcon aria-hidden='true' className='h-[80px] w-[54px] overflow-visible' />
+      <div className='relative flex h-17.5 w-10.75 shrink-0 items-center justify-center overflow-visible'>
+        <Omega3BottleIcon aria-hidden='true' className='size-full overflow-visible' />
       </div>
     );
   }
 
   return (
-    <div className='relative flex h-[90px] w-[60px] shrink-0 items-center justify-center overflow-visible'>
+    <div className='relative flex h-17.5 w-10.75 shrink-0 items-center justify-center overflow-visible'>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={imageKey ?? undefined}
         alt={`${productName} 상품 이미지`}
-        className='h-[80px] w-[54px] object-contain'
+        className='size-full object-contain'
         onError={() => setHasImageError(true)}
       />
     </div>

@@ -19,7 +19,7 @@ interface NoticeTitleProps {
 const NoticeTitle = ({ children }: NoticeTitleProps) => (
   <div className='flex min-w-0 items-center gap-1'>
     <DetailWarningIcon aria-hidden='true' className='size-[17px] shrink-0' />
-    <h2 className='min-w-0 leading-normal typo-caption-1 text-semantic-600'>{children}</h2>
+    <h2 className='min-w-0 leading-tight typo-caption-1 text-semantic-600'>{children}</h2>
   </div>
 );
 
@@ -39,7 +39,7 @@ const SupplementAdvertisingNotice = ({ ingredientName }: SupplementAdvertisingNo
     <article className='flex w-full flex-col gap-2 rounded-[20px] border border-point-700 bg-point-200/70 px-5 py-3 backdrop-blur-sm'>
       <NoticeTitle>아래와 같은 광고 문구가 포함된 제품은 주의하세요</NoticeTitle>
       <div className='flex flex-col gap-4'>
-        <ul className='flex list-disc flex-col gap-1 pl-[18px] leading-normal typo-caption-7 text-neutral-900'>
+        <ul className='flex list-outside list-disc flex-col gap-1 pl-4.5 leading-normal typo-caption-7 text-neutral-900'>
           {ADVERTISING_WARNING_LIST.map((warning) => (
             <li key={warning}>{warning}</li>
           ))}

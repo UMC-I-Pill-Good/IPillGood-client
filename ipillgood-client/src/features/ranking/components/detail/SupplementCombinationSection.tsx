@@ -19,11 +19,13 @@ const CombinationCard = ({ title, ingredientNameList, tone }: CombinationCardPro
   return (
     <article
       className={cn(
-        'flex min-h-[76px] w-full flex-col justify-center gap-1 rounded-[20px] px-2 py-4 shadow-[0_4px_4px_rgba(126,131,135,0.1)] backdrop-blur-sm',
-        isFavorable ? 'border border-white/40 bg-primary-300/50' : 'border border-white/40 bg-semantic-200/50',
+        'flex min-h-19 w-full flex-col justify-center gap-1 rounded-[20px] px-2 pb-2.25 pt-3 shadow-[0_4px_4px_rgba(126,131,135,0.1)] backdrop-blur-sm',
+        isFavorable
+          ? 'border border-white/40 bg-primary-300/50'
+          : 'border border-white/40 bg-semantic-200/50',
       )}
     >
-      <div className='flex min-w-0 items-center gap-1 px-1'>
+      <div className='flex min-w-0 items-center gap-1.75 px-1'>
         <span className='flex size-6 shrink-0 items-center justify-center rounded-full bg-neutral-100'>
           {isFavorable ? (
             <DetailThumbUpIcon aria-hidden='true' className='size-4' />
@@ -36,22 +38,15 @@ const CombinationCard = ({ title, ingredientNameList, tone }: CombinationCardPro
 
       <div className='flex max-w-full items-center gap-2 overflow-x-auto px-1 hide-scrollbar'>
         {ingredientNameList.map((ingredientName, index) => (
-          <Chip
-            key={`${ingredientName}-${index}`}
-            text={ingredientName}
-            variant='point'
-            className='h-6'
-          />
+          <Chip key={`${ingredientName}-${index}`} text={ingredientName} variant='point' />
         ))}
       </div>
     </article>
   );
 };
 
-const SupplementCombinationSection = ({
-  compatibility,
-}: SupplementCombinationSectionProps) => (
-  <section className='flex w-full flex-col gap-2.5 px-5 py-4'>
+const SupplementCombinationSection = ({ compatibility }: SupplementCombinationSectionProps) => (
+  <section className='flex w-full flex-col gap-2.5 px-5 pb-2.25 pt-3'>
     <div className='flex flex-col gap-1'>
       <h2 className='typo-body-5 text-black'>내 영양제와 궁합</h2>
       <p className='typo-caption-6 text-neutral-800'>
@@ -66,7 +61,9 @@ const SupplementCombinationSection = ({
     />
     <CombinationCard
       title='주의가 필요한 조합이에요!'
-      ingredientNameList={compatibility.cautionCombinations.map((item) => item.targetIngredientName)}
+      ingredientNameList={compatibility.cautionCombinations.map(
+        (item) => item.targetIngredientName,
+      )}
       tone='caution'
     />
   </section>

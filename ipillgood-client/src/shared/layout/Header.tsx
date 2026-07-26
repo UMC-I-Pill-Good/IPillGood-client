@@ -31,11 +31,11 @@ export const Header = ({
       )}
 
       {isBackOnly ? (
-        <h1 className='truncate typo-subtitle-4 text-neutral-900'>{title}</h1>
+        <h1 className='typo-subtitle-4 text-neutral-900'>{title}</h1>
       ) : (
         <>
           {!showBackButton && <div className='w-9' />}
-          <h1 className='flex-1 truncate text-center typo-subtitle-4 text-neutral-900'>{title}</h1>
+          <h1 className='flex-1 text-center typo-subtitle-4 text-neutral-900'>{title}</h1>
           {!showCloseButton && <div className='w-9' />}
         </>
       )}

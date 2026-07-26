@@ -7,6 +7,7 @@ export { default as RatingStarIcon } from './icons/fi-rr-star.svg';
 export { default as EmptyRatingStarIcon } from './icons/empty-rating-star.svg';
 export { default as FilledRatingStarIcon } from './icons/filled-rating-star.svg';
 export { default as FilterIcon } from './icons/filter.svg';
+export { default as MascotBigIcon } from './icons/mascot-big.svg';
 export { default as ValidBadgeIcon } from './icons/valid.svg';
 export { default as MascotIcon } from './icons/mascot-default.svg';
 export { default as MascotHeartIcon } from './icons/mascot-heart.svg';
@@ -78,3 +79,8 @@ export { default as CapsuleGrayIcon } from './icons/capsule-gray.svg';
 export { default as Omega3BottleIcon } from './icons/omega3-bottle.svg';
 export { default as DetailWarningIcon } from './icons/detail-warning.svg';
 export { default as DetailThumbUpIcon } from './icons/detail-thumb-up.svg';
+
+// my
+export { default as WarningIcon } from './icons/warning.svg';
+export { default as QuestionIcon } from './icons/question-mark.svg';
+export { default as MascotProfileIcon } from './icons/mascot-profile.svg';

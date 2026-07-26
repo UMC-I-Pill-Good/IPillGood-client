@@ -1,5 +1,5 @@
-import RankingPageHeader from '../RankingPageHeader';
 import { TextButton } from '@/shared/components';
+import { Header } from '@/shared/layout';
 import { getRankingProductDetail } from '../../api/getRankingProductDetail';
 import { getRankingProductCompatibility } from '../../api/getRankingProductCompatibility';
 import SupplementAdvertisingNotice from './SupplementAdvertisingNotice';
@@ -20,8 +20,8 @@ const RankingProductDetailContainer = async ({ productId }: RankingProductDetail
 
   if (!response.isSuccess || !product) {
     return (
-      <main className='min-h-dvh bg-background pb-24'>
-        <RankingPageHeader title='영양제 더보기' />
+      <main className='min-h-dvh bg-background pb-16'>
+        <Header title='영양제 더보기' />
         <p className='flex min-h-60 items-center justify-center px-5 text-center typo-body-10 text-neutral-800'>
           {response.message}
         </p>
@@ -30,8 +30,8 @@ const RankingProductDetailContainer = async ({ productId }: RankingProductDetail
   }
 
   return (
-    <main className='min-h-dvh overflow-x-hidden bg-background pb-24'>
-      <RankingPageHeader title='영양제 더보기' />
+    <main className='min-h-dvh overflow-x-hidden bg-background pb-16'>
+      <Header title='영양제 더보기' />
 
       <section className='px-5 pb-2 pt-4'>
         <SupplementDetailSummaryCard product={product} showReviewButton />
@@ -42,14 +42,14 @@ const RankingProductDetailContainer = async ({ productId }: RankingProductDetail
           <h2 className='typo-body-5 text-black'>영양제 설명</h2>
           <SupplementIngredientBottomSheet ingredients={product.ingredients} />
         </div>
-        <div className='min-h-[171px] rounded-[20px] border border-white/70 bg-white/50 px-3 py-2 shadow-[0_4px_4px_rgba(126,131,135,0.1)] backdrop-blur-sm'>
+        <div className='min-h-26.75 rounded-[20px] border border-white/70 bg-white/50 px-3 py-2 shadow-[0_4px_4px_rgba(126,131,135,0.1)] backdrop-blur-sm'>
           <p className='line-clamp-4 typo-body-11 text-neutral-800'>{product.description}</p>
         </div>
       </section>
 
-      <SupplementAdvertisingNotice
-        ingredientName={product.adClaimRiskIngredients[0]?.name ?? product.ingredients[0]?.name ?? ''}
-      />
+      {product.adClaimRiskIngredients.length > 0 && (
+        <SupplementAdvertisingNotice ingredientName={product.adClaimRiskIngredients[0].name} />
+      )}
 
       {compatibilityResponse.result && (
         <SupplementCombinationSection compatibility={compatibilityResponse.result} />
@@ -60,10 +60,12 @@ const RankingProductDetailContainer = async ({ productId }: RankingProductDetail
           질병 치료 및 의약품을 복용 중이라면 의사 상담 후 섭취를 추천드려요.
         </p>
         <TextButton
-          type='button'
+          href={product.purchaseUrl}
+          target='_blank'
+          rel='noopener noreferrer'
           text='구매하러 가기'
           size='xl'
-          className='h-[52px] w-full rounded-[8px] px-2 text-[20px]'
+          className='h-13 w-full rounded-lg px-2 typo-body-2'
         />
       </section>
     </main>

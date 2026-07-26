@@ -4,9 +4,8 @@ import { useRouter } from 'next/navigation';
 import { type ChangeEvent, useEffect, useRef, useState } from 'react';
 import { EmptyRatingStarIcon, FilledRatingStarIcon } from '@/assets';
 import { TextButton } from '@/shared/components';
-import { NavBar } from '@/shared/layout';
-import RankingPageHeader from '../RankingPageHeader';
-import { getRankingProductReviews } from '../../api/getRankingProductReviews';
+import { Header, NavBar } from '@/shared/layout';
+import { getRankingReviewById } from '../../api/getRankingReviewById';
 import { getRankingProductDetail } from '../../api/getRankingProductDetail';
 import { updateRankingReview } from '../../api/updateRankingReview';
 import { uploadRankingReviewImages } from '../../api/uploadRankingReviewImages';
@@ -43,25 +42,27 @@ const RankingReviewEditContainer = ({ productId, reviewId }: RankingReviewEditCo
 
   useEffect(() => {
     let active = true;
-    Promise.all([
-      getRankingProductReviews({ productId, size: 20 }),
-      getRankingProductDetail(productId),
-    ]).then(([reviewResponse, productResponse]) => {
-      if (!active) return;
-      const foundReview = reviewResponse.result?.reviews.find((item) => item.reviewId === reviewId) ?? null;
-      setReview(foundReview);
-      setContent(foundReview?.content ?? '');
-      setRating(foundReview?.rating ?? 0);
-      setImagePreviews(
-        foundReview?.imageKeys.map((imageKey, index) => ({
-          id: `existing-${index}-${imageKey}`,
-          src: imageKey,
-          imageKey,
-        })) ?? [],
-      );
-      setProduct(productResponse.result);
-      setIsLoading(false);
-    });
+    Promise.all([getRankingReviewById(productId, reviewId), getRankingProductDetail(productId)])
+      .then(([foundReview, productResponse]) => {
+        if (!active) return;
+        setReview(foundReview);
+        setContent(foundReview?.content ?? '');
+        setRating(foundReview?.rating ?? 0);
+        setImagePreviews(
+          foundReview?.imageKeys.map((imageKey, index) => ({
+            id: `existing-${index}-${imageKey}`,
+            src: imageKey,
+            imageKey,
+          })) ?? [],
+        );
+        setProduct(productResponse.result);
+      })
+      .catch(() => {
+        if (active) setSubmitError('후기 정보를 불러올 수 없습니다.');
+      })
+      .finally(() => {
+        if (active) setIsLoading(false);
+      });
     return () => {
       active = false;
     };
@@ -83,7 +84,9 @@ const RankingReviewEditContainer = ({ productId, reviewId }: RankingReviewEditCo
     const fileList = Array.from(event.target.files ?? []);
     if (!fileList.length) return;
 
-    const supportedFileList = fileList.filter((file) => SUPPORTED_IMAGE_TYPE_LIST.includes(file.type));
+    const supportedFileList = fileList.filter((file) =>
+      SUPPORTED_IMAGE_TYPE_LIST.includes(file.type),
+    );
     if (supportedFileList.length !== fileList.length) {
       setSubmitError('JPG, PNG, WEBP 형식의 이미지만 첨부할 수 있습니다.');
     } else {
@@ -149,16 +152,28 @@ const RankingReviewEditContainer = ({ productId, reviewId }: RankingReviewEditCo
   };
 
   if (isLoading) {
-    return <main className='min-h-dvh bg-background'><RankingPageHeader title='후기 작성하기' /><p className='p-5 typo-body-10 text-neutral-800'>후기 정보를 불러오는 중입니다.</p></main>;
+    return (
+      <main className='min-h-dvh bg-background'>
+        <Header title='후기 작성하기' />
+        <p className='p-5 typo-body-10 text-neutral-800'>후기 정보를 불러오는 중입니다.</p>
+      </main>
+    );
   }
 
   if (!review || !review.mine) {
-    return <main className='min-h-dvh bg-background'><RankingPageHeader title='후기 작성하기' /><p className='p-5 typo-body-10 text-neutral-800'>수정할 후기를 찾을 수 없습니다.</p></main>;
+    return (
+      <main className='min-h-dvh bg-background'>
+        <Header title='후기 작성하기' />
+        <p role={submitError ? 'alert' : undefined} className='p-5 typo-body-10 text-neutral-800'>
+          {submitError || '수정할 후기를 찾을 수 없습니다.'}
+        </p>
+      </main>
+    );
   }
 
   return (
     <main className='min-h-dvh bg-background pb-24'>
-      <RankingPageHeader title='후기 작성하기' />
+      <Header title='후기 작성하기' />
       {product && (
         <section className='px-5 pb-2 pt-4'>
           <SupplementDetailSummaryCard product={product} showReviewButton />
@@ -177,9 +192,15 @@ const RankingReviewEditContainer = ({ productId, reviewId }: RankingReviewEditCo
                 onClick={() => setRating(index + 1)}
               >
                 {index < rating ? (
-                  <FilledRatingStarIcon className='size-5 scale-150 text-secondary-600' aria-hidden='true' />
+                  <FilledRatingStarIcon
+                    className='size-5 scale-150 text-secondary-600'
+                    aria-hidden='true'
+                  />
                 ) : (
-                  <EmptyRatingStarIcon className='size-5 scale-150 text-neutral-400' aria-hidden='true' />
+                  <EmptyRatingStarIcon
+                    className='size-5 scale-150 text-neutral-400'
+                    aria-hidden='true'
+                  />
                 )}
               </button>
             ))}
@@ -187,7 +208,9 @@ const RankingReviewEditContainer = ({ productId, reviewId }: RankingReviewEditCo
           <p className='typo-caption-7 text-neutral-800'>별점을 선택해 주세요</p>
         </div>
         <div className='flex flex-col gap-2'>
-          <label htmlFor='review-content' className='typo-body-1 text-black'>후기 내용</label>
+          <label htmlFor='review-content' className='typo-body-1 text-black'>
+            후기 내용
+          </label>
           <div className='relative h-38.5'>
             <textarea
               id='review-content'
@@ -210,7 +233,13 @@ const RankingReviewEditContainer = ({ productId, reviewId }: RankingReviewEditCo
             {imagePreviews.length < MAX_IMAGE_COUNT && (
               <label className='flex size-25 cursor-pointer items-center justify-center rounded-lg border border-neutral-400 text-4xl font-light text-neutral-500'>
                 +
-                <input type='file' accept='image/*' multiple className='sr-only' onChange={handleImageChange} />
+                <input
+                  type='file'
+                  accept='image/*'
+                  multiple
+                  className='sr-only'
+                  onChange={handleImageChange}
+                />
               </label>
             )}
             {imagePreviews.map((image) => (
@@ -221,17 +250,32 @@ const RankingReviewEditContainer = ({ productId, reviewId }: RankingReviewEditCo
                 className='relative flex size-25 items-center justify-center overflow-hidden rounded-lg bg-neutral-300 typo-body-2 text-neutral-800'
                 onClick={() => handleImageRemove(image.id)}
               >
-                {image.src.startsWith('blob:') || image.src.startsWith('http') || image.src.startsWith('/') ? (
+                {image.src.startsWith('blob:') ||
+                image.src.startsWith('http') ||
+                image.src.startsWith('/') ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={image.src} alt='후기 첨부 이미지' className='size-full object-cover' />
-                ) : '사진'}
+                ) : (
+                  '사진'
+                )}
               </button>
             ))}
           </div>
           <p className='typo-caption-7 text-neutral-800'>최대 3개 첨부 가능</p>
         </div>
-        {submitError && <p role='alert' className='typo-caption-7 text-red-600'>{submitError}</p>}
-        <TextButton type='button' text={isSubmitting ? '수정 중...' : '수정 완료'} size='xl' className='mt-2 h-13 w-full' disabled={isSubmitting || !content.trim() || rating === 0} onClick={handleSubmit} />
+        {submitError && (
+          <p role='alert' className='typo-caption-7 text-red-600'>
+            {submitError}
+          </p>
+        )}
+        <TextButton
+          type='button'
+          text={isSubmitting ? '수정 중...' : '수정 완료'}
+          size='xl'
+          className='mt-2 h-13 w-full'
+          disabled={isSubmitting || !content.trim() || rating === 0}
+          onClick={handleSubmit}
+        />
       </section>
       <NavBar />
     </main>

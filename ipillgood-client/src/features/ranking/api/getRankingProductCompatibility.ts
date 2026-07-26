@@ -1,30 +1,13 @@
-import { getRankingProductDetail } from './getRankingProductDetail';
 import type { RankingProductCompatibilityApiResponse } from '../types/ranking';
 
 export const getRankingProductCompatibility = async (
   productId: number,
 ): Promise<RankingProductCompatibilityApiResponse> => {
-  const response = await getRankingProductDetail(productId);
-  if (!response.isSuccess || !response.result) {
-    return { isSuccess: false, code: response.code, message: response.message, result: null };
-  }
+  // TODO: 보유 영양제 조합 API 연결 후 실제 궁합 응답으로 교체
   return {
-    isSuccess: true,
-    code: 'SUCCESS200_1',
-    message: '내 캐비닛 기준 성분 궁합 조회에 성공했습니다.',
-    result: {
-      productId: response.result.productId,
-      ownedProductCount: response.result.inCabinet ? 1 : 0,
-      goodCombinations: response.result.ingredients.filter((item) => !item.adClaimRisk).map((item) => ({
-        targetIngredientId: item.ingredientId,
-        targetIngredientName: item.name,
-        type: 'GOOD' as const,
-      })),
-      cautionCombinations: response.result.adClaimRiskIngredients.map((item) => ({
-        targetIngredientId: item.ingredientId,
-        targetIngredientName: item.name,
-        type: 'CAUTION' as const,
-      })),
-    },
+    isSuccess: false,
+    code: 'COMPATIBILITY_API_NOT_CONNECTED',
+    message: `상품 ${productId}의 보유 영양제 궁합 API가 연결되지 않았습니다.`,
+    result: null,
   };
 };
