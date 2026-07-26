@@ -24,6 +24,16 @@ const SupplementStep = () => {
       />
 
       <div className='mt-2 grid grid-cols-3 gap-2'>
+        <SelectionCard
+          id='none'
+          label={'섭취 중인\n영양제 없음'}
+          icon={MinusCircleIcon}
+          isSelected={selectedItems.includes('none')}
+          onClick={handleSelect}
+          className='h-32 w-full rounded-[20px]'
+          hasIconBackground={false}
+        />
+
         {supplementItems.map((item) => (
           <SelectionCard
             key={item.id}
@@ -40,16 +50,6 @@ const SupplementStep = () => {
           icon={HorizonIcon}
           isSelected={false}
           onClick={() => setIsOpenSheet(true)}
-          className='h-32 w-full rounded-[20px]'
-          hasIconBackground={false}
-        />
-
-        <SelectionCard
-          id='none'
-          label={'섭취 중인\n영양제 없음'}
-          icon={MinusCircleIcon}
-          isSelected={selectedItems.includes('none')}
-          onClick={handleSelect}
           className='h-32 w-full rounded-[20px]'
           hasIconBackground={false}
         />

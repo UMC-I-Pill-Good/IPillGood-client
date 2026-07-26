@@ -24,8 +24,8 @@ const ToggleButton = ({ isChecked, onClick, disabled }: ToggleButtonProps) => {
     >
       <span
         className={cn(
-          'h-6 w-6 rounded-full bg-white transition-transform',
-          isChecked ? 'translate-x-7' : 'translate-x-0',
+          'h-5 w-5 rounded-full bg-white transition-transform',
+          isChecked ? 'translate-x-7' : 'translate-x-1',
         )}
       />
     </button>

@@ -7,6 +7,7 @@ interface DropdownMenuProps<T extends string | number> {
   value: T;
   onSelect: (value: T) => void;
   className?: string;
+  buttonClassName?: string;
   onClose: () => void;
 }
 
@@ -16,6 +17,7 @@ const DropdownMenu = <T extends string | number>({
   value,
   onSelect,
   className,
+  buttonClassName,
   onClose,
 }: DropdownMenuProps<T>) => {
   useEscapeKey(onClose); // ESC 키 입력 시 드롭다운 닫기
@@ -39,6 +41,7 @@ const DropdownMenu = <T extends string | number>({
           className={cn(
             'w-full text-center text-neutral py-1.5 transition hover:bg-primary-100 hover:text-black typo-body-10 rounded-t-lg z-50',
             option === value && 'text-black',
+            buttonClassName,
           )}
         >
           {option}

@@ -67,7 +67,13 @@ const TextButton = ({
   }
 
   return (
-    <button type={type} onClick={onClick} disabled={disabled} className={buttonClassName}>
+    <button
+      type={type}
+      aria-label={text}
+      onClick={onClick}
+      disabled={disabled}
+      className={buttonClassName}
+    >
       {text}
     </button>
   );
