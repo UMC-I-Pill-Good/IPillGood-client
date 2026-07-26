@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { Omega3BottleIcon } from '@/assets';
 import { Search } from 'lucide-react';
 import { BottomSheet, Chip, TextButton } from '@/shared/components';
 import type { ProductIngredient } from '../../types/ranking';
+import SupplementProductImage from './SupplementProductImage';
 
 interface SupplementIngredientBottomSheetProps {
   ingredients: ProductIngredient[];
@@ -12,14 +12,11 @@ interface SupplementIngredientBottomSheetProps {
 
 const SupplementIngredientCard = ({ ingredient }: { ingredient: ProductIngredient }) => (
   <article className='flex w-full items-center gap-3 whitespace-normal rounded-[20px] border border-white bg-primary-600/15 px-5 py-4 shadow-[0_4px_4px_rgba(126,131,135,0.1)]'>
-    <div className='flex w-10.75 shrink-0 items-center justify-center self-center overflow-visible'>
-      {ingredient.imageKey ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={ingredient.imageKey} alt='' className='h-17.5 w-10.75 object-contain' />
-      ) : (
-        <Omega3BottleIcon aria-hidden='true' className='h-17.5 w-10.75 object-contain' />
-      )}
-    </div>
+    <SupplementProductImage
+      imageKey={ingredient.imageKey}
+      alt={`${ingredient.name} 성분 이미지`}
+      className='h-18.5 w-12'
+    />
     <div className='flex min-w-0 flex-1 flex-col gap-2'>
       <div className='flex min-w-0 w-full flex-col items-start gap-2 pl-1'>
         <Chip text='추천' variant='point' className='mb-1 bg-secondary-600 px-3 text-white' />

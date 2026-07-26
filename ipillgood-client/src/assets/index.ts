@@ -9,6 +9,7 @@ export { default as FilledRatingStarIcon } from './icons/filled-rating-star.svg'
 export { default as FilterIcon } from './icons/filter.svg';
 export { default as MascotBigIcon } from './icons/mascot-big.svg';
 export { default as ValidBadgeIcon } from './icons/valid.svg';
+export { default as ValidChipIcon } from './icons/validChip.svg';
 export { default as MascotIcon } from './icons/mascot-default.svg';
 export { default as MascotHeartIcon } from './icons/mascot-heart.svg';
 export { default as MascotSearchIcon } from './icons/mascot-search.svg';

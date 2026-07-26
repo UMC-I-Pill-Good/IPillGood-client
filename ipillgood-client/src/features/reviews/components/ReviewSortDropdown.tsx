@@ -3,8 +3,8 @@
 import { useRef, useState } from 'react';
 import { DropdownIcon } from '@/assets';
 import { useEscapeKey, useOutsideClick } from '@/shared/hooks';
-import type { ReviewSort } from '../../types/rankingReview';
-import DropdownOptionMenu from '../default/DropdownOptionMenu';
+import type { ReviewSort } from '../types/review';
+import DropdownOptionMenu from '@/features/ranking/components/default/DropdownOptionMenu';
 
 interface ReviewSortDropdownProps {
   sort: ReviewSort;

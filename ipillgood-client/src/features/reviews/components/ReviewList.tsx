@@ -3,19 +3,19 @@
 import { useEffect, useState } from 'react';
 import { MascotSadIcon } from '@/assets';
 import { Header, NavBar } from '@/shared/layout';
-import { getRankingProductDetail } from '../../api/getRankingProductDetail';
-import { getRankingProductReviews } from '../../api/getRankingProductReviews';
-import type { RankingProductDetailDto } from '../../types/ranking';
-import type { RankingReviewItem, ReviewSort } from '../../types/rankingReview';
-import SupplementDetailSummaryCard from '../detail/SupplementDetailSummaryCard';
-import RankingReviewCard from './RankingReviewCard';
+import { getRankingProductDetail } from '@/features/ranking/api/getRankingProductDetail';
+import { getProductReviews } from '../api/getProductReviews';
+import type { RankingProductDetailDto } from '@/features/ranking/types/ranking';
+import type { RankingReviewItem, ReviewSort } from '../types/review';
+import SupplementDetailSummaryCard from '@/features/ranking/components/detail/SupplementDetailSummaryCard';
+import ReviewCard from './ReviewCard';
 import ReviewSortDropdown from './ReviewSortDropdown';
 
-interface RankingReviewContainerProps {
+interface ReviewListProps {
   productId: number;
 }
 
-const RankingReviewContainer = ({ productId }: RankingReviewContainerProps) => {
+const ReviewList = ({ productId }: ReviewListProps) => {
   const [sort, setSort] = useState<ReviewSort>('LATEST');
   const [reviews, setReviews] = useState<RankingReviewItem[]>([]);
   const [reviewCount, setReviewCount] = useState(0);
@@ -27,7 +27,7 @@ const RankingReviewContainer = ({ productId }: RankingReviewContainerProps) => {
 
     Promise.all([
       getRankingProductDetail(productId),
-      getRankingProductReviews({ productId, sort, size: 20 }),
+      getProductReviews({ productId, sort, size: 20 }),
     ])
       .then(([productResponse, reviewResponse]) => {
         if (!active) return;
@@ -77,7 +77,7 @@ const RankingReviewContainer = ({ productId }: RankingReviewContainerProps) => {
         ) : (
           <div className='flex flex-col gap-2'>
             {reviews.map((review) => (
-              <RankingReviewCard
+              <ReviewCard
                 key={review.reviewId}
                 review={review}
                 productId={productId}
@@ -95,4 +95,4 @@ const RankingReviewContainer = ({ productId }: RankingReviewContainerProps) => {
   );
 };
 
-export default RankingReviewContainer;
+export default ReviewList;

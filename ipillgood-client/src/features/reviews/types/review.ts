@@ -1,8 +1,8 @@
-import type { ApiResponse } from './ranking';
+import type { AgeGroup, ApiResponse, Gender } from '@/shared/types';
 
 export type ReviewSort = 'LATEST' | 'LIKE_COUNT_DESC';
-export type ReviewAgeGroup = 'TEENS' | 'TWENTIES' | 'THIRTIES' | 'FORTIES' | 'FIFTIES_AND_ABOVE';
-export type ReviewGender = 'MALE' | 'FEMALE';
+export type ReviewAgeGroup = AgeGroup;
+export type ReviewGender = Gender;
 export type ReviewReportReason = 'AD_PROMOTION' | 'ABUSE' | 'FALSE_INFO' | 'PERSONAL_INFO' | 'ETC';
 
 export type RankingReviewReportRequest = {
@@ -76,6 +76,19 @@ export type RankingReviewResult = {
 };
 
 export type RankingReviewApiResponse = ApiResponse<RankingReviewResult>;
+
+export type CreateReviewRequest = {
+  productId: number;
+  rating: number;
+  content: string;
+  imageKeys: string[];
+};
+
+export type CreateReviewResult = {
+  reviewId: number;
+};
+
+export type CreateReviewApiResponse = ApiResponse<CreateReviewResult>;
 
 export type RankingReviewDeleteResult = {
   deleted: boolean;

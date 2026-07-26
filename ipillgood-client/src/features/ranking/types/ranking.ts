@@ -1,6 +1,8 @@
-export type RankingGender = 'MALE' | 'FEMALE';
+import type { AgeGroup, ApiResponse, Gender } from '@/shared/types';
 
-export type RankingAgeGroup = 'TEENS' | 'TWENTIES' | 'THIRTIES' | 'FORTIES' | 'FIFTIES_AND_ABOVE';
+export type RankingGender = Gender;
+
+export type RankingAgeGroup = AgeGroup;
 
 export type HealthConcernMajorCategory =
   | 'NERVOUS_SYSTEM'
@@ -26,13 +28,6 @@ export type RankingQueryParams = {
   ingredientIds?: number[];
   size?: number;
   cursor?: string;
-};
-
-export type ApiResponse<T> = {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: T | null;
 };
 
 export type ProductSearchItemDto = {

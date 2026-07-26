@@ -1,9 +1,9 @@
 import type {
   UpdateRankingReviewApiResponse,
   UpdateRankingReviewRequest,
-} from '../types/rankingReview';
+} from '../types/review';
 
-export const updateRankingReview = async (
+export const updateReview = async (
   reviewId: number,
   request: UpdateRankingReviewRequest,
 ): Promise<UpdateRankingReviewApiResponse> => {

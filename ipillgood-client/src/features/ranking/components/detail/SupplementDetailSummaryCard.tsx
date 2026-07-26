@@ -1,7 +1,7 @@
 import { RatingStarIcon } from '@/assets';
 import { Chip, TextButton } from '@/shared/components';
 import type { RankingProductDetailDto } from '../../types/ranking';
-import SupplementDetailProductImage from './SupplementDetailProductImage';
+import SupplementProductImage from './SupplementProductImage';
 
 interface SupplementDetailSummaryCardProps {
   product: RankingProductDetailDto;
@@ -15,8 +15,11 @@ const SupplementDetailSummaryCard = ({
   const ratingAverage = product.ratingAverage ?? 0;
 
   return (
-    <article className='flex w-full items-center justify-center gap-3 rounded-[20px] bg-primary-600/15 px-5 py-4 shadow-[0_4px_4px_rgba(126,131,135,0.1)]'>
-      <SupplementDetailProductImage imageKey={product.imageUrl} productName={product.productName} />
+    <article className='flex w-full items-center justify-center gap-3 rounded-[20px] border border-white/85 bg-primary-600/15 px-5 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-2px_5px_rgba(126,131,135,0.07),0_2px_3px_rgba(126,131,135,0.1)] backdrop-blur-xl backdrop-saturate-150'>
+      <SupplementProductImage
+        imageKey={product.imageUrl}
+        alt={`${product.productName} 상품 이미지`}
+      />
 
       <div className='flex min-w-0 flex-1 flex-col items-end gap-1'>
         <div className='flex w-full min-w-0 flex-col items-start gap-1'>
@@ -38,7 +41,7 @@ const SupplementDetailSummaryCard = ({
 
         {showReviewButton && (
           <TextButton
-            href={`/reviews/${product.productId}`}
+            href={`/reviews?productId=${product.productId}`}
             text='후기 보기'
             variant='primary'
             size='sm'

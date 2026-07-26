@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Check } from 'lucide-react';
 import { ModalShell, TextButton } from '@/shared/components';
-import type { ReviewReportReason } from '../../types/rankingReview';
+import type { ReviewReportReason } from '../types/review';
 
 const REPORT_REASONS: readonly { value: ReviewReportReason; label: string }[] = [
   { value: 'AD_PROMOTION', label: '광고 또는 홍보성 내용' },

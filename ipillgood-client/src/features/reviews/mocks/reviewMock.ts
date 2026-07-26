@@ -1,7 +1,7 @@
-import type { RankingReviewItem } from '../types/rankingReview';
+import type { RankingReviewItem } from '../types/review';
 import vitaminImage from '@/assets/images/vitamin.png';
 
-export const MOCK_RANKING_REVIEWS: RankingReviewItem[] = [
+export const MOCK_REVIEWS: RankingReviewItem[] = [
   {
     reviewId: 1,
     nickname: '알약이',
@@ -46,4 +46,4 @@ export const MOCK_RANKING_REVIEWS: RankingReviewItem[] = [
   },
 ];
 
-export const MOCK_EMPTY_RANKING_REVIEW_PRODUCT_ID = 9002;
+export const MOCK_EMPTY_REVIEW_PRODUCT_ID = 9002;

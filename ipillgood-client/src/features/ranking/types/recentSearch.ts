@@ -1,4 +1,4 @@
-import type { ApiResponse } from './ranking';
+import type { ApiResponse } from '@/shared/types';
 
 export type RecentKeywordDto = {
   keywordId: number;

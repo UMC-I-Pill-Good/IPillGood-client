@@ -1,9 +1,9 @@
-import { getRankingProductReviews } from './getRankingProductReviews';
-import type { RankingReviewItem } from '../types/rankingReview';
+import { getProductReviews } from './getProductReviews';
+import type { RankingReviewItem } from '../types/review';
 
 const REVIEW_PAGE_SIZE = 20;
 
-export const getRankingReviewById = async (
+export const getReviewById = async (
   productId: number,
   reviewId: number,
 ): Promise<RankingReviewItem | null> => {
@@ -11,7 +11,7 @@ export const getRankingReviewById = async (
   const visitedCursorSet = new Set<string>();
 
   while (true) {
-    const response = await getRankingProductReviews({
+    const response = await getProductReviews({
       productId,
       size: REVIEW_PAGE_SIZE,
       cursor,

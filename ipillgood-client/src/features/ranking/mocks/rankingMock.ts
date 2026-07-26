@@ -1,8 +1,10 @@
 import type {
   HealthConcernMajorCategory,
+  IngredientSummary,
   RankingAgeGroup,
   RankingApiResponse,
   RankingGender,
+  RankingProductCompatibilityDto,
 } from '../types/ranking';
 
 type RankingMockFilterMeta = {
@@ -208,6 +210,57 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
     nextCursor: null,
   },
 };
+
+export const MOCK_RANKING_AD_CLAIM_RISK_INGREDIENT_LIST: IngredientSummary[] = [
+  {
+    ingredientId: 99001,
+    name: '성분명',
+    description: '식약처 부당 광고 사례를 확인해야 하는 성분입니다.',
+    imageKey: '',
+    effectKeywords: ['광고 주의'],
+  },
+];
+
+export const createMockRankingProductCompatibility = (
+  productId: number,
+): RankingProductCompatibilityDto => ({
+  productId,
+  ownedProductCount: 6,
+  goodCombinations: [
+    {
+      targetIngredientId: 99002,
+      targetIngredientName: '비타민 D',
+      type: 'GOOD',
+    },
+    {
+      targetIngredientId: 99003,
+      targetIngredientName: '비타민 C',
+      type: 'GOOD',
+    },
+    {
+      targetIngredientId: 99004,
+      targetIngredientName: '비타민 B',
+      type: 'GOOD',
+    },
+  ],
+  cautionCombinations: [
+    {
+      targetIngredientId: 99005,
+      targetIngredientName: '비타민 A',
+      type: 'CAUTION',
+    },
+    {
+      targetIngredientId: 99006,
+      targetIngredientName: '철분',
+      type: 'CAUTION',
+    },
+    {
+      targetIngredientId: 99007,
+      targetIngredientName: '칼슘',
+      type: 'CAUTION',
+    },
+  ],
+});
 
 export const MOCK_RANKING_FILTER_META: Record<number, RankingMockFilterMeta> = {
   9001: {

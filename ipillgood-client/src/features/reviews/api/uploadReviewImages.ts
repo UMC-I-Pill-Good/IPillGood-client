@@ -2,11 +2,11 @@ import type {
   ReviewImageContentType,
   ReviewImageUploadApiResponse,
   ReviewImageUploadRequest,
-} from '../types/rankingReview';
+} from '../types/review';
 
 const REVIEW_IMAGE_UPLOAD_PATH = '/api/v1/reviews/images/presigned-urls';
 
-export const uploadRankingReviewImages = async (
+export const uploadReviewImages = async (
   fileList: File[],
   displayOrderList: number[],
 ): Promise<string[]> => {

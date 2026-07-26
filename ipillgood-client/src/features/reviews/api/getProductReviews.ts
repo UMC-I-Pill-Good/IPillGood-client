@@ -1,17 +1,17 @@
 import {
-  MOCK_EMPTY_RANKING_REVIEW_PRODUCT_ID,
-  MOCK_RANKING_REVIEWS,
-} from '../mocks/rankingReviewMock';
-import type { RankingReviewApiResponse, RankingReviewQuery } from '../types/rankingReview';
+  MOCK_EMPTY_REVIEW_PRODUCT_ID,
+  MOCK_REVIEWS,
+} from '../mocks/reviewMock';
+import type { RankingReviewApiResponse, RankingReviewQuery } from '../types/review';
 
-export const getRankingProductReviews = async ({
+export const getProductReviews = async ({
   productId,
   sort = 'LATEST',
   size = 20,
   cursor,
 }: RankingReviewQuery): Promise<RankingReviewApiResponse> => {
   const sourceReviews =
-    productId === MOCK_EMPTY_RANKING_REVIEW_PRODUCT_ID ? [] : MOCK_RANKING_REVIEWS;
+    productId === MOCK_EMPTY_REVIEW_PRODUCT_ID ? [] : MOCK_REVIEWS;
   const sortedReviews = [...sourceReviews].sort((a, b) =>
     sort === 'LATEST' ? b.reviewId - a.reviewId : b.helpfulCount - a.helpfulCount,
   );

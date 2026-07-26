@@ -1,4 +1,7 @@
-import { MOCK_RANKING_RESPONSE } from '../mocks/rankingMock';
+import {
+  MOCK_RANKING_AD_CLAIM_RISK_INGREDIENT_LIST,
+  MOCK_RANKING_RESPONSE,
+} from '../mocks/rankingMock';
 import type { RankingProductDetailApiResponse } from '../types/ranking';
 
 export const getRankingProductDetail = async (
@@ -17,6 +20,11 @@ export const getRankingProductDetail = async (
     };
   }
 
+  const ingredientNameList =
+    product.ingredientName.length >= 2
+      ? product.ingredientName
+      : [...product.ingredientName, '상세 확인용 부원료'];
+
   // TODO: 영양제 상세 API 연결 시 서버 응답으로 교체
   return {
     isSuccess: true,
@@ -33,7 +41,7 @@ export const getRankingProductDetail = async (
       ratingAverage: product.ratingAverage,
       reviewCount: product.reviewCount,
       inCabinet: false,
-      ingredients: product.ingredientName.map((ingredientName, index) => ({
+      ingredients: ingredientNameList.map((ingredientName, index) => ({
         ingredientId: product.productId * 100 + index,
         name: ingredientName,
         description: '건강 유지에 도움을 줄 수 있습니다.',
@@ -41,7 +49,7 @@ export const getRankingProductDetail = async (
         effectKeywords: product.ingredientTags,
         adClaimRisk: false,
       })),
-      adClaimRiskIngredients: [],
+      adClaimRiskIngredients: MOCK_RANKING_AD_CLAIM_RISK_INGREDIENT_LIST,
     },
   };
 };
