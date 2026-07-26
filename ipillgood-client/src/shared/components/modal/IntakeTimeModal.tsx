@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { ClockIcon } from '@/assets';
+import { ModalClockIcon } from '@/assets';
 import { WheelSelectTime } from '@/features/cabinet/components/modal/WheelSelectTime';
 import { IconButton, ModalShell, TextButton } from '@/shared/components';
 import { X } from 'lucide-react';
@@ -33,7 +33,7 @@ const IntakeTimeModal = ({ onConfirm, onCancel }: IntakeTimeModalProps) => {
 
       <section className='mt-12 flex flex-col items-center gap-8'>
         <div className='flex h-25 w-25 items-center justify-center rounded-full bg-[#C0D4FF]'>
-          <ClockIcon />
+          <ModalClockIcon />
         </div>
 
         <h2 className='typo-body-5 text-black'>복용 시간을 선택해 주세요</h2>
