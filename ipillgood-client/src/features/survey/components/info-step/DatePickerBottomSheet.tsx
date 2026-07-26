@@ -1,7 +1,7 @@
 import { DateValue } from '@/features/survey/types/survey';
 import { monthOptions, yearOptions } from '@/features/survey/constants/basicInfo.constants';
 import { BottomSheet, TextButton } from '@/shared/components';
-import { WheelSelectDate } from './WeelSelectDate';
+import { WheelSelectDate } from './WheelSelectDate';
 
 interface DatePickerBottomSheetProps {
   open: boolean;

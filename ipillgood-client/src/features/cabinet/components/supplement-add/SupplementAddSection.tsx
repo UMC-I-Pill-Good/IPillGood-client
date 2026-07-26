@@ -25,7 +25,7 @@ const SupplementAddSection = () => {
           onConfirm={() => {
             setIsWarningModalOpen(false);
           }}
-          isdDplication={true}
+          isdDuplication={true}
         />
       )}
     </>

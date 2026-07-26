@@ -6,13 +6,13 @@ import { useRef } from 'react';
 interface InteractionWarningModalProps {
   onConfirm: () => void;
   onCancel: () => void;
-  isdDplication?: boolean;
+  isdDuplication?: boolean;
 }
 
 const InteractionWarningModal = ({
   onConfirm,
   onCancel,
-  isdDplication = false,
+  isdDuplication = false,
 }: InteractionWarningModalProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -30,7 +30,7 @@ const InteractionWarningModal = ({
         className='flex flex-col overflow-hidden rounded-[20px] bg-white px-10 py-5 w-88'
       >
         <section className='flex flex-col items-center justify-center space-y-4'>
-          {!isdDplication ? (
+          {!isdDuplication ? (
             <>
               <WarningIcon width={60} height={60} />
 

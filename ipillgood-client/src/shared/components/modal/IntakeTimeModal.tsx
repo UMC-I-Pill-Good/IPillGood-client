@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ClockIcon } from '@/assets';
-import { WheelSelectTime } from '@/features/cabinet/components/modal/WeelSelectTime';
+import { WheelSelectTime } from '@/features/cabinet/components/modal/WheelSelectTime';
 import { IconButton, ModalShell, TextButton } from '@/shared/components';
 import { X } from 'lucide-react';
 
