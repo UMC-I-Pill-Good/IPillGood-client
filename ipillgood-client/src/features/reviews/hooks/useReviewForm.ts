@@ -6,10 +6,7 @@ import { createReview } from '../api/createReview';
 import { getReviewById } from '../api/getReviewById';
 import { updateReview } from '../api/updateReview';
 import { uploadReviewImages } from '../api/uploadReviewImages';
-import {
-  MAX_REVIEW_IMAGE_COUNT,
-  SUPPORTED_REVIEW_IMAGE_TYPE_LIST,
-} from '../constants/reviewForm';
+import { MAX_REVIEW_IMAGE_COUNT, SUPPORTED_REVIEW_IMAGE_TYPE_LIST } from '../constants/reviewForm';
 import type { ReviewFormMode, ReviewImagePreview } from '../types/reviewForm';
 
 interface UseReviewFormParams {
@@ -45,7 +42,7 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
         setImagePreviews(
           review?.imageKeys.map((imageKey, index) => ({
             id: `existing-${index}-${imageKey}`,
-            src: imageKey,
+            previewUrl: review.imageUrls[index],
             imageKey,
           })) ?? [],
         );
@@ -70,7 +67,7 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
   useEffect(
     () => () => {
       imagePreviewsRef.current.forEach((image) => {
-        if (image.file) URL.revokeObjectURL(image.src);
+        if (image.file) URL.revokeObjectURL(image.previewUrl);
       });
     },
     [],
@@ -94,7 +91,7 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
 
     const nextImages = supportedFileList.slice(0, availableCount).map((file) => ({
       id: `${file.name}-${file.lastModified}-${crypto.randomUUID()}`,
-      src: URL.createObjectURL(file),
+      previewUrl: URL.createObjectURL(file),
       file,
     }));
     setImagePreviews((current) => [...current, ...nextImages]);
@@ -104,7 +101,7 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
   const handleImageRemove = (imageId: string) => {
     setImagePreviews((current) => {
       const image = current.find((item) => item.id === imageId);
-      if (image?.file) URL.revokeObjectURL(image.src);
+      if (image?.file) URL.revokeObjectURL(image.previewUrl);
       return current.filter((item) => item.id !== imageId);
     });
   };

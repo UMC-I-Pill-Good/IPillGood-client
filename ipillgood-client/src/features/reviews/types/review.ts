@@ -42,6 +42,7 @@ export type RankingReviewItem = {
   rating: number;
   content: string;
   imageKeys: string[];
+  imageUrls: string[];
   helpfulCount: number;
   helpedByMe: boolean;
   mine: boolean;

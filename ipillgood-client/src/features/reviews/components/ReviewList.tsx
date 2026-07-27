@@ -90,7 +90,6 @@ const ReviewList = ({ productId }: ReviewListProps) => {
           </div>
         )}
       </section>
-      <NavBar />
     </main>
   );
 };

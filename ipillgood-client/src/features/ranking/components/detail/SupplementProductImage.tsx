@@ -10,13 +10,30 @@ interface SupplementProductImageProps {
   className?: string;
 }
 
+interface ImageErrorState {
+  imageUrl: string | null;
+  hasError: boolean;
+}
+
 const SupplementProductImage = ({
   imageKey,
   alt,
   className,
 }: SupplementProductImageProps) => {
-  const [hasImageError, setHasImageError] = useState(false);
-  const shouldShowImage = Boolean(imageKey?.trim()) && !hasImageError;
+  const normalizedImageUrl = imageKey?.trim() || null;
+  const [imageErrorState, setImageErrorState] = useState<ImageErrorState>({
+    imageUrl: normalizedImageUrl,
+    hasError: false,
+  });
+
+  if (imageErrorState.imageUrl !== normalizedImageUrl) {
+    setImageErrorState({
+      imageUrl: normalizedImageUrl,
+      hasError: false,
+    });
+  }
+
+  const shouldShowImage = Boolean(normalizedImageUrl) && !imageErrorState.hasError;
 
   return (
     <div
@@ -28,10 +45,15 @@ const SupplementProductImage = ({
       {shouldShowImage ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={imageKey ?? undefined}
+          src={normalizedImageUrl ?? undefined}
           alt={alt}
           className='max-h-full max-w-full object-contain'
-          onError={() => setHasImageError(true)}
+          onError={() =>
+            setImageErrorState({
+              imageUrl: normalizedImageUrl,
+              hasError: true,
+            })
+          }
         />
       ) : (
         <Omega3BottleIcon aria-hidden='true' className='size-full overflow-visible' />

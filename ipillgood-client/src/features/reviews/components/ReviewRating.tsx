@@ -18,7 +18,7 @@ const ReviewRating = ({ rating, onChange, iconClassName }: ReviewRatingProps) =>
       ) : (
         <EmptyRatingStarIcon
           aria-hidden='true'
-          className={cn('size-5 text-neutral-400', iconClassName)}
+          className={cn('size-5 text-neutral-800', iconClassName)}
         />
       );
 

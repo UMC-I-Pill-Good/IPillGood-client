@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 
-type LegacyProductPageProps = {
+interface LegacyProductPageProps {
   params: Promise<{ productId: string }>;
 };
 

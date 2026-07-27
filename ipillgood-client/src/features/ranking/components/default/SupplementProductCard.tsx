@@ -36,7 +36,7 @@ const IngredientNameCarousel = ({ ingredientNameList }: IngredientNameListProps)
   return (
     <div
       ref={emblaRef}
-      className='w-full overflow-hidden'
+      className='w-full overflow-x-auto'
       role='region'
       aria-roledescription='carousel'
       aria-label='영양 성분 목록'

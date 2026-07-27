@@ -1,5 +1,4 @@
-import type { ReactNode } from 'react';
-import { DetailWarningIcon } from '@/assets';
+import NoticeTitle from './NoticeTitle';
 
 interface SupplementAdvertisingNoticeProps {
   ingredientName: string;
@@ -11,17 +10,6 @@ const ADVERTISING_WARNING_LIST = [
   '증명할 수 없는 효능을 주장하는 문구 (ex. 체중 감량 보장)',
   '식약처 및 지자체 등 공인기관이 아닌 사설기관 인증 광고',
 ];
-
-interface NoticeTitleProps {
-  children: ReactNode;
-}
-
-const NoticeTitle = ({ children }: NoticeTitleProps) => (
-  <div className='flex min-w-0 items-center gap-1'>
-    <DetailWarningIcon aria-hidden='true' className='size-[17px] shrink-0' />
-    <h2 className='min-w-0 leading-tight typo-caption-1 text-semantic-600'>{children}</h2>
-  </div>
-);
 
 const SupplementAdvertisingNotice = ({ ingredientName }: SupplementAdvertisingNoticeProps) => (
   <section className='flex w-full flex-col gap-2.5 px-5 py-4'>

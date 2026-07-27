@@ -6,7 +6,7 @@ interface ReviewsPageProps {
 
 const ReviewsPage = async ({ searchParams }: ReviewsPageProps) => {
   const { productId } = await searchParams;
-  const resolvedProductId = Number(productId) || 9001;
+  const resolvedProductId = Number(productId);
 
   return <ReviewList productId={resolvedProductId} />;
 };

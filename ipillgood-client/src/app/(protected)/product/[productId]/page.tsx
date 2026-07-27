@@ -8,9 +8,9 @@ import SupplementDetailSummaryCard from '@/features/ranking/components/detail/Su
 import SupplementIngredientBottomSheet from '@/features/ranking/components/detail/SupplementIngredientBottomSheet';
 import type { RankingProductCompatibilityDto } from '@/features/ranking/types/ranking';
 
-type RankingProductDetailPageProps = {
+interface RankingProductDetailPageProps {
   params: Promise<{ productId: string }>;
-};
+}
 
 const RankingProductDetailPage = async ({ params }: RankingProductDetailPageProps) => {
   const { productId } = await params;

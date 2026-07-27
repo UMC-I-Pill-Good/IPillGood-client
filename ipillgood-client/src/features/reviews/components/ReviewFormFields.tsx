@@ -82,14 +82,8 @@ const ReviewFormFields = ({
             className='relative flex size-25 items-center justify-center overflow-hidden rounded-lg bg-neutral-300 typo-body-2 text-neutral-800'
             onClick={() => onImageRemove(image.id)}
           >
-            {image.src.startsWith('blob:') ||
-            image.src.startsWith('http') ||
-            image.src.startsWith('/') ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={image.src} alt='후기 첨부 이미지' className='size-full object-cover' />
-            ) : (
-              '사진'
-            )}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={image.previewUrl} alt='후기 첨부 이미지' className='size-full object-cover' />
           </button>
         ))}
       </div>

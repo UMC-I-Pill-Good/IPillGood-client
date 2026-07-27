@@ -73,7 +73,6 @@ const ReviewForm = ({ mode, productId, reviewId }: ReviewFormProps) => {
         onImageRemove={handleImageRemove}
         onSubmit={handleSubmit}
       />
-      <NavBar />
     </main>
   );
 };
