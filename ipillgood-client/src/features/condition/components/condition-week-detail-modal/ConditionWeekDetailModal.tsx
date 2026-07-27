@@ -122,9 +122,9 @@ const ConditionWeekDetailModal = ({
                 <ConditionVitalityIcon className='block h-[19.31px] w-4 shrink-0' />
               </div>
             </div>
-            <div className='flex h-5 w-full items-center justify-center whitespace-nowrap text-center text-neutral-800 typo-caption-2'>
+            <div className='flex h-5 w-full items-baseline justify-center whitespace-nowrap text-center text-[#6580EE] typo-caption-2'>
               {displayVitality}
-              <span className='mx-1 text-[13px] font-medium leading-[150%] tracking-[-0.011em] text-neutral-500'>
+              <span className='mx-1 text-[10px] font-medium leading-[150%] tracking-[-0.011em] text-neutral-500'>
                 /
               </span>
               <span className='typo-caption-7 text-neutral-600'>5</span>
@@ -141,7 +141,7 @@ const ConditionWeekDetailModal = ({
                 <ConditionSleepIcon className='block h-5 w-[12.93px] shrink-0' />
               </div>
             </div>
-            <div className='flex h-5 w-full items-center justify-center whitespace-nowrap text-center text-neutral-800 typo-caption-2'>
+            <div className='flex h-5 w-full items-baseline justify-center whitespace-nowrap text-center text-[#6580EE] typo-caption-2'>
               {displaySleepHours}
               <span className='ml-1 font-[var(--font-dm-sans)] typo-caption-7 text-neutral-600'>
                 h
@@ -159,13 +159,13 @@ const ConditionWeekDetailModal = ({
                 <ConditionIntakeIcon className='block h-5 w-[18px] shrink-0' />
               </div>
             </div>
-            <div className='flex h-5 w-full items-center justify-center whitespace-nowrap text-center text-neutral-800 typo-caption-2'>
+            <div className='flex h-5 w-full items-baseline justify-center whitespace-nowrap text-center text-[#6580EE] typo-caption-2'>
               {displayIntakeDays}
-              <span className='mx-1 text-[13px] font-medium leading-[150%] tracking-[-0.011em] text-neutral-500'>
-                /
+              <span className='mx-1 text-[10px] font-medium leading-[150%] tracking-[-0.011em] text-neutral-500'>
+                / {displayTotalDays}
               </span>
               <span className='typo-caption-7 text-neutral-600'>
-                {displayTotalDays}일
+                일
               </span>
             </div>
           </div>
