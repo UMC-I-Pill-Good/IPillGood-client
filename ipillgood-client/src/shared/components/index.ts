@@ -11,8 +11,6 @@ export { default as BottomSheet } from './modal/BottomSheet';
 export { default as FilterBottomSheet } from './modal/FilterBottomSheet';
 export { default as IntakeCycleModal } from './modal/IntakeCycleModal';
 export { default as IntakeTimeModal } from './modal/IntakeTimeModal';
-export { default as ReviewDeleteModal } from './modal/ReviewDeleteModal';
-export { default as ReviewReportModal } from './modal/ReviewReportModal';
 export { default as SupplementDetailBottomSheet } from './modal/SupplementDetailBottomSheet';
 
 /* chip */

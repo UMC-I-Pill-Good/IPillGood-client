@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Search } from 'lucide-react';
-import { BottomSheet, Chip, TextButton } from '@/shared/components';
+import { BottomSheet, TextButton } from '@/shared/components';
 import type { ProductIngredient } from '../../types/ranking';
 import SupplementIngredientCard from './SupplementIngredientCard';
 

@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Check } from 'lucide-react';
-import TextButton from '../button/TextButton';
-import ModalShell from './ModalShell';
+import { ModalShell, TextButton } from '@/shared/components';
 
 const REPORT_REASONS = [
   { value: 'AD_PROMOTION', label: '광고 또는 홍보성 내용' },

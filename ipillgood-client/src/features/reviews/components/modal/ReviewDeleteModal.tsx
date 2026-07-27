@@ -1,8 +1,7 @@
 'use client';
 
 import { createPortal } from 'react-dom';
-import TextButton from '../button/TextButton';
-import ModalShell from './ModalShell';
+import { ModalShell, TextButton } from '@/shared/components';
 
 interface ReviewDeleteModalProps {
   onConfirm: () => void;

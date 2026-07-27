@@ -1,6 +1,6 @@
 'use client';
 
-import { Header, NavBar } from '@/shared/layout';
+import { Header } from '@/shared/layout';
 import SupplementDetailSummaryCard from '@/features/ranking/components/detail/SupplementDetailSummaryCard';
 import { useReviewForm } from '../hooks/useReviewForm';
 import type { ReviewFormMode } from '../types/reviewForm';

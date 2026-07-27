@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ReviewDeleteModal, ReviewReportModal } from '@/shared/components';
 import type { RankingReviewItem } from '../types/review';
+import ReviewDeleteModal from './modal/ReviewDeleteModal';
+import ReviewReportModal from './modal/ReviewReportModal';
 import ReviewCardContent from './ReviewCardContent';
 
 interface ReviewCardProps {

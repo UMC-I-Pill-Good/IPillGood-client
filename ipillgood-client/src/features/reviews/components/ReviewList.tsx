@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { MascotSadIcon } from '@/assets';
-import { Header, NavBar } from '@/shared/layout';
+import { Header } from '@/shared/layout';
 import { getRankingProductDetail } from '@/features/ranking/api/getRankingProductDetail';
 import { getProductReviews } from '../api/getProductReviews';
 import type { RankingProductDetailDto } from '@/features/ranking/types/ranking';
