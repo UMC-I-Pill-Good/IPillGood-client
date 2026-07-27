@@ -1,6 +1,6 @@
-export type ApiResponse<T> = {
+export type CommonResponse<T> = {
   isSuccess: boolean;
   code: string;
   message: string;
-  result: T | null;
+  result: T;
 };
