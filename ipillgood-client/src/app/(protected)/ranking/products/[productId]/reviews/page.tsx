@@ -1,12 +1,18 @@
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
-type LegacyReviewsPageProps = {
+interface LegacyReviewsPageProps {
   params: Promise<{ productId: string }>;
-};
+}
 
 const LegacyReviewsPage = async ({ params }: LegacyReviewsPageProps) => {
   const { productId } = await params;
-  redirect(`/product/${productId}/reviews`);
+  const resolvedProductId = Number(productId);
+
+  if (!Number.isSafeInteger(resolvedProductId) || resolvedProductId <= 0) {
+    notFound();
+  }
+
+  redirect(`/reviews?productId=${resolvedProductId}`);
 };
 
 export default LegacyReviewsPage;

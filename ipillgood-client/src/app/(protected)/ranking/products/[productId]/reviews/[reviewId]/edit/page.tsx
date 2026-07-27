@@ -1,12 +1,24 @@
-import { redirect } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
-type LegacyReviewEditPageProps = {
+interface LegacyReviewEditPageProps {
   params: Promise<{ productId: string; reviewId: string }>;
-};
+}
 
 const LegacyReviewEditPage = async ({ params }: LegacyReviewEditPageProps) => {
   const { productId, reviewId } = await params;
-  redirect(`/product/${productId}/reviews/${reviewId}/edit`);
+  const resolvedProductId = Number(productId);
+  const resolvedReviewId = Number(reviewId);
+
+  if (
+    !Number.isSafeInteger(resolvedProductId) ||
+    resolvedProductId <= 0 ||
+    !Number.isSafeInteger(resolvedReviewId) ||
+    resolvedReviewId <= 0
+  ) {
+    notFound();
+  }
+
+  redirect(`/reviews/reviews-edit?productId=${resolvedProductId}&reviewId=${resolvedReviewId}`);
 };
 
 export default LegacyReviewEditPage;

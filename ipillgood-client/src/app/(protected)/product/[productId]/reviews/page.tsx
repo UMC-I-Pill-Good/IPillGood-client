@@ -1,13 +1,18 @@
-import RankingReviewContainer from '@/features/ranking/components/review/RankingReviewContainer';
+import { notFound, redirect } from 'next/navigation';
 
-type RankingReviewPageProps = {
+interface RankingReviewPageProps {
   params: Promise<{ productId: string }>;
-};
+}
 
 const RankingReviewPage = async ({ params }: RankingReviewPageProps) => {
   const { productId } = await params;
+  const resolvedProductId = Number(productId);
 
-  return <RankingReviewContainer productId={Number(productId)} />;
+  if (!Number.isSafeInteger(resolvedProductId) || resolvedProductId <= 0) {
+    notFound();
+  }
+
+  redirect(`/reviews?productId=${resolvedProductId}`);
 };
 
 export default RankingReviewPage;

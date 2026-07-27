@@ -1,15 +1,27 @@
-import RankingReviewEditContainer from '@/features/ranking/components/review/RankingReviewEditContainer';
+import { notFound, redirect } from 'next/navigation';
 
-type RankingReviewEditPageProps = {
+interface RankingReviewEditPageProps {
   params: Promise<{
     productId: string;
     reviewId: string;
   }>;
-};
+}
 
 const RankingReviewEditPage = async ({ params }: RankingReviewEditPageProps) => {
   const { productId, reviewId } = await params;
-  return <RankingReviewEditContainer productId={Number(productId)} reviewId={Number(reviewId)} />;
+  const resolvedProductId = Number(productId);
+  const resolvedReviewId = Number(reviewId);
+
+  if (
+    !Number.isSafeInteger(resolvedProductId) ||
+    resolvedProductId <= 0 ||
+    !Number.isSafeInteger(resolvedReviewId) ||
+    resolvedReviewId <= 0
+  ) {
+    notFound();
+  }
+
+  redirect(`/reviews/reviews-edit?productId=${resolvedProductId}&reviewId=${resolvedReviewId}`);
 };
 
 export default RankingReviewEditPage;
