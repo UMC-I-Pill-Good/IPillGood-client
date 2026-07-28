@@ -14,6 +14,7 @@ interface ConditionGraphSvgProps {
   graphPointList: ConditionGraphPointType[];
   graphLinePoints: string;
   hoveredPointIndex: number | null;
+  selectedPointIndex: number | null;
   onHoverPoint: (index: number | null) => void;
   onSelectPoint: (index: number) => void;
 }
@@ -22,6 +23,7 @@ const ConditionGraphSvg = ({
   currentMonth,
   graphPointList,
   hoveredPointIndex,
+  selectedPointIndex,
   onHoverPoint,
   onSelectPoint,
 }: ConditionGraphSvgProps) => {
@@ -38,6 +40,27 @@ const ConditionGraphSvg = ({
       viewBox={`0 0 ${GRAPH_WIDTH} ${GRAPH_HEIGHT}`}
       className='absolute left-1/2 top-[67px] h-[166px] w-[284px] -translate-x-1/2 overflow-visible'
     >
+      <defs>
+        <filter id='shadow-default' x='-100%' y='-100%' width='300%' height='300%'>
+          <feDropShadow
+            dx='4'
+            dy='4'
+            stdDeviation='10'
+            floodColor='#7E8387'
+            floodOpacity='0.50'
+          />
+        </filter>
+        <filter id='shadow-highlight' x='-100%' y='-100%' width='300%' height='300%'>
+          <feDropShadow
+            dx='0'
+            dy='0'
+            stdDeviation='5'
+            floodColor='#7E8387'
+            floodOpacity='0.61'
+          />
+        </filter>
+      </defs>
+
       {/* 가이드라인 및 점수 라벨 */}
       {GUIDE_LINE_LIST.map(({ score, y }) => (
         <g key={score}>
@@ -51,14 +74,14 @@ const ConditionGraphSvg = ({
           />
 
           <text
-            x='3.4'
+            x='9'
             y={y}
             fill='var(--color-neutral-800)'
-            fontFamily='Inter, sans-serif'
-            fontSize='8'
+            fontFamily='Pretendard, sans-serif'
+            fontSize='12'
             fontWeight='500'
             letterSpacing='-0.011em'
-            textAnchor='middle'
+            textAnchor='end'
             dominantBaseline='middle'
           >
             {score}
@@ -100,36 +123,19 @@ const ConditionGraphSvg = ({
       {graphPointList.map((condition, index) => {
         if (condition.score === null) return null; // 데이터가 없는 주차는 점/선을 그리지 않음
 
+        const isHighlighted = hoveredPointIndex === index || selectedPointIndex === index;
+
         return (
           <g key={condition.weekLabel}>
-            {hoveredPointIndex === index && (
-              <line
-                x1={condition.x}
-                y1={AXIS_BOTTOM}
-                x2={condition.x}
-                y2={condition.y}
-                stroke='#B1B8BE'
-                strokeWidth='1.5'
-                pointerEvents='none'
-                style={{ transition: 'all 0.3s ease-out' }}
-              />
-            )}
-
             {/* 데이터 포인트 점 */}
             <circle
               cx={condition.x}
               cy={condition.y}
-              r={hoveredPointIndex === index ? 4.87 : 3}
-              fill={
-                hoveredPointIndex === index
-                  ? '#6580EE'
-                  : 'var(--primary, #7F99FF)'
-              }
+              r={isHighlighted ? 6 : 4.5}
+              fill={isHighlighted ? '#6580EE' : 'var(--primary, #7F99FF)'}
+              filter={isHighlighted ? 'url(#shadow-highlight)' : undefined}
               style={{
                 transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                ...(hoveredPointIndex === index
-                  ? { filter: 'drop-shadow(0px 0px 5px rgba(126, 131, 135, 0.61))' }
-                  : {}),
               }}
               pointerEvents='none'
             />
@@ -161,10 +167,10 @@ const ConditionGraphSvg = ({
         <text
           key={`${weekLabel}-label`}
           x={x}
-          y='163'
+          y='165'
           fill='var(--color-neutral-800)'
           fontFamily='Pretendard, sans-serif'
-          fontSize='10'
+          fontSize='12'
           fontWeight='400'
           textAnchor='middle'
         >

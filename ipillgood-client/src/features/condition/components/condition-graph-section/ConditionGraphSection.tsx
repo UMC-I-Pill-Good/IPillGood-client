@@ -31,7 +31,6 @@ const ConditionGraphSection = () => {
 
   const monthlyGraphData = homeSummaryData.records;
 
-  // 초기 0일 때/로드 전 일관된 0점 기본 데이터 렌더링 (항상 5주차 라벨 및 좌표 보장)
   const sourceGraphData = Array.from({ length: 5 }, (_, index) => {
     const weekNo = index + 1;
     const item = monthlyGraphData && monthlyGraphData[index];
@@ -99,12 +98,12 @@ const ConditionGraphSection = () => {
             </p>
           </div>
 
-          <div className='relative h-[258px] w-full overflow-hidden rounded-2xl border border-white bg-white/70 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'>
+          <div className='relative h-[268px] w-full overflow-hidden rounded-2xl border border-white bg-white/70 shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'>
             {/* 상단 월 이동 헤더 */}
             <div className='absolute left-1/2 top-[11px] flex h-6 w-[283px] -translate-x-1/2 items-center justify-between'>
               <button
                 type='button'
-                aria-label='이전 달 보기'
+                aria-label='이전 달'
                 className='flex size-6 items-center justify-center text-neutral-900 transition-all rounded-full hover:bg-neutral-100/70 active:bg-neutral-200/70'
               >
                 <ChevronLeft aria-hidden='true' size={24} strokeWidth={1.5} />
@@ -116,7 +115,7 @@ const ConditionGraphSection = () => {
 
               <button
                 type='button'
-                aria-label='다음 달 보기'
+                aria-label='다음 달'
                 className='flex size-6 items-center justify-center text-neutral-900 transition-all rounded-full hover:bg-neutral-100/70 active:bg-neutral-200/70'
               >
                 <ChevronRight aria-hidden='true' size={24} strokeWidth={1.5} />
@@ -129,11 +128,12 @@ const ConditionGraphSection = () => {
               graphPointList={graphPointList}
               graphLinePoints={graphLinePoints}
               hoveredPointIndex={hoveredPointIndex}
+              selectedPointIndex={selectedWeekIndex}
               onHoverPoint={setHoveredPointIndex}
               onSelectPoint={handlePointClick}
             />
 
-            <p className='absolute bottom-[5px] left-1/2 w-[284px] -translate-x-1/2 text-right text-[10px] font-normal leading-none text-neutral-700'>
+            <p className='absolute bottom-[10px] left-1/2 w-[284px] -translate-x-1/2 text-right text-xs font-normal leading-normal text-neutral-700'>
               컨디션 점수 (1-5점)
             </p>
           </div>

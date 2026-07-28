@@ -13,7 +13,7 @@ const ConditionSummaryValue = ({
 }: ConditionSummaryValueProps) => {
     if (type === 'sleep') {
         return (
-            <div className='flex items-center justify-center'>
+            <div className='flex items-baseline justify-center'>
                 <span className='typo-caption-2'>
                     {value}
                 </span>
@@ -27,7 +27,7 @@ const ConditionSummaryValue = ({
 
     if (type === 'intake') {
         return (
-            <div className='flex items-center justify-center'>
+            <div className='flex items-baseline justify-center'>
                 <span className='typo-caption-2'>
                     {value}
                 </span>
@@ -44,7 +44,7 @@ const ConditionSummaryValue = ({
     }
 
     return (
-        <div className='flex items-center justify-center'>
+        <div className='flex items-baseline justify-center'>
             <span className='typo-caption-2'>
                 {value}
             </span>

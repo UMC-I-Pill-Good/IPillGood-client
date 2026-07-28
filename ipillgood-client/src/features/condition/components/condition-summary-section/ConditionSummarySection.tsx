@@ -36,7 +36,7 @@ const ConditionSummarySection = ({
         </h2>
       </div>
 
-      <div className='grid h-[91px] w-full grid-cols-3 gap-2'>
+      <div className='grid h-[105px] w-full grid-cols-3 gap-2'>
         <ConditionSummaryCard
           type='vitality'
           label='평균 활력'
@@ -52,7 +52,7 @@ const ConditionSummarySection = ({
 
         <ConditionSummaryCard
           type='intake'
-          label='섭취 기록'
+          label={'주차별 평균\n섭취 기록'}
           value={intakeDays}
           total={totalDays}
         />
