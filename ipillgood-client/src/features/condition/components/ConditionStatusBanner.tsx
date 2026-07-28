@@ -34,11 +34,11 @@ const ConditionStatusBanner = ({
           )}
         >
           <div className='flex flex-row items-center gap-2 mx-auto min-w-0 shrink-0 overflow-visible'>
-            <div className='flex flex-col justify-center gap-0.5 min-w-0 pl-4'>
+            <div className='flex flex-col justify-center gap-0.5 min-w-0 pl-4 flex-1'>
               <p className='text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
                 {title}
               </p>
-              <p className='text-sm font-medium text-white leading-none whitespace-nowrap tracking-normal'>
+              <p className='text-sm font-medium text-white leading-normal tracking-normal'>
                 매주 체크하고, 변화를 기록해보세요.
               </p>
             </div>
@@ -60,11 +60,11 @@ const ConditionStatusBanner = ({
           )}
         >
           <div className='flex flex-row items-center justify-center gap-2 mx-auto min-w-0 shrink-0 w-full'>
-            <div className='flex flex-col justify-center min-w-0 pl-4'>
+            <div className='flex flex-col justify-center min-w-0 pl-4 flex-1'>
               <p className='text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
                 {title}
               </p>
-              <p className='text-xs font-medium leading-tight tracking-normal text-white mt-1 whitespace-nowrap'>
+              <p className='text-xs font-medium leading-tight tracking-normal text-white mt-1'>
                 매주 일요일에 컨디션 체크 알림을 보내드려요!
                 <br />
                 매주 체크하고, 변화를 기록해 보세요.
