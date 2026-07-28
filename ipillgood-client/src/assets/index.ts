@@ -75,6 +75,16 @@ export { default as SupplementBottleIcon } from './icons/supplement-bottle.svg';
 export { default as CapsuleIcon } from './icons/capsule.svg';
 export { default as CapsuleGrayIcon } from './icons/capsule-gray.svg';
 export { default as Omega3BottleIcon } from './icons/omega3-bottle.svg';
+export { default as SeedIcon } from './icons/seed.svg';
+export { default as SproutIcon } from './icons/sprout.svg';
+export { default as SproutLockedIcon } from './icons/sprout-lock.svg';
+export { default as FlowerIcon } from './icons/flower.svg';
+export { default as FlowerLockedIcon } from './icons/flower-lock.svg';
+export { default as FruitIcon } from './icons/fruit.svg';
+export { default as FruitLockedIcon } from './icons/fruit-lock.svg';
+export { default as TreeIcon } from './icons/tree.svg';
+export { default as TreeLockedIcon } from './icons/tree-lock.svg';
+export { default as LockPointIcon } from './icons/lock-point.svg';
 
 // my
 export { default as WarningIcon } from './icons/warning.svg';
