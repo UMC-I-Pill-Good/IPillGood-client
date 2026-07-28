@@ -41,15 +41,6 @@ const ConditionGraphSvg = ({
       className='absolute left-1/2 top-[67px] h-[166px] w-[284px] -translate-x-1/2 overflow-visible'
     >
       <defs>
-        <filter id='shadow-default' x='-100%' y='-100%' width='300%' height='300%'>
-          <feDropShadow
-            dx='4'
-            dy='4'
-            stdDeviation='10'
-            floodColor='#7E8387'
-            floodOpacity='0.50'
-          />
-        </filter>
         <filter id='shadow-highlight' x='-100%' y='-100%' width='300%' height='300%'>
           <feDropShadow
             dx='0'

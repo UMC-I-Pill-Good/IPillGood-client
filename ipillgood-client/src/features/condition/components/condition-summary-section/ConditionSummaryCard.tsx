@@ -37,7 +37,7 @@ const ConditionSummaryCard = ({
             </div>
 
             {/* 하단 블록: 수치 영역 */}
-            <div className='flex h-[13px] items-baseline justify-center whitespace-nowrap text-center text-[#7E8387] typo-caption-2 leading-none'>
+            <div className='h-[13px] text-[#7E8387] leading-none'>
                 <ConditionSummaryValue
                     type={type}
                     value={value}
