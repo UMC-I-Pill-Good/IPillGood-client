@@ -14,12 +14,13 @@ const GrowthStageItem = ({ stage, status }: GrowthStageItemProps) => {
 
   return (
     <div className='flex flex-col justify-end items-center h-32.75 w-1/5'>
-      <StageIcon />
+      <StageIcon aria-hidden='true' />
       {isLocked ? (
         <span
           className={`w-6.25 h-6.25 rounded-full bg-point-300 flex justify-center items-center mt-1 mb-7.5 ${stage.value === 'FRUIT' ? 'mr-1' : ''}`}
         >
-          <LockPointIcon />
+          <LockPointIcon aria-hidden='true' />
+          <span className='sr-only'>{`${label} 단계 (${dayRangeText}), 잠금`}</span>
         </span>
       ) : (
         <div
