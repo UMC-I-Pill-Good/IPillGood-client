@@ -13,9 +13,16 @@ const LoginForm = () => {
   const [idValue, setIdValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
+  const isValid = idValue.trim() !== '' && passwordValue.trim() !== '';
+
   // 로그인 폼 제출 핸들러
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!isValid) {
+      alert('아이디와 비밀번호를 입력해주세요.');
+      return;
+    }
 
     console.log({
       id: idValue,
@@ -23,7 +30,7 @@ const LoginForm = () => {
     });
 
     // login API 호출
-    router.push('survey');
+    router.push('/survey');
   };
 
   return (

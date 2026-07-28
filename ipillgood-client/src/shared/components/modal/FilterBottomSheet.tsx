@@ -30,7 +30,6 @@ interface FilterBottomSheetProps {
 const FilterBottomSheet = ({
   open,
   onClose,
-  title = '필터',
   groups,
   onReset,
   onApply,
@@ -44,9 +43,9 @@ const FilterBottomSheet = ({
         if (!nextOpen) onClose();
       }}
     >
-      <div className='flex h-[32.25rem] max-h-[calc(100dvh-4.5rem)] min-h-0 flex-col justify-between overflow-visible bg-background'>
-        <div className='thin-scrollbar flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto pb-8'>
-          <h2 className='typo-body-5 text-black'>{title}</h2>
+      <div className='flex h-129 max-h-[calc(100dvh-4.5rem)] min-h-0 flex-col justify-between overflow-visible bg-background'>
+        <div className='thin-scrollbar flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto mt-4 pb-8'>
+          <h2 className='typo-body-5 text-black'>필터</h2>
 
           <div className='flex flex-col gap-6'>
             {groups.map((group) => (

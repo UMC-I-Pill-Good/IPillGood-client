@@ -4,9 +4,12 @@ export { default as DropdownIcon } from './icons/dropdown.svg';
 export { default as CrossSmallIcon } from './icons/fi-rr-cross-small.svg';
 export { default as SearchIcon } from './icons/fi-rr-search.svg';
 export { default as RatingStarIcon } from './icons/fi-rr-star.svg';
+export { default as EmptyRatingStarIcon } from './icons/empty-rating-star.svg';
+export { default as FilledRatingStarIcon } from './icons/filled-rating-star.svg';
 export { default as FilterIcon } from './icons/filter.svg';
 export { default as MascotBigIcon } from './icons/mascot-big.svg';
 export { default as ValidBadgeIcon } from './icons/valid.svg';
+export { default as ValidChipIcon } from './icons/validChip.svg';
 export { default as MascotIcon } from './icons/mascot-default.svg';
 export { default as MascotHeartIcon } from './icons/mascot-heart.svg';
 export { default as MascotSearchIcon } from './icons/mascot-search.svg';
@@ -14,6 +17,8 @@ export { default as MascotSadIcon } from './icons/mascot-sad.svg';
 export { default as LogoIcon } from './icons/logo.svg';
 export { default as EyeIcon } from './icons/eye.svg';
 export { default as EyeOffIcon } from './icons/eyeoff.svg';
+export { default as ModalCalendarIcon } from './icons/modal-calender.svg';
+export { default as ModalClockIcon } from './icons/modal-clock.svg';
 
 /* login */
 export { default as IdIcon } from './icons/id.svg';
@@ -69,12 +74,14 @@ export { default as ImmuneDefenseIcon } from './icons/immune-defense.svg';
 export { default as MuscleIcon } from './icons/muscle.svg';
 export { default as ReproductiveIcon } from './icons/reproductive.svg';
 
-// home
+/* home */
 export { default as HeaderLogoIcon } from './icons/header-logo.svg';
 export { default as SupplementBottleIcon } from './icons/supplement-bottle.svg';
 export { default as CapsuleIcon } from './icons/capsule.svg';
 export { default as CapsuleGrayIcon } from './icons/capsule-gray.svg';
 export { default as Omega3BottleIcon } from './icons/omega3-bottle.svg';
+export { default as DetailWarningIcon } from './icons/detail-warning.svg';
+export { default as DetailThumbUpIcon } from './icons/detail-thumb-up.svg';
 export { default as SeedIcon } from './icons/seed.svg';
 export { default as SproutIcon } from './icons/sprout.svg';
 export { default as SproutLockedIcon } from './icons/sprout-lock.svg';
@@ -86,7 +93,20 @@ export { default as TreeIcon } from './icons/tree.svg';
 export { default as TreeLockedIcon } from './icons/tree-lock.svg';
 export { default as LockPointIcon } from './icons/lock-point.svg';
 
+/* cabinet */
+export { default as EmptyBottleIcon } from './icons/cabinet/empty-bottle.svg';
+export { default as CheckShieldIcon } from './icons/cabinet/check-shield.svg';
+export { default as WarningCircleIcon } from './icons/cabinet/warning-circle.svg';
+export { default as BellIcon } from './icons/cabinet/bell.svg';
+export { default as TimerOffIcon } from './icons/cabinet/timer-off.svg';
+
 // my
 export { default as WarningIcon } from './icons/warning.svg';
 export { default as QuestionIcon } from './icons/question-mark.svg';
 export { default as MascotProfileIcon } from './icons/mascot-profile.svg';
+
+// ingredient
+export { default as BanIcon } from './icons/ban.svg';
+export { default as NoFoodIcon } from './icons/no-food.svg';
+export { default as ClockIcon } from './icons/clock.svg';
+export { default as ForkKnifeIcon } from './icons/fork-knife.svg';

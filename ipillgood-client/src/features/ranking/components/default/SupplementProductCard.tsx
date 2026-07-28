@@ -1,7 +1,8 @@
 'use client';
 
+import useEmblaCarousel from 'embla-carousel-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { type KeyboardEvent, useState } from 'react';
 import { Omega3BottleIcon, RatingStarIcon, ValidBadgeIcon } from '@/assets';
 import { Chip } from '@/shared/components';
 import type { ProductSearchItemDto } from '../../types/ranking';
@@ -11,14 +12,53 @@ interface SupplementProductCardProps {
   item: ProductSearchItemDto;
   displayRank: number;
 }
+interface IngredientNameListProps {
+  ingredientNameList: string[];
+}
+
+const IngredientNameCarousel = ({ ingredientNameList }: IngredientNameListProps) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'start',
+    dragFree: true,
+    containScroll: 'trimSnaps',
+  });
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      emblaApi?.scrollPrev();
+    }
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      emblaApi?.scrollNext();
+    }
+  };
+
+  return (
+    <div
+      ref={emblaRef}
+      className='w-full overflow-x-auto'
+      role='region'
+      aria-roledescription='carousel'
+      aria-label='영양 성분 목록'
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+    >
+      <div className='flex gap-1'>
+        {ingredientNameList.map((ingredientName) => (
+          <div key={ingredientName} className='shrink-0'>
+            <Chip text={ingredientName} variant='point' />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const SupplementProductCard = ({ item, displayRank }: SupplementProductCardProps) => {
   const [hasImageError, setHasImageError] = useState(false);
   const imageUrl = item.imageUrl?.trim();
   const shouldShowImage = Boolean(imageUrl) && !hasImageError;
-  const ingredientName = item.ingredientName.trim();
   const ratingAverage = item.ratingAverage ?? 0;
-
   return (
     <article className='ranking-product-card flex w-full items-center justify-center gap-3 px-5 py-4'>
       <RankingBadge rank={displayRank} />
@@ -55,7 +95,7 @@ const SupplementProductCard = ({ item, displayRank }: SupplementProductCardProps
             <div className='flex w-full items-center justify-between gap-2'>
               <p className='min-w-0 flex-1 truncate typo-caption-6 text-black'>{item.brand}</p>
               <Link
-                href='/'
+                href={`/product/${item.productId}`}
                 aria-label={`${item.productName} 더보기`}
                 className='inline-flex shrink-0 items-center whitespace-nowrap typo-caption-7 text-neutral-800'
               >
@@ -75,9 +115,7 @@ const SupplementProductCard = ({ item, displayRank }: SupplementProductCardProps
             </div>
           </div>
 
-          <div className='flex w-full flex-wrap items-center gap-1'>
-            {ingredientName && <Chip text={ingredientName} variant='point' />}
-          </div>
+          <IngredientNameCarousel ingredientNameList={item.ingredientName} />
         </div>
       </div>
     </article>

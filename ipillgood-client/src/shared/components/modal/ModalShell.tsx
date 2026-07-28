@@ -1,6 +1,7 @@
 'use client';
 
 import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
+import clsx from 'clsx';
 import { useRef, type ReactNode } from 'react';
 
 interface ModalShellProps {
@@ -17,13 +18,13 @@ const ModalShell = ({ onClose, className = '', children, ariaLabel }: ModalShell
   useOutsideClick(contentRef, onClose);
 
   return (
-    <div className='fixed inset-0 z-50 flex items-center justify-center bg-neutral-800/20'>
+    <div className='fixed left-1/2 top-1/2 z-50 flex h-dvh w-screen -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-neutral-800/20'>
       <div
         ref={contentRef}
         role='dialog'
         aria-modal='true'
         aria-label={ariaLabel}
-        className={`flex flex-col overflow-hidden rounded-[20px] bg-white px-7.5 py-6 w-77.5 ${className}`}
+        className={clsx('flex w-77.5 flex-col rounded-[20px] bg-white px-7.5 py-6', className)}
       >
         {children}
       </div>

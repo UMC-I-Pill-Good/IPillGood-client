@@ -1,4 +1,4 @@
-import { BadgeIcon } from '@/assets';
+import { ValidChipIcon } from '@/assets';
 import { cn } from '@/shared/utils';
 import { cva, VariantProps } from 'class-variance-authority';
 
@@ -7,7 +7,7 @@ const chipVariant = cva(
   {
     variants: {
       variant: {
-        secondary: 'bg-secondary-500 text-white typo-caption-2 h-8',
+        secondary: 'bg-secondary text-white typo-caption-2 h-8',
         point: 'bg-point-700 text-white typo-caption-6 h-6',
       },
       icon: {
@@ -47,8 +47,8 @@ const Chip = ({ text, className, variant, icon = false }: ChipProps) => {
   return (
     <div className={cn(chipVariant({ variant, icon }), className)}>
       {icon && (
-        <span className='mr-1'>
-          <BadgeIcon />
+        <span className='mr-1 inline-flex h-2.5 w-1.25 items-center justify-center'>
+          <ValidChipIcon className='size-full' />
         </span>
       )}
       {text}

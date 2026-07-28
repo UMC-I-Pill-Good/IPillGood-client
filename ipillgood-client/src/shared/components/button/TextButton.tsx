@@ -34,28 +34,45 @@ const textButtonVariants = cva(
 );
 
 interface TextButtonProps extends VariantProps<typeof textButtonVariants> {
-  type: 'button' | 'submit' | 'reset';
+  type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
   text: string;
   disabled?: boolean;
   className?: string;
+  href?: string;
+  target?: '_blank' | '_self';
+  rel?: string;
 }
 
 const TextButton = ({
-  type,
+  type = 'button',
   onClick,
   text,
   disabled = false,
   className,
   variant,
   size,
+  href,
+  target,
+  rel,
 }: TextButtonProps) => {
+  const buttonClassName = cn(textButtonVariants({ size, variant }), className);
+
+  if (href && !disabled) {
+    return (
+      <a href={href} target={target} rel={rel} className={buttonClassName}>
+        {text}
+      </a>
+    );
+  }
+
   return (
     <button
       type={type}
+      aria-label={text}
       onClick={onClick}
       disabled={disabled}
-      className={cn(textButtonVariants({ size, variant }), className)}
+      className={buttonClassName}
     >
       {text}
     </button>

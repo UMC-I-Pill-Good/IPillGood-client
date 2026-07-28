@@ -1,8 +1,10 @@
 import type {
   HealthConcernMajorCategory,
+  IngredientSummary,
   RankingAgeGroup,
   RankingApiResponse,
   RankingGender,
+  RankingProductCompatibilityDto,
 } from '../types/ranking';
 
 type RankingMockFilterMeta = {
@@ -26,7 +28,12 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '알티지 오메가 3',
         imageUrl: null,
         mfdsCertified: true,
-        ingredientName: '오메가 3',
+        ingredientName: [
+          '오메가 3 지방산 복합체',
+          'EPA 고함량 정제 오일',
+          'DHA 두뇌·눈 건강 복합 성분',
+          '항산화 비타민 E 토코페롤',
+        ],
         ratingAverage: 4.8,
         reviewCount: 234,
         ingredientTags: ['혈행', '눈 건강'],
@@ -37,7 +44,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '프로메가 오메가 3',
         imageUrl: null,
         mfdsCertified: false,
-        ingredientName: '오메가 3',
+        ingredientName: ['오메가 3'],
         ratingAverage: 4.7,
         reviewCount: 198,
         ingredientTags: ['혈행'],
@@ -48,7 +55,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '식물성 알티지 오메가 3',
         imageUrl: null,
         mfdsCertified: false,
-        ingredientName: '오메가 3',
+        ingredientName: ['오메가 3'],
         ratingAverage: 4.9,
         reviewCount: 156,
         ingredientTags: ['눈 건강'],
@@ -59,7 +66,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '데일리 오메가 3',
         imageUrl: null,
         mfdsCertified: false,
-        ingredientName: '오메가 3',
+        ingredientName: ['오메가 3'],
         ratingAverage: 4.5,
         reviewCount: 91,
         ingredientTags: ['혈행'],
@@ -70,7 +77,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '비타민D 1000IU',
         imageUrl: null,
         mfdsCertified: true,
-        ingredientName: '비타민 D',
+        ingredientName: ['비타민 D'],
         ratingAverage: 4.6,
         reviewCount: 287,
         ingredientTags: ['뼈', '면역'],
@@ -81,7 +88,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '메가도스 비타민 C',
         imageUrl: null,
         mfdsCertified: true,
-        ingredientName: '비타민 C',
+        ingredientName: ['비타민 C'],
         ratingAverage: 4.9,
         reviewCount: 312,
         ingredientTags: ['항산화', '면역'],
@@ -92,7 +99,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '마그네슘 위드 비타민 B6',
         imageUrl: null,
         mfdsCertified: false,
-        ingredientName: '마그네슘',
+        ingredientName: ['마그네슘', '비타민 B6'],
         ratingAverage: 4.3,
         reviewCount: 72,
         ingredientTags: ['근육', '에너지'],
@@ -103,7 +110,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '생유산균 골드',
         imageUrl: null,
         mfdsCertified: true,
-        ingredientName: '프로바이오틱스',
+        ingredientName: ['프로바이오틱스'],
         ratingAverage: 4.7,
         reviewCount: 421,
         ingredientTags: ['장 건강', '소화'],
@@ -114,7 +121,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '눈건강 루테인 지아잔틴',
         imageUrl: null,
         mfdsCertified: true,
-        ingredientName: '루테인',
+        ingredientName: ['루테인', '지아잔틴'],
         ratingAverage: 4.8,
         reviewCount: 144,
         ingredientTags: ['눈 건강'],
@@ -125,7 +132,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '코엔자임 Q10 플러스',
         imageUrl: null,
         mfdsCertified: false,
-        ingredientName: '코엔자임 Q10',
+        ingredientName: ['코엔자임 Q10'],
         ratingAverage: 4.4,
         reviewCount: 88,
         ingredientTags: ['항산화', '혈압'],
@@ -136,7 +143,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '칼슘 마그네슘 비타민D',
         imageUrl: null,
         mfdsCertified: true,
-        ingredientName: '칼슘',
+        ingredientName: ['칼슘', '마그네슘', '비타민 D'],
         ratingAverage: null,
         reviewCount: 53,
         ingredientTags: ['뼈', '근육'],
@@ -147,7 +154,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '밀크씨슬 간건강',
         imageUrl: null,
         mfdsCertified: false,
-        ingredientName: '밀크씨슬',
+        ingredientName: ['밀크씨슬'],
         ratingAverage: 4.2,
         reviewCount: 176,
         ingredientTags: ['간 건강', '대사'],
@@ -158,7 +165,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '아이클리어 루테인',
         imageUrl: null,
         mfdsCertified: true,
-        ingredientName: '루테인',
+        ingredientName: ['루테인'],
         ratingAverage: 4.8,
         reviewCount: 144,
         ingredientTags: ['눈 건강'],
@@ -169,7 +176,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '멀티비타민 포 맨',
         imageUrl: null,
         mfdsCertified: false,
-        ingredientName: '멀티비타민',
+        ingredientName: ['멀티비타민'],
         ratingAverage: 4.1,
         reviewCount: 64,
         ingredientTags: ['에너지', '면역'],
@@ -180,7 +187,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '멀티비타민 포 우먼',
         imageUrl: null,
         mfdsCertified: false,
-        ingredientName: '멀티비타민',
+        ingredientName: ['멀티비타민'],
         ratingAverage: 4.6,
         reviewCount: 64,
         ingredientTags: ['에너지', '면역'],
@@ -191,7 +198,7 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
         productName: '철분 엽산',
         imageUrl: null,
         mfdsCertified: true,
-        ingredientName: '철분',
+        ingredientName: ['철분', '엽산'],
         ratingAverage: 4.0,
         reviewCount: 35,
         ingredientTags: ['혈액', '여성 건강'],
@@ -203,6 +210,57 @@ export const MOCK_RANKING_RESPONSE: RankingApiResponse = {
     nextCursor: null,
   },
 };
+
+export const MOCK_RANKING_AD_CLAIM_RISK_INGREDIENT_LIST: IngredientSummary[] = [
+  {
+    ingredientId: 99001,
+    name: '성분명',
+    description: '식약처 부당 광고 사례를 확인해야 하는 성분입니다.',
+    imageKey: '',
+    effectKeywords: ['광고 주의'],
+  },
+];
+
+export const createMockRankingProductCompatibility = (
+  productId: number,
+): RankingProductCompatibilityDto => ({
+  productId,
+  ownedProductCount: 6,
+  goodCombinations: [
+    {
+      targetIngredientId: 99002,
+      targetIngredientName: '비타민 D',
+      type: 'GOOD',
+    },
+    {
+      targetIngredientId: 99003,
+      targetIngredientName: '비타민 C',
+      type: 'GOOD',
+    },
+    {
+      targetIngredientId: 99004,
+      targetIngredientName: '비타민 B',
+      type: 'GOOD',
+    },
+  ],
+  cautionCombinations: [
+    {
+      targetIngredientId: 99005,
+      targetIngredientName: '비타민 A',
+      type: 'CAUTION',
+    },
+    {
+      targetIngredientId: 99006,
+      targetIngredientName: '철분',
+      type: 'CAUTION',
+    },
+    {
+      targetIngredientId: 99007,
+      targetIngredientName: '칼슘',
+      type: 'CAUTION',
+    },
+  ],
+});
 
 export const MOCK_RANKING_FILTER_META: Record<number, RankingMockFilterMeta> = {
   9001: {
