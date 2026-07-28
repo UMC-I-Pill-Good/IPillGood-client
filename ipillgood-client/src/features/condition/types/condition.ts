@@ -21,6 +21,7 @@ export type ConditionCheckRequest = {
   vitalityScore: number;
   sleepHours: number;
   sleepMinutes: number;
+  intakeDaysCount: number; // 섭취 완료 일수 (0~7)
 };
 
 export type ConditionCheckResult = {
@@ -113,7 +114,7 @@ export type ConditionCurrentWeekResponse = {
   result: ConditionCurrentWeekResult;
 };
 
-// 5. POST /api/v1/conditions/popup-logs/auto-shown (컨디션 팝업 자동 노출 기록)
+// 5. PATCH /api/v1/conditions/popup-logs/auto-shown (컨디션 팝업 자동 노출 기록)
 export type ConditionPopupAutoShownResult = {
   popupLogId: number;
   weekStartOn: string;

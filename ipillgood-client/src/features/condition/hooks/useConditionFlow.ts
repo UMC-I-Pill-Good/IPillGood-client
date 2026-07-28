@@ -115,6 +115,7 @@ export const useConditionFlow = () => {
         vitalityScore: vitalityScore,
         sleepHours: sleepTime.hours,
         sleepMinutes: sleepTime.minutes,
+        intakeDaysCount: 6, // API 연동 전 임시 복용 일수 더미값 주입
       });
 
       if (response.isSuccess && response.result) {

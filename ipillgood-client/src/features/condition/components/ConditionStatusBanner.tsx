@@ -29,48 +29,49 @@ const ConditionStatusBanner = ({
         /* 1. 체크 완료 배너 */
         <div
           className={clsx(
-            'relative flex h-[77px] w-full items-center rounded-2xl bg-primary-300 py-4 pl-[68px] pr-12 text-left gap-2',
+            'relative flex h-[77px] w-full items-center justify-center rounded-2xl bg-primary-300 py-4 px-4 text-left gap-2',
             'shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
           )}
         >
-          <div className='flex flex-1 flex-col justify-center gap-0.5 mt-[3px] min-w-0'>
-            <p className='h-6 text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
-              {title}
-            </p>
-            <p className='h-[17px] text-sm font-medium text-white leading-none whitespace-nowrap tracking-normal'>
-              매주 체크하고, 변화를 기록해보세요.
-            </p>
-          </div>
+          <div className='flex flex-row items-center gap-2 mx-auto min-w-0 shrink-0 overflow-visible'>
+            <div className='flex flex-col justify-center gap-0.5 min-w-0 pl-4 flex-1'>
+              <p className='text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
+                {title}
+              </p>
+              <p className='text-sm font-medium text-white leading-normal tracking-normal'>
+                매주 체크하고, 변화를 기록해보세요.
+              </p>
+            </div>
 
-          <div className='ml-auto shrink-0 pointer-events-none flex items-center justify-center h-[89px] w-[65px]'>
-            <MascotHeartIcon
-              width={65}
-              height={89}
-              className='block h-full w-full object-contain'
-            />
+            <div className='shrink-0 pointer-events-none flex items-center justify-center h-[80px] w-[59px]'>
+              <MascotHeartIcon
+                width={59}
+                height={80}
+                className='block h-full w-full object-contain'
+              />
+            </div>
           </div>
         </div>
       ) : (
-        /* 2. 체크 미완료 배너 (팀원 피드백대로 whitespace-nowrap 완벽 복원) */
+        /* 2. 체크 미완료 배너 */
         <div
           className={clsx(
-            'relative flex h-[148px] w-full flex-col items-center justify-between rounded-2xl bg-primary-300 pt-3 pb-4 px-3 text-left shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
+            'relative flex h-[148px] w-full flex-col items-center justify-between rounded-2xl bg-primary-300 pt-3.5 pb-4 px-4 text-left shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
           )}
         >
-          {/* 상단 텍스트 및 마스코트 헤더 영역 */}
-          <div className='flex w-full items-center pr-10 gap-2'>
-            <div className='flex flex-1 flex-col justify-center min-w-0 ml-[48px] mt-1'>
-              <p className='h-6 text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
+          <div className='flex flex-row items-center justify-center gap-2 mx-auto min-w-0 shrink-0 w-full'>
+            <div className='flex flex-col justify-center min-w-0 pl-4 flex-1'>
+              <p className='text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
                 {title}
               </p>
-              <p className='text-xs font-medium leading-tight tracking-normal text-white whitespace-nowrap mt-1'>
+              <p className='text-xs font-medium leading-tight tracking-normal text-white mt-1'>
                 매주 일요일에 컨디션 체크 알림을 보내드려요!
                 <br />
                 매주 체크하고, 변화를 기록해 보세요.
               </p>
             </div>
 
-            <div className='ml-auto shrink-0 pointer-events-none flex items-center justify-center h-[76px] w-[65px]'>
+            <div className='shrink-0 pointer-events-none flex items-center justify-center h-[76px] w-[59px]'>
               <MascotSearchIcon
                 width={59}
                 height={76}
@@ -85,7 +86,7 @@ const ConditionStatusBanner = ({
             text='이번 주 컨디션 체크하러 가기'
             size='lg'
             onClick={onOpenConditionCheck}
-            className='mt-1 h-10.5 w-full max-w-[290px] rounded-lg bg-primary-600 text-white text-lg font-medium shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] hover:bg-primary-700'
+            className='mx-auto mt-1 h-10.5 w-full max-w-[290px] rounded-lg bg-primary-600 text-white text-base font-medium shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] hover:bg-primary-700 transition-all'
           />
         </div>
       )}

@@ -8,8 +8,8 @@ export interface GetHealthConcernRecommendationsParams {
 
 /**
  * 건강 상태 추천 성분 조회 (GET /api/v1/health-concerns/recommendations)
- * @param majorCategory 건강 상태 대분류 (예: 'SENSORY')
- * @param minorCategory 건강 상태 소분류 (예: 'EYE')
+ * @param majorCategory 건강 상태 대분류 (예: 'SENSORY_SYSTEM')
+ * @param minorCategory 건강 상태 소분류 (예: 'EYES')
  */
 export const getHealthConcernRecommendations = async ({
   majorCategory,

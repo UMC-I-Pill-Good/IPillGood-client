@@ -5,9 +5,9 @@ export type IngredientSummary = {
   ingredientId: number;
   name: string;
   description: string;
-  imageKey: string;
+  imageUrl: string;
   effectKeywords: string[];
-  inCabinet: boolean;
+  hasCabinetProduct: boolean;
 };
 
 export type HealthConcernRecommendationsResult = {

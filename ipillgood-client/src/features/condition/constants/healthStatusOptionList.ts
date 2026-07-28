@@ -14,8 +14,8 @@ import type { HealthSystemType } from '../types/healthStatus';
  * 건강 고민 대분류 아이콘 매핑
  */
 export const HEALTH_CONCERN_ICON_MAP = {
-  NERVOUS: NervousIcon,
-  SENSORY: EyeHealthIcon,
+  NERVOUS_SYSTEM: NervousIcon,
+  SENSORY_SYSTEM: EyeHealthIcon,
   DIGESTIVE: DigestiveIcon,
   ENDOCRINE: EndocrineIcon,
   CARDIOVASCULAR: ConditionCardiovascularIcon,
@@ -30,23 +30,23 @@ export const HEALTH_CONCERN_ICON_MAP = {
  */
 export const HEALTH_SYSTEM_OPTION_LIST: HealthSystemType[] = [
   {
-    key: 'NERVOUS',
+    key: 'NERVOUS_SYSTEM',
     label: '신경계',
     icon: NervousIcon,
     bodyPartList: [
-      { key: 'COGNITION', label: '인지 기능 / 기억력' },
+      { key: 'COGNITIVE_MEMORY', label: '인지 기능 / 기억력' },
       { key: 'TENSION', label: '긴장' },
       { key: 'SLEEP_QUALITY', label: '수면의 질' },
       { key: 'FATIGUE', label: '피로' },
     ],
   },
   {
-    key: 'SENSORY',
+    key: 'SENSORY_SYSTEM',
     label: '감각계',
     icon: EyeHealthIcon,
     bodyPartList: [
       { key: 'TEETH', label: '치아' },
-      { key: 'EYE', label: '눈' },
+      { key: 'EYES', label: '눈' },
       { key: 'SKIN', label: '피부' },
     ],
   },

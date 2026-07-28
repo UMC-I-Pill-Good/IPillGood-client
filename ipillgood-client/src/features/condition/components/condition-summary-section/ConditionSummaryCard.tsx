@@ -23,17 +23,21 @@ const ConditionSummaryCard = ({
     return (
         <article
             aria-label={`${label} ${valueText}`}
-            className='glass flex h-full w-full min-w-0 flex-col items-center justify-between rounded-xl border-white pt-[11px] pb-[11px] px-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-2px_5px_rgba(126,131,135,0.07),0_4px_4px_0_rgba(126,131,135,0.1)]'
+            className='glass flex h-[105px] w-full min-w-0 flex-col items-center justify-center gap-[4px] rounded-xl border-white pt-2 pb-2 px-[20px] shadow-[inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-2px_5px_rgba(126,131,135,0.07),0_4px_4px_0_rgba(126,131,135,0.1)]'
         >
-            <p className='typo-caption-2 flex items-center justify-center whitespace-nowrap text-center text-[#111111]'>
-                {label}
-            </p>
+            {/* 상단 블록: 라벨과 아이콘 */}
+            <div className='flex flex-col items-center gap-2 self-stretch shrink-0'>
+                <p className='typo-caption-2 flex h-[29px] items-start justify-center whitespace-pre-wrap text-center text-[#111111] !leading-[1.15]'>
+                    {label}
+                </p>
 
-            <div className='flex size-6 shrink-0 items-center justify-center'>
-                <ConditionSummaryIcon type={type} />
+                <div className='flex size-6 shrink-0 items-center justify-center'>
+                    <ConditionSummaryIcon type={type} />
+                </div>
             </div>
 
-            <div className='flex items-center justify-center whitespace-nowrap text-center text-neutral-800'>
+            {/* 하단 블록: 수치 영역 */}
+            <div className='h-[13px] text-[#7E8387] leading-none'>
                 <ConditionSummaryValue
                     type={type}
                     value={value}
