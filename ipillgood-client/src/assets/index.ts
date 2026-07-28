@@ -82,6 +82,16 @@ export { default as CapsuleGrayIcon } from './icons/capsule-gray.svg';
 export { default as Omega3BottleIcon } from './icons/omega3-bottle.svg';
 export { default as DetailWarningIcon } from './icons/detail-warning.svg';
 export { default as DetailThumbUpIcon } from './icons/detail-thumb-up.svg';
+export { default as SeedIcon } from './icons/seed.svg';
+export { default as SproutIcon } from './icons/sprout.svg';
+export { default as SproutLockedIcon } from './icons/sprout-lock.svg';
+export { default as FlowerIcon } from './icons/flower.svg';
+export { default as FlowerLockedIcon } from './icons/flower-lock.svg';
+export { default as FruitIcon } from './icons/fruit.svg';
+export { default as FruitLockedIcon } from './icons/fruit-lock.svg';
+export { default as TreeIcon } from './icons/tree.svg';
+export { default as TreeLockedIcon } from './icons/tree-lock.svg';
+export { default as LockPointIcon } from './icons/lock-point.svg';
 
 /* cabinet */
 export { default as EmptyBottleIcon } from './icons/cabinet/empty-bottle.svg';
