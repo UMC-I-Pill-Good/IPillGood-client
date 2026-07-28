@@ -43,7 +43,7 @@ const RecommendedIngredientCard = ({
         {/* 상단 정보 그룹 */}
         <div className='flex min-w-0 flex-col items-start gap-1 w-full'>
           {/* 캐비닛 내 존재 배지 */}
-          {ingredient.inCabinet && (
+          {ingredient.hasCabinetProduct && (
             <Chip
               text='캐비닛 내 존재'
               variant='point'
