@@ -3,6 +3,7 @@ import type {
   RankingAgeGroup,
   RankingQueryParams,
 } from '../types/ranking';
+import { AGE_GROUP_LABEL } from '@/shared/types';
 import {
   AGE_OPTIONS,
   DEFAULT_RANKING_FILTERS,
@@ -25,13 +26,7 @@ const AGE_GROUP_BY_OPTION: Partial<Record<AgeFilter, RankingAgeGroup>> = {
   '50대 이상': 'FIFTIES_AND_ABOVE',
 };
 
-const AGE_OPTION_BY_GROUP: Record<RankingAgeGroup, Exclude<AgeFilter, '전체'>> = {
-  TEENS: '10대',
-  TWENTIES: '20대',
-  THIRTIES: '30대',
-  FORTIES: '40대',
-  FIFTIES_AND_ABOVE: '50대 이상',
-};
+const AGE_OPTION_BY_GROUP: Record<RankingAgeGroup, Exclude<AgeFilter, '전체'>> = AGE_GROUP_LABEL;
 
 const HEALTH_CATEGORY_BY_OPTION: Record<
   Exclude<HealthConcernFilter, null>,
