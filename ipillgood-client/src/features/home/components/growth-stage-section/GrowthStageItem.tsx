@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { GrowthStageOptionType, GrowthStageStatusType } from '../../types/growthStage.type';
 import { Chip } from '@/shared/components';
 import { LockPointIcon } from '@/assets';
@@ -17,14 +18,20 @@ const GrowthStageItem = ({ stage, status }: GrowthStageItemProps) => {
       <StageIcon aria-hidden='true' />
       {isLocked ? (
         <span
-          className={`w-6.25 h-6.25 rounded-full bg-point-300 flex justify-center items-center mt-1 mb-7.5 ${stage.value === 'FRUIT' ? 'mr-1' : ''}`}
+          className={clsx(
+            'w-6.25 h-6.25 rounded-full bg-point-300 flex justify-center items-center mt-1 mb-7.5',
+            stage.value === 'FRUIT' && 'mr-1',
+          )}
         >
           <LockPointIcon aria-hidden='true' />
           <span className='sr-only'>{`${label} 단계 (${dayRangeText}), 잠금`}</span>
         </span>
       ) : (
         <div
-          className={`typo-caption-6 flex flex-col items-center leading-tight! ${stage.value === 'FRUIT' ? 'mr-2.5' : ''}`}
+          className={clsx(
+            'typo-caption-6 flex flex-col items-center leading-tight!',
+            stage.value === 'FRUIT' && 'mr-2.5',
+          )}
         >
           <span className='text-black mt-1'>{label}</span>
           <span className='text-point-900'>{dayRangeText}</span>
