@@ -41,8 +41,8 @@ const DEFAULT_SLEEP_HOURS = 7;
 const DEFAULT_SLEEP_MINUTES = 30;
 
 const DEFAULT_HOME_SUMMARY: ConditionMonthlyRecordsResult = {
-  year: 2026,
-  month: 7,
+  year: new Date().getFullYear(),
+  month: new Date().getMonth() + 1,
   averageConditionScore: null,
   averageVitalityScore: null,
   averageSleepHours: null,

@@ -64,7 +64,11 @@ export const useConditionFlow = () => {
   // GET /api/v1/conditions/monthly-records API 호출 (스토어 데이터가 비어있을 때만 1회 호출)
   useEffect(() => {
     if (homeSummaryData.records.length === 0) {
-      getConditionSummary(2026, 7)
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear();
+      const currentMonth = currentDate.getMonth() + 1;
+
+      getConditionSummary(currentYear, currentMonth)
         .then((res) => {
           if (res.isSuccess && res.result) {
             setHomeSummaryData(res.result);

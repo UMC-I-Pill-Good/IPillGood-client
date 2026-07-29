@@ -16,12 +16,12 @@ import type { HealthSystemType } from '../types/healthStatus';
 export const HEALTH_CONCERN_ICON_MAP = {
   NERVOUS_SYSTEM: NervousIcon,
   SENSORY_SYSTEM: EyeHealthIcon,
-  DIGESTIVE: DigestiveIcon,
+  DIGESTIVE_METABOLIC: DigestiveIcon,
   ENDOCRINE: EndocrineIcon,
   CARDIOVASCULAR: ConditionCardiovascularIcon,
-  IMMUNE: ImmuneDefenseIcon,
+  IMMUNE_SYSTEM: ImmuneDefenseIcon,
   MUSCULOSKELETAL: MuscleIcon,
-  REPRODUCTIVE: ReproductiveIcon,
+  REPRODUCTIVE_URINARY: ReproductiveIcon,
   FALLBACK: NervousIcon,
 } as const;
 
@@ -51,7 +51,7 @@ export const HEALTH_SYSTEM_OPTION_LIST: HealthSystemType[] = [
     ],
   },
   {
-    key: 'DIGESTIVE',
+    key: 'DIGESTIVE_METABOLIC',
     label: '소화 대사계',
     icon: DigestiveIcon,
     bodyPartList: [
@@ -85,7 +85,7 @@ export const HEALTH_SYSTEM_OPTION_LIST: HealthSystemType[] = [
     ],
   },
   {
-    key: 'IMMUNE',
+    key: 'IMMUNE_SYSTEM',
     label: '신체 방어\n및 면역계',
     icon: ImmuneDefenseIcon,
     isTwoLine: true,
@@ -106,7 +106,7 @@ export const HEALTH_SYSTEM_OPTION_LIST: HealthSystemType[] = [
     ],
   },
   {
-    key: 'REPRODUCTIVE',
+    key: 'REPRODUCTIVE_URINARY',
     label: '생식\n및 비뇨계',
     icon: ReproductiveIcon,
     isTwoLine: true,

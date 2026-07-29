@@ -33,9 +33,18 @@ const RecommendedIngredientCard = ({
         onClick && 'cursor-pointer hover:bg-[rgba(127,153,255,0.2)]',
       )}
     >
-      {/* 1. 성분 이미지 영역 (omega3-bottle 임시 사용) */}
+      {/* 1. 성분 이미지 영역 (서버에서 받은 이미지 URL이 있으면 이미지를 그리고, 없으면 기본 아이콘 표시) */}
       <div className='flex w-[54px] shrink-0 items-center justify-center self-center overflow-visible'>
-        <Omega3BottleIcon className='h-[80px] w-[54px] object-contain overflow-visible' />
+        {ingredient.imageUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={ingredient.imageUrl}
+            alt={ingredient.name}
+            className='block h-[80px] w-[54px] object-contain overflow-visible'
+          />
+        ) : (
+          <Omega3BottleIcon className='h-[80px] w-[54px] object-contain overflow-visible' />
+        )}
       </div>
 
       {/* 2. 우측 상세 정보 영역 */}

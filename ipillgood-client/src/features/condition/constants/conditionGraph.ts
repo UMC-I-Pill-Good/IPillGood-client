@@ -1,4 +1,3 @@
-export const CURRENT_MONTH = 5;
 
 export const GRAPH_WIDTH = 284;
 export const GRAPH_HEIGHT = 166;

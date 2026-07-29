@@ -10,7 +10,6 @@ import ConditionWeekDetailModal from '../condition-week-detail-modal/ConditionWe
 import ConditionGraphSvg from './ConditionGraphSvg';
 
 import {
-  CURRENT_MONTH,
   AXIS_LEFT,
   AXIS_BOTTOM,
   SCORE_INTERVAL,
@@ -91,7 +90,7 @@ const ConditionGraphSection = () => {
         <div className='flex w-full flex-col gap-2'>
           <div className='flex w-full flex-col items-start gap-1'>
             <h2 className='text-lg font-semibold leading-normal text-black'>
-              {CURRENT_MONTH}월 컨디션 변화 그래프
+              {homeSummaryData.month}월 컨디션 변화 그래프
             </h2>
             <p className='text-xs font-medium leading-normal text-point-900'>
               각 주차의 점을 클릭해 상세 정보를 확인해 보세요!
@@ -110,7 +109,7 @@ const ConditionGraphSection = () => {
               </button>
 
               <p className='typo-body-10 w-6 text-center text-black'>
-                {CURRENT_MONTH}월
+                {homeSummaryData.month}월
               </p>
 
               <button
@@ -124,7 +123,7 @@ const ConditionGraphSection = () => {
 
             {/* 분리된 꺾은선 SVG 그래프 컴포넌트 */}
             <ConditionGraphSvg
-              currentMonth={CURRENT_MONTH}
+              currentMonth={homeSummaryData.month}
               graphPointList={graphPointList}
               graphLinePoints={graphLinePoints}
               hoveredPointIndex={hoveredPointIndex}
@@ -143,7 +142,7 @@ const ConditionGraphSection = () => {
       {/* 선택된 주차의 recordId가 존재할 때만 상세 모달 렌더링 */}
       {selectedPoint && selectedPoint.recordId !== undefined && (
         <ConditionWeekDetailModal
-          month={CURRENT_MONTH}
+          month={homeSummaryData.month}
           weekLabel={selectedPoint.weekLabel}
           recordId={selectedPoint.recordId}
           weekStartDate={selectedPoint.weekStartDate}
