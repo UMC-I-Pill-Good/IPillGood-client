@@ -1,25 +1,32 @@
+import { useAtom } from 'jotai';
+import { Control, useFormState, useWatch } from 'react-hook-form';
 import { inputFields } from '@/features/signup/constants/signup.constants';
 import { Input, TextButton } from '@/shared/components';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { SignupType } from '@/features/signup/schemas/authSchema';
+import { getDuplicateCheckId } from '../api/duplicate';
+import { isIdDuplicatedAtom } from '../atoms/signup.atom';
 
 interface SignupInputStepProps {
-  register: UseFormRegister<SignupType>;
-  errors: FieldErrors<SignupType>;
-  idValue: string;
-  isIdDuplicated: boolean;
-  onDuplicateCheck: () => void;
-  onIdChange: () => void;
+  control: Control<SignupType>;
+  register: ReturnType<typeof import('react-hook-form').useForm<SignupType>>['register'];
 }
 
-const SignupInputStep = ({
-  register,
-  errors,
-  idValue,
-  isIdDuplicated,
-  onDuplicateCheck,
-  onIdChange,
-}: SignupInputStepProps) => {
+const SignupInputStep = ({ control, register }: SignupInputStepProps) => {
+  const { errors } = useFormState({ control }); // 이 컴포넌트만 에러 상태 구독
+  const idValue = useWatch({ control, name: 'id' }); // watch도 이 컴포넌트로 국한
+  const [isIdDuplicated, setIsIdDuplicated] = useAtom(isIdDuplicatedAtom);
+
+  const handleDuplicateCheck = async () => {
+    if (!idValue.trim()) return;
+    try {
+      const response = await getDuplicateCheckId(idValue);
+      if (response.isSuccess) setIsIdDuplicated(true);
+    } catch (error) {
+      setIsIdDuplicated(false);
+      console.error(error);
+    }
+  };
+
   return (
     <section className='space-y-2 py-4'>
       {inputFields.map((field) => (
@@ -27,9 +34,7 @@ const SignupInputStep = ({
           <Input
             {...register(field.name, {
               onChange: () => {
-                if (field.name === 'id') {
-                  onIdChange();
-                }
+                if (field.name === 'id') setIsIdDuplicated(false);
               },
             })}
             id={field.name}
@@ -50,7 +55,7 @@ const SignupInputStep = ({
                 variant='secondary'
                 className='h-10 px-3'
                 disabled={!idValue.trim()}
-                onClick={onDuplicateCheck}
+                onClick={handleDuplicateCheck}
               />
             </div>
           )}

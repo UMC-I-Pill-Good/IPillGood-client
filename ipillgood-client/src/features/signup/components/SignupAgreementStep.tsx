@@ -1,25 +1,17 @@
+import Link from 'next/link';
 import { CheckboxButton } from '@/shared/components';
 import { agreementLists } from '@/features/signup/constants/signup.constants';
-import Link from 'next/link';
+import { useAgreementStore } from '../stores/useAgreementStore';
 
-interface SignupAgreementStepProps {
-  checked: {
-    all: boolean;
-    terms: boolean;
-    privacy: boolean;
-    health: boolean;
-    marketing: boolean;
-  };
-  onAllCheck: () => void;
-  onCheck: (key: keyof SignupAgreementStepProps['checked']) => void;
-}
+const SignupAgreementStep = () => {
+  const checked = useAgreementStore((s) => s.checked);
+  const toggleAll = useAgreementStore((s) => s.toggleAll);
+  const toggle = useAgreementStore((s) => s.toggle);
 
-const SignupAgreementStep = ({ checked, onAllCheck, onCheck }: SignupAgreementStepProps) => {
   return (
     <section className='py-4 space-y-2'>
       <div className='bg-white/50 h-12 p-4 rounded-xl glass w-full flex items-center justify-start gap-2'>
-        <CheckboxButton checked={checked.all} onClick={onAllCheck} size='lg' />
-
+        <CheckboxButton checked={checked.all} onClick={toggleAll} size='lg' />
         <p className='typo-body-9'>전체 동의합니다</p>
       </div>
 
@@ -28,7 +20,7 @@ const SignupAgreementStep = ({ checked, onAllCheck, onCheck }: SignupAgreementSt
           {agreementLists.map(({ id, label, href }) => (
             <li key={id} className='flex items-center justify-between'>
               <div className='flex items-center gap-2'>
-                <CheckboxButton checked={checked[id]} onClick={() => onCheck(id)} size='sm' />
+                <CheckboxButton checked={checked[id]} onClick={() => toggle(id)} size='sm' />
                 <p className='typo-body-10'>{label}</p>
               </div>
 
