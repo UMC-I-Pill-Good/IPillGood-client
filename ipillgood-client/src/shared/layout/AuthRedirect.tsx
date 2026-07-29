@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
 
@@ -14,27 +14,31 @@ const AuthRedirect = ({ type, children }: AuthRedirectProps) => {
   const pathname = usePathname();
   const { getAccessToken } = useLocalStorage();
 
-  const hasToken = !!getAccessToken();
-
-  const shouldSkipAuth = pathname.startsWith('/survey');
-
-  const shouldRedirect =
-    !shouldSkipAuth && ((type === 'public' && hasToken) || (type === 'protected' && !hasToken));
+  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
-    // survey는 public에서도 접근 허용
-    if (shouldSkipAuth) return;
+    const hasToken = !!getAccessToken();
+
+    if (pathname.startsWith('/survey')) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setIsChecked(true);
+      return;
+    }
 
     if (type === 'public' && hasToken) {
       router.replace('/home');
+      return;
     }
 
     if (type === 'protected' && !hasToken) {
       router.replace('/login');
+      return;
     }
-  }, [shouldSkipAuth, type, hasToken, router]);
 
-  if (shouldRedirect) {
+    setIsChecked(true);
+  }, [pathname, router, type, getAccessToken]);
+
+  if (!isChecked) {
     return null;
   }
 
