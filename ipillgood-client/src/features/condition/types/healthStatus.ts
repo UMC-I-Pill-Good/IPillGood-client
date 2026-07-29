@@ -37,5 +37,29 @@ export type HealthSystemType = {
   label: string;
   icon: ComponentType<SVGProps<SVGSVGElement>>;
   bodyPartList: HealthBodyPartType[];
-  isTwoLine?: boolean; // 12px 2줄 줄바꿈 적용 여부 플래그
+  isTwoLine?: boolean; 
 };
+
+// 4. GET /api/v1/health-concerns/categories (건강 상태 카테고리 목록 조회)
+export type MinorCategory = {
+  type: string;
+  label: string;
+};
+
+export type MajorCategory = {
+  type: string;
+  label: string;
+  minorCategories: MinorCategory[];
+};
+
+export type HealthConcernCategoriesResult = {
+  majorCategories: MajorCategory[];
+};
+
+export type HealthConcernCategoriesResponse = {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: HealthConcernCategoriesResult;
+};
+
