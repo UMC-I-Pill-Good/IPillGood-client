@@ -15,6 +15,7 @@ const HealthResultContent = () => {
     isValid,
     handleBack,
     handleClose,
+    handleIngredientClick,
   } = useHealthResultFlow();
 
   if (!isValid) {
@@ -83,7 +84,10 @@ const HealthResultContent = () => {
       <HealthDeclineCauseSection declineCause={data.declineCause} />
 
       {/* 3. 추천 성분 섹션 */}
-      <RecommendedIngredientSection ingredientList={data.recommendedIngredients} />
+      <RecommendedIngredientSection
+        ingredientList={data.recommendedIngredients}
+        onIngredientClick={handleIngredientClick}
+      />
     </div>
   );
 };

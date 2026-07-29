@@ -22,6 +22,10 @@ export const useHealthResultFlow = () => {
   const handleBack = () => router.push('/condition/health-status');
   const handleClose = () => router.push('/condition');
 
+  const handleIngredientClick = (ingredientId: number) => {
+    router.push(`/ingredient/${ingredientId}`);
+  };
+
   const isValid = Boolean(majorCategory && minorCategory);
 
   return {
@@ -33,5 +37,6 @@ export const useHealthResultFlow = () => {
     isValid,
     handleBack,
     handleClose,
+    handleIngredientClick,
   };
 };
