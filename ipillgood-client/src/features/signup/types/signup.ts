@@ -5,7 +5,7 @@ export type PolicyAgreement = {
   agreed: boolean;
 };
 
-export type RequsestSignup = {
+export type RequestSignup = {
   nickname: string;
   username: string;
   email: string;

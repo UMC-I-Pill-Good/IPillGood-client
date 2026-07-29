@@ -1,7 +1,7 @@
 import { axiosInstance } from '@/app/api/api';
-import { RequsestSignup, ResponseSignup } from '../types/signup';
+import { RequestSignup, ResponseSignup } from '../types/signup';
 
-export const postSignup = async (body: RequsestSignup): Promise<ResponseSignup> => {
+export const postSignup = async (body: RequestSignup): Promise<ResponseSignup> => {
   const { data } = await axiosInstance.post('/auth/signup', body);
 
   return data;

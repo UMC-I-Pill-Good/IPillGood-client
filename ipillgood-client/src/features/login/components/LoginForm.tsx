@@ -6,14 +6,37 @@ import { TextButton } from '@/shared/components';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { postLogin } from '../api/login';
+import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
+import { useMutation } from '@tanstack/react-query';
 
 const LoginForm = () => {
   const router = useRouter();
+  const { setTokens } = useLocalStorage();
 
   const [idValue, setIdValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
   const isValid = idValue.trim() !== '' && passwordValue.trim() !== '';
+
+  const loginMutation = useMutation({
+    mutationFn: postLogin,
+    onSuccess: ({ result }) => {
+      const { accessToken, refreshToken, onboardingCompleted } = result;
+
+      setTokens(accessToken, refreshToken);
+
+      if (onboardingCompleted) {
+        router.push('/home');
+      } else {
+        router.push('/survey?step=1');
+      }
+    },
+    onError: (error) => {
+      console.error(error);
+      alert('아이디 또는 비밀번호를 확인해주세요.');
+    },
+  });
 
   // 로그인 폼 제출 핸들러
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -24,13 +47,10 @@ const LoginForm = () => {
       return;
     }
 
-    console.log({
-      id: idValue,
+    loginMutation.mutate({
+      username: idValue,
       password: passwordValue,
     });
-
-    // login API 호출
-    router.push('/survey');
   };
 
   return (
