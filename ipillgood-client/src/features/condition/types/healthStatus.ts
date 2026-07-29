@@ -1,3 +1,4 @@
+import { type CommonResponse } from '@/shared/types/api';
 import type { ComponentType, SVGProps } from 'react';
 
 // 1. GET /api/v1/health-concerns/recommendations (건강 상태 추천 성분 조회)
@@ -18,12 +19,7 @@ export type HealthConcernRecommendationsResult = {
   recommendedIngredients: IngredientSummary[];
 };
 
-export type HealthConcernRecommendationsResponse = {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: HealthConcernRecommendationsResult;
-};
+export type HealthConcernRecommendationsResponse = CommonResponse<HealthConcernRecommendationsResult>;
 
 // 3. UI 정적 객체 기반 렌더링용 타입
 export type HealthBodyPartType = {
@@ -56,10 +52,5 @@ export type HealthConcernCategoriesResult = {
   majorCategories: MajorCategory[];
 };
 
-export type HealthConcernCategoriesResponse = {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: HealthConcernCategoriesResult;
-};
+export type HealthConcernCategoriesResponse = CommonResponse<HealthConcernCategoriesResult>;
 
