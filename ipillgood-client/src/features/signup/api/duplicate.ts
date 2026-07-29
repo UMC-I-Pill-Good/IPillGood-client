@@ -9,3 +9,13 @@ export const getDuplicateCheckId = async (username: string) => {
 
   return data;
 };
+
+export const getDuplicateCheckEmail = async (email: string) => {
+  const { data } = await axiosInstance.get('/auth/check-email', {
+    params: {
+      email,
+    },
+  });
+
+  return data;
+};

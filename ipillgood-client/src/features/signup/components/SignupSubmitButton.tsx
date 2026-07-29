@@ -1,4 +1,3 @@
-// SignupSubmitButton.tsx
 import { Control, useFormState } from 'react-hook-form';
 import { useAtomValue } from 'jotai';
 import { TextButton } from '@/shared/components';
@@ -24,7 +23,7 @@ const SignupSubmitButton = ({ step, control }: SignupSubmitButtonProps) => {
       type='submit'
       text={step === 1 ? '다음' : '가입 완료'}
       size='xl'
-      className='w-full'
+      className='w-full mt-auto mb-2.5'
       disabled={disabled}
     />
   );

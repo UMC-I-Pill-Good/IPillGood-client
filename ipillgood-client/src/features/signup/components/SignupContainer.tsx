@@ -28,21 +28,19 @@ const SignupContainer = () => {
             {step === 1 && <SignupInputStep control={control} register={register} />}
             {step === 2 && <SignupAgreementStep />}
 
-            <section className='mt-auto space-y-2.5'>
-              <SignupSubmitButton step={step} control={control} />
-
-              {step === 1 && (
-                <div className='text-center'>
-                  <p className='text-neutral-800'>
-                    이미 계정이 있으신가요?{' '}
-                    <Link href='/login' className='text-black transition hover:underline'>
-                      로그인
-                    </Link>
-                  </p>
-                </div>
-              )}
-            </section>
+            <SignupSubmitButton step={step} control={control} />
           </form>
+
+          {step === 1 && (
+            <div className='text-center'>
+              <p className='text-neutral-800'>
+                이미 계정이 있으신가요?{' '}
+                <Link href='/login' className='text-black transition hover:underline'>
+                  로그인
+                </Link>
+              </p>
+            </div>
+          )}
         </>
       )}
 

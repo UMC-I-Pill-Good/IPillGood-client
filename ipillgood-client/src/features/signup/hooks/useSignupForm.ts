@@ -1,11 +1,11 @@
-// features/signup/hooks/useSignupForm.ts
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useSetAtom } from 'jotai';
 import { signupSchema, SignupType } from '@/features/signup/schemas/authSchema';
 import { postSignup } from '../api/signup';
-import { isIdDuplicatedAtom } from '../atoms/signup.atom';
+import { getDuplicateCheckEmail } from '../api/duplicate';
+import { isIdDuplicatedAtom, emailDuplicatedAtom } from '../atoms/signup.atom';
 import { useAgreementStore } from '../stores/useAgreementStore';
 
 export const useSignupForm = () => {
@@ -14,6 +14,7 @@ export const useSignupForm = () => {
   const step = Number(searchParams.get('step') ?? 1);
 
   const setIsIdDuplicated = useSetAtom(isIdDuplicatedAtom);
+  const setEmailServerErrorMessage = useSetAtom(emailDuplicatedAtom);
   const checked = useAgreementStore((s) => s.checked);
 
   const form = useForm<SignupType>({
@@ -32,7 +33,20 @@ export const useSignupForm = () => {
 
   const onSubmit = form.handleSubmit(async (data) => {
     if (step === 1) {
-      router.push('/signup?step=2');
+      try {
+        const response = await getDuplicateCheckEmail(data.email);
+
+        if (!response.isSuccess) {
+          setEmailServerErrorMessage(response.message ?? '이미 사용 중인 이메일입니다.');
+          return; // 중복이면 다음 스텝으로 넘어가지 않음
+        }
+
+        setEmailServerErrorMessage(null);
+        router.push('/signup?step=2');
+      } catch (err) {
+        console.error(err);
+        setEmailServerErrorMessage('이미 사용 중인 이메일입니다.');
+      }
       return;
     }
 

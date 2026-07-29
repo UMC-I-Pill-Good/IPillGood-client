@@ -5,7 +5,7 @@ import { inputFields } from '@/features/signup/constants/signup.constants';
 import { Input, TextButton } from '@/shared/components';
 import { SignupType } from '@/features/signup/schemas/authSchema';
 import { getDuplicateCheckId } from '../api/duplicate';
-import { isIdDuplicatedAtom } from '../atoms/signup.atom';
+import { emailDuplicatedAtom, isIdDuplicatedAtom } from '../atoms/signup.atom';
 
 interface SignupInputStepProps {
   control: Control<SignupType>;
@@ -18,8 +18,9 @@ const SignupInputStep = ({ control, register }: SignupInputStepProps) => {
   const [isIdDuplicated, setIsIdDuplicated] = useAtom(isIdDuplicatedAtom);
 
   const [idServerErrorMessage, setIdServerErrorMessage] = useState<string | null>(null);
+  const [emailServerErrorMessage, setEmailServerErrorMessage] = useAtom(emailDuplicatedAtom);
 
-  const handleDuplicateCheck = async () => {
+  const handleIdDuplicateCheck = async () => {
     if (!idValue.trim()) return;
     try {
       const response = await getDuplicateCheckId(idValue);
@@ -34,20 +35,25 @@ const SignupInputStep = ({ control, register }: SignupInputStepProps) => {
   return (
     <section className='space-y-2 py-4'>
       {inputFields.map((field) => {
-        const isIdField = field.name === 'id';
-        // id 필드는 서버 메시지가 있으면 그걸 우선, 없으면 zod 메시지
-        const idErrorMessage = isIdField
-          ? (idServerErrorMessage ?? errors[field.name]?.message)
-          : errors[field.name]?.message;
+        const errorMessage =
+          field.name === 'id'
+            ? (idServerErrorMessage ?? errors.id?.message)
+            : field.name === 'email'
+              ? (emailServerErrorMessage ?? errors.email?.message)
+              : errors[field.name]?.message;
 
         return (
           <div key={field.name} className='flex gap-2'>
             <Input
               {...register(field.name, {
                 onChange: () => {
-                  if (isIdField) {
+                  if (field.name === 'id') {
                     setIsIdDuplicated(false);
-                    setIdServerErrorMessage(null); // 값 바뀌면 서버 메시지 초기화 -> zod로 복귀
+                    setIdServerErrorMessage(null);
+                  }
+
+                  if (field.name === 'email') {
+                    setEmailServerErrorMessage(null);
                   }
                 },
               })}
@@ -55,8 +61,10 @@ const SignupInputStep = ({ control, register }: SignupInputStepProps) => {
               type={field.type}
               label={field.label}
               placeholder={field.placeholder}
-              error={idErrorMessage}
-              successMessage={isIdField && isIdDuplicated ? '사용 가능한 아이디입니다.' : undefined}
+              error={errorMessage}
+              successMessage={
+                field.name === 'id' && isIdDuplicated ? '사용 가능한 아이디입니다.' : undefined
+              }
             />
 
             {field.isDuplicateCheck && (
@@ -67,7 +75,7 @@ const SignupInputStep = ({ control, register }: SignupInputStepProps) => {
                   variant='secondary'
                   className='h-10 px-3'
                   disabled={!idValue.trim()}
-                  onClick={handleDuplicateCheck}
+                  onClick={handleIdDuplicateCheck}
                 />
               </div>
             )}
