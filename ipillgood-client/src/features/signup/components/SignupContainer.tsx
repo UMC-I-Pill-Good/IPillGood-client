@@ -12,6 +12,8 @@ import StepNavigation from './StepNavigation';
 import SignupInputStep from './SignupInputStep';
 import SignupAgreementStep from './SignupAgreementStep';
 import SignupCompleteStep from './SignupCompleteStep';
+import { postSignup } from '../api/signup';
+import { getDuplicateCheckId } from '../api/duplicate';
 
 const SignupContainer = () => {
   const router = useRouter();
@@ -93,11 +95,19 @@ const SignupContainer = () => {
   });
 
   // 아이디 중복확인 처리
-  const handleDuplicateCheck = () => {
+  const handleDuplicateCheck = async () => {
     if (!idValue.trim()) return;
 
-    // API 호출
-    setIsIdDuplicated(true);
+    try {
+      const response = await getDuplicateCheckId(idValue);
+
+      if (response.isSuccess) {
+        setIsIdDuplicated(true);
+      }
+    } catch (error) {
+      setIsIdDuplicated(false);
+      console.error(error);
+    }
   };
 
   // 폼 제출 처리: 1단계에서는 다음 단계로만 이동, 2단계에서는 실제 가입 처리
@@ -108,9 +118,35 @@ const SignupContainer = () => {
         return;
       }
 
-      console.log('회원가입 성공:', data);
+      const request = {
+        nickname: data.nickname,
+        username: data.id,
+        email: data.email,
+        password: data.password,
+        passwordConfirm: data.passwordConfirm,
+        policyAgreements: [
+          {
+            policyDocumentId: 1,
+            agreed: checked.terms,
+          },
+          {
+            policyDocumentId: 2,
+            agreed: checked.privacy,
+          },
+          {
+            policyDocumentId: 3,
+            agreed: checked.health,
+          },
+          {
+            policyDocumentId: 4,
+            agreed: checked.marketing,
+          },
+        ],
+      };
 
-      // await signup(data);
+      const response = await postSignup(request);
+
+      console.log(response);
 
       router.push('/signup?step=3');
     } catch (err) {
@@ -179,7 +215,7 @@ const SignupContainer = () => {
         </>
       )}
 
-      {step === 3 && <SignupCompleteStep onRouter={() => router.push('/survey?step=1')} />}
+      {step === 3 && <SignupCompleteStep />}
     </main>
   );
 };
