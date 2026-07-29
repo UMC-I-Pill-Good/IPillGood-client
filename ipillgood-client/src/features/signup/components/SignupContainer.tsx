@@ -7,7 +7,7 @@ import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signupSchema, SignupType } from '@/features/signup/schemas/authSchema';
 import { TextButton } from '@/shared/components';
-import { StepHeader } from '@/shared/layout/StepHeader';
+import StepHeader from '@/shared/layout/StepHeader';
 import StepNavigation from './StepNavigation';
 import SignupInputStep from './SignupInputStep';
 import SignupAgreementStep from './SignupAgreementStep';

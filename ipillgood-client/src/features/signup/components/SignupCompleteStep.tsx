@@ -14,7 +14,7 @@ const SignupCompleteStep = () => {
         </p>
       </div>
 
-      <TextButton text='초기 설문 시작하기' size='xl' className='w-full mt-auto' href='/survey' />
+      <TextButton text='로그인하러 가기' size='xl' className='w-full mt-auto' href='/login' />
     </section>
   );
 };
