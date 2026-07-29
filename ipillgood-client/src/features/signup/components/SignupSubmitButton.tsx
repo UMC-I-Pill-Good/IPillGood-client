@@ -16,7 +16,8 @@ const SignupSubmitButton = ({ step, control }: SignupSubmitButtonProps) => {
   const isRequiredChecked = useIsRequiredChecked();
 
   const disabled =
-    (step === 1 && (!isValid || !isIdDuplicated)) || (step === 2 && !isRequiredChecked);
+    (step === 1 && (!isValid || !isIdDuplicated)) ||
+    (step === 2 && (!isRequiredChecked || !isValid));
 
   return (
     <TextButton

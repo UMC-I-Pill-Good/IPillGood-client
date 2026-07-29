@@ -31,7 +31,7 @@ const LoginForm = () => {
       }
     },
     onError: (error) => {
-      console.error(error);
+      console.error('로그인 실패:', error instanceof Error ? error.message : '알 수 없는 오류');
       alert('아이디 또는 비밀번호를 확인해주세요.');
     },
   });

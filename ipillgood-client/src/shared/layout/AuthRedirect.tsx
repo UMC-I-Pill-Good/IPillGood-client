@@ -14,11 +14,16 @@ const AuthRedirect = ({ type, children }: AuthRedirectProps) => {
   const pathname = usePathname();
   const { getAccessToken } = useLocalStorage();
 
-  useEffect(() => {
-    const hasToken = !!getAccessToken();
+  const hasToken = !!getAccessToken();
 
+  const shouldSkipAuth = pathname.startsWith('/survey');
+
+  const shouldRedirect =
+    !shouldSkipAuth && ((type === 'public' && hasToken) || (type === 'protected' && !hasToken));
+
+  useEffect(() => {
     // survey는 public에서도 접근 허용
-    if (pathname.startsWith('/survey')) return;
+    if (shouldSkipAuth) return;
 
     if (type === 'public' && hasToken) {
       router.replace('/home');
@@ -27,7 +32,11 @@ const AuthRedirect = ({ type, children }: AuthRedirectProps) => {
     if (type === 'protected' && !hasToken) {
       router.replace('/login');
     }
-  }, [pathname, router, type, getAccessToken]);
+  }, [shouldSkipAuth, type, hasToken, router]);
+
+  if (shouldRedirect) {
+    return null;
+  }
 
   return children;
 };

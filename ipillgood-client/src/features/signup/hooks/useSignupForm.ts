@@ -5,15 +5,17 @@ import { useSetAtom } from 'jotai';
 import { signupSchema, SignupType } from '@/features/signup/schemas/authSchema';
 import { postSignup } from '../api/signup';
 import { getDuplicateCheckEmail } from '../api/duplicate';
-import { isIdDuplicatedAtom, emailDuplicatedAtom } from '../atoms/signup.atom';
+import { emailDuplicatedAtom } from '../atoms/signup.atom';
 import { useAgreementStore } from '../stores/useAgreementStore';
+import { useCallback } from 'react';
 
 export const useSignupForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const step = Number(searchParams.get('step') ?? 1);
 
-  const setIsIdDuplicated = useSetAtom(isIdDuplicatedAtom);
+  const parsedStep = Number(searchParams.get('step'));
+  const step = [1, 2, 3].includes(parsedStep) ? parsedStep : 1;
+
   const setEmailServerErrorMessage = useSetAtom(emailDuplicatedAtom);
   const checked = useAgreementStore((s) => s.checked);
 
@@ -23,13 +25,13 @@ export const useSignupForm = () => {
     defaultValues: { nickname: '', id: '', email: '', password: '', passwordConfirm: '' },
   });
 
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
     if (step === 1) {
       router.back();
       return;
     }
     router.push('/signup?step=1');
-  };
+  }, [step, router]);
 
   const onSubmit = form.handleSubmit(async (data) => {
     if (step === 1) {
@@ -66,13 +68,14 @@ export const useSignupForm = () => {
       };
 
       await postSignup(request);
+      useAgreementStore.getState().reset();
       router.push('/signup?step=3');
     } catch (err) {
       console.error(err);
+      alert('회원가입에 실패했습니다. 다시 진행해주세요.');
+      router.push('/signup?step=1');
     }
   });
-
-  const resetIdCheck = () => setIsIdDuplicated(false);
 
   return {
     step,
@@ -80,6 +83,5 @@ export const useSignupForm = () => {
     register: form.register,
     handleBack,
     onSubmit,
-    resetIdCheck,
   };
 };

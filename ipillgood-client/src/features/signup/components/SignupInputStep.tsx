@@ -15,18 +15,28 @@ interface SignupInputStepProps {
 const SignupInputStep = ({ control, register }: SignupInputStepProps) => {
   const { errors } = useFormState({ control });
   const idValue = useWatch({ control, name: 'id' });
-  const [isIdDuplicated, setIsIdDuplicated] = useAtom(isIdDuplicatedAtom);
+  const [isIdChecked, setIsIdChecked] = useAtom(isIdDuplicatedAtom);
 
   const [idServerErrorMessage, setIdServerErrorMessage] = useState<string | null>(null);
   const [emailServerErrorMessage, setEmailServerErrorMessage] = useAtom(emailDuplicatedAtom);
 
+  // 아이디 중복 체크
   const handleIdDuplicateCheck = async () => {
     if (!idValue.trim()) return;
+
     try {
       const response = await getDuplicateCheckId(idValue);
-      if (response.isSuccess) setIsIdDuplicated(true);
+
+      if (!response.isSuccess) {
+        setIsIdChecked(false);
+        setIdServerErrorMessage(response.message ?? '이미 사용 중인 아이디입니다.');
+        return;
+      }
+
+      setIsIdChecked(true);
+      setIdServerErrorMessage(null);
     } catch (error) {
-      setIsIdDuplicated(false);
+      setIsIdChecked(false);
       setIdServerErrorMessage('이미 사용 중인 아이디입니다.');
       console.error(error);
     }
@@ -48,7 +58,7 @@ const SignupInputStep = ({ control, register }: SignupInputStepProps) => {
               {...register(field.name, {
                 onChange: () => {
                   if (field.name === 'id') {
-                    setIsIdDuplicated(false);
+                    setIsIdChecked(false);
                     setIdServerErrorMessage(null);
                   }
 
@@ -63,7 +73,7 @@ const SignupInputStep = ({ control, register }: SignupInputStepProps) => {
               placeholder={field.placeholder}
               error={errorMessage}
               successMessage={
-                field.name === 'id' && isIdDuplicated ? '사용 가능한 아이디입니다.' : undefined
+                field.name === 'id' && isIdChecked ? '사용 가능한 아이디입니다.' : undefined
               }
             />
 
