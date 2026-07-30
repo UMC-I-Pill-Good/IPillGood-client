@@ -4,13 +4,9 @@ import { MascotBigIcon } from '@/assets';
 import { TextButton } from '@/shared/components';
 import { Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useBlockBackNavigation } from '../../hooks/useBlockBackNavigation';
 
 const WithdrawCompleteSection = () => {
   const router = useRouter();
-
-  // 뒤로가기 시 이전 화면 대신 로그인 페이지로 이동
-  useBlockBackNavigation(() => router.replace('/login'));
 
   return (
     <section className='flex flex-col flex-1 items-center justify-center pt-12.75 pb-20 px-5'>
