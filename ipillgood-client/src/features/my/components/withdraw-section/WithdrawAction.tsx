@@ -1,14 +1,18 @@
 'use client';
 
+import { useState } from 'react';
 import { CheckboxButton, TextButton } from '@/shared/components';
-import { useWithdrawAction } from '@/features/my/hooks/useWithdrawAction';
+import { useWithdraw } from '../../hooks/useWithdraw';
 
 interface WithdrawActionProps {
   onWithdrawSuccess: () => void;
 }
 
 const WithdrawAction = ({ onWithdrawSuccess }: WithdrawActionProps) => {
-  const { isAgreed, handleToggleAgree, handleClickWithdraw } = useWithdrawAction(onWithdrawSuccess);
+  const [isAgreed, setIsAgreed] = useState(false);
+  const { handleClickWithdraw, isWithdrawing } = useWithdraw(onWithdrawSuccess);
+
+  const handleToggleAgree = () => setIsAgreed((v) => !v);
 
   return (
     <>
@@ -25,7 +29,7 @@ const WithdrawAction = ({ onWithdrawSuccess }: WithdrawActionProps) => {
         text='탈퇴하기'
         size='xl'
         onClick={handleClickWithdraw}
-        disabled={!isAgreed}
+        disabled={!isAgreed || isWithdrawing}
         className='w-full mt-auto'
       />
     </>

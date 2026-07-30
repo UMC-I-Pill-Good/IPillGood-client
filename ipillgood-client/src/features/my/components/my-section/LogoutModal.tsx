@@ -5,9 +5,10 @@ interface LogoutModalProps {
   nickname: string;
   onConfirm: () => void;
   onCancel: () => void;
+  isPending?: boolean;
 }
 
-const LogoutModal = ({ nickname, onConfirm, onCancel }: LogoutModalProps) => {
+const LogoutModal = ({ nickname, onConfirm, onCancel, isPending }: LogoutModalProps) => {
   return (
     <ModalShell
       onClose={onCancel}
@@ -39,6 +40,7 @@ const LogoutModal = ({ nickname, onConfirm, onCancel }: LogoutModalProps) => {
           variant='primary'
           size='sm'
           onClick={onConfirm}
+          disabled={isPending}
           className='flex-1 shadow-[4px_4px_4px_0px__rgba(0,0,0,0.15)]'
         />
       </div>

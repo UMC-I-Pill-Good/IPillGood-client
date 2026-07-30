@@ -1,27 +1,24 @@
 'use client';
 
+import { useState } from 'react';
 import { Input, TextButton } from '@/shared/components';
-import { useProfileForm } from '../../hooks/useProfileForm';
+import { useNicknameChange } from '../../hooks/useNicknameChange';
 import PasswordChangeSheet from './PasswordChangeSheet';
 
 const ProfileSection = () => {
-  const {
-    nickname,
-    canChangePassword,
-    isPasswordSheetOpen,
-    setIsPasswordSheetOpen,
-    handleNicknameChange,
-    handleOpenPasswordSheet,
-    handleSave,
-  } = useProfileForm();
+  const [isPasswordSheetOpen, setIsPasswordSheetOpen] = useState(false);
+
+  const { nickname, nicknameError, canChangePassword, isSaving, handleNicknameChange, handleSave } =
+    useNicknameChange();
 
   return (
-    <section className='flex flex-col px-5 pt-4 flex-1 pb-20'>
+    <section className='flex flex-col px-5 pt-4 flex-1 pb-22'>
       <h2 className='typo-body-5 text-black mb-8'>회원가입 시 입력한 정보를 수정할 수 있어요!</h2>
 
       <Input
         label='닉네임'
         value={nickname}
+        error={nicknameError}
         onChange={handleNicknameChange}
         placeholder='닉네임을 입력해주세요.'
         inputClassName='px-6 py-2 text-neutral-800 font-medium!'
@@ -34,7 +31,7 @@ const ProfileSection = () => {
           variant='outline'
           size='xl'
           className='w-full mt-auto'
-          onClick={handleOpenPasswordSheet}
+          onClick={() => setIsPasswordSheetOpen(true)}
         />
       )}
 
@@ -45,6 +42,7 @@ const ProfileSection = () => {
         size='xl'
         className='w-full mt-2.5'
         onClick={handleSave}
+        disabled={isSaving}
       />
 
       <PasswordChangeSheet open={isPasswordSheetOpen} onOpenChange={setIsPasswordSheetOpen} />
