@@ -8,5 +8,6 @@ export const useMyInfo = () => {
     queryKey: myInfoQueryKey,
     queryFn: getMyInfo,
     select: (res) => res.result,
+    staleTime: 1000 * 60 * 5,
   });
 };
