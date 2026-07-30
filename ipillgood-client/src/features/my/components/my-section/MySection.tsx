@@ -1,5 +1,5 @@
 import ProfileCard from './ProfileCard';
-import LogoutSection from './LogoutButton';
+import LogoutSection from './LogoutSection';
 import MenuListSection from './MenuListSection';
 
 const MySection = () => {
