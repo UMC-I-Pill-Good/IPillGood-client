@@ -33,8 +33,8 @@ const ConditionStatusBanner = ({
             'shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
           )}
         >
-          <div className='flex flex-row items-center gap-2 mx-auto min-w-0 shrink-0 overflow-visible'>
-            <div className='flex flex-col justify-center gap-0.5 min-w-0 pl-4 flex-1'>
+          <div className='flex flex-row items-center gap-2 mx-auto min-w-0 shrink-0 overflow-visible pl-6'>
+            <div className='flex flex-col justify-center gap-0.5 min-w-0 pt-1'>
               <p className='text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
                 {title}
               </p>
@@ -56,11 +56,11 @@ const ConditionStatusBanner = ({
         /* 2. 체크 미완료 배너 */
         <div
           className={clsx(
-            'relative flex h-[148px] w-full flex-col items-center justify-between rounded-2xl bg-primary-300 pt-3.5 pb-4 px-4 text-left shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
+            'relative flex h-[148px] w-full flex-col items-center justify-between rounded-2xl bg-primary-300 pt-3 pb-4 px-4 text-left shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
           )}
         >
-          <div className='flex flex-row items-center justify-center gap-2 mx-auto min-w-0 shrink-0 w-full'>
-            <div className='flex flex-col justify-center min-w-0 pl-4 flex-1'>
+          <div className='flex flex-row items-center justify-center gap-2 mx-auto min-w-0 shrink-0 w-full pl-6'>
+            <div className='flex flex-col justify-center min-w-0 pt-1'>
               <p className='text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
                 {title}
               </p>
