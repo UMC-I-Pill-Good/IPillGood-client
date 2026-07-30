@@ -5,7 +5,7 @@ import { TextButton } from '@/shared/components';
 
 const AboutSection = () => {
   return (
-    <section className='flex flex-col flex-1 items-center px-5 pt-22 pb-20'>
+    <section className='flex flex-col flex-1 items-center px-5 pt-22 pb-22'>
       <MascotBigIcon />
       <p className='mt-15 mb-1 typo-body-6 text-black'>아필굿은 개인 맞춤 영양 성분 추천을 통해</p>
       <p className='typo-body-6 text-black mb-26'>
