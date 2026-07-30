@@ -6,6 +6,7 @@ import ConditionVitalityModal from './ConditionVitalityModal';
 import ConditionSleepTimeModal from './ConditionSleepTimeModal';
 import ConditionCheckCompleteModal from './ConditionCheckCompleteModal';
 import ConditionSundayIntakeModal from './ConditionSundayIntakeModal';
+import { useMyInfo } from '@/features/my/hooks/useMyInfo';
 
 interface ConditionCheckModalsProps {
   userName?: string;
@@ -14,6 +15,8 @@ interface ConditionCheckModalsProps {
 const ConditionCheckModals = ({
   userName = '아필굿',
 }: ConditionCheckModalsProps) => {
+  const { data: myInfo } = useMyInfo();
+  const displayUserName = myInfo?.nickname ?? userName;
   const {
     isCheckModalOpen,
     isSundayModalOpen,
@@ -86,7 +89,7 @@ const ConditionCheckModals = ({
           {checkStep === 4 && (
             <ConditionCheckCompleteModal
               isOpen={true}
-              userName={userName}
+              userName={displayUserName}
               onClose={closeCheckModal}
               onViewGraph={handleViewGraph}
             />
