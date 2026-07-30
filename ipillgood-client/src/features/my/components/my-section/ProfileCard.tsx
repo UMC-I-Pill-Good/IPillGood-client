@@ -1,15 +1,19 @@
-import { MascotProfileIcon } from '@/assets';
-import { mockMyUser } from '../../mocks/user.mock';
+'use client';
+
 import Link from 'next/link';
+import { useMyInfo } from '../../hooks/useMyInfo';
+import Image from 'next/image';
 
 const ProfileCard = () => {
-  const { nickname } = mockMyUser;
+  const { data } = useMyInfo();
+  const { nickname, profileImageUrl } = data ?? {};
 
   return (
     <div className='flex px-5 py-4 gap-3 bg-linear-[165deg] from-primary-300/50 to-primary-300/70 rounded-[20px] shadow-[0px_4px_4px_0px_rgba(126,131,135,0.10)]'>
       <div className='bg-primary-100 rounded-full w-20 h-20 overflow-hidden'>
-        {/* TODO: 프로필 이미지 3종 랜덤 (미정) */}
-        <MascotProfileIcon />
+        {profileImageUrl && (
+          <Image width={80} height={80} src={profileImageUrl} alt='프로필 사진' />
+        )}
       </div>
       <div className='flex flex-col gap-1.75 justify-center'>
         <p className='text-black typo-body-2'>{nickname}</p>
