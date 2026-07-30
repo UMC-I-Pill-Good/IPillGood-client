@@ -27,7 +27,7 @@ const LogoutSection = () => {
         <LogoutModal
           onConfirm={handleLogout}
           onCancel={() => setIsOpen(false)}
-          nickname={data?.nickname ?? ''}
+          nickname={data?.nickname ?? '회원'}
           isPending={isLoggingOut}
         />
       )}

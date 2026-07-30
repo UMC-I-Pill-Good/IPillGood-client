@@ -16,6 +16,9 @@ export const useLogout = (onSuccess?: () => void) => {
       queryClient.clear();
       router.push('/login');
     },
+    onError: () => {
+      alert('로그아웃에 실패했습니다.');
+    },
   });
 
   const handleLogout = () => {

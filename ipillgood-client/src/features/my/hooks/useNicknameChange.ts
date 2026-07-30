@@ -19,8 +19,8 @@ export const useNicknameChange = () => {
   const [nicknameError, setNicknameError] = useState('');
   const [syncedNickname, setSyncedNickname] = useState<string | undefined>(undefined);
 
-  // data가 처음 도착하거나 서버 값이 바뀌면 렌더링 중에 닉네임을 동기화
-  if (data && data.nickname !== syncedNickname) {
+  // 서버 데이터가 처음 도착했을 때만 닉네임 초기화 (이후 사용자 입력을 서버 재조회가 덮어쓰지 않도록)
+  if (data && syncedNickname === undefined) {
     setSyncedNickname(data.nickname);
     setNickname(data.nickname);
   }

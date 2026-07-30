@@ -32,7 +32,7 @@ const PasswordChangeSheet = ({ open, onOpenChange }: PasswordChangeSheetProps) =
           type='password'
           hasPasswordToggle
           label='새 비밀번호'
-          placeholder='영문, 숫자 포함 8~16자'
+          placeholder='영문, 숫자, 특수문자 포함 8~16자'
           error={errors.newPassword?.message}
           {...register('newPassword')}
         />
