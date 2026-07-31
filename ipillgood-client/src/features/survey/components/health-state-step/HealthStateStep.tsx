@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { TextButton } from '@/shared/components';
+import { FetchError, LoadingSpinner, TextButton } from '@/shared/components';
 import { StepHeader } from '@/shared/layout';
 import { useState } from 'react';
 import { getContraindications } from '@/features/survey/api/ingredients';
 import { questionLabel } from '@/features/survey/constants/healthState.constants';
 
 const HealthStateStep = () => {
-  const { data, isPending, isError } = useQuery({
+  const { data, isPending, isError, refetch } = useQuery({
     queryKey: ['contraindications'],
     queryFn: getContraindications,
   });
@@ -39,8 +39,12 @@ const HealthStateStep = () => {
     });
   };
 
-  if (isPending) return <div>로딩중...</div>;
-  if (isError) return <div>건강 상태 정보를 불러오지 못했습니다.</div>;
+  if (isPending) return <LoadingSpinner />;
+
+  if (isError)
+    return (
+      <FetchError description='건강 상태 정보를 불러오지 못했습니다.' onRetry={() => refetch()} />
+    );
 
   return (
     <section className='pb-8'>
