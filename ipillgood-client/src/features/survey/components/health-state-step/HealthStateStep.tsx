@@ -4,8 +4,11 @@ import { StepHeader } from '@/shared/layout';
 import { useState } from 'react';
 import { getContraindications } from '@/features/survey/api/ingredients';
 import { questionLabel } from '@/features/survey/constants/healthState.constants';
+import { useRouter } from 'next/navigation';
 
 const HealthStateStep = () => {
+  const router = useRouter();
+
   const { data, isPending, isError, refetch } = useQuery({
     queryKey: ['contraindications'],
     queryFn: getContraindications,
@@ -19,9 +22,13 @@ const HealthStateStep = () => {
 
       // "없음" 선택 시 다른 옵션 초기화
       if (option === '없음') {
+        if (current.includes('없음')) {
+          return prev; // 해제하지 않음
+        }
+
         return {
           ...prev,
-          [groupType]: current.includes('없음') ? [] : ['없음'],
+          [groupType]: ['없음'],
         };
       }
 
@@ -47,7 +54,7 @@ const HealthStateStep = () => {
     );
 
   return (
-    <section className='pb-8'>
+    <section className='flex flex-1 flex-col'>
       <StepHeader title='건강 상태를 알려주세요!' desc='안전한 영양제 추천을 위해 꼭 필요해요.' />
 
       <div className='mt-2 space-y-8'>
@@ -87,6 +94,14 @@ const HealthStateStep = () => {
           </section>
         ))}
       </div>
+
+      <TextButton
+        type='button'
+        text='다음'
+        size='xl'
+        className='mt-auto w-full'
+        onClick={() => router.push('/survey?step=4')}
+      />
     </section>
   );
 };

@@ -2,9 +2,8 @@ import { axiosInstance } from '@/app/api/api';
 import { ResponseContraindications, ResponseIngredients } from '../types/ingredients';
 
 export const getContraindications = async (): Promise<ResponseContraindications> => {
-  throw new Error('테스트 에러');
-
   const { data } = await axiosInstance.get('/contraindications');
+
   return data;
 };
 
