@@ -57,8 +57,8 @@ const HealthStateStep = () => {
     <section className='flex flex-1 flex-col'>
       <StepHeader title='건강 상태를 알려주세요!' desc='안전한 영양제 추천을 위해 꼭 필요해요.' />
 
-      <div className='mt-2 space-y-8'>
-        {data?.result.groups.map((group, index) => (
+      <div className='mt-2 space-y-8 mb-8'>
+        {data?.result?.groups?.map((group, index) => (
           <section key={group.type} className='space-y-2'>
             <h5 className='typo-body-5 ml-1'>
               {index + 1}. {questionLabel[group.type]}{' '}

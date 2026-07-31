@@ -81,7 +81,13 @@ const SelectionCard = ({
       onClick={() => onClick(id)}
     >
       {image ? (
-        <Image src={image} alt={label} className='' />
+        <Image
+          src={image}
+          alt={label}
+          width={54}
+          height={54}
+          className='h-18 w-auto object-contain'
+        />
       ) : (
         <span
           className={iconVariants({
