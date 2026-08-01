@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import useEmblaCarousel from 'embla-carousel-react';
+import { type KeyboardEvent } from 'react';
 import { TextButton } from '@/shared/components';
 import { AlternativeFoodType } from '../types/ingredient';
 import AlternativeFoodCard from './AlternativeFoodCard';
@@ -13,7 +14,7 @@ interface AlternativeFoodSectionProps {
 
 const AlternativeFoodSection = ({ alternativeFoods, name }: AlternativeFoodSectionProps) => {
   const router = useRouter();
-  const [emblaRef] = useEmblaCarousel({
+  const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
     dragFree: true,
     containScroll: 'trimSnaps',
@@ -21,6 +22,17 @@ const AlternativeFoodSection = ({ alternativeFoods, name }: AlternativeFoodSecti
 
   const handleSearchClick = () => {
     router.push(`/ranking/result?search=${encodeURIComponent(name)}`);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      emblaApi?.scrollPrev();
+    }
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      emblaApi?.scrollNext();
+    }
   };
 
   return (
@@ -42,6 +54,8 @@ const AlternativeFoodSection = ({ alternativeFoods, name }: AlternativeFoodSecti
             role='region'
             aria-roledescription='carousel'
             aria-label='대체 음식 목록'
+            tabIndex={0}
+            onKeyDown={handleKeyDown}
           >
             <div className='flex gap-1'>
               {alternativeFoods.map((food) => (
