@@ -1,26 +1,48 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaqCategoryType } from '../types/faq.type';
-import { mockFaqList } from '../mocks/faq.mock';
+import { useQuery } from '@tanstack/react-query';
+import { getFaqs } from '../api/support';
 
 export const useFaqFilter = () => {
   const [keyword, setKeyword] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<FaqCategoryType | 'ALL'>('ALL');
 
-  const filteredFaqList = mockFaqList.filter(
-    (faq) =>
-      (selectedCategory === 'ALL' || faq.category === selectedCategory) &&
-      faq.question.includes(keyword),
-  );
+  const { data, isLoading } = useQuery({
+    queryKey: ['faqs', selectedCategory, searchKeyword],
+    queryFn: () =>
+      getFaqs({
+        category: selectedCategory === 'ALL' ? undefined : selectedCategory,
+        keyword: searchKeyword,
+      }),
+    select: (res) => res.result.faqs,
+    staleTime: 1000 * 60 * 60,
+  });
+
+  // 디바운스 적용
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearchKeyword(keyword);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [keyword]);
 
   const handleSelectCategory = (category: FaqCategoryType | 'ALL') => {
     setSelectedCategory(category);
+  };
+
+  const handleSearch = () => {
+    setSearchKeyword(keyword);
   };
 
   return {
     keyword,
     setKeyword,
     selectedCategory,
-    filteredFaqList,
+    filteredFaqList: data ?? [],
+    handleSearch,
+    isLoading,
     handleSelectCategory,
   };
 };
