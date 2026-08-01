@@ -13,7 +13,7 @@ const PolicyDocumentSection = ({ documentType }: PolicyDocumentSectionProps) => 
   const formattedDate = effectiveAt?.slice(0, 10).replaceAll('-', '.');
 
   return (
-    <section className='flex flex-col px-5 py-4 gap-8'>
+    <section className='flex flex-col px-5 py-4 gap-8 pb-25.5'>
       {isLoading ? (
         <div className='w-24 h-3.5 rounded animate-pulse bg-neutral-100' />
       ) : (
