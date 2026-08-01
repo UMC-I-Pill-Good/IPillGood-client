@@ -8,9 +8,18 @@ interface PolicyDocumentSectionProps {
 }
 
 const PolicyDocumentSection = ({ documentType }: PolicyDocumentSectionProps) => {
-  const { data, isLoading } = usePolicyDocument(documentType);
+  const { data, isLoading, isError } = usePolicyDocument(documentType);
   const { content, effectiveAt } = data ?? {};
   const formattedDate = effectiveAt?.slice(0, 10).replaceAll('-', '.');
+
+  // 임시 (UI 미정)
+  if (isError || (!isLoading && !data)) {
+    return (
+      <section className='flex flex-col px-5 py-4 gap-8 pb-25.5'>
+        <p className='typo-caption-1 text-neutral-800'>문서를 불러오지 못했습니다.</p>
+      </section>
+    );
+  }
 
   return (
     <section className='flex flex-col px-5 py-4 gap-8 pb-25.5'>
