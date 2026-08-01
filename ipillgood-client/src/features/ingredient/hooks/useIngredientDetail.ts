@@ -6,5 +6,6 @@ export const useIngredientDetail = (ingredientId: number) => {
     queryKey: ['ingredientDetail', ingredientId],
     queryFn: () => getIngredientDetail(ingredientId),
     select: (res) => res.result,
+    staleTime: 1000 * 60 * 5,
   });
 };
