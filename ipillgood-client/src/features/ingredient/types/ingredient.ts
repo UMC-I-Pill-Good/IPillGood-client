@@ -1,9 +1,9 @@
-export type CombinationSafetyType = 'CAUTION' | 'GOOD';
+import { CommonResponse } from '@/shared/types';
 
 export type ContraindicatedCombinationType = {
   targetIngredientId: number;
   targetIngredientName: string;
-  type: CombinationSafetyType;
+  type: 'CAUTION';
   reason: string | null;
 };
 
@@ -25,3 +25,5 @@ export type IngredientDetailType = {
   hasCabinetProduct: boolean;
   alternativeFoods: AlternativeFoodType[];
 };
+
+export type IngredientDetailResponseType = CommonResponse<IngredientDetailType>;
