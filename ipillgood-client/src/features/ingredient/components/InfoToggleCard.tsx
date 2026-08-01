@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { KeyboardEvent, ReactNode, useState } from 'react';
 
 interface InfoToggleCardProps {
   title: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
   items: string[];
 }
 
@@ -13,7 +13,7 @@ const InfoToggleCard = ({ title, icon, items }: InfoToggleCardProps) => {
 
   const handleToggleExpand = () => setIsExpanded((prev) => !prev);
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
     if (event.key !== 'Enter' && event.key !== ' ') return;
     event.preventDefault();
     handleToggleExpand();
@@ -26,7 +26,7 @@ const InfoToggleCard = ({ title, icon, items }: InfoToggleCardProps) => {
       onClick={handleToggleExpand}
       onKeyDown={handleKeyDown}
       aria-expanded={isExpanded}
-      className='pt-2.5 pl-3.5 pr-2.75 pb-3 bg-linear-[135deg] from-primary-600/10 to-primary-600/20 rounded-[20px] shadow-[0px_4px_4px_0px_rgba(126,131,135,0.1),inset_-2px_-2px_4px_0px_rgba(0,0,0,0.03)] cursor-pointer'
+      className='pt-2.5 pl-3.5 pr-2.75 pb-3 bg-linear-[135deg] from-primary-600/15 to-primary-600/20 rounded-[20px] shadow-[0px_4px_4px_0px_rgba(126,131,135,0.1),inset_-2px_-2px_4px_0px_rgba(0,0,0,0.03)] cursor-pointer'
     >
       <div className='flex justify-between items-start h-18'>
         <h2 className='whitespace-pre-line typo-body-6 text-primary-700'>{title}</h2>
