@@ -1,11 +1,11 @@
-import { PrivacyPolicySection } from '@/features/policy/components';
+import PolicyDocumentSection from '@/features/policy/components/PolicyDocumentSection';
 import { Header } from '@/shared/layout';
 
 const PrivacyPolicyPage = () => {
   return (
     <main>
       <Header title='개인정보 처리방침' />
-      <PrivacyPolicySection />
+      <PolicyDocumentSection documentType='PRIVACY_COLLECTION' />
     </main>
   );
 };
