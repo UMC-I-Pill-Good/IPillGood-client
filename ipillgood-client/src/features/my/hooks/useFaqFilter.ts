@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FaqCategoryType } from '../types/faq.type';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { getFaqs } from '../api/support';
 
 export const useFaqFilter = () => {
@@ -8,15 +8,16 @@ export const useFaqFilter = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<FaqCategoryType | 'ALL'>('ALL');
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ['faqs', selectedCategory, searchKeyword],
     queryFn: () =>
       getFaqs({
         category: selectedCategory === 'ALL' ? undefined : selectedCategory,
-        keyword: searchKeyword,
+        keyword: searchKeyword || undefined,
       }),
     select: (res) => res.result.faqs,
     staleTime: 1000 * 60 * 60,
+    placeholderData: keepPreviousData,
   });
 
   // 디바운스 적용
@@ -43,6 +44,7 @@ export const useFaqFilter = () => {
     filteredFaqList: data ?? [],
     handleSearch,
     isLoading,
+    isError,
     handleSelectCategory,
   };
 };

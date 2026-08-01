@@ -15,10 +15,43 @@ const FaqSection = () => {
     filteredFaqList,
     handleSearch,
     isLoading,
+    isError,
     handleSelectCategory,
   } = useFaqFilter();
 
   const { data } = useSupport();
+
+  const renderFaqList = () => {
+    if (isLoading) {
+      // 임시 UI
+      return (
+        <div className='flex flex-col items-center py-5'>
+          <div className='w-24 h-3.5 rounded animate-pulse bg-neutral-100' />
+        </div>
+      );
+    }
+
+    if (isError) {
+      // 임시 UI
+      return (
+        <div className='flex flex-col items-center py-5'>
+          <MascotSadIcon />
+          <p className='typo-body-6 text-primary-700'>FAQ를 불러오지 못했습니다.</p>
+        </div>
+      );
+    }
+
+    if (filteredFaqList.length === 0) {
+      return (
+        <div className='flex flex-col items-center py-5'>
+          <MascotSadIcon />
+          <p className='typo-body-6 text-primary-700'>검색 결과가 존재하지 않아요...</p>
+        </div>
+      );
+    }
+
+    return <FaqAccordion faqList={filteredFaqList} />;
+  };
 
   return (
     <section className='px-5 pt-4 pb-22 flex-1 flex flex-col'>
@@ -37,19 +70,7 @@ const FaqSection = () => {
         onSelectCategory={handleSelectCategory}
       />
 
-      {isLoading ? (
-        <div className='flex flex-col items-center py-5'>
-          {/* 임시 UI */}
-          <div className='w-24 h-3.5 rounded animate-pulse bg-neutral-100' />
-        </div>
-      ) : filteredFaqList.length === 0 ? (
-        <div className='flex flex-col items-center py-5'>
-          <MascotSadIcon />
-          <p className='typo-body-6 text-primary-700'>검색 결과가 존재하지 않아요...</p>
-        </div>
-      ) : (
-        <FaqAccordion faqList={filteredFaqList} />
-      )}
+      {renderFaqList()}
 
       <ContactSection
         contactEmail={data?.contactEmail ?? ''}
