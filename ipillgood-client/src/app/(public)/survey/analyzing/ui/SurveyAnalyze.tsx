@@ -11,8 +11,8 @@ const container = {
   hidden: {},
   show: {
     transition: {
-      delayChildren: 0.5,
-      staggerChildren: 0.3,
+      delayChildren: 0.4,
+      staggerChildren: 0.2,
     },
   },
 };
@@ -24,7 +24,7 @@ const item = {
   show: {
     opacity: 1,
     transition: {
-      duration: 3,
+      duration: 2.5,
       ease: [0.22, 1, 0.36, 1] as const,
     },
   },
@@ -37,7 +37,7 @@ const SurveyAnalyzePage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.replace('/survey/result');
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, [router]);
@@ -52,12 +52,12 @@ const SurveyAnalyzePage = () => {
         initial='hidden'
         animate='show'
       >
-        <motion.p variants={item} className='text-[#6580EE] typo-body-10 mb-16'>
+        <motion.p variants={item} className='text-primary-700 typo-body-10 mb-16'>
           Pill Good? Feel Good!!
         </motion.p>
         <motion.p variants={item} className='typo-subtitle-4 text-center text-white mb-4'>
           <span className='block leading-normal'>
-            <span className='text-[#6580EE]'>누누 님</span>에게 딱 맞는 영양제를
+            <span className='text-primary-700'>누누 님</span>에게 딱 맞는 영양제를
             <br />
             고르고 있어요.
           </span>

@@ -9,6 +9,7 @@ import {
   lifestyleAtom,
   healthStateAtom,
   healthConcernAtom,
+  currentIngredientIdsAtom,
 } from '../atoms/survey.atom';
 import { JOB_TYPE_MAP } from '../constants/basicInfo.constants';
 import { formatDateToISO } from '../utils/formatData';
@@ -40,15 +41,11 @@ export const useSubmitSurvey = () => {
   const onboardingConcernCodes = useAtomValue(healthConcernAtom);
 
   // survey step 5
-  const currentIngredients = useAtomValue(currentIngredientAtom);
+  const currentIngredientIds = useAtomValue(currentIngredientIdsAtom);
 
   if (gender === null || selectedJob === '') {
     throw new Error('기본 정보가 입력되지 않았습니다.');
   }
-
-  const currentIngredientNone = currentIngredients.includes('none');
-
-  const currentIngredientIds = currentIngredients.filter((item) => item !== 'none').map(Number);
 
   return useMutation({
     mutationFn: async () => {
@@ -73,8 +70,8 @@ export const useSubmitSurvey = () => {
         underlyingDiseaseNone: underlyingDiseaseIds.length === 0,
         medicationNone: medicationIds.length === 0,
         allergyNone: allergyIds.length === 0,
+        currentIngredientNone: currentIngredientIds.length === 0,
 
-        currentIngredientNone: currentIngredientNone,
         contraindicationIds: contraindicationIds,
         onboardingConcernCodes: onboardingConcernCodes,
         currentIngredientIds: currentIngredientIds,

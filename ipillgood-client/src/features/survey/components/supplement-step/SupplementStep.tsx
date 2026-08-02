@@ -14,6 +14,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getIngredients } from '../../api/ingredients';
+import { useSetAtom } from 'jotai';
+import { currentIngredientIdsAtom } from '../../atoms/survey.atom';
 
 const SupplementStep = () => {
   const router = useRouter();
@@ -29,9 +31,30 @@ const SupplementStep = () => {
   const otherIngredients =
     data?.result?.ingredients?.filter((item) => item.ingredientId >= 22) ?? [];
 
-  const { selectedItems, handleSelect } = useSelectable({
+  const setSelectedIngredientIds = useSetAtom(currentIngredientIdsAtom);
+
+  const { selectedItems, handleSelect } = useSelectable<string>({
     exclusiveId: 'none',
   });
+
+  const handleIngredientSelect = (id: string) => {
+    handleSelect(id);
+
+    setSelectedIngredientIds((prev) => {
+      if (id === 'none') {
+        return [];
+      }
+
+      const ingredientId = Number(id);
+
+      if (prev.includes(ingredientId)) {
+        return prev.filter((item) => item !== ingredientId);
+      }
+
+      return [...prev, ingredientId];
+    });
+  };
+
   const [isOpenSheet, setIsOpenSheet] = useState(false);
 
   if (isPending) return <LoadingSpinner />;
@@ -54,7 +77,7 @@ const SupplementStep = () => {
           label={'섭취 중인\n영양제 없음'}
           icon={MinusCircleIcon}
           isSelected={selectedItems.includes('none')}
-          onClick={handleSelect}
+          onClick={handleIngredientSelect}
           className='h-32 w-full rounded-[20px]'
           hasIconBackground={false}
         />
@@ -66,14 +89,14 @@ const SupplementStep = () => {
             label={item.name}
             image={item.imageUrl}
             isSelected={selectedItems.includes(String(item.ingredientId))}
-            onClick={handleSelect}
+            onClick={handleIngredientSelect}
             className='h-32 w-full rounded-[20px]'
           />
         ))}
 
         <SelectionCard
           id='etc'
-          label='기타'
+          label='더보기'
           icon={HorizonIcon}
           isSelected={false}
           onClick={() => setIsOpenSheet(true)}
@@ -94,7 +117,7 @@ const SupplementStep = () => {
                 label={item.name}
                 image={item.imageUrl}
                 isSelected={selectedItems.includes(String(item.ingredientId))}
-                onClick={handleSelect}
+                onClick={handleIngredientSelect}
                 className='h-32 w-full rounded-[20px]'
               />
             ))}
@@ -112,10 +135,10 @@ const SupplementStep = () => {
 
       <TextButton
         type='button'
-        text='다음'
+        text='설문 완료'
         size='xl'
         className='mt-auto w-full'
-        onClick={() => router.push('/survey?step=4')}
+        onClick={() => router.push('/survey/analyzing')}
       />
     </section>
   );

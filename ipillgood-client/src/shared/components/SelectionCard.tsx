@@ -86,7 +86,7 @@ const SelectionCard = ({
           alt={label}
           width={54}
           height={54}
-          className='h-18 w-auto object-contain'
+          className='h-18 w-18 object-contain'
         />
       ) : (
         <span

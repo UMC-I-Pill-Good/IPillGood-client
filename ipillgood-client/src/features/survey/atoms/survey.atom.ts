@@ -32,3 +32,5 @@ export const healthStateAtom = atomWithReset<Record<string, number[]>>({
 });
 
 export const healthConcernAtom = atomWithReset<HealthConcernCode[]>([]);
+
+export const currentIngredientIdsAtom = atomWithReset<number[]>([]);
