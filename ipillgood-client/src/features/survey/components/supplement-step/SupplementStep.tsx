@@ -18,7 +18,7 @@ import {
   currentIngredientIdsAtom,
   selectedIngredientItemsAtom,
 } from '@/features/survey/atoms/survey.atom';
-import { useSubmitSurvey, useSelectable, useResetSurvey } from '@/features/survey/hooks';
+import { useSubmitSurveyMutation, useSelectable, useResetSurvey } from '@/features/survey/hooks';
 
 const SupplementStep = () => {
   const router = useRouter();
@@ -31,10 +31,12 @@ const SupplementStep = () => {
   const { data, isPending, isError, refetch } = useQuery({
     queryKey: ['ingredients'],
     queryFn: getIngredients,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
   });
 
   // 설문 최종 제출
-  const { mutate: submitSurvey } = useSubmitSurvey();
+  const { mutate: submitSurvey, isPending: isSubmitting } = useSubmitSurveyMutation();
 
   // 메인/기타 영양제 분리
   const mainIngredients =
@@ -59,19 +61,16 @@ const SupplementStep = () => {
     },
   });
 
-  const isSubmitDisabled = selectedItems.length === 0;
+  const isSubmitDisabled = selectedItems.length === 0 || isSubmitting;
 
   // 설문 제출
   const handleSubmitSurvey = () => {
     submitSurvey(undefined, {
-      onSuccess: () => {
-        router.push('/survey/analyzing');
+      onSuccess: (data) => {
+        router.push(`/survey/analyzing?recommendationId=${data.result.recommendationId}`);
       },
-      onError: (error) => {
-        console.error('survey error:', error);
-
+      onError: () => {
         alert('필수 입력값이 입력되지 않았습니다. 설문을 처음부터 다시 진행해주세요.');
-
         resetSurvey.resetSurvey();
         router.replace('/survey');
       },
