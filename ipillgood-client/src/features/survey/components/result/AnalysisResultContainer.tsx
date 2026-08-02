@@ -1,6 +1,6 @@
 'use client';
 
-import { TextButton } from '@/shared/components';
+import { FetchError, LoadingSpinner, TextButton } from '@/shared/components';
 import RecommendationList from './RecommendationList';
 import { BulbIcon, CheckCircleIcon } from '@/assets';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -12,9 +12,23 @@ const AnalysisResultContainer = () => {
 
   const recommendationId = Number(searchParams.get('recommendationId'));
 
-  const { data } = useRecommendationQuery(recommendationId);
+  const { data, isPending, isError, refetch } = useRecommendationQuery(recommendationId);
 
-  const items = data?.result.items ?? [];
+  if (isPending) {
+    return <LoadingSpinner />;
+  }
+
+  if (isError) {
+    return <FetchError description='추천 결과를 불러오지 못했습니다.' onRetry={() => refetch()} />;
+  }
+
+  const recommendation = data?.result;
+
+  if (!recommendation || recommendation.status !== 'SUCCESS') {
+    return <FetchError description='추천 결과를 확인할 수 없습니다.' />;
+  }
+
+  const items = recommendation.items;
 
   return (
     <main className='flex flex-1 min-h-screen flex-col py-4 px-5'>

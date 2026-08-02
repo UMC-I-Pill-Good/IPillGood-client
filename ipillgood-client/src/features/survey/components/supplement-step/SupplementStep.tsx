@@ -36,7 +36,7 @@ const SupplementStep = () => {
   });
 
   // 설문 최종 제출
-  const { mutate: submitSurvey } = useSubmitSurveyMutation();
+  const { mutate: submitSurvey, isPending: isSubmitting } = useSubmitSurveyMutation();
 
   // 메인/기타 영양제 분리
   const mainIngredients =
@@ -61,7 +61,7 @@ const SupplementStep = () => {
     },
   });
 
-  const isSubmitDisabled = selectedItems.length === 0;
+  const isSubmitDisabled = selectedItems.length === 0 || isSubmitting;
 
   // 설문 제출
   const handleSubmitSurvey = () => {

@@ -29,7 +29,7 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
           </div>
         )}
 
-        <Image src={item.image} alt={item.name} className='relative z-10 h-fit w-23' priority />
+        <Image src={item.image} alt={item.name} className='relative z-10 h-fit w-23' preload />
 
         {item.isCertified && (
           <div className='absolute bottom-2 z-10 flex h-5.5 items-center justify-center gap-0.5 rounded-full bg-point-700 px-2 text-white typo-caption-6'>
@@ -90,7 +90,7 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
         </>
       )}
 
-      <Image src={item.image} alt={item.name} className='relative z-10 h-fit w-23' priority />
+      <Image src={item.image} alt={item.name} className='relative z-10 h-fit w-23' preload />
 
       {item.isCertified && (
         <div className='absolute bottom-2 z-10 flex h-5.5 items-center justify-center gap-0.5 rounded-full bg-point-700 px-2 text-white typo-caption-6'>

@@ -6,7 +6,7 @@ const SignupCompleteStep = () => {
   return (
     <section className='flex flex-1 flex-col items-center justify-center'>
       <div className='flex pt-24 flex-col items-center justify-center'>
-        <Image src={mascotImage} alt='마스코트' className='w-50 h-auto' priority />
+        <Image src={mascotImage} alt='마스코트' className='w-50 h-auto' preload />
 
         <h3 className='text-primary-600 typo-subtitle-4 pt-28'>회원가입이 완료되었습니다!</h3>
         <p className='text-neutral-700 typo-body-2 pt-4.5 text-center'>

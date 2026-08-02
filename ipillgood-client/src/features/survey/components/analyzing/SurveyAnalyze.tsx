@@ -99,7 +99,7 @@ const SurveyAnalyze = () => {
             ease: [0.22, 1, 0.36, 1],
           }}
         >
-          <Image src={ManhwaImage} alt='4컷 만화' priority />
+          <Image src={ManhwaImage} alt='4컷 만화' preload />
         </motion.div>
       </motion.section>
     </main>
