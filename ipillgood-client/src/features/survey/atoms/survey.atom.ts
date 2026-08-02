@@ -23,3 +23,9 @@ export const lifestyleAtom = atomWithReset<LifestyleState>({
   eating: '혼합',
   workout: '거의 안 함',
 });
+
+export const healthStateAtom = atomWithReset<Record<string, number[]>>({
+  UNDERLYING_DISEASE: [],
+  MEDICATION: [],
+  ALLERGY: [],
+});

@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { FetchError, LoadingSpinner, TextButton } from '@/shared/components';
 import { StepHeader } from '@/shared/layout';
-import { useState } from 'react';
 import { getContraindications } from '@/features/survey/api/ingredients';
 import { questionLabel } from '@/features/survey/constants/healthState.constants';
 import { useRouter } from 'next/navigation';
+import { useAtom } from 'jotai';
+import { healthStateAtom } from '@/features/survey/atoms/survey.atom';
 
 const HealthStateStep = () => {
   const router = useRouter();
@@ -14,34 +15,27 @@ const HealthStateStep = () => {
     queryFn: getContraindications,
   });
 
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, string[]>>({});
+  const [selectedOptions, setSelectedOptions] = useAtom(healthStateAtom);
 
-  const handleSelect = (groupType: string, option: string) => {
+  const handleSelect = (groupType: string, id: number) => {
     setSelectedOptions((prev) => {
-      const current = prev[groupType] ?? ['없음'];
+      const current = prev[groupType] ?? [];
 
-      // "없음" 선택 시 다른 옵션 초기화
-      if (option === '없음') {
-        if (current.includes('없음')) {
-          return prev; // 해제하지 않음
-        }
-
+      // 없음 선택
+      if (id === -1) {
         return {
           ...prev,
-          [groupType]: ['없음'],
+          [groupType]: [],
         };
       }
 
-      // 다른 옵션 선택 시 "없음" 제거
-      const next = current.filter((item) => item !== '없음');
-
-      const updated = next.includes(option)
-        ? next.filter((item) => item !== option)
-        : [...next, option];
+      const updated = current.includes(id)
+        ? current.filter((item) => item !== id)
+        : [...current, id];
 
       return {
         ...prev,
-        [groupType]: updated.length === 0 ? ['없음'] : updated,
+        [groupType]: updated,
       };
     });
   };
@@ -76,7 +70,9 @@ const HealthStateStep = () => {
                 })),
               ].map((item) => {
                 const isSelected =
-                  selectedOptions[group.type]?.includes(item.name) ?? item.name === '없음';
+                  item.id === -1
+                    ? selectedOptions[group.type]?.length === 0
+                    : selectedOptions[group.type]?.includes(item.id);
 
                 return (
                   <TextButton
@@ -86,7 +82,7 @@ const HealthStateStep = () => {
                     variant={isSelected ? 'secondary' : 'assistive'}
                     size='sm'
                     className='px-4'
-                    onClick={() => handleSelect(group.type, item.name)}
+                    onClick={() => handleSelect(group.type, item.id)}
                   />
                 );
               })}
