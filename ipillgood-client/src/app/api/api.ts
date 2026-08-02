@@ -60,6 +60,13 @@ axiosInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 
+    // 로그인, 회원가입 등 인증이 필요 없는 요청은 refresh 로직 대상에서 제외
+    const AUTH_FREE_URLS = ['/auth/login', '/auth/signup'];
+
+    if (AUTH_FREE_URLS.some((url) => request.url?.includes(url))) {
+      return Promise.reject(error);
+    }
+
     // accessToken 만료
     if (error.response?.status === 401 && !request._retry) {
       request._retry = true;

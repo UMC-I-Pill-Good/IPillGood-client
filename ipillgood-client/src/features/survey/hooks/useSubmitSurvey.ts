@@ -77,8 +77,6 @@ export const useSubmitSurvey = () => {
         currentIngredientIds: currentIngredientIds,
       };
 
-      console.log('📌 survey request body:', body);
-
       return postSurvey(body);
     },
   });
