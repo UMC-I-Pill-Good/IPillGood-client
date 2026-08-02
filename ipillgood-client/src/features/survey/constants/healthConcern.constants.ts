@@ -17,73 +17,75 @@ import {
 
 export const healthConcernItems = [
   {
-    id: 'fatigue',
+    id: 'FATIGUE',
     label: '피로 개선',
     icon: FatigueIcon,
   },
   {
-    id: 'immunity',
+    id: 'IMMUNITY',
     label: '면역력',
     icon: ImmunityIcon,
   },
   {
-    id: 'sleep',
+    id: 'SLEEP_QUALITY',
     label: '수면 질 개선',
     icon: SleepIcon,
   },
   {
-    id: 'gut',
+    id: 'GUT_HEALTH',
     label: '장 건강',
     icon: GutHealthIcon,
   },
   {
-    id: 'skin',
+    id: 'SKIN_HEALTH',
     label: '피부 건강',
     icon: SkinHealthIcon,
   },
   {
-    id: 'diet',
+    id: 'WEIGHT_MANAGEMENT',
     label: '체중 관리',
     icon: WeightManagementIcon,
   },
   {
-    id: 'eye',
+    id: 'EYE_HEALTH',
     label: '눈 건강',
     icon: EyeHealthIcon,
   },
   {
-    id: 'bone',
+    id: 'BONE_JOINT',
     label: '뼈/관절',
     icon: BoneJointIcon,
   },
   {
-    id: 'blood',
+    id: 'BLOOD_PRESSURE_VESSEL',
     label: '혈압/혈관',
     icon: CardiovascularIcon,
   },
   {
-    id: 'stress',
+    id: 'STRESS',
     label: '스트레스',
     icon: StressIcon,
   },
   {
-    id: 'antioxidant',
+    id: 'ANTIOXIDANT',
     label: '항산화',
     icon: AntioxidantIcon,
   },
   {
-    id: 'hair',
+    id: 'HAIR_HEALTH',
     label: '탈모/모발',
     icon: HairHealthIcon,
   },
   {
-    id: 'women',
+    id: 'WOMENS_HEALTH',
     label: '여성 건강',
     icon: WomenHealthIcon,
   },
   {
-    id: 'exercise',
+    id: 'EXERCISE_PERFORMANCE',
     label: '운동 능력',
     icon: ExercisePerformanceIcon,
   },
-];
+] as const;
+
+export type HealthConcernCode = (typeof healthConcernItems)[number]['id'];

@@ -3,7 +3,6 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import StepNavigation from './StepNavigation';
 import BasicInfoStep from './info-step/BasicInfoStep';
-import { TextButton } from '@/shared/components';
 import LifestyleStep from './lifestyle-step/LifestyleStep';
 import HealthStateStep from './health-state-step/HealthStateStep';
 import HealthConcernStep from './health-concern-step/HealthConcernStep';
@@ -25,18 +24,6 @@ const SurveyContainer = () => {
     router.push(`/survey?step=${step - 1}`);
   };
 
-  const handleNext = () => {
-    if (step < 5) {
-      router.push(`/survey?step=${step + 1}`);
-      return;
-    }
-
-    // TODO: 설문 제출 API
-    console.log('설문 완료');
-
-    router.push('/survey/analyzing');
-  };
-
   return (
     <main className='flex min-h-screen flex-col px-5 py-4'>
       <StepNavigation step={step} onBack={handleBack} />
@@ -46,14 +33,6 @@ const SurveyContainer = () => {
       {step === 3 && <HealthStateStep />}
       {step === 4 && <HealthConcernStep />}
       {step === 5 && <SupplementStep />}
-
-      <TextButton
-        type='button'
-        text={step === 5 ? '설문 완료' : '다음'}
-        size='xl'
-        className='mt-auto w-full'
-        onClick={handleNext}
-      />
     </main>
   );
 };
