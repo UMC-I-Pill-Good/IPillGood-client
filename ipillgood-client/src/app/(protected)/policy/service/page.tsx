@@ -1,11 +1,11 @@
-import { ServiceTermSection } from '@/features/policy/components';
+import PolicyDocumentSection from '@/features/policy/components/PolicyDocumentSection';
 import { Header } from '@/shared/layout';
 
 const ServicePage = () => {
   return (
     <main>
       <Header title='서비스 이용약관' />
-      <ServiceTermSection />
+      <PolicyDocumentSection documentType='SERVICE_TERMS' />
     </main>
   );
 };

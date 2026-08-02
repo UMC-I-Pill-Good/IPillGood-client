@@ -4,19 +4,64 @@ import { useFaqFilter } from '../../hooks/useFaqFilter';
 import FaqAccordion from './FaqAccordion';
 import FaqCategoryOptions from './FaqCategoryOptions';
 import ContactSection from './ContactSection';
+import { useSupport } from '../../hooks/useSupport';
+import { MascotSadIcon } from '@/assets';
 
 const FaqSection = () => {
-  const { keyword, setKeyword, selectedCategory, filteredFaqList, handleSelectCategory } =
-    useFaqFilter();
+  const {
+    keyword,
+    setKeyword,
+    selectedCategory,
+    filteredFaqList,
+    handleSearch,
+    isLoading,
+    isError,
+    handleSelectCategory,
+  } = useFaqFilter();
+
+  const { data } = useSupport();
+
+  const renderFaqList = () => {
+    if (isLoading) {
+      // 임시 UI
+      return (
+        <div className='flex flex-col items-center py-5'>
+          <div className='w-24 h-3.5 rounded animate-pulse bg-neutral-100' />
+        </div>
+      );
+    }
+
+    if (isError) {
+      // 임시 UI
+      return (
+        <div className='flex flex-col items-center py-5'>
+          <MascotSadIcon />
+          <p className='typo-body-6 text-primary-700'>FAQ를 불러오지 못했습니다.</p>
+        </div>
+      );
+    }
+
+    if (filteredFaqList.length === 0) {
+      return (
+        <div className='flex flex-col items-center py-5'>
+          <MascotSadIcon />
+          <p className='typo-body-6 text-primary-700'>검색 결과가 존재하지 않아요...</p>
+        </div>
+      );
+    }
+
+    return <FaqAccordion faqList={filteredFaqList} />;
+  };
 
   return (
-    <section className='px-5 pt-4 pb-20'>
+    <section className='px-5 pt-4 pb-22 flex-1 flex flex-col'>
       <h2 className='text-black typo-body-5'>자주 묻는 질문 (FAQ)</h2>
       <SearchBar
         isFilterButton={false}
         value={keyword}
         onChange={setKeyword}
         placeholder='키워드로 검색해 주세요.'
+        onSearch={handleSearch}
         className='mt-2 h-12'
       />
 
@@ -25,13 +70,14 @@ const FaqSection = () => {
         onSelectCategory={handleSelectCategory}
       />
 
-      <FaqAccordion faqList={filteredFaqList} />
+      {renderFaqList()}
 
       <ContactSection
+        contactEmail={data?.contactEmail ?? ''}
         showTitle={false}
         showHours={false}
         caption='원하는 질문이 없으신가요? 상단 메일로 문의해 주세요!'
-        className='mt-21.75 flex flex-col gap-2'
+        className='mt-auto flex flex-col gap-2'
       />
     </section>
   );
