@@ -4,7 +4,8 @@ import { FetchError, LoadingSpinner, TextButton } from '@/shared/components';
 import RecommendationList from './RecommendationList';
 import { BulbIcon, CheckCircleIcon } from '@/assets';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useMyInfoQuery, useRecommendationQuery } from '@/features/survey/hooks';
+import { useRecommendationQuery } from '@/features/survey/hooks';
+import { useMyInfoQuery } from '@/shared/hooks';
 
 const AnalysisResultContainer = () => {
   const router = useRouter();
