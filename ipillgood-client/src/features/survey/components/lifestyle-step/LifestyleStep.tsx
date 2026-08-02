@@ -24,7 +24,7 @@ const LifestyleStep = () => {
 
       <section className='space-y-2'>
         {lifestyleOptions
-          .filter((item) => item.id !== 'conceive' || gender === 'woman')
+          .filter((item) => item.id !== 'conceive' || gender === 'FEMALE')
           .map(({ id, title, icon: Icon, options, required }, index) => (
             <article
               key={id}

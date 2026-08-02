@@ -35,20 +35,20 @@ const GenderSelectSection = () => {
         <button
           type='button'
           role='radio'
-          aria-checked={gender === 'woman'}
+          aria-checked={gender === 'FEMALE'}
           aria-label='여성'
-          onClick={() => setGender('woman')}
+          onClick={() => setGender('FEMALE')}
           className={clsx(
             'group flex flex-1 flex-col items-center justify-center gap-2 rounded-[20px] border no-center-glass h-33 transition',
             'hover:border-transparent hover:bg-secondary/50 active:bg-secondary/70',
-            gender === 'woman' ? 'border-transparent bg-secondary/50' : 'bg-white/50 border-white',
+            gender === 'FEMALE' ? 'border-transparent bg-secondary/50' : 'bg-white/50 border-white',
           )}
         >
           <div
             className={clsx(
               'flex h-15 w-15 items-center justify-center rounded-full bg-secondary-200 transition',
               'group-hover:bg-secondary/30 group-active:bg-secondary/40',
-              gender === 'woman' && 'bg-secondary/30',
+              gender === 'FEMALE' && 'bg-secondary/30',
             )}
           >
             <WomanIcon aria-hidden='true' />
@@ -59,20 +59,20 @@ const GenderSelectSection = () => {
         <button
           type='button'
           role='radio'
-          aria-checked={gender === 'man'}
+          aria-checked={gender === 'MALE'}
           aria-label='남성'
-          onClick={() => setGender('man')}
+          onClick={() => setGender('MALE')}
           className={clsx(
             'group flex flex-1 flex-col items-center justify-center gap-2 rounded-[20px] border no-center-glass h-33 transition',
             'hover:border-transparent hover:bg-secondary/50 active:bg-secondary/70',
-            gender === 'man' ? 'border-transparent bg-secondary/50' : 'bg-white/50 border-white',
+            gender === 'MALE' ? 'border-transparent bg-secondary/50' : 'bg-white/50 border-white',
           )}
         >
           <div
             className={clsx(
               'flex h-15 w-15 items-center justify-center rounded-full bg-secondary-200 transition',
               'group-hover:bg-secondary/30 group-active:bg-secondary/40',
-              gender === 'man' && 'bg-secondary/30',
+              gender === 'MALE' && 'bg-secondary/30',
             )}
           >
             <ManIcon aria-hidden='true' />
@@ -82,7 +82,7 @@ const GenderSelectSection = () => {
         </button>
       </article>
 
-      {gender === 'woman' && (
+      {gender === 'FEMALE' && (
         <article className='bg-white/50 border border-white rounded-[20px] no-center-glass p-3 py-4 w-full h-30 relative z-30'>
           <p className='typo-body-10 mb-2'>
             여성 정보 <span className='text-neutral'>(선택 입력)</span>

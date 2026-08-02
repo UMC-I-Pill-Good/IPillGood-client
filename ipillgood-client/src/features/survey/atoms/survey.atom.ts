@@ -1,18 +1,21 @@
 import { atom } from 'jotai';
+import { atomWithReset } from 'jotai/utils';
+import { JobLabel } from '../constants/basicInfo.constants';
 
-export const genderAtom = atom<'woman' | 'man' | null>(null);
+const getToday = () => {
+  const now = new Date();
+  return {
+    year: now.getFullYear(),
+    month: now.getMonth() + 1, // getMonth()는 0부터 시작하니 +1
+    day: now.getDate(),
+  };
+};
 
-export const birthYearAtom = atom(2026);
-
-export const selectedJobAtom = atom('');
-
-export const periodAtom = atom(30);
-
-export const selectedDateAtom = atom({
-  year: 2026,
-  month: 7,
-  day: 17,
-});
+export const genderAtom = atomWithReset<'FEMALE' | 'MALE' | null>(null);
+export const birthYearAtom = atomWithReset(2026);
+export const selectedJobAtom = atomWithReset<JobLabel | ''>('');
+export const periodAtom = atomWithReset(30);
+export const selectedDateAtom = atomWithReset(getToday());
 
 export const lifestyleAtom = atom<Record<string, string>>({
   smoking: '비흡연',

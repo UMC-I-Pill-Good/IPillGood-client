@@ -7,7 +7,7 @@ export type DateValue = {
 };
 
 export type RequestSurveyInfo = {
-  submissionType: 'INITIAL' | 'UPDATE';
+  submissionType: 'INITIAL' | 'REVISION';
   birthYear: number;
   gender: 'MALE' | 'FEMALE';
   jobType: string;
