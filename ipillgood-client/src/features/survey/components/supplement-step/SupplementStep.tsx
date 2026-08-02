@@ -64,8 +64,7 @@ const SupplementStep = () => {
   // 설문 제출
   const handleSubmitSurvey = () => {
     submitSurvey(undefined, {
-      onSuccess: (data) => {
-        console.log('survey response:', data);
+      onSuccess: () => {
         router.push('/survey/analyzing');
       },
       onError: (error) => {
