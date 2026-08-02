@@ -33,7 +33,7 @@ const item = {
 const SurveyAnalyzePage = () => {
   const router = useRouter();
 
-  // 5초 뒤 자동으로 결과 페에지 전환
+  // 5초 뒤 자동으로 결과 페이지 전환
   useEffect(() => {
     const timer = setTimeout(() => {
       router.replace('/survey/result');
