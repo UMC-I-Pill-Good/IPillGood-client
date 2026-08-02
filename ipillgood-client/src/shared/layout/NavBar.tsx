@@ -38,8 +38,8 @@ export const NavBar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className='bottom-nav-glass fixed bottom-0 left-1/2 z-30 w-full max-w-110 -translate-x-1/2'>
-      <ul className='flex h-19 items-center justify-between'>
+    <nav className=' bg-white/60 backdrop-blur-lg fixed bottom-6 left-1/2 z-30 w-[calc(100%-20px)] max-w-100 rounded-full -translate-x-1/2 shadow-[4px_4px_15px_0px_rgba(0,0,0,0.15)]'>
+      <ul className='flex h-16.5 items-center justify-between'>
         {menuList.map(({ label, href, icon: Icon }) => {
           const isActive = pathname === href || pathname.startsWith(`${href}/`);
 
@@ -48,7 +48,7 @@ export const NavBar = () => {
               <Link
                 href={href}
                 className={cn(
-                  'flex h-full flex-col items-center justify-center gap-0.5 typo-caption-7 transition-colors',
+                  'flex h-full flex-col items-center justify-center gap-1 text-[10px] font-medium transition-colors',
                   isActive ? 'text-primary-600' : 'text-neutral-800 hover:text-primary-400',
                 )}
               >
