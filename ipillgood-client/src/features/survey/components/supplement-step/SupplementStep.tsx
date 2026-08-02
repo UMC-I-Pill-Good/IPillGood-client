@@ -24,15 +24,19 @@ const SupplementStep = () => {
   const router = useRouter();
 
   const [isOpenSheet, setIsOpenSheet] = useState(false);
-  const resetSurvey = useResetSurvey();
 
+  const resetSurvey = useResetSurvey(); // 설문 상태 초기화
+
+  // 영양제 목록 조회
   const { data, isPending, isError, refetch } = useQuery({
     queryKey: ['contraindications'],
     queryFn: getIngredients,
   });
 
+  // 설문 최종 제출
   const { mutate: submitSurvey } = useSubmitSurvey();
 
+  // 메인/기타 영양제 분리
   const mainIngredients =
     data?.result?.ingredients?.filter((item) => item.ingredientId <= 21) ?? [];
 
@@ -42,6 +46,7 @@ const SupplementStep = () => {
   const [selectedItems, setSelectedItems] = useAtom(selectedIngredientItemsAtom);
   const setCurrentIngredientIds = useSetAtom(currentIngredientIdsAtom);
 
+  // 영양제 선택 및 선택된 ID 저장
   const { handleSelect } = useSelectable<string>({
     exclusiveId: 'none',
     selectedItems,
@@ -56,6 +61,7 @@ const SupplementStep = () => {
 
   const isSubmitDisabled = selectedItems.length === 0;
 
+  // 설문 제출
   const handleSubmitSurvey = () => {
     submitSurvey(undefined, {
       onSuccess: (data) => {

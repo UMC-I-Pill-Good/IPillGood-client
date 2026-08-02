@@ -15,7 +15,7 @@ const StepNavigation = ({ step, onBack }: StepNavigationProps) => {
 
   const [isOpenModal, setIsOpenModal] = useState(false);
 
-  const { resetSurvey } = useResetSurvey();
+  const { resetSurvey } = useResetSurvey(); // 설문 상태 초기화
 
   return (
     <section>

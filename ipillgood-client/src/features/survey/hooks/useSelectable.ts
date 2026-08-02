@@ -15,9 +15,11 @@ export const useSelectable = <T extends string>({
 }: UseSelectableOptions<T> = {}) => {
   const [internalSelectedItems, setInternalSelectedItems] = useState<T[]>([]);
 
+  // 외부 상태가 있으면 사용하고, 없으면 내부 상태 사용
   const selectedItems = externalSelectedItems ?? internalSelectedItems;
   const setSelectedItems = externalSetSelectedItems ?? setInternalSelectedItems;
 
+  // 선택/해제 처리
   const handleSelect = (id: T) => {
     setSelectedItems((prev) => {
       // 단독 선택

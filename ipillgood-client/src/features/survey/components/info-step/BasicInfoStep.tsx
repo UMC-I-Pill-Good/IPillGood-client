@@ -18,6 +18,7 @@ const BasicInfoStep = () => {
 
   const isValid = gender !== null && selectedJob !== '';
 
+  // 다음 단계로 이동
   const handleNext = () => {
     if (!isValid) return;
 
@@ -27,6 +28,7 @@ const BasicInfoStep = () => {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
+      // 미래 날짜 선택 시 경고 후 이동 중단
       if (selected > today) {
         alert('마지막 생리 시작일은 오늘 이전 날짜로 선택해주세요.');
         return;

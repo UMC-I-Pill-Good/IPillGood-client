@@ -10,6 +10,7 @@ import { healthStateAtom } from '@/features/survey/atoms/survey.atom';
 const HealthStateStep = () => {
   const router = useRouter();
 
+  // 건강 상태(금기사항) 목록 조회
   const { data, isPending, isError, refetch } = useQuery({
     queryKey: ['contraindications'],
     queryFn: getContraindications,
@@ -21,7 +22,7 @@ const HealthStateStep = () => {
     setSelectedOptions((prev) => {
       const current = prev[groupType] ?? [];
 
-      // 없음 선택
+      // '없음' 선택 시 해당 그룹 초기화
       if (id === -1) {
         return {
           ...prev,
@@ -29,6 +30,7 @@ const HealthStateStep = () => {
         };
       }
 
+      // 선택/해제 토글
       const updated = current.includes(id)
         ? current.filter((item) => item !== id)
         : [...current, id];

@@ -12,12 +12,14 @@ const getToday = () => {
   };
 };
 
+// 기본 정보
 export const genderAtom = atomWithReset<'FEMALE' | 'MALE' | null>(null);
 export const birthYearAtom = atomWithReset(2026);
 export const selectedJobAtom = atomWithReset<JobLabel | ''>('');
 export const periodAtom = atomWithReset(30);
 export const selectedDateAtom = atomWithReset(getToday());
 
+// 생활 습관
 export const lifestyleAtom = atomWithReset<LifestyleState>({
   smoking: '비흡연',
   drinking: '비음주',
@@ -26,13 +28,16 @@ export const lifestyleAtom = atomWithReset<LifestyleState>({
   conceive: '아니요',
 });
 
+// 건강 상태
 export const healthStateAtom = atomWithReset<Record<string, number[]>>({
   UNDERLYING_DISEASE: [],
   MEDICATION: [],
   ALLERGY: [],
 });
 
+// 건강 고민
 export const healthConcernAtom = atomWithReset<HealthConcernCode[]>([]);
 
-export const selectedIngredientItemsAtom = atomWithReset<string[]>([]);
-export const currentIngredientIdsAtom = atomWithReset<number[]>([]);
+// 섭취 중인 영양제
+export const selectedIngredientItemsAtom = atomWithReset<string[]>([]); // 선택된 영양제 ID별 항목 이름
+export const currentIngredientIdsAtom = atomWithReset<number[]>([]); // 선택된 영양제 ID
