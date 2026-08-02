@@ -22,7 +22,7 @@ const LifestyleStep = () => {
     <section className='space-y-2 flex flex-1 flex-col'>
       <StepHeader title='생활 습관에 대해 알려주세요!' desc='건강 상태 분석에 참고할게요.' />
 
-      <section className='space-y-2'>
+      <section className='space-y-2 pb-6'>
         {lifestyleOptions
           .filter((item) => item.id !== 'conceive' || gender === 'FEMALE')
           .map(({ id, title, icon: Icon, options, required }, index) => (

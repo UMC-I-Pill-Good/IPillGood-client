@@ -1,6 +1,6 @@
-import { atom } from 'jotai';
 import { atomWithReset } from 'jotai/utils';
 import { JobLabel } from '../constants/basicInfo.constants';
+import { LifestyleState } from '../types/survey';
 
 const getToday = () => {
   const now = new Date();
@@ -17,7 +17,7 @@ export const selectedJobAtom = atomWithReset<JobLabel | ''>('');
 export const periodAtom = atomWithReset(30);
 export const selectedDateAtom = atomWithReset(getToday());
 
-export const lifestyleAtom = atom<Record<string, string>>({
+export const lifestyleAtom = atomWithReset<LifestyleState>({
   smoking: '비흡연',
   drinking: '비음주',
   eating: '혼합',
