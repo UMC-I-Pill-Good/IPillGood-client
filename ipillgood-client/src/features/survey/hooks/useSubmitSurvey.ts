@@ -43,12 +43,12 @@ export const useSubmitSurvey = () => {
   // survey step 5
   const currentIngredientIds = useAtomValue(currentIngredientIdsAtom);
 
-  if (gender === null || selectedJob === '') {
-    throw new Error('기본 정보가 입력되지 않았습니다.');
-  }
-
   return useMutation({
     mutationFn: async () => {
+      if (gender === null || selectedJob === '') {
+        throw new Error('기본 정보가 입력되지 않았습니다.');
+      }
+
       const body: RequestSurveyInfo = {
         submissionType: 'INITIAL',
         birthYear,
@@ -76,6 +76,8 @@ export const useSubmitSurvey = () => {
         onboardingConcernCodes: onboardingConcernCodes,
         currentIngredientIds: currentIngredientIds,
       };
+
+      console.log('📌 survey request body:', body);
 
       return postSurvey(body);
     },

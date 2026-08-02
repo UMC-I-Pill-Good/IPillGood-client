@@ -13,17 +13,25 @@ import useSelectable from '@/features/survey/hooks/useSelectable';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { getIngredients } from '../../api/ingredients';
-import { useSetAtom } from 'jotai';
-import { currentIngredientIdsAtom } from '../../atoms/survey.atom';
+import { getIngredients } from '@/features/survey/api/ingredients';
+import { useAtom, useSetAtom } from 'jotai';
+import {
+  currentIngredientIdsAtom,
+  selectedIngredientItemsAtom,
+} from '@/features/survey/atoms/survey.atom';
+import { useSubmitSurvey } from '@/features/survey/hooks/useSubmitSurvey';
 
 const SupplementStep = () => {
   const router = useRouter();
+
+  const [isOpenSheet, setIsOpenSheet] = useState(false);
 
   const { data, isPending, isError, refetch } = useQuery({
     queryKey: ['contraindications'],
     queryFn: getIngredients,
   });
+
+  const { mutate: submitSurvey } = useSubmitSurvey();
 
   const mainIngredients =
     data?.result?.ingredients?.filter((item) => item.ingredientId <= 21) ?? [];
@@ -31,31 +39,32 @@ const SupplementStep = () => {
   const otherIngredients =
     data?.result?.ingredients?.filter((item) => item.ingredientId >= 22) ?? [];
 
-  const setSelectedIngredientIds = useSetAtom(currentIngredientIdsAtom);
+  const [selectedItems, setSelectedItems] = useAtom(selectedIngredientItemsAtom);
+  const setCurrentIngredientIds = useSetAtom(currentIngredientIdsAtom);
 
-  const { selectedItems, handleSelect } = useSelectable<string>({
+  const { handleSelect } = useSelectable<string>({
     exclusiveId: 'none',
+    selectedItems,
+    setSelectedItems: (items) => {
+      const next = typeof items === 'function' ? items(selectedItems) : items;
+
+      setSelectedItems(next);
+
+      setCurrentIngredientIds(next.filter((item) => item !== 'none').map(Number));
+    },
   });
 
-  const handleIngredientSelect = (id: string) => {
-    handleSelect(id);
-
-    setSelectedIngredientIds((prev) => {
-      if (id === 'none') {
-        return [];
-      }
-
-      const ingredientId = Number(id);
-
-      if (prev.includes(ingredientId)) {
-        return prev.filter((item) => item !== ingredientId);
-      }
-
-      return [...prev, ingredientId];
+  const handleSubmitSurvey = () => {
+    submitSurvey(undefined, {
+      onSuccess: (data) => {
+        console.log('survey response:', data);
+        router.push('/survey/analyzing');
+      },
+      onError: (error) => {
+        console.error('survey error:', error);
+      },
     });
   };
-
-  const [isOpenSheet, setIsOpenSheet] = useState(false);
 
   if (isPending) return <LoadingSpinner />;
 
@@ -77,7 +86,7 @@ const SupplementStep = () => {
           label={'섭취 중인\n영양제 없음'}
           icon={MinusCircleIcon}
           isSelected={selectedItems.includes('none')}
-          onClick={handleIngredientSelect}
+          onClick={(value) => handleSelect(value)}
           className='h-32 w-full rounded-[20px]'
           hasIconBackground={false}
         />
@@ -89,7 +98,7 @@ const SupplementStep = () => {
             label={item.name}
             image={item.imageUrl}
             isSelected={selectedItems.includes(String(item.ingredientId))}
-            onClick={handleIngredientSelect}
+            onClick={(value) => handleSelect(value)}
             className='h-32 w-full rounded-[20px]'
           />
         ))}
@@ -117,7 +126,7 @@ const SupplementStep = () => {
                 label={item.name}
                 image={item.imageUrl}
                 isSelected={selectedItems.includes(String(item.ingredientId))}
-                onClick={handleIngredientSelect}
+                onClick={(value) => handleSelect(value)}
                 className='h-32 w-full rounded-[20px]'
               />
             ))}
@@ -138,7 +147,7 @@ const SupplementStep = () => {
         text='설문 완료'
         size='xl'
         className='mt-auto w-full'
-        onClick={() => router.push('/survey/analyzing')}
+        onClick={handleSubmitSurvey}
       />
     </section>
   );

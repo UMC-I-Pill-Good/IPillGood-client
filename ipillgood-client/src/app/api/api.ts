@@ -67,12 +67,7 @@ axiosInstance.interceptors.response.use(
       if (!refreshPromise) {
         refreshPromise = (async () => {
           try {
-            const { setTokens, getRefreshToken } = useLocalStorage();
-            const refreshToken = getRefreshToken();
-
-            if (!refreshToken) {
-              throw new Error('저장된 refreshToken이 없습니다.');
-            }
+            const { setTokens } = useLocalStorage();
 
             // 기본 axios 사용 (인터셉터 방지)
             const response = await axios.post(
