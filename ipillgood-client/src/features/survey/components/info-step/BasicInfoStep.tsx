@@ -7,19 +7,39 @@ import JobSelectSection from './JobSelectSection';
 import { TextButton } from '@/shared/components';
 import { useRouter } from 'next/navigation';
 import { useAtomValue } from 'jotai';
-import { genderAtom, selectedJobAtom } from '@/features/survey/atoms/survey.atom';
+import { genderAtom, selectedJobAtom, selectedDateAtom } from '@/features/survey/atoms/survey.atom';
 
 const BasicInfoStep = () => {
   const router = useRouter();
 
   const gender = useAtomValue(genderAtom);
   const selectedJob = useAtomValue(selectedJobAtom);
+  const selectedDate = useAtomValue(selectedDateAtom);
 
   const isValid = gender !== null && selectedJob !== '';
+
+  const handleNext = () => {
+    if (!isValid) return;
+
+    if (gender === 'FEMALE') {
+      const selected = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day);
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (selected > today) {
+        alert('마지막 생리 시작일은 오늘 이전 날짜로 선택해주세요.');
+        return;
+      }
+    }
+
+    router.push('/survey?step=2');
+  };
 
   return (
     <section className='flex flex-1 flex-col'>
       <StepHeader title='기본 정보를 알려주세요!' desc='나에게 맞는 영양제를 추천해드릴게요.' />
+
       <BirthYearSection />
       <GenderSelectSection />
       <JobSelectSection />
@@ -30,7 +50,7 @@ const BasicInfoStep = () => {
         size='xl'
         disabled={!isValid}
         className='mt-auto w-full'
-        onClick={() => router.push('/survey?step=2')}
+        onClick={handleNext}
       />
     </section>
   );
