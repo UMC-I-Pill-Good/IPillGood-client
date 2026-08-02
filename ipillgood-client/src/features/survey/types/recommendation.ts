@@ -21,3 +21,9 @@ export type ResponseRecommendationResult = CommonResponse<{
   completedAt: string;
   items: RecommendationItem[];
 }>;
+
+export type ResponseRecommendationRetry = CommonResponse<{
+  recommendationId: number;
+  status: 'PENDING' | 'FAILED' | 'NO_RESULT';
+  startedAt: string;
+}>;

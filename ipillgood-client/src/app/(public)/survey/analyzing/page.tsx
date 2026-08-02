@@ -1,7 +1,7 @@
-import SurveyAnalyzePage from './ui/SurveyAnalyze';
+import SurveyAnalyze from '@/features/survey/components/analyzing/SurveyAnalyze';
 
 const AnalyzePage = () => {
-  return <SurveyAnalyzePage />;
+  return <SurveyAnalyze />;
 };
 
 export default AnalyzePage;

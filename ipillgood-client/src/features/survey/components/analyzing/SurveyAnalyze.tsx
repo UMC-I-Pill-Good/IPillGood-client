@@ -32,7 +32,7 @@ const item = {
   },
 };
 
-const SurveyAnalyzePage = () => {
+const SurveyAnalyze = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const resetSurvey = useResetSurvey();
@@ -63,7 +63,7 @@ const SurveyAnalyzePage = () => {
   }, [status, router, recommendationId, resetSurvey]);
 
   if (status === 'FAILED') {
-    return <AnalyzeError />;
+    return <AnalyzeError recommendationId={recommendationId} />;
   }
 
   return (
@@ -106,4 +106,4 @@ const SurveyAnalyzePage = () => {
   );
 };
 
-export default SurveyAnalyzePage;
+export default SurveyAnalyze;

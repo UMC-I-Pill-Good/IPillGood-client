@@ -37,7 +37,7 @@ const RecommendationList = ({ items }: RecommendationListProps) => {
             <article className='flex flex-col gap-1.5'>
               <p className='typo-body-5'>{item.ingredientName}</p>
 
-              <p className='typo-caption-3 leading-4! text-neutral-900'>{item.aiReason}</p>
+              <p className='typo-caption-2 leading-4! text-neutral-900'>{item.aiReason}</p>
             </article>
 
             <article className='flex items-center gap-1'>
