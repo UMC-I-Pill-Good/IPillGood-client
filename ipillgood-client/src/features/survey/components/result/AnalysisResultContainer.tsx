@@ -3,10 +3,18 @@
 import { TextButton } from '@/shared/components';
 import RecommendationList from './RecommendationList';
 import { BulbIcon, CheckCircleIcon } from '@/assets';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useRecommendationQuery } from '@/features/survey/hooks';
 
 const AnalysisResultContainer = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const recommendationId = Number(searchParams.get('recommendationId'));
+
+  const { data } = useRecommendationQuery(recommendationId);
+
+  const items = data?.result.items ?? [];
 
   return (
     <main className='flex flex-1 min-h-screen flex-col py-4 px-5'>
@@ -24,9 +32,9 @@ const AnalysisResultContainer = () => {
         </p>
       </section>
 
-      <RecommendationList />
+      <RecommendationList items={items} />
 
-      <section className='py-4 pb-20'>
+      <section className='py-4 pb-8'>
         <div className='bg-point-200 rounded-[20px] p-4'>
           <article className='flex items-center gap-1'>
             <div className='bg-white rounded-full p-1 inline-flex items-center justify-center'>

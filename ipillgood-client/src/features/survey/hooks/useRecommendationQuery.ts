@@ -6,6 +6,7 @@ export const useRecommendationQuery = (recommendationId?: number) => {
     queryKey: ['recommendation', recommendationId],
     queryFn: () => getRecommendation(recommendationId!),
     enabled: !!recommendationId,
+    staleTime: 1000 * 60 * 5,
     refetchInterval: (query) => {
       const status = query.state.data?.result.status;
 
