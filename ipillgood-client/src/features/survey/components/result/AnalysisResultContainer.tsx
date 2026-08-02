@@ -4,13 +4,15 @@ import { FetchError, LoadingSpinner, TextButton } from '@/shared/components';
 import RecommendationList from './RecommendationList';
 import { BulbIcon, CheckCircleIcon } from '@/assets';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useRecommendationQuery } from '@/features/survey/hooks';
+import { useMyInfoQuery, useRecommendationQuery } from '@/features/survey/hooks';
 
 const AnalysisResultContainer = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const recommendationId = Number(searchParams.get('recommendationId'));
+
+  const { data: myInfoData } = useMyInfoQuery();
 
   const { data, isPending, isError, refetch } = useRecommendationQuery(recommendationId);
 
@@ -35,8 +37,9 @@ const AnalysisResultContainer = () => {
       <section className='flex flex-col items-center justify-center mt-18 py-4'>
         <CheckCircleIcon />
         <h5 className='typo-body-1 mt-5'>설문이 완료되었어요!</h5>
-        <h5 className='typo-body-1 mt-2'>
-          <span className='text-primary'>누누 님</span>에게 딱 맞는 영양 성분을 추천드려요
+        <h5 className='typo-body-1 mt-2 text-center leading-6!'>
+          <span className='text-primary'>{myInfoData?.result.nickname} 님</span>에게 딱 맞는 영양
+          성분을 추천드려요
         </h5>
 
         <p className='text-neutral text-center typo-caption-2 leading-4! whitespace-pre-line mt-4.5'>

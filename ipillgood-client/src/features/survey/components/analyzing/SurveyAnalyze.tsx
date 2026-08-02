@@ -6,7 +6,7 @@ import ManhwaImage from '@/assets/images/manhwa.png';
 import { motion } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-import { useRecommendationQuery, useResetSurvey } from '@/features/survey/hooks';
+import { useMyInfoQuery, useRecommendationQuery, useResetSurvey } from '@/features/survey/hooks';
 import AnalyzeError from './AnalyzeError';
 
 const container = {
@@ -38,6 +38,8 @@ const SurveyAnalyze = () => {
   const resetSurvey = useResetSurvey();
 
   const recommendationId = Number(searchParams.get('recommendationId'));
+
+  const { data: myInfoData } = useMyInfoQuery();
 
   const { data } = useRecommendationQuery(recommendationId);
 
@@ -81,7 +83,8 @@ const SurveyAnalyze = () => {
         </motion.p>
         <motion.p variants={item} className='typo-subtitle-4 text-center text-white mb-4'>
           <span className='block leading-normal'>
-            <span className='text-primary-700'>누누 님</span>에게 딱 맞는 영양제를
+            <span className='text-primary-700'>{myInfoData?.result.nickname} 님</span>에게 딱 맞는
+            영양제를
             <br />
             고르고 있어요.
           </span>
