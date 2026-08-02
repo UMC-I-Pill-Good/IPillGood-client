@@ -6,6 +6,7 @@ import { questionLabel } from '@/features/survey/constants/healthState.constants
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
 import { healthStateAtom } from '@/features/survey/atoms/survey.atom';
+import { ContraindicationGroup } from '@/features/survey/types/ingredients';
 
 const HealthStateStep = () => {
   const router = useRouter();
@@ -18,7 +19,7 @@ const HealthStateStep = () => {
 
   const [selectedOptions, setSelectedOptions] = useAtom(healthStateAtom);
 
-  const handleSelect = (groupType: string, id: number) => {
+  const handleSelect = (groupType: ContraindicationGroup['type'], id: number) => {
     setSelectedOptions((prev) => {
       const current = prev[groupType] ?? [];
 
@@ -73,7 +74,7 @@ const HealthStateStep = () => {
               ].map((item) => {
                 const isSelected =
                   item.id === -1
-                    ? selectedOptions[group.type]?.length === 0
+                    ? (selectedOptions[group.type]?.length ?? 0) === 0
                     : selectedOptions[group.type]?.includes(item.id);
 
                 return (

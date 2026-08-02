@@ -29,7 +29,7 @@ const SupplementStep = () => {
 
   // 영양제 목록 조회
   const { data, isPending, isError, refetch } = useQuery({
-    queryKey: ['contraindications'],
+    queryKey: ['ingredients'],
     queryFn: getIngredients,
   });
 

@@ -13,7 +13,10 @@ const FetchError = ({
   onRetry,
 }: ErrorScreenProps) => {
   return (
-    <div className='flex min-h-[80vh] flex-col items-center justify-center gap-3 px-6 text-center'>
+    <div
+      role='alert'
+      className='flex min-h-[80vh] flex-col items-center justify-center gap-3 px-6 text-center'
+    >
       <TriangleAlert className='text-semantic size-10' />
 
       <div className='space-y-1'>

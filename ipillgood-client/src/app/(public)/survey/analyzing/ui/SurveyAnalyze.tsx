@@ -33,7 +33,7 @@ const item = {
 const SurveyAnalyzePage = () => {
   const router = useRouter();
 
-  // 3초 뒤 자동으로 결과 페에지 전환 (API 연동 전 임시)
+  // 5초 뒤 자동으로 결과 페에지 전환
   useEffect(() => {
     const timer = setTimeout(() => {
       router.replace('/survey/result');
