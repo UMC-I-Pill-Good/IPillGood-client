@@ -4,8 +4,10 @@ import { Background } from '@/app/(public)/(landing)/ui/Background';
 import Image from 'next/image';
 import ManhwaImage from '@/assets/images/manhwa.png';
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
+import { useRecommendationQuery, useResetSurvey } from '@/features/survey/hooks';
+import AnalyzeError from './AnalyzeError';
 
 const container = {
   hidden: {},
@@ -32,15 +34,37 @@ const item = {
 
 const SurveyAnalyzePage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const resetSurvey = useResetSurvey();
 
-  // 5초 뒤 자동으로 결과 페이지 전환
+  const recommendationId = Number(searchParams.get('recommendationId'));
+
+  const { data } = useRecommendationQuery(recommendationId);
+
+  const status = data?.result.status;
+
+  // 3초 뒤 자동으로 결과 페이지 전환
   useEffect(() => {
-    const timer = setTimeout(() => {
-      router.replace('/survey/result');
-    }, 5000);
+    if (!status) return;
 
-    return () => clearTimeout(timer);
-  }, [router]);
+    if (status === 'SUCCESS') {
+      const timer = setTimeout(() => {
+        router.replace(`/survey/result?recommendationId=${recommendationId}`);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+
+    if (status === 'NO_RESULT') {
+      alert('추천 가능한 영양제가 없습니다. 설문을 처음부터 다시 진행해주세요.');
+      resetSurvey.resetSurvey();
+      router.replace('/survey');
+    }
+  }, [status, router, recommendationId, resetSurvey]);
+
+  if (status === 'FAILED') {
+    return <AnalyzeError />;
+  }
 
   return (
     <main className='relative isolate flex min-h-screen justify-center overflow-hidden bg-[linear-gradient(225deg,#CBD6FF_0%,#92A8FF_59%,#92A8FF_80%,#7590ff_100%)] p-5'>

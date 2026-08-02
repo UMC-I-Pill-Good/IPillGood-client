@@ -17,7 +17,7 @@ import { postSurvey } from '../api/survey';
 import { RequestSurveyInfo } from '../types/survey';
 import { LIFESTYLE_VALUE_MAP } from '../constants/lifestyle.constants';
 
-export const useSubmitSurvey = () => {
+export const useSubmitSurveyMutation = () => {
   // survey step 1
   const birthYear = useAtomValue(birthYearAtom);
   const gender = useAtomValue(genderAtom);

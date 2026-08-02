@@ -15,6 +15,8 @@ const HealthStateStep = () => {
   const { data, isPending, isError, refetch } = useQuery({
     queryKey: ['contraindications'],
     queryFn: getContraindications,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
   });
 
   const [selectedOptions, setSelectedOptions] = useAtom(healthStateAtom);

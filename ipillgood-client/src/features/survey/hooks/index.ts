@@ -1,3 +1,4 @@
-export * from './useSubmitSurvey';
+export * from './useSubmitSurveyMutation';
 export * from './useSelectable';
 export * from './useResetSurvey';
+export * from './useRecommendationQuery';
