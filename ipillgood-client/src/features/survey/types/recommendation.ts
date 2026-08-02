@@ -5,7 +5,7 @@ export type RecommendationItem = {
   rankNo: number;
   ingredientId: number;
   ingredientName: string;
-  ingredientImageKey: string;
+  imageUrl: string;
   effectKeywords: string[];
   recommendedIntake: string;
   recommendedIntakeTime: string;

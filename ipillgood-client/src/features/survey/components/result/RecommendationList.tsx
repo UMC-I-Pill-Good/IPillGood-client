@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import { badgeColor } from '@/features/survey/constants/result.constants';
 import { BiggerBadgeIcon } from '@/assets';
 import Image from 'next/image';
-import vitaminImage from '@/assets/images/vitamin.png';
 import { Chip } from '@/shared/components';
 import { RecommendationItem } from '@/features/survey/types/recommendation';
 
@@ -29,7 +28,13 @@ const RecommendationList = ({ items }: RecommendationListProps) => {
               {item.rankNo}
             </span>
 
-            <Image src={vitaminImage} alt={item.ingredientName} className='shrink-0' />
+            <Image
+              src={item.imageUrl}
+              alt={item.ingredientName}
+              width={54}
+              height={54}
+              className='shrink-0'
+            />
           </section>
 
           <section className='space-y-2'>
