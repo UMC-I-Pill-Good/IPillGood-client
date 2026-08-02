@@ -8,6 +8,7 @@ import {
   selectedDateAtom,
   lifestyleAtom,
   healthStateAtom,
+  healthConcernAtom,
 } from '../atoms/survey.atom';
 import { JOB_TYPE_MAP } from '../constants/basicInfo.constants';
 import { formatDateToISO } from '../utils/formatData';
@@ -15,7 +16,7 @@ import { postSurvey } from '../api/survey';
 import { RequestSurveyInfo } from '../types/survey';
 import { LIFESTYLE_VALUE_MAP } from '../constants/lifestyle.constants';
 
-export const useSubmitBasicInfo = () => {
+export const useSubmitSurvey = () => {
   // survey step 1
   const birthYear = useAtomValue(birthYearAtom);
   const gender = useAtomValue(genderAtom);
@@ -35,9 +36,19 @@ export const useSubmitBasicInfo = () => {
 
   const contraindicationIds = [...underlyingDiseaseIds, ...medicationIds, ...allergyIds];
 
+  // survey step 4
+  const onboardingConcernCodes = useAtomValue(healthConcernAtom);
+
+  // survey step 5
+  const currentIngredients = useAtomValue(currentIngredientAtom);
+
   if (gender === null || selectedJob === '') {
     throw new Error('기본 정보가 입력되지 않았습니다.');
   }
+
+  const currentIngredientNone = currentIngredients.includes('none');
+
+  const currentIngredientIds = currentIngredients.filter((item) => item !== 'none').map(Number);
 
   return useMutation({
     mutationFn: async () => {
@@ -63,10 +74,10 @@ export const useSubmitBasicInfo = () => {
         medicationNone: medicationIds.length === 0,
         allergyNone: allergyIds.length === 0,
 
-        currentIngredientNone: true,
+        currentIngredientNone: currentIngredientNone,
         contraindicationIds: contraindicationIds,
-        onboardingConcernCodes: [],
-        currentIngredientIds: [],
+        onboardingConcernCodes: onboardingConcernCodes,
+        currentIngredientIds: currentIngredientIds,
       };
 
       return postSurvey(body);

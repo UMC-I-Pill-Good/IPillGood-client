@@ -1,6 +1,7 @@
 import { atomWithReset } from 'jotai/utils';
 import { JobLabel } from '../constants/basicInfo.constants';
 import { LifestyleState } from '../types/survey';
+import { HealthConcernCode } from '../constants/healthConcern.constants';
 
 const getToday = () => {
   const now = new Date();
@@ -29,3 +30,5 @@ export const healthStateAtom = atomWithReset<Record<string, number[]>>({
   MEDICATION: [],
   ALLERGY: [],
 });
+
+export const healthConcernAtom = atomWithReset<HealthConcernCode[]>([]);

@@ -2,14 +2,25 @@
 
 import { SelectionCard, TextButton } from '@/shared/components';
 import { StepHeader } from '@/shared/layout';
-import { healthConcernItems } from '@/features/survey/constants/healthConcern.constants';
+import {
+  HealthConcernCode,
+  healthConcernItems,
+} from '@/features/survey/constants/healthConcern.constants';
 import useSelectable from '@/features/survey/hooks/useSelectable';
 import { useRouter } from 'next/navigation';
+import { useAtom } from 'jotai';
+import { healthConcernAtom } from '../../atoms/survey.atom';
 
 const HealthConcernStep = () => {
   const router = useRouter();
 
-  const { selectedItems, handleSelect } = useSelectable({ max: 3 });
+  const [selectedItems, setSelectedItems] = useAtom(healthConcernAtom);
+
+  const { handleSelect } = useSelectable<HealthConcernCode>({
+    max: 3,
+    selectedItems,
+    setSelectedItems,
+  });
 
   const isValid = selectedItems.length > 0;
 
@@ -28,7 +39,7 @@ const HealthConcernStep = () => {
             label={label}
             icon={icon}
             isSelected={selectedItems.includes(id)}
-            onClick={handleSelect}
+            onClick={(value) => handleSelect(value as HealthConcernCode)}
             className='w-full'
           />
         ))}

@@ -1,24 +1,34 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
-interface UseSelectableOptions {
+interface UseSelectableOptions<T extends string> {
   max?: number;
-  exclusiveId?: string;
+  exclusiveId?: T;
+  selectedItems?: T[];
+  setSelectedItems?: Dispatch<SetStateAction<T[]>>;
 }
 
-const useSelectable = ({ max, exclusiveId }: UseSelectableOptions = {}) => {
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+const useSelectable = <T extends string>({
+  max,
+  exclusiveId,
+  selectedItems: externalSelectedItems,
+  setSelectedItems: externalSetSelectedItems,
+}: UseSelectableOptions<T> = {}) => {
+  const [internalSelectedItems, setInternalSelectedItems] = useState<T[]>([]);
 
-  const handleSelect = (id: string) => {
+  const selectedItems = externalSelectedItems ?? internalSelectedItems;
+  const setSelectedItems = externalSetSelectedItems ?? setInternalSelectedItems;
+
+  const handleSelect = (id: T) => {
     setSelectedItems((prev) => {
-      // 단독 선택 아이템(ex. 'none')
+      // 단독 선택
       if (exclusiveId && id === exclusiveId) {
         return prev.includes(id) ? [] : [id];
       }
 
-      // 단독 선택 아이템이 선택되어 있었다면 제거
+      // 단독 선택 제거
       const next = exclusiveId ? prev.filter((item) => item !== exclusiveId) : prev;
 
-      // 이미 선택된 경우 해제
+      // 선택 해제
       if (next.includes(id)) {
         return next.filter((item) => item !== id);
       }
