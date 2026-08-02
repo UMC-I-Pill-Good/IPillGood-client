@@ -7,7 +7,7 @@ interface UseSelectableOptions<T extends string> {
   setSelectedItems?: Dispatch<SetStateAction<T[]>>;
 }
 
-const useSelectable = <T extends string>({
+export const useSelectable = <T extends string>({
   max,
   exclusiveId,
   selectedItems: externalSelectedItems,
@@ -48,5 +48,3 @@ const useSelectable = <T extends string>({
     setSelectedItems,
   };
 };
-
-export default useSelectable;

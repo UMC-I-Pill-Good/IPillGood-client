@@ -9,7 +9,6 @@ import {
   TextButton,
 } from '@/shared/components';
 import { StepHeader } from '@/shared/layout';
-import useSelectable from '@/features/survey/hooks/useSelectable';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
@@ -19,12 +18,13 @@ import {
   currentIngredientIdsAtom,
   selectedIngredientItemsAtom,
 } from '@/features/survey/atoms/survey.atom';
-import { useSubmitSurvey } from '@/features/survey/hooks/useSubmitSurvey';
+import { useSubmitSurvey, useSelectable, useResetSurvey } from '@/features/survey/hooks';
 
 const SupplementStep = () => {
   const router = useRouter();
 
   const [isOpenSheet, setIsOpenSheet] = useState(false);
+  const resetSurvey = useResetSurvey();
 
   const { data, isPending, isError, refetch } = useQuery({
     queryKey: ['contraindications'],
@@ -54,6 +54,8 @@ const SupplementStep = () => {
     },
   });
 
+  const isSubmitDisabled = selectedItems.length === 0;
+
   const handleSubmitSurvey = () => {
     submitSurvey(undefined, {
       onSuccess: (data) => {
@@ -62,6 +64,11 @@ const SupplementStep = () => {
       },
       onError: (error) => {
         console.error('survey error:', error);
+
+        alert('필수 입력값이 입력되지 않았습니다. 설문을 처음부터 다시 진행해주세요.');
+
+        resetSurvey.resetSurvey();
+        router.replace('/survey');
       },
     });
   };
@@ -147,6 +154,7 @@ const SupplementStep = () => {
         text='설문 완료'
         size='xl'
         className='mt-auto w-full'
+        disabled={isSubmitDisabled}
         onClick={handleSubmitSurvey}
       />
     </section>

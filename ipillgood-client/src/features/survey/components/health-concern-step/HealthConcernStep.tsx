@@ -6,10 +6,10 @@ import {
   HealthConcernCode,
   healthConcernItems,
 } from '@/features/survey/constants/healthConcern.constants';
-import useSelectable from '@/features/survey/hooks/useSelectable';
+import { useSelectable } from '@/features/survey/hooks';
 import { useRouter } from 'next/navigation';
 import { useAtom } from 'jotai';
-import { healthConcernAtom } from '../../atoms/survey.atom';
+import { healthConcernAtom } from '@/features/survey/atoms/survey.atom';
 
 const HealthConcernStep = () => {
   const router = useRouter();
