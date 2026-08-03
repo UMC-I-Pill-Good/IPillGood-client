@@ -1,18 +1,21 @@
-import { recommendations } from '@/features/survey/mocks/result.mocks';
 import clsx from 'clsx';
 import { badgeColor } from '@/features/survey/constants/result.constants';
 import { BiggerBadgeIcon } from '@/assets';
 import Image from 'next/image';
-import vitaminImage from '@/assets/images/vitamin.png';
 import { Chip } from '@/shared/components';
+import { RecommendationItem } from '@/features/survey/types/recommendation';
 
-const RecommendationList = () => {
+interface RecommendationListProps {
+  items: RecommendationItem[];
+}
+
+const RecommendationList = ({ items }: RecommendationListProps) => {
   return (
     <section className='space-y-2 py-4'>
-      {recommendations.map((item, index) => (
+      {items.map((item, index) => (
         <div
-          key={item.id}
-          className='flex w-full items-center gap-3 rounded-[20px] border-none bg-primary/30 px-3 py-4 no-center-glass'
+          key={item.recommendationItemId}
+          className='flex w-full items-center gap-3 rounded-[20px] border-none bg-primary/30 pl-3 pr-4 py-4 no-center-glass'
         >
           <section className='flex shrink-0 items-center justify-center gap-3'>
             <span
@@ -22,24 +25,29 @@ const RecommendationList = () => {
               )}
             >
               <BiggerBadgeIcon />
-              {index + 1}
+              {item.rankNo}
             </span>
 
-            <Image src={vitaminImage} alt={item.name} className='shrink-0' />
+            <Image
+              src={item.imageUrl}
+              alt={item.ingredientName}
+              width={54}
+              height={54}
+              className='shrink-0'
+            />
           </section>
 
           <section className='space-y-2'>
+            <Chip text='추천' variant='secondary' className='h-6 typo-caption-6' />
             <article className='flex flex-col gap-1.5'>
-              <p className='typo-body-5'>{item.name}</p>
+              <p className='typo-body-5'>{item.ingredientName}</p>
 
-              <p className='typo-body-10 text-primary-700'>추천 이유</p>
-
-              <p className='typo-caption-3 leading-4! text-neutral-900'>{item.reason}</p>
+              <p className='typo-caption-2 leading-4! text-neutral-900'>{item.aiReason}</p>
             </article>
 
             <article className='flex items-center gap-1'>
-              {item.chips.map((chip) => (
-                <Chip key={chip} text={chip} variant='point' />
+              {item.effectKeywords.map((keyword) => (
+                <Chip key={keyword} text={keyword} variant='point' />
               ))}
             </article>
           </section>

@@ -4,15 +4,17 @@ import { Background } from '@/app/(public)/(landing)/ui/Background';
 import Image from 'next/image';
 import ManhwaImage from '@/assets/images/manhwa.png';
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
+import { useMyInfoQuery, useRecommendationQuery, useResetSurvey } from '@/features/survey/hooks';
+import AnalyzeError from './AnalyzeError';
 
 const container = {
   hidden: {},
   show: {
     transition: {
-      delayChildren: 0.5,
-      staggerChildren: 0.3,
+      delayChildren: 0.4,
+      staggerChildren: 0.2,
     },
   },
 };
@@ -24,23 +26,47 @@ const item = {
   show: {
     opacity: 1,
     transition: {
-      duration: 3,
+      duration: 2.5,
       ease: [0.22, 1, 0.36, 1] as const,
     },
   },
 };
 
-const SurveyAnalyzePage = () => {
+const SurveyAnalyze = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const resetSurvey = useResetSurvey();
 
-  // 3초 뒤 자동으로 결과 페에지 전환 (API 연동 전 임시)
+  const recommendationId = Number(searchParams.get('recommendationId'));
+
+  const { data: myInfoData } = useMyInfoQuery();
+
+  const { data } = useRecommendationQuery(recommendationId);
+
+  const status = data?.result.status;
+
+  // 3초 뒤 자동으로 결과 페이지 전환
   useEffect(() => {
-    const timer = setTimeout(() => {
-      router.replace('/survey/result');
-    }, 3000);
+    if (!status) return;
 
-    return () => clearTimeout(timer);
-  }, [router]);
+    if (status === 'SUCCESS') {
+      const timer = setTimeout(() => {
+        router.replace(`/survey/result?recommendationId=${recommendationId}`);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+
+    if (status === 'NO_RESULT') {
+      alert('추천 가능한 영양제가 없습니다. 설문을 처음부터 다시 진행해주세요.');
+      resetSurvey.resetSurvey();
+      router.replace('/survey');
+    }
+  }, [status, router, recommendationId, resetSurvey]);
+
+  if (status === 'FAILED') {
+    return <AnalyzeError recommendationId={recommendationId} />;
+  }
 
   return (
     <main className='relative isolate flex min-h-screen justify-center overflow-hidden bg-[linear-gradient(225deg,#CBD6FF_0%,#92A8FF_59%,#92A8FF_80%,#7590ff_100%)] p-5'>
@@ -52,12 +78,13 @@ const SurveyAnalyzePage = () => {
         initial='hidden'
         animate='show'
       >
-        <motion.p variants={item} className='text-[#6580EE] typo-body-10 mb-16'>
+        <motion.p variants={item} className='text-primary-700 typo-body-10 mb-16'>
           Pill Good? Feel Good!!
         </motion.p>
         <motion.p variants={item} className='typo-subtitle-4 text-center text-white mb-4'>
           <span className='block leading-normal'>
-            <span className='text-[#6580EE]'>누누 님</span>에게 딱 맞는 영양제를
+            <span className='text-primary-700'>{myInfoData?.result.nickname} 님</span>에게 딱 맞는
+            영양제를
             <br />
             고르고 있어요.
           </span>
@@ -75,11 +102,11 @@ const SurveyAnalyzePage = () => {
             ease: [0.22, 1, 0.36, 1],
           }}
         >
-          <Image src={ManhwaImage} alt='4컷 만화' priority />
+          <Image src={ManhwaImage} alt='4컷 만화' preload />
         </motion.div>
       </motion.section>
     </main>
   );
 };
 
-export default SurveyAnalyzePage;
+export default SurveyAnalyze;

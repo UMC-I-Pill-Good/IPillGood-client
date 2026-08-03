@@ -36,4 +36,27 @@ export const lifestyleOptions = [
     options: ['아니요', '예'],
     required: false,
   },
-];
+] as const;
+
+export const LIFESTYLE_VALUE_MAP = {
+  smoking: {
+    비흡연: 'NONE',
+    '과거 흡연': 'PAST',
+    '현재 흡연': 'CURRENT',
+  },
+  drinking: {
+    비음주: 'NONE',
+    '가끔 마심': 'OCCASIONAL',
+    '자주 마심': 'FREQUENT',
+  },
+  eating: {
+    혼합: 'MIXED',
+    '채식 위주': 'VEGETARIAN',
+    '육식 위주': 'MEAT_BASED',
+  },
+  workout: {
+    '거의 안 함': 'RARELY',
+    '주 1-2회': 'WEEK_1_2',
+    '주 3회 이상': 'WEEK_3_PLUS',
+  },
+} as const;

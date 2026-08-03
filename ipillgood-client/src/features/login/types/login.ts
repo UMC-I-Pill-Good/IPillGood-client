@@ -12,7 +12,6 @@ export type RequestLogin = {
 
 export type ResponseLogin = CommonResponse<{
   accessToken: string;
-  refreshToken: string;
   tokenType: string;
   expiresIn: number;
   memberId: number;

@@ -2,7 +2,7 @@ import IngredientSection from '@/features/ingredient/components/IngredientSectio
 
 const IngredientPage = () => {
   return (
-    <main className='pb-16'>
+    <main className='flex flex-col min-h-dvh'>
       <IngredientSection />
     </main>
   );

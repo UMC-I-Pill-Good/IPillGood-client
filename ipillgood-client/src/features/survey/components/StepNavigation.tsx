@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { ChevronLeft, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useResetSurvey } from '../hooks/useResetSurvey';
 
 interface StepNavigationProps {
   step: number;
@@ -13,6 +14,8 @@ const StepNavigation = ({ step, onBack }: StepNavigationProps) => {
   const router = useRouter();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const { resetSurvey } = useResetSurvey(); // 설문 상태 초기화
 
   return (
     <section>
@@ -46,7 +49,8 @@ const StepNavigation = ({ step, onBack }: StepNavigationProps) => {
           }
           onCancel={() => setIsOpenModal(false)}
           onConfirm={() => {
-            router.push('/');
+            resetSurvey();
+            router.push('/survey');
             setIsOpenModal(false);
           }}
         />

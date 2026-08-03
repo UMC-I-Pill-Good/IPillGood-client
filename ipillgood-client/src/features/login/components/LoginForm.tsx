@@ -20,9 +20,9 @@ const LoginForm = () => {
   const loginMutation = useMutation({
     mutationFn: postLogin,
     onSuccess: ({ result }) => {
-      const { accessToken, refreshToken, onboardingCompleted } = result;
+      const { accessToken, onboardingCompleted } = result;
 
-      setTokens(accessToken, refreshToken);
+      setTokens(accessToken);
 
       if (onboardingCompleted) {
         router.push('/home');

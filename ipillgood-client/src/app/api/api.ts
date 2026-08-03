@@ -18,6 +18,7 @@ if (!baseURL) {
 // 인스턴스 정의
 export const axiosInstance = axios.create({
   baseURL,
+  withCredentials: true,
 });
 
 // 요청 인터셉터 : 모든 요청 전에 accessToken을 Authozation 헤더에 추가
@@ -59,28 +60,32 @@ axiosInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // access token 만료
+    // 로그인, 회원가입 등 인증이 필요 없는 요청은 refresh 로직 대상에서 제외
+    const AUTH_FREE_URLS = ['/auth/login', '/auth/signup'];
+
+    if (AUTH_FREE_URLS.some((url) => request.url?.includes(url))) {
+      return Promise.reject(error);
+    }
+
+    // accessToken 만료
     if (error.response?.status === 401 && !request._retry) {
       request._retry = true;
 
       if (!refreshPromise) {
         refreshPromise = (async () => {
           try {
-            const { setTokens, getRefreshToken } = useLocalStorage();
-            const refreshToken = getRefreshToken();
-
-            if (!refreshToken) {
-              throw new Error('저장된 refreshToken이 없습니다.');
-            }
+            const { setTokens } = useLocalStorage();
 
             // 기본 axios 사용 (인터셉터 방지)
-            const response = await axios.post(`${baseURL}/auth/reissue`, {
-              refreshToken,
-            });
+            const response = await axios.post(
+              `${baseURL}/auth/reissue`,
+              {},
+              {
+                withCredentials: true,
+              },
+            );
 
-            const { accessToken, refreshToken: newRefreshToken } = response.data.result;
-
-            setTokens(accessToken, newRefreshToken);
+            setTokens(response.data.result.accessToken);
           } catch (err) {
             console.error('토큰 재발급 실패', err);
 
@@ -102,7 +107,9 @@ axiosInstance.interceptors.response.use(
 
         // 재발급된 새 accessToken을 재요청 헤더에 반영
         const { getAccessToken } = useLocalStorage();
+
         const newAccessToken = getAccessToken();
+
         if (newAccessToken && request.headers) {
           request.headers.Authorization = `Bearer ${newAccessToken}`;
         }

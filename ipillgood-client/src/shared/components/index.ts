@@ -27,3 +27,7 @@ export { default as SelectionCard } from './SelectionCard';
 
 /* DropdownMenu */
 export { default as DropdownMenu } from './DropdownMenu';
+
+/* Fetch */
+export { default as FetchError } from './FetchError';
+export { default as LoadingSpinner } from './LoadingSpinner';
