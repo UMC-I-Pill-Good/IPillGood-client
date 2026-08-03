@@ -9,7 +9,7 @@ import { useDebounce } from '@/shared/hooks/useDebounce';
 const SORT_OPTIONS = ['후기 많은 순', '평점 높은 순'] as const;
 
 interface SupplementSearchSectionProps {
-  onDebouncedKeywordChange: (keyword: string) => void;
+  onDebouncedKeywordChange: (keyword: string | null) => void;
   sort: '후기 많은 순' | '평점 높은 순';
   setSort: (value: '후기 많은 순' | '평점 높은 순') => void;
 }
@@ -24,7 +24,7 @@ const SupplementSearchSection = ({
   const debouncedKeyword = useDebounce(keyword, 500);
 
   useEffect(() => {
-    onDebouncedKeywordChange(debouncedKeyword);
+    onDebouncedKeywordChange(debouncedKeyword || null);
   }, [debouncedKeyword, onDebouncedKeywordChange]);
 
   return (

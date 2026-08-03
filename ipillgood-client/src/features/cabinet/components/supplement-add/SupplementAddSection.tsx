@@ -1,7 +1,7 @@
 'use client';
 
 import { TextButton } from '@/shared/components';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import InteractionWarningModal from '@/features/cabinet/components/modal/InteractionWarningModal';
 
 const SupplementAddSection = () => {
@@ -32,4 +32,4 @@ const SupplementAddSection = () => {
   );
 };
 
-export default SupplementAddSection;
+export default memo(SupplementAddSection);

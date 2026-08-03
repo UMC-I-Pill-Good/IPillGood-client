@@ -29,7 +29,7 @@ export type ResponseCabinetProducts = CommonResponse<{
 }>;
 
 export type SearchProductParams = {
-  keyword: string;
+  keyword: string | null;
   sort: 'REVIEW_COUNT_DESC' | 'RATING_DESC';
   page: number;
   size: number;

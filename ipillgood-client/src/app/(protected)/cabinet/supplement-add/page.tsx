@@ -1,4 +1,3 @@
-import SupplementAddSection from '@/features/cabinet/components/supplement-add/SupplementAddSection';
 import SupplementSearchContent from '@/features/cabinet/components/supplement-add/SupplementSearchContent';
 import { Header } from '@/shared/layout';
 
@@ -10,7 +9,6 @@ const SupplementAddPage = () => {
       <p className='typo-body-10 px-5 py-4'>캐비닛에 추가하고 싶은 영양제를 선택해 주세요.</p>
       <SupplementSearchContent />
 
-      <SupplementAddSection />
     </main>
   );
 };
