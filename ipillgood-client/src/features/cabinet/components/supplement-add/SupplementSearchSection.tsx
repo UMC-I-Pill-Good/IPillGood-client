@@ -1,26 +1,31 @@
 'use client';
 
 import { DropdownMenu, SearchBar } from '@/shared/components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import clsx from 'clsx';
+import { useDebounce } from '@/shared/hooks/useDebounce';
 
 const SORT_OPTIONS = ['후기 많은 순', '평점 높은 순'] as const;
 
 interface SupplementSearchSectionProps {
-  keyword: string;
-  setKeyword: (value: string) => void;
+  onDebouncedKeywordChange: (keyword: string) => void;
   sort: '후기 많은 순' | '평점 높은 순';
   setSort: (value: '후기 많은 순' | '평점 높은 순') => void;
 }
 
 const SupplementSearchSection = ({
-  keyword,
-  setKeyword,
+  onDebouncedKeywordChange,
   sort,
   setSort,
 }: SupplementSearchSectionProps) => {
+  const [keyword, setKeyword] = useState('');
   const [isSortOpen, setIsSortOpen] = useState(false);
+  const debouncedKeyword = useDebounce(keyword, 500);
+
+  useEffect(() => {
+    onDebouncedKeywordChange(debouncedKeyword);
+  }, [debouncedKeyword, onDebouncedKeywordChange]);
 
   return (
     <section className='flex flex-col px-5 space-y-9'>

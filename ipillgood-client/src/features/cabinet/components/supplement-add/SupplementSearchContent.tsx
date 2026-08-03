@@ -7,12 +7,9 @@ import SupplementSearchSection from './SupplementSearchSection';
 import SupplementSortList from './SupplementSortList';
 
 import { getCabinetProductsSearch } from '@/features/cabinet/api/cabinet';
-import { useDebounce } from '@/shared/hooks/useDebounce';
 
 const SupplementSearchContent = () => {
-  const [keyword, setKeyword] = useState('');
-
-  const debouncedKeyword = useDebounce(keyword, 500);
+  const [debouncedKeyword, setDebouncedKeyword] = useState('');
 
   const [sort, setSort] = useState<'후기 많은 순' | '평점 높은 순'>('후기 많은 순');
 
@@ -33,8 +30,7 @@ const SupplementSearchContent = () => {
   return (
     <>
       <SupplementSearchSection
-        keyword={keyword}
-        setKeyword={setKeyword}
+        onDebouncedKeywordChange={setDebouncedKeyword}
         sort={sort}
         setSort={setSort}
       />
