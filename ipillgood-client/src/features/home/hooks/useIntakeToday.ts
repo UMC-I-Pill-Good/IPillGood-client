@@ -7,7 +7,7 @@ export const intakeTodayQueryKey = ['intakeToday'];
 export const useIntakeToday = () => {
   const queryClient = useQueryClient();
 
-  const { data } = useQuery({
+  const { data, isPending, isError } = useQuery({
     queryKey: intakeTodayQueryKey,
     queryFn: getIntakeToday,
     select: (res) => res.result,
@@ -59,5 +59,7 @@ export const useIntakeToday = () => {
     setIsModalOpen,
     handleConfirm,
     isConfirming: recordsMutation.isPending,
+    isPending,
+    isError,
   };
 };

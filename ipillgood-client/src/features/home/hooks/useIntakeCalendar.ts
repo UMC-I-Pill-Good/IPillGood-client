@@ -9,7 +9,7 @@ export const useIntakeCalendar = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
-  const { data } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ['intakeCalendar', year, month],
     queryFn: () => getIntakeCalendar({ year, month }),
     select: (res) => res.result,
@@ -48,6 +48,7 @@ export const useIntakeCalendar = () => {
     year,
     month,
     days: data?.days ?? [],
+    isPending,
     selectedDate,
     setSelectedDate,
     handlePrevMonth,

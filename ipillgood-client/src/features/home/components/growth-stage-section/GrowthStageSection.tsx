@@ -13,7 +13,7 @@ const GrowthStageSection = () => {
     staleTime: 1000 * 60 * 5,
   });
 
-  const { mascotStage, streakDays } = data ?? {};
+  const { mascotStage, streakDays = 0 } = data ?? {};
 
   const currentIndex = GROWTH_STAGE_OPTION_LIST.findIndex((stage) => stage.value === mascotStage);
 

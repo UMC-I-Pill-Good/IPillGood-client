@@ -12,9 +12,11 @@ const TodayIntakeCheckSection = () => {
     setIsModalOpen,
     handleConfirm,
     isConfirming,
+    isPending,
+    isError,
   } = useIntakeToday();
 
-  if (allCompleted) return null;
+  if (isPending || isError || allCompleted) return null;
 
   return (
     <section className='w-full flex flex-col justify-center items-center  mt-4  gap-3 py-4 rounded-[20px] border border-white bg-white/50 shadow-[0px_4px_4px_0px_rgba(126,131,135,0.10)]'>
