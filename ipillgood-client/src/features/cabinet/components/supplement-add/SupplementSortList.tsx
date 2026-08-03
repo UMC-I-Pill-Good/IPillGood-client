@@ -3,6 +3,7 @@
 import { useSupplementSelection } from '@/features/cabinet/hooks';
 import SupplementCard from './SupplementCard';
 import { SearchProductItem } from '@/features/cabinet/types/cabinet';
+import { memo } from 'react';
 
 interface SupplementSortListProps {
   products: SearchProductItem[];
@@ -25,4 +26,4 @@ const SupplementSortList = ({ products }: SupplementSortListProps) => {
   );
 };
 
-export default SupplementSortList;
+export default memo(SupplementSortList);
