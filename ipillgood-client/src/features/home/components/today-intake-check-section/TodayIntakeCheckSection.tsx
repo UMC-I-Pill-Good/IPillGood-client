@@ -1,12 +1,20 @@
 'use client';
 
 import { TextButton } from '@/shared/components';
-import { useTodayIntakeCheck } from '../../hooks/useTodayIntakeCheck';
 import IntakeCheckModal from './IntakeCheckModal';
+import { useIntakeToday } from '../../hooks/useIntakeToday';
 
 const TodayIntakeCheckSection = () => {
-  const { isModalOpen, handleCheckIntake, handleModalCancel, handleModalConfirm } =
-    useTodayIntakeCheck();
+  const {
+    allCompleted,
+    pendingProducts,
+    isModalOpen,
+    setIsModalOpen,
+    handleConfirm,
+    isConfirming,
+  } = useIntakeToday();
+
+  if (allCompleted) return null;
 
   return (
     <section className='w-full flex flex-col justify-center items-center  mt-4  gap-3 py-4 rounded-[20px] border border-white bg-white/50 shadow-[0px_4px_4px_0px_rgba(126,131,135,0.10)]'>
@@ -24,10 +32,15 @@ const TodayIntakeCheckSection = () => {
         variant='primary'
         size='sm'
         className='rounded-full w-43 h-9'
-        onClick={handleCheckIntake}
+        onClick={() => setIsModalOpen(true)}
       />
       {isModalOpen && (
-        <IntakeCheckModal onCancel={handleModalCancel} onConfirm={handleModalConfirm} />
+        <IntakeCheckModal
+          pendingProducts={pendingProducts}
+          isConfirming={isConfirming}
+          onCancel={() => setIsModalOpen(false)}
+          onConfirm={handleConfirm}
+        />
       )}
     </section>
   );
