@@ -3,10 +3,10 @@ import type { StaticImageData } from 'next/image';
 
 export type CabinetItem = {
   id: number;
-  image: StaticImageData;
+  image: string | StaticImageData;
   name: string;
   isTaking: boolean;
-  isCertified: boolean;
+  activeProductId: number | null;
 };
 
 export type ProductItem = {
@@ -14,6 +14,7 @@ export type ProductItem = {
   productId: number;
   productName: string;
   thumbnailImageUrl: string;
+  mfdsCertified: boolean;
   isActiveIntake: boolean;
   activeProductId: number | null;
   addedAt: string;

@@ -1,7 +1,7 @@
 'use client';
 
 import { BottomSheet, TextButton, ToggleButton } from '@/shared/components';
-import { CabinetItem } from '@/features/cabinet/types/cabinet';
+import { ProductItem } from '@/features/cabinet/types/cabinet';
 import Image from 'next/image';
 import { BellIcon, TimerOffIcon } from '@/assets';
 import { useState } from 'react';
@@ -11,7 +11,7 @@ import { IntakeCycleModal, IntakeTimeModal } from '@/shared/components';
 interface SupplementDetailBottomSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  item: CabinetItem | null; // 임시
+  item: ProductItem | null;
 }
 
 const SupplementDetailBottomSheet = ({
@@ -19,7 +19,7 @@ const SupplementDetailBottomSheet = ({
   onOpenChange,
   item,
 }: SupplementDetailBottomSheetProps) => {
-  const [isIntake, setIsIntake] = useState(true); // 임시
+  const [isIntake, setIsIntake] = useState(true);
   const [isOpenIntakeCycleModal, setIsOpenIntakeCycleModal] = useState(false);
   const [isOpenIntakeTimeModal, setIsOpenIntakeTimeModal] = useState(false);
 
@@ -30,11 +30,11 @@ const SupplementDetailBottomSheet = ({
       <div className='flex flex-col'>
         <section className='py-4 space-y-3 flex flex-col items-center justify-center'>
           <div className='flex items-center justify-center bg-white rounded-lg w-45 h-45'>
-            <Image src={item?.image} alt='비타민' className='h-27.5 w-fit shrink-0' />
+            <Image src={item?.thumbnailImageUrl} alt='비타민' className='h-27.5 w-fit shrink-0' />
           </div>
           <article className='text-center space-y-2'>
             <p className='typo-caption-2 text-center'>영양제 브랜드</p>
-            <p className='typo-subtitle-4 text-center'>{item?.name}</p>
+            <p className='typo-subtitle-4 text-center'>{item?.productName}</p>
           </article>
         </section>
 
@@ -44,7 +44,7 @@ const SupplementDetailBottomSheet = ({
             <p className='typo-body-9 text-primary'>개별알림</p>
           </div>
 
-          {item.isTaking ? (
+          {item.isActiveIntake ? (
             <section className='space-y-2'>
               <div className='no-center-glass px-5 rounded-[20px] flex items-center justify-between h-13'>
                 <p className='typo-body-10'>복용 알림 ON/OFF</p>

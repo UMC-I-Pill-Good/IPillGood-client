@@ -1,10 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { cabinetItems } from '../mocks/cabinet.mocks';
 import EmptyCabinetCard from './EmptyCabinetCard';
 import CabinetCard from './CabinetCard';
-import { CabinetItem } from '../types/cabinet';
+import { ProductItem } from '../types/cabinet';
 import { SupplementDetailBottomSheet } from '@/shared/components';
 import { useCabinetProductsQuery } from '../hooks';
 
@@ -17,36 +16,42 @@ const MAX_COUNT = 9;
 const CabinetGrid = ({ mode }: CabinetGridProps) => {
   const { data } = useCabinetProductsQuery();
 
-  console.log('data', data);
+  const products = data?.result.products || [];
 
-  const takingIds = cabinetItems.filter((item) => item.isTaking).map((item) => item.id);
+  const takingIds = products
+    .filter((item) => item.isActiveIntake)
+    .map((item) => item.memberProductId);
 
   const [selectedIds, setSelectedIds] = useState<number[]>(
-    mode === 'add' ? cabinetItems.filter((item) => item.isTaking).map((item) => item.id) : [],
+    mode === 'add'
+      ? products.filter((item) => item.isActiveIntake).map((item) => item.memberProductId)
+      : [],
   );
 
-  const [selectedItem, setSelectedItem] = useState<CabinetItem | null>(null);
+  const [selectedItem, setSelectedItem] = useState<ProductItem | null>(null);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
-  const handleAddSelect = (item: CabinetItem) => {
-    if (item.isTaking) return;
+  const handleAddSelect = (item: ProductItem) => {
+    if (item.isActiveIntake) return;
 
     setSelectedIds((prev) => {
-      if (prev.includes(item.id)) {
+      if (prev.includes(item.memberProductId)) {
         return takingIds;
       }
 
-      return [...takingIds, item.id];
+      return [...takingIds, item.memberProductId];
     });
   };
 
-  const handleDeleteSelect = (item: CabinetItem) => {
+  const handleDeleteSelect = (item: ProductItem) => {
     setSelectedIds((prev) =>
-      prev.includes(item.id) ? prev.filter((id) => id !== item.id) : [...prev, item.id],
+      prev.includes(item.memberProductId)
+        ? prev.filter((id) => id !== item.memberProductId)
+        : [...prev, item.memberProductId],
     );
   };
 
-  const handleCardClick = (item: CabinetItem) => {
+  const handleCardClick = (item: ProductItem) => {
     if (mode === 'default') {
       setSelectedItem(item);
       setIsBottomSheetOpen(true);
@@ -60,7 +65,7 @@ const CabinetGrid = ({ mode }: CabinetGridProps) => {
     }
   };
 
-  const slots = Array.from({ length: MAX_COUNT }, (_, index) => cabinetItems[index]);
+  const slots = Array.from({ length: MAX_COUNT }, (_, index) => products[index]);
 
   return (
     <>
@@ -68,10 +73,10 @@ const CabinetGrid = ({ mode }: CabinetGridProps) => {
         {slots.map((item, index) =>
           item ? (
             <CabinetCard
-              key={item.id}
+              key={item.memberProductId}
               mode={mode}
               item={item}
-              isSelected={selectedIds.includes(item.id)}
+              isSelected={selectedIds.includes(item.memberProductId)}
               onClick={() => handleCardClick(item)}
             />
           ) : (
