@@ -1,33 +1,40 @@
 'use client';
 
 import { DropdownMenu, SearchBar } from '@/shared/components';
-import { useAtom } from 'jotai';
-import { productKeywordAtom } from '@/features/cabinet/atoms/cabinet.atom';
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import clsx from 'clsx';
 
 const SORT_OPTIONS = ['후기 많은 순', '평점 높은 순'] as const;
 
-const SupplementSearchSection = () => {
-  const [keyword, setKeyword] = useAtom(productKeywordAtom);
+interface SupplementSearchSectionProps {
+  keyword: string;
+  setKeyword: (value: string) => void;
+  sort: '후기 많은 순' | '평점 높은 순';
+  setSort: (value: '후기 많은 순' | '평점 높은 순') => void;
+}
 
-  const [sort, setSort] = useState<'후기 많은 순' | '평점 높은 순'>('후기 많은 순');
+const SupplementSearchSection = ({
+  keyword,
+  setKeyword,
+  sort,
+  setSort,
+}: SupplementSearchSectionProps) => {
   const [isSortOpen, setIsSortOpen] = useState(false);
 
   return (
-    <section className='flex flex-col px-5 space-y-8'>
+    <section className='flex flex-col px-5 space-y-9'>
       <SearchBar
         value={keyword}
         onChange={setKeyword}
         placeholder='영양제를 검색해주세요.'
         isFilterButton={false}
-        isClearButton={true}
+        isClearButton
         className='h-12'
       />
 
       <section className='flex items-center justify-between'>
-        <p className='typo-body-5'>{keyword || '전체'} 제품 목록</p>
+        <p className='typo-body-5'>제품 목록</p>
 
         <div className='relative'>
           <button
@@ -37,7 +44,7 @@ const SupplementSearchSection = () => {
             className='flex h-8 items-center glass text-neutral typo-caption-2'
           >
             {sort}
-            <ChevronDown className={clsx(' transition-transform', isSortOpen && 'rotate-180')} />
+            <ChevronDown className={clsx('transition-transform', isSortOpen && 'rotate-180')} />
           </button>
 
           {isSortOpen && (

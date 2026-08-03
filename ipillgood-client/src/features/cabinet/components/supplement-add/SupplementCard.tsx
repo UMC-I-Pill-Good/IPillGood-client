@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import CheckboxButton from '@/shared/components/button/CheckboxButton';
-import { SupplementItem } from '@/features/cabinet/types/supplement';
 import { Chip } from '@/shared/components';
 import { RatingStarIcon } from '@/assets';
 import Link from 'next/link';
+import { SearchProductItem } from '@/features/cabinet/types/cabinet';
 
 interface Props {
-  item: SupplementItem;
+  item: SearchProductItem;
   checked: boolean;
   onCheck: () => void;
 }
@@ -22,24 +22,39 @@ const SupplementCard = ({ item, checked, onCheck }: Props) => {
           className={!checked ? 'bg-transparent' : undefined}
         />
 
-        <Image src={item.image} alt={item.name} className='w-fit h-22.5 shrink-0' />
+        <div className='flex size-22.5 shrink-0 items-center justify-center overflow-hidden'>
+          <Image
+            src={item.thumbnailImageUrl}
+            alt={item.productName}
+            width={88}
+            height={88}
+            className='h-full w-full object-contain'
+          />
+        </div>
 
         <div className='w-full'>
-          {item.isOwned && <Chip variant='secondary' text='보유 중' className='h-6 mb-1.5' />}
-          <div className='flex items-center justify-between mb-0.5'>
-            <p className='typo-caption-6'>{item.company}</p>
-            <Link href={'/'} className='typo-caption-6 text-neutral-700 transition hover:underline'>
+          {item.isOwned && <Chip variant='secondary' text='보유 중' className='mb-1.5 h-6' />}
+
+          <div className='mb-0.5 flex items-center justify-between'>
+            <p className='typo-caption-6'>{item.brand}</p>
+
+            <Link href={`/`} className='typo-caption-6 text-neutral-700 transition hover:underline'>
               더보기
             </Link>
           </div>
 
-          <p className='typo-body-9'>{item.name}</p>
+          <p className='typo-body-9'>{item.productName}</p>
 
           <p className='flex items-center gap-1.5 typo-caption-6 text-neutral'>
-            <RatingStarIcon /> {item.rating} ({item.reviewCount})
+            <RatingStarIcon />
+            {item.averageRating} ({item.reviewCount})
           </p>
 
-          <Chip text={item.ingredient} variant='point' className='mt-1 h-6 px-3' />
+          <div className='mt-1 flex gap-1'>
+            {item.ingredientTags.map((ingredient) => (
+              <Chip key={ingredient} text={ingredient} variant='point' className='h-6 px-3' />
+            ))}
+          </div>
         </div>
       </div>
     </div>
