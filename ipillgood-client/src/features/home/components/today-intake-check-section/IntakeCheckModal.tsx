@@ -2,15 +2,31 @@
 
 import { ModalShell, TextButton } from '@/shared/components';
 import CheckboxList from '../CheckboxList';
-import { useIntakeCheck } from '../../hooks/useIntakeCheck';
+import { useState } from 'react';
+import { ScheduledProductType } from '../../types/intakeToday.type';
 
 interface IntakeCheckModalProps {
+  pendingProducts: ScheduledProductType[];
+  isConfirming: boolean;
   onCancel: () => void;
   onConfirm: (checkedIdList: number[]) => void;
 }
 
-const IntakeCheckModal = ({ onCancel, onConfirm }: IntakeCheckModalProps) => {
-  const { list, checkedIdList, handleToggleCheck } = useIntakeCheck();
+const IntakeCheckModal = ({
+  pendingProducts,
+  isConfirming,
+  onCancel,
+  onConfirm,
+}: IntakeCheckModalProps) => {
+  const [checkedIdList, setCheckedIdList] = useState<number[]>([]);
+
+  const handleToggleCheck = (activeProductId: number) => {
+    setCheckedIdList((prev) =>
+      prev.includes(activeProductId)
+        ? prev.filter((id) => id !== activeProductId)
+        : [...prev, activeProductId],
+    );
+  };
 
   return (
     <ModalShell onClose={onCancel} className='gap-2.5' ariaLabel='오늘 영양제, 챙겨 드셨나요?'>
@@ -19,9 +35,9 @@ const IntakeCheckModal = ({ onCancel, onConfirm }: IntakeCheckModalProps) => {
         <p className='typo-caption-2 text-neutral-800'>건강한 루틴이 쌓이고 있어요!</p>
       </div>
       <CheckboxList
-        list={list.map((s) => ({
-          id: s.userSupplementId,
-          label: s.productName,
+        list={pendingProducts.map((p) => ({
+          id: p.activeProductId,
+          label: p.productName,
         }))}
         checkedIdList={checkedIdList}
         onToggle={handleToggleCheck}
@@ -41,6 +57,7 @@ const IntakeCheckModal = ({ onCancel, onConfirm }: IntakeCheckModalProps) => {
           variant='primary'
           size='sm'
           onClick={() => onConfirm(checkedIdList)}
+          disabled={isConfirming}
           className='flex-1'
         />
       </div>
