@@ -1,8 +1,22 @@
 import { axiosInstance } from '@/app/api/api';
-import { ResponseCabinetProducts } from '../types/cabinet';
+import {
+  ResponseCabinetProducts,
+  ResponseSearchProducts,
+  SearchProductParams,
+} from '../types/cabinet';
 
 export const getCabinetProducts = async (): Promise<ResponseCabinetProducts> => {
   const { data } = await axiosInstance.get<ResponseCabinetProducts>('/cabinet/products');
+
+  return data;
+};
+
+export const getCabinetProductsSearch = async (
+  params: SearchProductParams,
+): Promise<ResponseSearchProducts> => {
+  const { data } = await axiosInstance.get<ResponseSearchProducts>('/cabinet/product-candidates', {
+    params,
+  });
 
   return data;
 };
