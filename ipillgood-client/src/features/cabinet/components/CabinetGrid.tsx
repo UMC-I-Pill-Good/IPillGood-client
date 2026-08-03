@@ -6,6 +6,8 @@ import EmptyCabinetCard from './EmptyCabinetCard';
 import CabinetCard from './CabinetCard';
 import { CabinetItem } from '../types/cabinet';
 import { SupplementDetailBottomSheet } from '@/shared/components';
+import { useQuery } from '@tanstack/react-query';
+import { getCabinetProducts } from '../api/cabinet';
 
 interface CabinetGridProps {
   mode: 'default' | 'add' | 'delete';
@@ -14,6 +16,13 @@ interface CabinetGridProps {
 const MAX_COUNT = 9;
 
 const CabinetGrid = ({ mode }: CabinetGridProps) => {
+  const { data } = useQuery({
+    queryKey: ['cabinetProducts'],
+    queryFn: getCabinetProducts,
+  });
+
+  console.log('data', data);
+
   const takingIds = cabinetItems.filter((item) => item.isTaking).map((item) => item.id);
 
   const [selectedIds, setSelectedIds] = useState<number[]>(
@@ -59,7 +68,7 @@ const CabinetGrid = ({ mode }: CabinetGridProps) => {
 
   return (
     <>
-      <section className='no-center-glass mx-5 grid grid-cols-3 gap-4 rounded-[20px] bg-white/20 px-5 py-4 shadow-[4px_4px_20px_rgba(155,161,255,0.3),inset_4px_4px_4px_rgba(255,255,255,0.2)]'>
+      <section className='no-center-glass mx-5 grid grid-cols-3 gap-4 rounded-[20px] bg-white/20  px-5 py-4 shadow-[4px_4px_20px_rgba(155,161,255,0.3),inset_4px_4px_4px_rgba(255,255,255,0.2)]'>
         {slots.map((item, index) =>
           item ? (
             <CabinetCard
