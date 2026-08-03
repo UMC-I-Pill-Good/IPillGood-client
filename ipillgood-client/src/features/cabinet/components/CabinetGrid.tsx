@@ -6,8 +6,7 @@ import EmptyCabinetCard from './EmptyCabinetCard';
 import CabinetCard from './CabinetCard';
 import { CabinetItem } from '../types/cabinet';
 import { SupplementDetailBottomSheet } from '@/shared/components';
-import { useQuery } from '@tanstack/react-query';
-import { getCabinetProducts } from '../api/cabinet';
+import { useCabinetProductsQuery } from '../hooks';
 
 interface CabinetGridProps {
   mode: 'default' | 'add' | 'delete';
@@ -16,10 +15,7 @@ interface CabinetGridProps {
 const MAX_COUNT = 9;
 
 const CabinetGrid = ({ mode }: CabinetGridProps) => {
-  const { data } = useQuery({
-    queryKey: ['cabinetProducts'],
-    queryFn: getCabinetProducts,
-  });
+  const { data } = useCabinetProductsQuery();
 
   console.log('data', data);
 
