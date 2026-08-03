@@ -1,34 +1,50 @@
 'use client';
 
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-
+import { useEffect, useState } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import SupplementSearchSection from './SupplementSearchSection';
 import SupplementSortList from './SupplementSortList';
 import SupplementAddSection from './SupplementAddSection';
-
 import { MascotSadIcon } from '@/assets';
 import { getCabinetProductsSearch } from '@/features/cabinet/api/cabinet';
+import { useInView } from 'react-intersection-observer';
 
 const SupplementSearchContent = () => {
   const [debouncedKeyword, setDebouncedKeyword] = useState<string | null>(null);
 
   const [sort, setSort] = useState<'후기 많은 순' | '평점 높은 순'>('후기 많은 순');
 
-  const { data, isSuccess } = useQuery({
-    queryKey: ['cabinet-products-search', debouncedKeyword, sort],
+  const { data, isSuccess, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
+    queryKey: ['cabinetProductsSearch', debouncedKeyword, sort],
 
-    queryFn: () =>
+    queryFn: ({ pageParam }) =>
       getCabinetProductsSearch({
         keyword: debouncedKeyword,
         sort: sort === '후기 많은 순' ? 'REVIEW_COUNT_DESC' : 'RATING_DESC',
-        page: 0,
+        page: pageParam,
         size: 20,
       }),
+
+    initialPageParam: 0,
+
+    getNextPageParam: (lastPage) =>
+      lastPage.result.hasNext ? lastPage.result.page + 1 : undefined,
   });
 
-  const products = data?.result.products ?? [];
+  const products = data?.pages.flatMap((page) => page.result.products) ?? [];
   const isEmptySearchResult = isSuccess && debouncedKeyword !== null && products.length === 0;
+
+  const { ref: loadMoreRef, inView } = useInView({
+    threshold: 0,
+    rootMargin: '160px 0px',
+    skip: !hasNextPage,
+  });
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
     <>
@@ -46,6 +62,8 @@ const SupplementSearchContent = () => {
       ) : (
         <SupplementSortList products={products} />
       )}
+
+      {hasNextPage && <div ref={loadMoreRef} className='h-px w-full' />}
 
       {!isEmptySearchResult && <SupplementAddSection />}
     </>
