@@ -8,8 +8,16 @@ export const useCabinetSearchQuery = () => {
   const [sort, setSort] = useState<'후기 많은 순' | '평점 높은 순'>('후기 많은 순');
 
   // 검색어와 정렬 기준으로 무한 스크롤 검색
-  const { data, isSuccess, hasNextPage, fetchNextPage, isFetchingNextPage, isError, refetch } =
-    useInfiniteQuery({
+  const {
+    data,
+    isSuccess,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isFetchNextPageError,
+    isError,
+    refetch,
+  } = useInfiniteQuery({
       queryKey: ['cabinetProductsSearch', debouncedKeyword, sort],
       queryFn: ({ pageParam }) =>
         getCabinetProductsSearch({
@@ -36,10 +44,10 @@ export const useCabinetSearchQuery = () => {
 
   // 하단이 보이면 다음 페이지 조회
   useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
+    if (inView && hasNextPage && !isFetchingNextPage && !isFetchNextPageError) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+  }, [inView, hasNextPage, isFetchingNextPage, isFetchNextPageError, fetchNextPage]);
 
   return {
     debouncedKeyword,
@@ -50,7 +58,10 @@ export const useCabinetSearchQuery = () => {
     isEmptySearchResult,
     hasNextPage,
     loadMoreRef,
-    isError,
+    isInitialLoadError: isError && !data,
+    isFetchNextPageError,
+    isFetchingNextPage,
+    fetchNextPage,
     refetch,
   };
 };

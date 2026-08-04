@@ -5,7 +5,7 @@ import SupplementsList from './SupplementsList';
 import SupplementAddSection from './SupplementAddSection';
 import { MascotSadIcon } from '@/assets';
 import { useCabinetSearchQuery, useSupplementSelection } from '@/features/cabinet/hooks';
-import { FetchError } from '@/shared/components';
+import { FetchError, TextButton } from '@/shared/components';
 
 const CabinetAddContent = () => {
   const { selectedIds, toggle } = useSupplementSelection();
@@ -16,14 +16,23 @@ const CabinetAddContent = () => {
     setSort,
     products,
     isEmptySearchResult,
-    isError,
+    isInitialLoadError,
+    isFetchNextPageError,
+    isFetchingNextPage,
+    fetchNextPage,
     refetch,
     hasNextPage,
     loadMoreRef,
   } = useCabinetSearchQuery();
 
-  if (isError) {
-    return <FetchError description='검색 결과를 불러오지 못했습니다.' onRetry={() => refetch()} />;
+  if (isInitialLoadError) {
+    return (
+      <FetchError
+        description='검색 결과를 불러오지 못했습니다.'
+        onRetry={() => refetch()}
+        className='min-h-[70vh]'
+      />
+    );
   }
 
   return (
@@ -44,7 +53,21 @@ const CabinetAddContent = () => {
           <SupplementsList products={products} selectedIds={selectedIds} onToggle={toggle} />
         )}
 
-        {hasNextPage && <div ref={loadMoreRef} className='h-px w-full' />}
+        {isFetchNextPageError ? (
+          <div role='alert' className='flex flex-col items-center gap-2 px-5 py-4'>
+            <p className='typo-body-11 text-neutral'>추가 검색 결과를 불러오지 못했습니다.</p>
+            <TextButton
+              text='다시 시도'
+              variant='primary'
+              size='sm'
+              disabled={isFetchingNextPage}
+              onClick={() => fetchNextPage()}
+              className='w-50'
+            />
+          </div>
+        ) : (
+          hasNextPage && <div ref={loadMoreRef} className='h-px w-full' />
+        )}
       </div>
 
       {!isEmptySearchResult && <SupplementAddSection selectedIds={selectedIds} />}
