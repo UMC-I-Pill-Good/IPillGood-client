@@ -1,7 +1,6 @@
 import { WarningCircleIcon, WarningIcon } from '@/assets';
 import { IntakeConflict } from '@/features/cabinet/types/intake';
 import { ModalShell, TextButton } from '@/shared/components';
-import { createPortal } from 'react-dom';
 
 interface InteractionWarningModalProps {
   conflicts: IntakeConflict[];
@@ -17,7 +16,7 @@ const InteractionWarningModal = ({
   const isDuplication = conflicts.length > 1;
   const firstConflict = conflicts[0];
 
-  return createPortal(
+  return (
     <ModalShell
       onClose={onCancel}
       ariaLabel='병용 금기 처리 알림'
@@ -108,8 +107,7 @@ const InteractionWarningModal = ({
           className='flex-1 shadow-[4px_4px_2px_rgba(0,0,0,0.15)]'
         />
       </section>
-    </ModalShell>,
-    document.body,
+    </ModalShell>
   );
 };
 

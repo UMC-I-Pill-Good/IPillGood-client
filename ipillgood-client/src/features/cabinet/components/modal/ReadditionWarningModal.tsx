@@ -10,7 +10,7 @@ const ReAdditionWarningModal = ({ onConfirm, onCancel }: ReAdditionWarningModalP
   return (
     <ModalShell
       onClose={onCancel}
-      ariaLabel='병용 금기 처리 알림'
+      ariaLabel='당일 재추가 제한 안내'
       className='w-88 overflow-hidden px-10 py-8'
     >
       <section className='flex flex-col items-center justify-center space-y-4'>

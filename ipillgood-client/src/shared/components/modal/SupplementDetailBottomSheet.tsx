@@ -24,7 +24,6 @@ const SupplementDetailBottomSheet = ({
   memberProductId,
 }: SupplementDetailBottomSheetProps) => {
   const router = useRouter();
-  const [isNotificationEnabled, setIsNotificationEnabled] = useState<boolean | null>(null);
   const [isOpenIntakeCycleModal, setIsOpenIntakeCycleModal] = useState(false);
   const [isOpenIntakeTimeModal, setIsOpenIntakeTimeModal] = useState(false);
 
@@ -38,7 +37,7 @@ const SupplementDetailBottomSheet = ({
   if (!data?.result) return null;
 
   const activeProduct = data.result.activeProduct;
-  const notificationEnabled = isNotificationEnabled ?? activeProduct?.notificationEnabled ?? false;
+  const notificationEnabled = activeProduct?.notificationEnabled ?? false;
   const intakeHour = activeProduct ? Number(activeProduct.intakeTime.split(':')[0]) : null;
   const intakeTimeLabel = activeProduct
     ? `${intakeHour !== null && intakeHour >= 12 ? '오후' : '오전'} ${activeProduct.intakeTime}`
@@ -93,7 +92,6 @@ const SupplementDetailBottomSheet = ({
                 <ToggleButton
                   isChecked={notificationEnabled}
                   onClick={() => {
-                    setIsNotificationEnabled(!notificationEnabled);
                     updateActiveProduct({ notificationEnabled: !notificationEnabled });
                   }}
                 />

@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import EmptyCabinetCard from './EmptyCabinetCard';
 import CabinetCard from './CabinetCard';
 import { ProductItem } from '../types/cabinet';
@@ -33,13 +33,18 @@ const CabinetGrid = ({ mode, onAddSelectionChange, onDeleteSelectionChange }: Ca
     navigateToReviewAdd,
   } = useReviewPrompt(mode === 'default');
 
-  const products = [...(data?.result.products ?? [])].sort(
-    (a, b) => new Date(a.addedAt).getTime() - new Date(b.addedAt).getTime(),
+  const products = useMemo(
+    () =>
+      [...(data?.result.products ?? [])].sort(
+        (a, b) => new Date(a.addedAt).getTime() - new Date(b.addedAt).getTime(),
+      ),
+    [data?.result.products],
   );
 
-  const takingIds = products
-    .filter((item) => item.isActiveIntake)
-    .map((item) => item.memberProductId);
+  const takingIds = useMemo(
+    () => products.filter((item) => item.isActiveIntake).map((item) => item.memberProductId),
+    [products],
+  );
 
   const [selectedIds, setSelectedIds] = useState<number[]>(
     mode === 'add'

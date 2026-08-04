@@ -5,6 +5,7 @@ import SupplementsList from './SupplementsList';
 import SupplementAddSection from './SupplementAddSection';
 import { MascotSadIcon } from '@/assets';
 import { useCabinetSearchQuery, useSupplementSelection } from '@/features/cabinet/hooks';
+import { FetchError } from '@/shared/components';
 
 const CabinetAddContent = () => {
   const { selectedIds, toggle } = useSupplementSelection();
@@ -15,9 +16,15 @@ const CabinetAddContent = () => {
     setSort,
     products,
     isEmptySearchResult,
+    isError,
+    refetch,
     hasNextPage,
     loadMoreRef,
   } = useCabinetSearchQuery();
+
+  if (isError) {
+    return <FetchError description='검색 결과를 불러오지 못했습니다.' onRetry={() => refetch()} />;
+  }
 
   return (
     <section className='flex min-h-0 flex-1 flex-col'>

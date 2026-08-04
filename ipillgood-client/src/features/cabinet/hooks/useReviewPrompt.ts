@@ -14,16 +14,30 @@ export const useReviewPrompt = (enabled: boolean) => {
 
   const dismissMutation = useMutation({
     mutationFn: patchReviewPromptsDismiss,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['reviewPrompts'] });
-    },
   });
 
   const dismiss = () => {
     if (!duePrompt) return;
 
-    setDismissedPromptId(duePrompt.activeProductId);
-    dismissMutation.mutate(duePrompt.activeProductId);
+    const activeProductId = duePrompt.activeProductId;
+
+    dismissMutation.mutate(activeProductId, {
+      onSuccess: (response) => {
+        if (!response.isSuccess) {
+          alert(response.message ?? '후기 알림을 닫지 못했어요.');
+          return;
+        }
+
+        setDismissedPromptId(activeProductId);
+
+        queryClient.invalidateQueries({
+          queryKey: ['reviewPrompts'],
+        });
+      },
+      onError: () => {
+        alert('후기 알림을 닫지 못했어요.');
+      },
+    });
   };
 
   const navigateToReviewAdd = () => {

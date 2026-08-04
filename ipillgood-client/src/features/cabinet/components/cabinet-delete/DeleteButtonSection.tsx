@@ -59,7 +59,10 @@ const DeleteButtonSection = ({ selectedIds }: DeleteButtonSectionProps) => {
           cancelLabel='아니요'
           confirmLabel='네'
           onCancel={() => setIsDeleteModalOpen(false)}
-          onConfirm={() => deleteProductsMutation.mutate(selectedIds)}
+          onConfirm={() => {
+            if (deleteProductsMutation.isPending) return;
+            deleteProductsMutation.mutate(selectedIds);
+          }}
           contentClassName='text-semantic'
         />
       )}

@@ -8,19 +8,20 @@ export const useCabinetSearchQuery = () => {
   const [sort, setSort] = useState<'후기 많은 순' | '평점 높은 순'>('후기 많은 순');
 
   // 검색어와 정렬 기준으로 무한 스크롤 검색
-  const { data, isSuccess, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: ['cabinetProductsSearch', debouncedKeyword, sort],
-    queryFn: ({ pageParam }) =>
-      getCabinetProductsSearch({
-        keyword: debouncedKeyword,
-        sort: sort === '후기 많은 순' ? 'REVIEW_COUNT_DESC' : 'RATING_DESC',
-        page: pageParam,
-        size: 20,
-      }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) =>
-      lastPage.result.hasNext ? lastPage.result.page + 1 : undefined,
-  });
+  const { data, isSuccess, hasNextPage, fetchNextPage, isFetchingNextPage, isError, refetch } =
+    useInfiniteQuery({
+      queryKey: ['cabinetProductsSearch', debouncedKeyword, sort],
+      queryFn: ({ pageParam }) =>
+        getCabinetProductsSearch({
+          keyword: debouncedKeyword,
+          sort: sort === '후기 많은 순' ? 'REVIEW_COUNT_DESC' : 'RATING_DESC',
+          page: pageParam,
+          size: 20,
+        }),
+      initialPageParam: 0,
+      getNextPageParam: (lastPage) =>
+        lastPage.result.hasNext ? lastPage.result.page + 1 : undefined,
+    });
 
   const products = data?.pages.flatMap((page) => page.result.products) ?? []; // 모든 페이지의 상품을 하나의 배열로 합침
 
@@ -49,5 +50,7 @@ export const useCabinetSearchQuery = () => {
     isEmptySearchResult,
     hasNextPage,
     loadMoreRef,
+    isError,
+    refetch,
   };
 };

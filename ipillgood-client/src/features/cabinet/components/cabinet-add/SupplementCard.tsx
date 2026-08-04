@@ -22,7 +22,7 @@ const SupplementCard = ({ item, checked, onCheck }: Props) => {
   return (
     <div className='relative no-center-glass rounded-[20px] bg-primary/30 border-none px-5 py-3'>
       <div className='flex items-center'>
-        {!item.isOwned && (
+        {!item.isOwned && item.isSelectable && (
           <CheckboxButton
             checked={checked}
             size='lg'
