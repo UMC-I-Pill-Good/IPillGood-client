@@ -15,7 +15,7 @@ const SupplementAdvertisingNotice = ({ ingredientName }: SupplementAdvertisingNo
   <section className='flex w-full flex-col gap-2.5 px-5 py-4'>
     <article className='flex w-full flex-col gap-2 rounded-[20px] border border-point-600 bg-point-100/70 px-5 py-3 backdrop-blur-sm'>
       <NoticeTitle>과대 광고 성분 조심 안내</NoticeTitle>
-      <div className='flex flex-col gap-1 leading-normal typo-caption-7 text-neutral-900'>
+      <div className='flex flex-col leading-normal typo-caption-7 text-neutral-900'>
         <p>식약처 부당 광고 사례집에도 등장한 성분이에요.</p>
         <p>
           <strong className='font-semibold'>[{ingredientName}]</strong>의 효능 표현, 과장 없는지
@@ -27,7 +27,7 @@ const SupplementAdvertisingNotice = ({ ingredientName }: SupplementAdvertisingNo
     <article className='flex w-full flex-col gap-2 rounded-[20px] border border-point-700 bg-point-200/70 px-5 py-3 backdrop-blur-sm'>
       <NoticeTitle>아래와 같은 광고 문구가 포함된 제품은 주의하세요</NoticeTitle>
       <div className='flex flex-col gap-4'>
-        <ul className='flex list-outside list-disc flex-col gap-1 pl-4.5 leading-normal typo-caption-7 text-neutral-900'>
+        <ul className='flex list-outside list-disc flex-col pl-4.5 leading-normal typo-caption-7 text-neutral-900'>
           {ADVERTISING_WARNING_LIST.map((warning) => (
             <li key={warning}>{warning}</li>
           ))}
