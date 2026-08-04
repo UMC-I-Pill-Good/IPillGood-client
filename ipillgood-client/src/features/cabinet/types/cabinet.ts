@@ -74,3 +74,31 @@ export type ResponseDeleteProducts = CommonResponse<{
   deletedCount: number;
   deletedProducts: DeletedProduct[];
 }>;
+
+export type ResponseCabinetProductDetail = CommonResponse<{
+  memberProductId: number;
+  productId: number;
+  brand: string;
+  productName: string;
+  thumbnailImageUrl: string;
+  isActiveIntake: boolean;
+  hasMyReview: boolean;
+  ingredients: {
+    ingredientId: number;
+    name: string;
+    imageUrl: string;
+    description: string;
+    effectTags: string[];
+  }[];
+  activeProduct: {
+    activeProductId: number;
+    startedOn: string;
+    intakeDayCount: number;
+    notificationEnabled: boolean;
+    intakeTime: string;
+    frequency: string;
+    frequencyLabel: string;
+    frequencyIntervalDays: number;
+    scheduleAnchorOn: string;
+  };
+}>;

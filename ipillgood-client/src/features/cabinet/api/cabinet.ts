@@ -5,10 +5,21 @@ import {
   ResponseSearchProducts,
   SearchProductParams,
   ResponseDeleteProducts,
+  ResponseCabinetProductDetail,
 } from '../types/cabinet';
 
 export const getCabinetProducts = async (): Promise<ResponseCabinetProducts> => {
   const { data } = await axiosInstance.get<ResponseCabinetProducts>('/cabinet/products');
+
+  return data;
+};
+
+export const getCabinetProductsDetail = async (
+  memberProductId: number,
+): Promise<ResponseCabinetProductDetail> => {
+  const { data } = await axiosInstance.get<ResponseCabinetProductDetail>(
+    `/cabinet/products/${memberProductId}`,
+  );
 
   return data;
 };
