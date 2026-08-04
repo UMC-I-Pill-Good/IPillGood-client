@@ -1,5 +1,6 @@
 import { axiosInstance } from '@/app/api/api';
 import {
+  ResponseAddProducts,
   ResponseCabinetProducts,
   ResponseSearchProducts,
   SearchProductParams,
@@ -17,6 +18,12 @@ export const getCabinetProductsSearch = async (
   const { data } = await axiosInstance.get<ResponseSearchProducts>('/cabinet/product-candidates', {
     params,
   });
+
+  return data;
+};
+
+export const postCabinetProducts = async (body: number[]): Promise<ResponseAddProducts> => {
+  const { data } = await axiosInstance.post<ResponseAddProducts>('/cabinet/products', body);
 
   return data;
 };

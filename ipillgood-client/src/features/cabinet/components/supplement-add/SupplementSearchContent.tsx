@@ -11,12 +11,10 @@ import { useInView } from 'react-intersection-observer';
 
 const SupplementSearchContent = () => {
   const [debouncedKeyword, setDebouncedKeyword] = useState<string | null>(null);
-
   const [sort, setSort] = useState<'후기 많은 순' | '평점 높은 순'>('후기 많은 순');
 
   const { data, isSuccess, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ['cabinetProductsSearch', debouncedKeyword, sort],
-
     queryFn: ({ pageParam }) =>
       getCabinetProductsSearch({
         keyword: debouncedKeyword,
@@ -24,9 +22,7 @@ const SupplementSearchContent = () => {
         page: pageParam,
         size: 20,
       }),
-
     initialPageParam: 0,
-
     getNextPageParam: (lastPage) =>
       lastPage.result.hasNext ? lastPage.result.page + 1 : undefined,
   });

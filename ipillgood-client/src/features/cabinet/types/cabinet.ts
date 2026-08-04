@@ -56,3 +56,17 @@ export type ResponseSearchProducts = CommonResponse<{
   hasNext: boolean;
   products: SearchProductItem[];
 }>;
+
+export type AddedProduct = {
+  memberProductId: number;
+  productId: number;
+  brand: string;
+  productName: string;
+  thumbnailImageUrl: string;
+  addedAt: string;
+};
+
+export type ResponseAddProducts = CommonResponse<{
+  addedCount: number;
+  addedProducts: AddedProduct[];
+}>;
