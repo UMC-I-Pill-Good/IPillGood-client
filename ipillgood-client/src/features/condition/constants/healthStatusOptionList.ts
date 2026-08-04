@@ -57,7 +57,7 @@ export const HEALTH_SYSTEM_OPTION_LIST: HealthSystemType[] = [
     bodyPartList: [
       { key: 'LIVER', label: '간' },
       { key: 'STOMACH', label: '위' },
-      { key: 'INTESTINE', label: '장' },
+      { key: 'GUT', label: '장' },
       { key: 'BODY_FAT', label: '체지방' },
       { key: 'CALCIUM_ABSORPTION', label: '칼슘 흡수' },
     ],
@@ -68,9 +68,9 @@ export const HEALTH_SYSTEM_OPTION_LIST: HealthSystemType[] = [
     icon: EndocrineIcon,
     bodyPartList: [
       { key: 'BLOOD_SUGAR', label: '혈당' },
-      { key: 'MENOPAWSE_WOMEN', label: '갱년기 여성' },
-      { key: 'MENOPAWSE_MEN', label: '갱년기 남성' },
-      { key: 'PREMENSTRUAL_DISCOMFORT', label: '월경 전 불편한 상태' },
+      { key: 'MENOPAUSE_FEMALE', label: '갱년기 여성' },
+      { key: 'MENOPAUSE_MALE', label: '갱년기 남성' },
+      { key: 'PMS_DISCOMFORT', label: '월경 전 불편한 상태' },
     ],
   },
   {
@@ -81,7 +81,7 @@ export const HEALTH_SYSTEM_OPTION_LIST: HealthSystemType[] = [
       { key: 'TRIGLYCERIDE', label: '혈중 중성지방' },
       { key: 'CHOLESTEROL', label: '콜레스테롤' },
       { key: 'BLOOD_PRESSURE', label: '혈압' },
-      { key: 'BLOOD_SUGAR_CARDIO', label: '혈당' },
+      { key: 'BLOOD_FLOW', label: '혈행' },
     ],
   },
   {
@@ -102,7 +102,7 @@ export const HEALTH_SYSTEM_OPTION_LIST: HealthSystemType[] = [
       { key: 'EXERCISE_PERFORMANCE', label: '운동 수행 능력' },
       { key: 'JOINT', label: '관절' },
       { key: 'BONE', label: '뼈' },
-      { key: 'MUSCLE', label: '근육' },
+      { key: 'MUSCLE_STRENGTH', label: '근력' },
     ],
   },
   {

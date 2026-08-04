@@ -56,7 +56,10 @@ const ConditionStatusBanner = ({
         /* 2. 체크 미완료 배너 */
         <div
           className={clsx(
-            'relative flex h-[148px] w-full flex-col items-center justify-between rounded-2xl bg-primary-300 pt-3 pb-4 px-4 text-left shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
+            'relative flex w-full flex-col items-center rounded-2xl bg-primary-300 px-4 text-left shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
+            currentWeekStatus.checkAvailable
+              ? 'h-[148px] justify-between pt-3 pb-4'
+              : 'h-[77px] justify-center py-4',
           )}
         >
           <div className='flex flex-row items-center justify-center gap-2 mx-auto min-w-0 shrink-0 w-full pl-6'>
@@ -80,14 +83,16 @@ const ConditionStatusBanner = ({
             </div>
           </div>
 
-          {/* 공통 TextButton */}
-          <TextButton
-            type='button'
-            text='이번 주 컨디션 체크하러 가기'
-            size='lg'
-            onClick={onOpenConditionCheck}
-            className='mx-auto mt-1 h-10.5 w-full max-w-[290px] rounded-lg bg-primary-600 text-white text-base font-medium shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] hover:bg-primary-700 transition-all'
-          />
+          {/* 공통 TextButton - 일요일 및 체크 가능일 때만 노출 */}
+          {currentWeekStatus.checkAvailable && (
+            <TextButton
+              type='button'
+              text='이번 주 컨디션 체크하러 가기'
+              size='lg'
+              onClick={onOpenConditionCheck}
+              className='mx-auto mt-1 h-10.5 w-full max-w-[290px] rounded-lg bg-primary-600 text-white text-base font-medium shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] hover:bg-primary-700 transition-all'
+            />
+          )}
         </div>
       )}
     </section>

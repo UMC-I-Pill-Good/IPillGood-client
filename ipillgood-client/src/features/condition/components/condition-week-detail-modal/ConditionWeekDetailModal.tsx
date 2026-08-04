@@ -70,10 +70,10 @@ const ConditionWeekDetailModal = ({
   };
 
   const displayVitality = isLoading
-    ? formatScore(vitality)
-    : detailData?.conditionScore !== undefined
-      ? formatScore(detailData.conditionScore)
-      : formatScore(vitality);
+    ? Math.round(vitality).toString()
+    : detailData?.vitalityScore !== undefined
+      ? Math.round(detailData.vitalityScore).toString()
+      : Math.round(vitality).toString();
 
   const displaySleepHours = isLoading
     ? sleepHours

@@ -23,7 +23,6 @@ export type ConditionCheckRequest = {
   vitalityScore: number;
   sleepHours: number;
   sleepMinutes: number;
-  intakeDaysCount: number; // 섭취 완료 일수 (0~7)
 };
 
 export type ConditionCheckResult = {
