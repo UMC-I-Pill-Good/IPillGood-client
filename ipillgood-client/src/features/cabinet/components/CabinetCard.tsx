@@ -3,12 +3,13 @@ import { CheckShieldIcon } from '@/assets';
 import { Check } from 'lucide-react';
 import clsx from 'clsx';
 import { ProductItem } from '../types/cabinet';
+import { memo } from 'react';
 
 interface CabinetCardProps {
   item: ProductItem;
   mode: 'default' | 'add' | 'delete';
   isSelected: boolean;
-  onClick: () => void;
+  onClick: (item: ProductItem) => void;
 }
 
 const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
@@ -16,7 +17,7 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
     return (
       <button
         type='button'
-        onClick={onClick}
+        onClick={() => onClick(item)}
         aria-label='알림 설정 바텀시트 열기'
         aria-pressed={isSelected}
         className='group relative flex h-35 items-center justify-center rounded-[20px]'
@@ -51,7 +52,7 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
   return (
     <button
       type='button'
-      onClick={onClick}
+      onClick={() => onClick(item)}
       aria-label='영양제 선택'
       className={clsx(
         'group relative flex h-35 items-center justify-center rounded-[20px]',
@@ -116,4 +117,4 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
   );
 };
 
-export default CabinetCard;
+export default memo(CabinetCard);

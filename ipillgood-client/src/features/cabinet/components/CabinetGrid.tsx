@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import EmptyCabinetCard from './EmptyCabinetCard';
 import CabinetCard from './CabinetCard';
 import { ProductItem } from '../types/cabinet';
@@ -90,14 +90,15 @@ const CabinetGrid = ({ mode, onDeleteSelectionChange }: CabinetGridProps) => {
 
   if (isPending) return <LoadingSpinner />;
 
-  if (isError)
+  if (isError) {
     return (
       <FetchError description='캐비닛 정보를 불러오지 못했습니다.' onRetry={() => refetch()} />
     );
+  }
 
   return (
     <>
-      <section className='no-center-glass mx-5 grid grid-cols-3 gap-4 rounded-[20px] bg-white/20  px-5 py-4 shadow-[4px_4px_20px_rgba(155,161,255,0.3),inset_4px_4px_4px_rgba(255,255,255,0.2)]'>
+      <section className='no-center-glass mx-5 grid grid-cols-3 gap-4 rounded-[20px] bg-white/20 px-5 py-4 shadow-[4px_4px_20px_rgba(155,161,255,0.3),inset_4px_4px_4px_rgba(255,255,255,0.2)]'>
         {slots.map((item, index) =>
           item ? (
             <CabinetCard
@@ -105,7 +106,7 @@ const CabinetGrid = ({ mode, onDeleteSelectionChange }: CabinetGridProps) => {
               mode={mode}
               item={item}
               isSelected={selectedIds.includes(item.memberProductId)}
-              onClick={() => handleCardClick(item)}
+              onClick={handleCardClick}
             />
           ) : mode === 'default' && index === products.length ? (
             <EmptyCabinetCard key={`empty-${index}`} mode={mode} showAddButton />
@@ -141,4 +142,4 @@ const CabinetGrid = ({ mode, onDeleteSelectionChange }: CabinetGridProps) => {
   );
 };
 
-export default CabinetGrid;
+export default memo(CabinetGrid);
