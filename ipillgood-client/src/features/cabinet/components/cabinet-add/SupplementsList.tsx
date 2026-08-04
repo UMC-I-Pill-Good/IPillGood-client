@@ -1,20 +1,20 @@
 'use client';
 
-import CabinetAddCard from './CabinetAddCard';
+import SupplementCard from './SupplementCard';
 import { SearchProductItem } from '@/features/cabinet/types/cabinet';
 import { memo } from 'react';
 
-interface CabinetAddListProps {
+interface SupplementsListProps {
   products: SearchProductItem[];
   selectedIds: number[];
   onToggle: (id: number) => void;
 }
 
-const CabinetAddList = ({ products, selectedIds, onToggle }: CabinetAddListProps) => {
+const SupplementsList = ({ products, selectedIds, onToggle }: SupplementsListProps) => {
   return (
     <section className='px-5 space-y-2 pb-4'>
       {products.map((item) => (
-        <CabinetAddCard
+        <SupplementCard
           key={item.productId}
           item={item}
           checked={selectedIds.includes(item.productId)}
@@ -25,4 +25,4 @@ const CabinetAddList = ({ products, selectedIds, onToggle }: CabinetAddListProps
   );
 };
 
-export default memo(CabinetAddList);
+export default memo(SupplementsList);

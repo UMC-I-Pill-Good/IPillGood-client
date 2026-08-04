@@ -8,17 +8,17 @@ import { useDebounce } from '@/shared/hooks/useDebounce';
 
 const SORT_OPTIONS = ['후기 많은 순', '평점 높은 순'] as const;
 
-interface CabinetAddSearchSectionProps {
+interface SupplementSearchSectionProps {
   onDebouncedKeywordChange: (keyword: string | null) => void;
   sort: '후기 많은 순' | '평점 높은 순';
   setSort: (value: '후기 많은 순' | '평점 높은 순') => void;
 }
 
-const CabinetAddSearchSection = ({
+const SupplementSearchSection = ({
   onDebouncedKeywordChange,
   sort,
   setSort,
-}: CabinetAddSearchSectionProps) => {
+}: SupplementSearchSectionProps) => {
   const [keyword, setKeyword] = useState('');
   const [isSortOpen, setIsSortOpen] = useState(false);
   const debouncedKeyword = useDebounce(keyword, 500);
@@ -70,4 +70,4 @@ const CabinetAddSearchSection = ({
   );
 };
 
-export default CabinetAddSearchSection;
+export default SupplementSearchSection;

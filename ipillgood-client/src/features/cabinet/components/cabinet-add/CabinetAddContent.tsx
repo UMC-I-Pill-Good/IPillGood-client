@@ -1,8 +1,8 @@
 'use client';
 
-import CabinetAddSearchSection from './CabinetAddSearchSection';
-import CabinetAddList from './CabinetAddList';
-import CabinetAddSection from './CabinetAddSection';
+import SupplementSearchSection from './SupplementSearchSection';
+import SupplementsList from './SupplementsList';
+import SupplementAddSection from './SupplementAddSection';
 import { MascotSadIcon } from '@/assets';
 import { useCabinetSearchQuery, useSupplementSelection } from '@/features/cabinet/hooks';
 
@@ -21,7 +21,7 @@ const CabinetAddContent = () => {
 
   return (
     <section className='flex min-h-0 flex-1 flex-col'>
-      <CabinetAddSearchSection
+      <SupplementSearchSection
         onDebouncedKeywordChange={setDebouncedKeyword}
         sort={sort}
         setSort={setSort}
@@ -34,13 +34,13 @@ const CabinetAddContent = () => {
             <p className='mt-4 typo-body-6 text-primary-700'>검색 결과가 존재하지 않아요...</p>
           </section>
         ) : (
-          <CabinetAddList products={products} selectedIds={selectedIds} onToggle={toggle} />
+          <SupplementsList products={products} selectedIds={selectedIds} onToggle={toggle} />
         )}
 
         {hasNextPage && <div ref={loadMoreRef} className='h-px w-full' />}
       </div>
 
-      {!isEmptySearchResult && <CabinetAddSection selectedIds={selectedIds} />}
+      {!isEmptySearchResult && <SupplementAddSection selectedIds={selectedIds} />}
     </section>
   );
 };

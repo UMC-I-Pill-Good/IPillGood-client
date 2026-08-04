@@ -5,11 +5,11 @@ import { useCabinetAddProducts } from '@/features/cabinet/hooks';
 import { TextButton } from '@/shared/components';
 import { memo } from 'react';
 
-interface CabinetAddSectionProps {
+interface SupplementAddSectionProps {
   selectedIds: number[];
 }
 
-const CabinetAddSection = ({ selectedIds }: CabinetAddSectionProps) => {
+const SupplementAddSection = ({ selectedIds }: SupplementAddSectionProps) => {
   const {
     conflicts,
     isWarningModalOpen,
@@ -43,4 +43,4 @@ const CabinetAddSection = ({ selectedIds }: CabinetAddSectionProps) => {
   );
 };
 
-export default memo(CabinetAddSection);
+export default memo(SupplementAddSection);
