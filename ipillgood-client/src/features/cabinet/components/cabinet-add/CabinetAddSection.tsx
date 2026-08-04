@@ -6,6 +6,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import InteractionWarningModal from '@/features/cabinet/components/modal/InteractionWarningModal';
 import { postCabinetProducts } from '@/features/cabinet/api/cabinet';
+import { getProductConflict } from '@/features/cabinet/api/conflict';
+import { ProductConflict } from '@/features/cabinet/types/conflict';
 import { useRouter } from 'next/navigation';
 
 interface CabinetAddSectionProps {
@@ -14,6 +16,7 @@ interface CabinetAddSectionProps {
 
 const CabinetAddSection = ({ selectedIds }: CabinetAddSectionProps) => {
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
+  const [conflicts, setConflicts] = useState<ProductConflict[]>([]);
   const queryClient = useQueryClient();
 
   const router = useRouter();
@@ -41,6 +44,35 @@ const CabinetAddSection = ({ selectedIds }: CabinetAddSectionProps) => {
     },
   });
 
+  const conflictCheckMutation = useMutation({
+    mutationFn: (productIds: number[]) => Promise.all(productIds.map(getProductConflict)),
+    onSuccess: (responses) => {
+      const failedResponse = responses.find((response) => !response.isSuccess);
+
+      if (failedResponse) {
+        alert(failedResponse.message ?? '영양제 병용 여부를 확인하지 못했어요.');
+        return;
+      }
+
+      const detectedConflicts = responses.flatMap((response) => response.result.conflicts);
+
+      if (detectedConflicts.length === 0) {
+        addProductsMutation.mutate({ productIds: selectedIds });
+        return;
+      }
+
+      setConflicts(detectedConflicts);
+      setIsWarningModalOpen(true);
+    },
+    onError: (error) => {
+      const message = isAxiosError<{ message?: string }>(error)
+        ? error.response?.data.message
+        : undefined;
+
+      alert(message ?? '병용 금기 여부를 확인에 실패했습니다.');
+    },
+  });
+
   return (
     <>
       <section className='shrink-0 px-5 pb-28 pt-4'>
@@ -49,18 +81,25 @@ const CabinetAddSection = ({ selectedIds }: CabinetAddSectionProps) => {
           text='캐비닛에 추가하기'
           size='xl'
           className='w-full'
-          disabled={selectedIds.length === 0 || addProductsMutation.isPending}
-          onClick={() => setIsWarningModalOpen(true)}
+          disabled={
+            selectedIds.length === 0 ||
+            addProductsMutation.isPending ||
+            conflictCheckMutation.isPending
+          }
+          onClick={() => conflictCheckMutation.mutate(selectedIds)}
         />
       </section>
 
       {isWarningModalOpen && (
         <InteractionWarningModal
-          onCancel={() => setIsWarningModalOpen(false)}
+          conflicts={conflicts}
+          onCancel={() => {
+            setIsWarningModalOpen(false);
+            setConflicts([]);
+          }}
           onConfirm={() => {
             addProductsMutation.mutate({ productIds: selectedIds });
           }}
-          isdDuplication={true}
         />
       )}
     </>
