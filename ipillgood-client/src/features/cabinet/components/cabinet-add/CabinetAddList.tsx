@@ -1,7 +1,7 @@
 'use client';
 
 import CabinetAddCard from './CabinetAddCard';
-import { SearchProductItem } from '@/features/cabinet/types/supplement-add';
+import { SearchProductItem } from '@/features/cabinet/types/cabinet';
 import { memo } from 'react';
 
 interface CabinetAddListProps {
