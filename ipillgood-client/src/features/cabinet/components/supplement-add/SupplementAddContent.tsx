@@ -7,7 +7,7 @@ import { MascotSadIcon } from '@/assets';
 import { useCabinetSearchQuery, useSupplementSelection } from '@/features/cabinet/hooks';
 import { FetchError, TextButton } from '@/shared/components';
 
-const CabinetAddContent = () => {
+const SupplementAddContent = () => {
   const { selectedIds, toggle } = useSupplementSelection();
 
   const {
@@ -75,4 +75,4 @@ const CabinetAddContent = () => {
   );
 };
 
-export default CabinetAddContent;
+export default SupplementAddContent;

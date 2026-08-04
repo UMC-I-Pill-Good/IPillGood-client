@@ -6,7 +6,7 @@ import { frequencyCycle } from '@/features/cabinet/constants/intake.constants';
 import { useAddIntakeProducts } from '@/features/cabinet/hooks';
 import { IntakeCycleModal, IntakeTimeModal, TextButton } from '@/shared/components';
 import { useState } from 'react';
-import ReAdditionWarningModal from '../modal/ReadditionWarningModal';
+import ReAdditionWarningModal from '../modal/ReAdditionWarningModal';
 
 interface IntakeAddButtonSectionProps {
   selectedIds: number[];
