@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import InteractionWarningModal from '@/features/cabinet/components/modal/InteractionWarningModal';
 import { postCabinetProducts } from '@/features/cabinet/api/supplement-add';
+import { useRouter } from 'next/navigation';
 
 interface CabinetAddSectionProps {
   selectedIds: number[];
@@ -14,6 +15,8 @@ interface CabinetAddSectionProps {
 const CabinetAddSection = ({ selectedIds }: CabinetAddSectionProps) => {
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const queryClient = useQueryClient();
+
+  const router = useRouter();
 
   const addProductsMutation = useMutation({
     mutationFn: postCabinetProducts,
@@ -26,6 +29,8 @@ const CabinetAddSection = ({ selectedIds }: CabinetAddSectionProps) => {
       queryClient.invalidateQueries({ queryKey: ['cabinetProducts'] });
       queryClient.invalidateQueries({ queryKey: ['cabinetProductsSearch'] });
       setIsWarningModalOpen(false);
+
+      router.push('/cabinet');
     },
     onError: (error) => {
       const message = isAxiosError<{ message?: string }>(error)

@@ -21,20 +21,22 @@ const CabinetAddCard = ({ item, checked, onCheck }: Props) => {
 
   return (
     <div className='relative no-center-glass rounded-[20px] bg-primary/30 border-none px-5 py-3'>
-      <div className='flex items-center gap-3'>
-        <CheckboxButton
-          checked={checked}
-          size='lg'
-          onClick={onCheck}
-          className={!checked ? 'bg-transparent' : undefined}
-        />
+      <div className='flex items-center'>
+        {!item.isOwned && (
+          <CheckboxButton
+            checked={checked}
+            size='lg'
+            onClick={onCheck}
+            className={!checked ? 'bg-transparent' : undefined}
+          />
+        )}
 
-        <div className='flex size-22.5 shrink-0 items-center justify-center overflow-hidden'>
+        <div className='flex size-18 shrink-0 items-center justify-center overflow-hidden'>
           <Image
             src={item.thumbnailImageUrl}
             alt={item.productName}
-            width={88}
-            height={88}
+            width={72}
+            height={72}
             className='h-full w-full object-contain'
           />
         </div>
@@ -45,7 +47,7 @@ const CabinetAddCard = ({ item, checked, onCheck }: Props) => {
           <div className='mb-0.5 flex items-center justify-between'>
             <p className='typo-caption-6 line-clamp-1'>{item.brand}</p>
 
-            <Link href={`/`} className='typo-caption-6 text-neutral-700 transition hover:underline'>
+            <Link href={`/`} className='typo-caption-7 text-neutral-700 transition hover:underline'>
               더보기
             </Link>
           </div>
