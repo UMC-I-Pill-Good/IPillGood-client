@@ -12,7 +12,7 @@ interface SupplementSortListProps {
 
 const SupplementSortList = ({ products, selectedIds, onToggle }: SupplementSortListProps) => {
   return (
-    <section className='px-5 py-2 space-y-2 pb-4'>
+    <section className='px-5 space-y-2 pb-4'>
       {products.map((item) => (
         <SupplementCard
           key={item.productId}

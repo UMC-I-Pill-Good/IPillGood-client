@@ -79,6 +79,8 @@ const CabinetGrid = ({ mode }: CabinetGridProps) => {
               isSelected={selectedIds.includes(item.memberProductId)}
               onClick={() => handleCardClick(item)}
             />
+          ) : mode === 'default' && index === products.length ? (
+            <EmptyCabinetCard key={`empty-${index}`} mode={mode} showAddButton />
           ) : (
             <EmptyCabinetCard key={`empty-${index}`} mode={mode} />
           ),

@@ -34,7 +34,7 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
           alt={item.productName}
           width={80}
           height={80}
-          className='relative z-10 h-fit w-20'
+          className='relative z-10 h-fit w-20 ml-1'
           preload
         />
 

@@ -4,10 +4,11 @@ import Link from 'next/link';
 
 interface EmptyCabinetCardProps {
   mode: 'default' | 'add' | 'delete';
+  showAddButton?: boolean;
 }
 
-const EmptyCabinetCard = ({ mode }: EmptyCabinetCardProps) => {
-  return mode === 'default' ? (
+const EmptyCabinetCard = ({ mode, showAddButton = false }: EmptyCabinetCardProps) => {
+  return mode === 'default' && showAddButton ? (
     <Link
       href='/cabinet/supplement-add'
       className='flex items-center justify-center rounded-[20px] h-35 transition hover:brightness-90 bg-[#F5F6FF]/20 shadow-[inset_4px_4px_20px_rgba(155,161,255,0.2),4px_4px_4px_rgba(255,255,255,0.2)]'
@@ -20,7 +21,10 @@ const EmptyCabinetCard = ({ mode }: EmptyCabinetCardProps) => {
       </div>
     </Link>
   ) : (
-    <div className='flex items-center justify-center rounded-[20px] bg-[#F5F6FF]/20 shadow-[inset_4px_4px_20px_rgba(155,161,255,0.2),4px_4px_4px_rgba(255,255,255,0.2)]' />
+    <div
+      className='h-35 rounded-[20px] bg-[#F5F6FF]/20 shadow-[inset_4px_4px_20px_rgba(155,161,255,0.2),4px_4px_4px_rgba(255,255,255,0.2)]'
+      aria-hidden='true'
+    />
   );
 };
 
