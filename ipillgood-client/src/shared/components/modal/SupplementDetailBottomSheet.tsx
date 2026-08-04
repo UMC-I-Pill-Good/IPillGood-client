@@ -35,7 +35,7 @@ const SupplementDetailBottomSheet = ({
               alt={item.productName}
               width={110}
               height={110}
-              className='h-27.5 w-fit shrink-0'
+              className='h-27.5 w-auto shrink-0'
             />
           </div>
           <article className='text-center space-y-2'>

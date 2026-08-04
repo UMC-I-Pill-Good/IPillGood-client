@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EmptyCabinetCard from './EmptyCabinetCard';
 import CabinetCard from './CabinetCard';
 import { ProductItem } from '../types/cabinet';
@@ -9,11 +9,12 @@ import { useCabinetProductsQuery } from '../hooks';
 
 interface CabinetGridProps {
   mode: 'default' | 'add' | 'delete';
+  onDeleteSelectionChange?: (selectedIds: number[]) => void;
 }
 
 const MAX_COUNT = 9;
 
-const CabinetGrid = ({ mode }: CabinetGridProps) => {
+const CabinetGrid = ({ mode, onDeleteSelectionChange }: CabinetGridProps) => {
   const { data, isPending, isError, refetch } = useCabinetProductsQuery();
 
   const products = [...(data?.result.products ?? [])].sort(
@@ -32,6 +33,12 @@ const CabinetGrid = ({ mode }: CabinetGridProps) => {
 
   const [selectedItem, setSelectedItem] = useState<ProductItem | null>(null);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+
+  useEffect(() => {
+    if (mode === 'delete') {
+      onDeleteSelectionChange?.(selectedIds);
+    }
+  }, [mode, onDeleteSelectionChange, selectedIds]);
 
   const handleAddSelect = (item: ProductItem) => {
     if (item.isActiveIntake) return;

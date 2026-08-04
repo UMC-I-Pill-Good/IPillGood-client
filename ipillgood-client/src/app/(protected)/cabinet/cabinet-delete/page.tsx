@@ -1,6 +1,5 @@
-import { CabinetGrid } from '@/features/cabinet/components';
 import { Header } from '@/shared/layout';
-import DeleteButtonSection from '@/features/cabinet/components/cabinet-delete/DeleteButtonSection';
+import CabinetDeleteContent from '@/features/cabinet/components/cabinet-delete/CabinetDeleteContent';
 
 const CabinetDeletePage = () => {
   return (
@@ -10,9 +9,7 @@ const CabinetDeletePage = () => {
 
         <p className='px-5 py-4 typo-body-10'>삭제할 영양제를 클릭하세요.</p>
 
-        <CabinetGrid mode='delete' />
-
-        <DeleteButtonSection />
+        <CabinetDeleteContent />
       </main>
     </>
   );
