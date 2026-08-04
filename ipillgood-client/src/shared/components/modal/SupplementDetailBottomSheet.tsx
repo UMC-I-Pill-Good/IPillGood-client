@@ -8,6 +8,8 @@ import { ChevronRight } from 'lucide-react';
 import { IntakeCycleModal, IntakeTimeModal } from '@/shared/components';
 import { useQuery } from '@tanstack/react-query';
 import { getCabinetProductsDetail } from '@/features/cabinet/api/cabinet';
+import { usePatchIntakeProductMutation } from '@/features/cabinet/hooks';
+import { frequencyCycle } from '@/features/cabinet/constants/intake.constants';
 
 interface SupplementDetailBottomSheetProps {
   open: boolean;
@@ -20,7 +22,7 @@ const SupplementDetailBottomSheet = ({
   onOpenChange,
   memberProductId,
 }: SupplementDetailBottomSheetProps) => {
-  const [isIntake, setIsIntake] = useState(true);
+  const [isNotificationEnabled, setIsNotificationEnabled] = useState<boolean | null>(null);
   const [isOpenIntakeCycleModal, setIsOpenIntakeCycleModal] = useState(false);
   const [isOpenIntakeTimeModal, setIsOpenIntakeTimeModal] = useState(false);
 
@@ -29,14 +31,33 @@ const SupplementDetailBottomSheet = ({
     queryFn: () => getCabinetProductsDetail(memberProductId!),
     enabled: open && memberProductId !== null,
   });
+  const patchActiveProductMutation = usePatchIntakeProductMutation();
 
   if (!data?.result) return null;
 
   const activeProduct = data.result.activeProduct;
+  const notificationEnabled = isNotificationEnabled ?? activeProduct?.notificationEnabled ?? false;
   const intakeHour = activeProduct ? Number(activeProduct.intakeTime.split(':')[0]) : null;
   const intakeTimeLabel = activeProduct
     ? `${intakeHour !== null && intakeHour >= 12 ? '오후' : '오전'} ${activeProduct.intakeTime}`
     : '';
+
+  const updateActiveProduct = (body: {
+    intakeTime?: string;
+    frequency?: string;
+    notificationEnabled?: boolean;
+  }) => {
+    if (!activeProduct) return;
+
+    patchActiveProductMutation.mutate({
+      activeProductId: activeProduct.activeProductId,
+      body: {
+        intakeTime: body.intakeTime ?? activeProduct.intakeTime,
+        frequency: body.frequency ?? activeProduct.frequency,
+        notificationEnabled: body.notificationEnabled ?? notificationEnabled,
+      },
+    });
+  };
 
   return (
     <BottomSheet open={open} onOpenChange={onOpenChange}>
@@ -53,7 +74,7 @@ const SupplementDetailBottomSheet = ({
           </div>
           <article className='text-center space-y-2'>
             <p className='typo-caption-2 text-center'>영양제 브랜드</p>
-            <p className='typo-subtitle-4 text-center'>{data.result.productName}</p>
+            <p className='typo-subtitle-4 text-center line-clamp-1'>{data.result.productName}</p>
           </article>
         </section>
 
@@ -67,7 +88,13 @@ const SupplementDetailBottomSheet = ({
             <section className='space-y-2'>
               <div className='no-center-glass px-5 rounded-[20px] flex items-center justify-between h-13'>
                 <p className='typo-body-10'>복용 알림 ON/OFF</p>
-                <ToggleButton isChecked={isIntake} onClick={() => setIsIntake((prev) => !prev)} />
+                <ToggleButton
+                  isChecked={notificationEnabled}
+                  onClick={() => {
+                    setIsNotificationEnabled(!notificationEnabled);
+                    updateActiveProduct({ notificationEnabled: !notificationEnabled });
+                  }}
+                />
               </div>
 
               <div className='no-center-glass px-5 rounded-[20px] flex items-center justify-between h-13'>
@@ -124,15 +151,23 @@ const SupplementDetailBottomSheet = ({
       </div>
       {isOpenIntakeTimeModal && (
         <IntakeTimeModal
+          initialTime={activeProduct?.intakeTime}
           onCancel={() => setIsOpenIntakeTimeModal(false)}
-          onConfirm={() => setIsOpenIntakeTimeModal(false)}
+          onConfirm={(intakeTime) => {
+            setIsOpenIntakeTimeModal(false);
+            updateActiveProduct({ intakeTime });
+          }}
         />
       )}
 
       {isOpenIntakeCycleModal && (
         <IntakeCycleModal
+          initialCycle={activeProduct?.frequencyLabel}
           onCancel={() => setIsOpenIntakeCycleModal(false)}
-          onConfirm={() => setIsOpenIntakeCycleModal(false)}
+          onConfirm={(cycle) => {
+            setIsOpenIntakeCycleModal(false);
+            updateActiveProduct({ frequency: frequencyCycle[cycle] });
+          }}
         />
       )}
     </BottomSheet>
