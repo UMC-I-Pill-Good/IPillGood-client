@@ -40,7 +40,7 @@ const RankingProductDetailPage = async ({ params }: RankingProductDetailPageProp
   };
 
   return (
-    <main className='min-h-dvh overflow-x-hidden bg-background pb-16'>
+    <main className='min-h-dvh overflow-x-hidden bg-background pb-24'>
       <Header title='영양제 더보기' />
       <section className='px-5 pb-2 pt-4'>
         <SupplementDetailSummaryCard product={product} showReviewButton />

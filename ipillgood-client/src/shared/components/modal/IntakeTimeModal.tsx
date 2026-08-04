@@ -8,18 +8,22 @@ import { IconButton, ModalShell, TextButton } from '@/shared/components';
 import { X } from 'lucide-react';
 
 interface IntakeTimeModalProps {
-  onConfirm: () => void;
+  initialTime?: string;
+  onConfirm: (intakeTime: string) => void;
   onCancel: () => void;
 }
 
-const IntakeTimeModal = ({ onConfirm, onCancel }: IntakeTimeModalProps) => {
+const IntakeTimeModal = ({ initialTime = '00:00', onConfirm, onCancel }: IntakeTimeModalProps) => {
   const meridiemOptions = ['오전', '오후'] as const;
   const hourOptions = Array.from({ length: 12 }, (_, i) => i + 1);
   const minuteOptions = Array.from({ length: 60 }, (_, i) => i);
 
-  const [meridiem, setMeridiem] = useState<'오전' | '오후'>('오전');
-  const [hour, setHour] = useState(7);
-  const [minute, setMinute] = useState(0);
+  const [initialHour, initialMinute] = initialTime.split(':').map(Number);
+
+  const [meridiem, setMeridiem] = useState<'오전' | '오후'>(initialHour >= 12 ? '오후' : '오전');
+
+  const [hour, setHour] = useState(initialHour % 12 || 12);
+  const [minute, setMinute] = useState(initialMinute);
 
   return createPortal(
     <ModalShell
@@ -47,7 +51,15 @@ const IntakeTimeModal = ({ onConfirm, onCancel }: IntakeTimeModalProps) => {
         <WheelSelectTime options={minuteOptions} value={minute} onChange={setMinute} />
       </section>
 
-      <TextButton type='button' text='확인' className='mt-8 w-full' onClick={onConfirm} />
+      <TextButton
+        type='button'
+        text='확인'
+        className='mt-8 w-full'
+        onClick={() => {
+          const hour24 = (hour % 12) + (meridiem === '오후' ? 12 : 0);
+          onConfirm(`${String(hour24).padStart(2, '0')}:${String(minute).padStart(2, '0')}`);
+        }}
+      />
     </ModalShell>,
     document.body,
   );

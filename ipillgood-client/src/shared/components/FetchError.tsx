@@ -1,21 +1,27 @@
 import { TextButton } from '@/shared/components';
 import { TriangleAlert } from 'lucide-react';
+import { cn } from '../utils';
 
 interface ErrorScreenProps {
   title?: string;
   description?: string;
   onRetry?: () => void;
+  className?: string;
 }
 
 const FetchError = ({
   title = '문제가 발생했어요',
   description = '잠시 후 다시 시도해주세요.',
   onRetry,
+  className,
 }: ErrorScreenProps) => {
   return (
     <div
       role='alert'
-      className='flex min-h-[80vh] flex-col items-center justify-center gap-3 px-6 text-center'
+      className={cn(
+        'flex min-h-[80vh] flex-col items-center justify-center gap-3 px-6 text-center',
+        className,
+      )}
     >
       <TriangleAlert className='text-semantic size-10' />
 

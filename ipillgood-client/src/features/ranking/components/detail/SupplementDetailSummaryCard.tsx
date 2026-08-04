@@ -15,7 +15,7 @@ const SupplementDetailSummaryCard = ({
   const ratingAverage = product.ratingAverage ?? 0;
 
   return (
-    <article className='flex w-full items-center justify-center gap-3 rounded-[20px] border border-white/85 bg-primary-600/15 px-5 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-2px_5px_rgba(126,131,135,0.07),0_2px_3px_rgba(126,131,135,0.1)] backdrop-blur-xl backdrop-saturate-150'>
+    <article className='flex w-full items-center justify-center gap-3 rounded-[20px] border-none bg-primary-600/15 px-5 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-2px_5px_rgba(126,131,135,0.07),0_2px_3px_rgba(126,131,135,0.1)] backdrop-blur-xl backdrop-saturate-150'>
       <SupplementProductImage
         imageKey={product.imageUrl}
         alt={`${product.productName} 상품 이미지`}

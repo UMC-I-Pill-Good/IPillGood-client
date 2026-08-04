@@ -1,6 +1,7 @@
 import { EmptyBottleIcon } from '@/assets';
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
+import { memo } from 'react';
 
 interface EmptyCabinetCardProps {
   mode: 'default' | 'add' | 'delete';
@@ -28,4 +29,4 @@ const EmptyCabinetCard = ({ mode, showAddButton = false }: EmptyCabinetCardProps
   );
 };
 
-export default EmptyCabinetCard;
+export default memo(EmptyCabinetCard);

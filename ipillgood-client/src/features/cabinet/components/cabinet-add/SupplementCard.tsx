@@ -3,7 +3,7 @@ import CheckboxButton from '@/shared/components/button/CheckboxButton';
 import { Chip } from '@/shared/components';
 import { RatingStarIcon } from '@/assets';
 import Link from 'next/link';
-import { SearchProductItem } from '@/features/cabinet/types/supplement-add';
+import { SearchProductItem } from '@/features/cabinet/types/cabinet';
 import { memo } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 
@@ -13,7 +13,7 @@ interface Props {
   onCheck: () => void;
 }
 
-const CabinetAddCard = ({ item, checked, onCheck }: Props) => {
+const SupplementCard = ({ item, checked, onCheck }: Props) => {
   const [emblaRef] = useEmblaCarousel({
     dragFree: true,
     containScroll: 'trimSnaps',
@@ -22,7 +22,7 @@ const CabinetAddCard = ({ item, checked, onCheck }: Props) => {
   return (
     <div className='relative no-center-glass rounded-[20px] bg-primary/30 border-none px-5 py-3'>
       <div className='flex items-center'>
-        {!item.isOwned && (
+        {!item.isOwned && item.isSelectable && (
           <CheckboxButton
             checked={checked}
             size='lg'
@@ -47,7 +47,10 @@ const CabinetAddCard = ({ item, checked, onCheck }: Props) => {
           <div className='mb-0.5 flex items-center justify-between'>
             <p className='typo-caption-6 line-clamp-1'>{item.brand}</p>
 
-            <Link href={`/`} className='typo-caption-7 text-neutral-700 transition hover:underline'>
+            <Link
+              href={`/product/${item.productId}`}
+              className='typo-caption-7 text-neutral-700 transition hover:underline'
+            >
               더보기
             </Link>
           </div>
@@ -74,4 +77,4 @@ const CabinetAddCard = ({ item, checked, onCheck }: Props) => {
   );
 };
 
-export default memo(CabinetAddCard);
+export default memo(SupplementCard);
