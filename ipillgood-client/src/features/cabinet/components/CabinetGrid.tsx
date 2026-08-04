@@ -16,7 +16,9 @@ const MAX_COUNT = 9;
 const CabinetGrid = ({ mode }: CabinetGridProps) => {
   const { data, isPending, isError, refetch } = useCabinetProductsQuery();
 
-  const products = data?.result.products || [];
+  const products = [...(data?.result.products ?? [])].sort(
+    (a, b) => new Date(a.addedAt).getTime() - new Date(b.addedAt).getTime(),
+  );
 
   const takingIds = products
     .filter((item) => item.isActiveIntake)
