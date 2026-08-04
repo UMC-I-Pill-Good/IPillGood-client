@@ -10,6 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getCabinetProductsDetail } from '@/features/cabinet/api/cabinet';
 import { usePatchIntakeProductMutation } from '@/features/cabinet/hooks';
 import { frequencyCycle } from '@/features/cabinet/constants/intake.constants';
+import { useRouter } from 'next/navigation';
 
 interface SupplementDetailBottomSheetProps {
   open: boolean;
@@ -22,6 +23,7 @@ const SupplementDetailBottomSheet = ({
   onOpenChange,
   memberProductId,
 }: SupplementDetailBottomSheetProps) => {
+  const router = useRouter();
   const [isNotificationEnabled, setIsNotificationEnabled] = useState<boolean | null>(null);
   const [isOpenIntakeCycleModal, setIsOpenIntakeCycleModal] = useState(false);
   const [isOpenIntakeTimeModal, setIsOpenIntakeTimeModal] = useState(false);
@@ -73,7 +75,7 @@ const SupplementDetailBottomSheet = ({
             />
           </div>
           <article className='text-center space-y-2'>
-            <p className='typo-caption-2 text-center'>영양제 브랜드</p>
+            <p className='typo-caption-2 text-center'>{data.result.brand}</p>
             <p className='typo-subtitle-4 text-center line-clamp-1'>{data.result.productName}</p>
           </article>
         </section>
@@ -139,14 +141,21 @@ const SupplementDetailBottomSheet = ({
         </section>
 
         <section className='space-y-2 pt-4'>
-          <TextButton type='button' text='영양성분 더보기' size='xl' className='w-full' />
-          <button
+          <TextButton
             type='button'
+            text='영양성분 더보기'
+            size='xl'
+            className='w-full'
+            onClick={() => router.push(`/product/${data.result.productId}`)}
+          />
+          <TextButton
+            href='/reviews/reviews-add'
             aria-label='후기 작성 페이지 이동'
-            className='shrink-0 inline-flex items-center justify-center w-full typo-body-2 h-13 bg-neutral-300 text-neutral hover:brightness-90 active:brightness-80 shadow-[0_4px_4px_rgba(126,131,135,0.1)] transition-all rounded-lg'
-          >
-            후기 작성하기
-          </button>
+            text='후기 작성하기'
+            variant='outline'
+            size='xl'
+            className='w-full'
+          />
         </section>
       </div>
       {isOpenIntakeTimeModal && (
