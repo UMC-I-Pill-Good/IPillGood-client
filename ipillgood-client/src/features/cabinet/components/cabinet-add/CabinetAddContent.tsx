@@ -6,7 +6,7 @@ import CabinetAddSearchSection from './CabinetAddSearchSection';
 import CabinetAddList from './CabinetAddList';
 import CabinetAddSection from './CabinetAddSection';
 import { MascotSadIcon } from '@/assets';
-import { getCabinetProductsSearch } from '@/features/cabinet/api/cabinet';
+import { getCabinetProductsSearch } from '@/features/cabinet/api/supplement-add';
 import { useSupplementSelection } from '@/features/cabinet/hooks';
 import { useInView } from 'react-intersection-observer';
 

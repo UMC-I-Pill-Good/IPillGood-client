@@ -3,7 +3,7 @@ import CheckboxButton from '@/shared/components/button/CheckboxButton';
 import { Chip } from '@/shared/components';
 import { RatingStarIcon } from '@/assets';
 import Link from 'next/link';
-import { SearchProductItem } from '@/features/cabinet/types/cabinet';
+import { SearchProductItem } from '@/features/cabinet/types/supplement-add';
 import { memo } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 

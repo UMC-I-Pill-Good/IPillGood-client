@@ -5,7 +5,7 @@ import { memo, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import InteractionWarningModal from '@/features/cabinet/components/modal/InteractionWarningModal';
-import { postCabinetProducts } from '@/features/cabinet/api/cabinet';
+import { postCabinetProducts } from '@/features/cabinet/api/supplement-add';
 
 interface CabinetAddSectionProps {
   selectedIds: number[];
