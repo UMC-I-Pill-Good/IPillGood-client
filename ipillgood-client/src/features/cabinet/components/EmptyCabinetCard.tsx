@@ -11,7 +11,7 @@ interface EmptyCabinetCardProps {
 const EmptyCabinetCard = ({ mode, showAddButton = false }: EmptyCabinetCardProps) => {
   return mode === 'default' && showAddButton ? (
     <Link
-      href='/cabinet/cabinet-add'
+      href='/cabinet/supplement-add'
       className='flex items-center justify-center rounded-[20px] h-35 transition hover:brightness-90 bg-[#F5F6FF]/20 shadow-[inset_4px_4px_20px_rgba(155,161,255,0.2),4px_4px_4px_rgba(255,255,255,0.2)]'
     >
       <div className='relative translate-y-1'>

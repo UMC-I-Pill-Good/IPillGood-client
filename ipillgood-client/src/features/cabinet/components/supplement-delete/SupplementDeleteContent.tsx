@@ -4,7 +4,7 @@ import { useState } from 'react';
 import CabinetGrid from '../CabinetGrid';
 import DeleteButtonSection from './DeleteButtonSection';
 
-const CabinetDeleteContent = () => {
+const SupplementDeleteContent = () => {
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
   return (
@@ -15,4 +15,4 @@ const CabinetDeleteContent = () => {
   );
 };
 
-export default CabinetDeleteContent;
+export default SupplementDeleteContent;

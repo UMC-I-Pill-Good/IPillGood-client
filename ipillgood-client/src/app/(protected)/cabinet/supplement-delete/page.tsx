@@ -1,7 +1,7 @@
 import { Header } from '@/shared/layout';
-import CabinetDeleteContent from '@/features/cabinet/components/cabinet-delete/CabinetDeleteContent';
+import SupplementDeleteContent from '@/features/cabinet/components/supplement-delete/SupplementDeleteContent';
 
-const CabinetDeletePage = () => {
+const SupplementDeletePage = () => {
   return (
     <>
       <main className='flex min-h-dvh flex-col pb-24'>
@@ -9,10 +9,10 @@ const CabinetDeletePage = () => {
 
         <p className='px-5 py-4 typo-body-10'>삭제할 영양제를 클릭하세요.</p>
 
-        <CabinetDeleteContent />
+        <SupplementDeleteContent />
       </main>
     </>
   );
 };
 
-export default CabinetDeletePage;
+export default SupplementDeletePage;

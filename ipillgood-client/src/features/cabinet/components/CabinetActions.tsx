@@ -34,7 +34,7 @@ const CabinetActions = () => {
                 variant='outline'
                 size='sm'
                 className='px-3'
-                onClick={() => router.push('/cabinet/cabinet-delete')}
+                onClick={() => router.push('/cabinet/supplement-delete')}
               />
             </section>
           ) : (
