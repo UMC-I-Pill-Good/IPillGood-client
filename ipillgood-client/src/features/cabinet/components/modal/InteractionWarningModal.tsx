@@ -1,11 +1,11 @@
 import { WarningCircleIcon, WarningIcon } from '@/assets';
-import { ProductConflict } from '@/features/cabinet/types/conflict';
+import { IntakeConflict } from '@/features/cabinet/types/intake';
 import { TextButton } from '@/shared/components';
 import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
 import { useRef } from 'react';
 
 interface InteractionWarningModalProps {
-  conflicts: ProductConflict[];
+  conflicts: IntakeConflict[];
   onConfirm: () => void;
   onCancel: () => void;
 }
@@ -47,7 +47,7 @@ const InteractionWarningModal = ({
                 </span>
                 과(와) 새로 추가하려는{' '}
                 <span className='text-primary-700 typo-body-10'>
-                  [{firstConflict.purchaseIngredientName}]
+                  [{firstConflict.targetIngredientName}]
                 </span>
                 은 병용 시 과다 섭취 및 부작용 위험이 있어 <br />
                 <span className='typo-body-10 text-semantic'>
@@ -59,7 +59,7 @@ const InteractionWarningModal = ({
                 <WarningCircleIcon className='shrink-0' />
                 <div className='flex flex-col gap-1 break-keep'>
                   <p className='typo-body-10'>
-                    {firstConflict.currentIngredientName} + {firstConflict.purchaseIngredientName}
+                    {firstConflict.currentIngredientName} + {firstConflict.targetIngredientName}
                   </p>
                   <p className='typo-caption-6'>{firstConflict.reason}</p>
                 </div>
@@ -81,13 +81,13 @@ const InteractionWarningModal = ({
               <article className='space-y-2'>
                 {conflicts.map((conflict) => (
                   <div
-                    key={`${conflict.currentIngredientId}-${conflict.purchaseProductIngredientId}`}
+                    key={`${conflict.currentIngredientId}-${conflict.targetIngredientId}`}
                     className='px-5 py-3 bg-semantic-200 rounded-lg flex gap-2'
                   >
                     <WarningCircleIcon className='shrink-0' />
                     <div className='flex flex-col gap-1 break-keep'>
                       <p className='typo-body-10'>
-                        {conflict.currentIngredientName} + {conflict.purchaseIngredientName}
+                        {conflict.currentIngredientName} + {conflict.targetIngredientName}
                       </p>
                       <p className='typo-caption-6'>{conflict.reason}</p>
                     </div>
