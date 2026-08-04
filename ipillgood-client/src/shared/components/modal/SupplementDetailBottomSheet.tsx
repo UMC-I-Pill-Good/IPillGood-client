@@ -1,29 +1,39 @@
 'use client';
 
 import { BottomSheet, TextButton, ToggleButton } from '@/shared/components';
-import { ProductItem } from '@/features/cabinet/types/cabinet';
 import Image from 'next/image';
 import { BellIcon, TimerOffIcon } from '@/assets';
 import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { IntakeCycleModal, IntakeTimeModal } from '@/shared/components';
+import { useQuery } from '@tanstack/react-query';
+import { getCabinetProductsDetail } from '@/features/cabinet/api/cabinet';
 
 interface SupplementDetailBottomSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  item: ProductItem | null;
+  memberProductId: number | null;
 }
 
 const SupplementDetailBottomSheet = ({
   open,
   onOpenChange,
-  item,
+  memberProductId,
 }: SupplementDetailBottomSheetProps) => {
   const [isIntake, setIsIntake] = useState(true);
   const [isOpenIntakeCycleModal, setIsOpenIntakeCycleModal] = useState(false);
   const [isOpenIntakeTimeModal, setIsOpenIntakeTimeModal] = useState(false);
 
-  if (!item) return null;
+  const { data } = useQuery({
+    queryKey: ['cabinetProductDetail', memberProductId],
+    queryFn: () => getCabinetProductsDetail(memberProductId!),
+    enabled: open && memberProductId !== null,
+  });
+
+  if (!data?.result) return null;
+
+  const intakeHour = Number(data.result.activeProduct.intakeTime.split(':')[0]);
+  const intakeTimeLabel = `${intakeHour >= 12 ? '오후' : '오전'} ${data.result.activeProduct.intakeTime}`;
 
   return (
     <BottomSheet open={open} onOpenChange={onOpenChange}>
@@ -31,16 +41,16 @@ const SupplementDetailBottomSheet = ({
         <section className='py-4 space-y-3 flex flex-col items-center justify-center'>
           <div className='flex items-center justify-center bg-white rounded-lg w-45 h-45'>
             <Image
-              src={item.thumbnailImageUrl}
-              alt={item.productName}
+              src={data.result.thumbnailImageUrl}
+              alt={data.result.productName}
               width={110}
               height={110}
-              className='h-27.5 w-auto shrink-0'
+              className='h-27.5 w-20 shrink-0'
             />
           </div>
           <article className='text-center space-y-2'>
             <p className='typo-caption-2 text-center'>영양제 브랜드</p>
-            <p className='typo-subtitle-4 text-center'>{item?.productName}</p>
+            <p className='typo-subtitle-4 text-center'>{data.result.productName}</p>
           </article>
         </section>
 
@@ -50,7 +60,7 @@ const SupplementDetailBottomSheet = ({
             <p className='typo-body-9 text-primary'>개별알림</p>
           </div>
 
-          {item.isActiveIntake ? (
+          {data.result.isActiveIntake ? (
             <section className='space-y-2'>
               <div className='no-center-glass px-5 rounded-[20px] flex items-center justify-between h-13'>
                 <p className='typo-body-10'>복용 알림 ON/OFF</p>
@@ -65,7 +75,7 @@ const SupplementDetailBottomSheet = ({
                   className='text-neutral transition hover:brightness-75'
                   onClick={() => setIsOpenIntakeTimeModal(true)}
                 >
-                  오전 08:00
+                  {intakeTimeLabel}
                 </button>
               </div>
 
@@ -77,7 +87,7 @@ const SupplementDetailBottomSheet = ({
                   className='text-neutral flex items-center transition hover:brightness-75'
                   onClick={() => setIsOpenIntakeCycleModal(true)}
                 >
-                  매일 <ChevronRight size={20} />
+                  {data.result.activeProduct.frequencyLabel} <ChevronRight size={20} />
                 </button>
               </div>
             </section>

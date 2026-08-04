@@ -21,6 +21,9 @@ interface CabinetGridProps {
 const MAX_COUNT = 9;
 
 const CabinetGrid = ({ mode, onAddSelectionChange, onDeleteSelectionChange }: CabinetGridProps) => {
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [selectedMemberProductId, setSelectedMemberProductId] = useState<number | null>(null);
+
   const { data, isPending, isError, refetch } = useCabinetProductsQuery();
 
   const {
@@ -43,9 +46,6 @@ const CabinetGrid = ({ mode, onAddSelectionChange, onDeleteSelectionChange }: Ca
       ? products.filter((item) => item.isActiveIntake).map((item) => item.memberProductId)
       : [],
   );
-
-  const [selectedItem, setSelectedItem] = useState<ProductItem | null>(null);
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   useEffect(() => {
     if (mode === 'add') {
@@ -79,7 +79,7 @@ const CabinetGrid = ({ mode, onAddSelectionChange, onDeleteSelectionChange }: Ca
 
   const handleCardClick = (item: ProductItem) => {
     if (mode === 'default') {
-      setSelectedItem(item);
+      setSelectedMemberProductId(item.memberProductId);
       setIsBottomSheetOpen(true);
       return;
     }
@@ -124,7 +124,7 @@ const CabinetGrid = ({ mode, onAddSelectionChange, onDeleteSelectionChange }: Ca
       <SupplementDetailBottomSheet
         open={isBottomSheetOpen}
         onOpenChange={setIsBottomSheetOpen}
-        item={selectedItem}
+        memberProductId={selectedMemberProductId}
       />
 
       {isReviewPromptModalOpen && (
