@@ -4,7 +4,7 @@ import { useState } from 'react';
 import EmptyCabinetCard from './EmptyCabinetCard';
 import CabinetCard from './CabinetCard';
 import { ProductItem } from '../types/cabinet';
-import { SupplementDetailBottomSheet } from '@/shared/components';
+import { FetchError, LoadingSpinner, SupplementDetailBottomSheet } from '@/shared/components';
 import { useCabinetProductsQuery } from '../hooks';
 
 interface CabinetGridProps {
@@ -14,7 +14,7 @@ interface CabinetGridProps {
 const MAX_COUNT = 9;
 
 const CabinetGrid = ({ mode }: CabinetGridProps) => {
-  const { data } = useCabinetProductsQuery();
+  const { data, isPending, isError, refetch } = useCabinetProductsQuery();
 
   const products = data?.result.products || [];
 
@@ -66,6 +66,13 @@ const CabinetGrid = ({ mode }: CabinetGridProps) => {
   };
 
   const slots = Array.from({ length: MAX_COUNT }, (_, index) => products[index]);
+
+  if (isPending) return <LoadingSpinner />;
+
+  if (isError)
+    return (
+      <FetchError description='캐비닛 정보를 불러오지 못했습니다.' onRetry={() => refetch()} />
+    );
 
   return (
     <>
