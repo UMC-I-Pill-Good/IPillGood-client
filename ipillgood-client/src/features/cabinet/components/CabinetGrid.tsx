@@ -14,12 +14,13 @@ import { useCabinetProductsQuery, useReviewPrompt } from '../hooks';
 
 interface CabinetGridProps {
   mode: 'default' | 'add' | 'delete';
+  onAddSelectionChange?: (selectedIds: number[]) => void;
   onDeleteSelectionChange?: (selectedIds: number[]) => void;
 }
 
 const MAX_COUNT = 9;
 
-const CabinetGrid = ({ mode, onDeleteSelectionChange }: CabinetGridProps) => {
+const CabinetGrid = ({ mode, onAddSelectionChange, onDeleteSelectionChange }: CabinetGridProps) => {
   const { data, isPending, isError, refetch } = useCabinetProductsQuery();
 
   const {
@@ -47,10 +48,14 @@ const CabinetGrid = ({ mode, onDeleteSelectionChange }: CabinetGridProps) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   useEffect(() => {
+    if (mode === 'add') {
+      onAddSelectionChange?.(selectedIds.filter((id) => !takingIds.includes(id)));
+    }
+
     if (mode === 'delete') {
       onDeleteSelectionChange?.(selectedIds);
     }
-  }, [mode, onDeleteSelectionChange, selectedIds]);
+  }, [mode, onAddSelectionChange, onDeleteSelectionChange, selectedIds, takingIds]);
 
   const handleAddSelect = (item: ProductItem) => {
     if (item.isActiveIntake) return;
