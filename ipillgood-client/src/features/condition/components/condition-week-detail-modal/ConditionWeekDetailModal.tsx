@@ -30,7 +30,13 @@ const ConditionWeekDetailModal = ({
   useEscapeKey(onClose);
   useOutsideClick(contentRef, onClose);
 
-  const { data: detailData, isLoading } = useQuery<ConditionWeekDetailResult>({
+  const {
+    data: detailData,
+    isLoading,
+    isError,
+    isFetching,
+    refetch,
+  } = useQuery<ConditionWeekDetailResult>({
     queryKey: conditionQueryKeys.weekDetail(recordId),
     queryFn: async () => {
       const response = await getConditionWeekDetail(recordId);
@@ -55,14 +61,15 @@ const ConditionWeekDetailModal = ({
       className='fixed inset-0 z-50 flex items-center justify-center bg-neutral-800/30'
       role='dialog'
       aria-modal='true'
-      aria-busy={isLoading}
+      aria-labelledby='condition-week-detail-title'
+      aria-busy={isLoading || isFetching}
     >
       <div
         ref={contentRef}
-        className='flex h-[153px] w-[264px] flex-col gap-4 rounded-[20px] bg-white px-5 py-4 shadow-[4px_4px_40px_0_rgba(126,131,135,0.2)]'
+        className='flex min-h-[153px] w-[264px] flex-col gap-4 rounded-[20px] bg-white px-5 py-4 shadow-[4px_4px_40px_0_rgba(126,131,135,0.2)]'
       >
         <div className='flex h-9 w-full shrink-0 items-center justify-between'>
-          <h3 className='typo-body-5 whitespace-nowrap text-[#111111]'>
+          <h3 id='condition-week-detail-title' className='typo-body-5 whitespace-nowrap text-black'>
             {month}월 {weekLabel} 컨디션
           </h3>
 
@@ -79,15 +86,15 @@ const ConditionWeekDetailModal = ({
             icon={<ConditionVitalityIcon className='block h-[19.31px] w-4 shrink-0' />}
             value={
               <>
-              {isLoading ? (
-                <span className='h-3 w-5 rounded-full bg-neutral-200 motion-safe:animate-pulse' />
-              ) : (
-                displayVitality
-              )}
-              <span className='mx-1 text-[10px] font-medium leading-[150%] tracking-[-0.011em] text-neutral-500'>
-                /
-              </span>
-              <span className='typo-caption-7 text-neutral-600'>5</span>
+                {isLoading ? (
+                  <span className='h-3 w-5 rounded-full bg-neutral-200 motion-safe:animate-pulse' />
+                ) : (
+                  displayVitality
+                )}
+                <span className='mx-1 text-[10px] font-medium leading-[150%] tracking-[-0.011em] text-neutral-500'>
+                  /
+                </span>
+                <span className='typo-caption-7 text-neutral-600'>5</span>
               </>
             }
           />
@@ -97,14 +104,14 @@ const ConditionWeekDetailModal = ({
             icon={<ConditionSleepIcon className='block h-5 w-[12.93px] shrink-0' />}
             value={
               <>
-              {isLoading ? (
-                <span className='h-3 w-5 rounded-full bg-neutral-200 motion-safe:animate-pulse' />
-              ) : (
-                displaySleepHours
-              )}
-              <span className='ml-1 font-[var(--font-dm-sans)] typo-caption-7 text-neutral-600'>
-                h
-              </span>
+                {isLoading ? (
+                  <span className='h-3 w-5 rounded-full bg-neutral-200 motion-safe:animate-pulse' />
+                ) : (
+                  displaySleepHours
+                )}
+                <span className='ml-1 font-[var(--font-dm-sans)] typo-caption-7 text-neutral-600'>
+                  h
+                </span>
               </>
             }
           />
@@ -114,19 +121,33 @@ const ConditionWeekDetailModal = ({
             icon={<ConditionIntakeIcon className='block h-5 w-[18px] shrink-0' />}
             value={
               <>
-              {isLoading ? (
-                <span className='h-3 w-5 rounded-full bg-neutral-200 motion-safe:animate-pulse' />
-              ) : (
-                displayIntakeDays
-              )}
-              <span className='mx-1 text-[10px] font-medium leading-[150%] tracking-[-0.011em] text-neutral-500'>
-                / 7
-              </span>
-              <span className='typo-caption-7 text-neutral-600'>일</span>
+                {isLoading ? (
+                  <span className='h-3 w-5 rounded-full bg-neutral-200 motion-safe:animate-pulse' />
+                ) : (
+                  displayIntakeDays
+                )}
+                <span className='mx-1 text-[10px] font-medium leading-[150%] tracking-[-0.011em] text-neutral-500'>
+                  / 7
+                </span>
+                <span className='typo-caption-7 text-neutral-600'>일</span>
               </>
             }
           />
         </div>
+
+        {isError && (
+          <div role='alert' className='typo-caption-7 text-center text-neutral-700'>
+            컨디션 정보를 불러오지 못했습니다.{' '}
+            <button
+              type='button'
+              className='underline disabled:no-underline'
+              disabled={isFetching}
+              onClick={() => void refetch()}
+            >
+              {isFetching ? '다시 시도 중...' : '다시 시도'}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

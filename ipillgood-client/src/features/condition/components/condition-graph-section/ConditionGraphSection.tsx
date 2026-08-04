@@ -8,7 +8,12 @@ import { type ConditionGraphPointType } from '../../types/condition';
 import ConditionWeekDetailModal from '../condition-week-detail-modal/ConditionWeekDetailModal';
 import ConditionGraphSvg from './ConditionGraphSvg';
 
-import { AXIS_BOTTOM, SCORE_INTERVAL } from '../../constants/conditionGraph';
+import {
+  AXIS_BOTTOM,
+  POINT_END_X,
+  POINT_START_X,
+  SCORE_INTERVAL,
+} from '../../constants/conditionGraph';
 
 const getScoreY = (score: number) => {
   return AXIS_BOTTOM - score * SCORE_INTERVAL;
@@ -35,6 +40,7 @@ const ConditionGraphSection = () => {
   const { selectedWeekIndex, setSelectedWeekIndex, closeModal } = useConditionStore();
   const {
     homeSummaryData,
+    currentWeekStatus,
     isMonthlyRecordsLoading,
     isMonthlyRecordsFetching,
     handlePreviousMonth,
@@ -73,9 +79,10 @@ const ConditionGraphSection = () => {
   });
 
   const graphPointList: ConditionGraphPointType[] = sourceGraphData.map((condition, index) => {
-    const startX = 48.38;
-    const endX = 251.05;
-    const x = totalWeeks <= 1 ? startX : startX + (index * (endX - startX)) / (totalWeeks - 1);
+    const x =
+      totalWeeks <= 1
+        ? POINT_START_X
+        : POINT_START_X + (index * (POINT_END_X - POINT_START_X)) / (totalWeeks - 1);
 
     return {
       ...condition,
@@ -106,7 +113,9 @@ const ConditionGraphSection = () => {
     handleNextMonth();
   };
 
-  const currentYear = new Date().getFullYear();
+  const currentYear = currentWeekStatus.today
+    ? Number(currentWeekStatus.today.slice(0, 4))
+    : new Date().getFullYear();
   const displayYearMonth =
     homeSummaryData.year !== currentYear
       ? `${homeSummaryData.year}년 ${homeSummaryData.month}월`
@@ -193,6 +202,7 @@ const ConditionGraphSection = () => {
           onClose={handleModalClose}
         />
       )}
+
     </>
   );
 };

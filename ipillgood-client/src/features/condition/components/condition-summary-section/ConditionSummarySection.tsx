@@ -58,7 +58,7 @@ const ConditionSummarySection = ({
   return (
     <section className='flex w-full flex-col gap-2 px-5 pt-4 pb-0'>
       <div className='flex h-[21px] w-full items-center gap-1'>
-        <h2 className='typo-body-5 whitespace-nowrap text-[#111111]'>{summaryTitle}</h2>
+        <h2 className='typo-body-5 whitespace-nowrap text-black'>{summaryTitle}</h2>
       </div>
 
       <div className='grid h-[105px] w-full grid-cols-3 gap-2'>

@@ -9,7 +9,12 @@ import { type HealthSystemType } from '../types/healthStatus';
 
 export const useHealthStatusSelection = () => {
   const router = useRouter();
-  const { data: categoryData, isLoading } = useHealthConcernCategories();
+  const {
+    data: categoryData,
+    error: categoryError,
+    isLoading,
+    refetch: refetchCategoryList,
+  } = useHealthConcernCategories();
 
   const systemList = useMemo<HealthSystemType[]>(
     () =>
@@ -88,5 +93,7 @@ export const useHealthStatusSelection = () => {
     handleComplete,
     isFormValid,
     isPending: isLoading,
+    categoryError,
+    refetchCategoryList,
   };
 };

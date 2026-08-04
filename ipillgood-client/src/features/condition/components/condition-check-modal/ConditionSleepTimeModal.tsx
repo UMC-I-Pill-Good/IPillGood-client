@@ -14,6 +14,7 @@ interface ConditionSleepTimeModalProps {
   isOpen: boolean;
   initialHours?: number;
   initialMinutes?: number;
+  errorMessage?: string | null;
   isSubmitting?: boolean;
   onBack: () => void;
   onClose: () => void;
@@ -24,6 +25,7 @@ const ConditionSleepTimeModal = ({
   isOpen,
   initialHours = 7,
   initialMinutes = 30,
+  errorMessage,
   isSubmitting = false,
   onBack,
   onClose,
@@ -72,14 +74,14 @@ const ConditionSleepTimeModal = ({
           {/* Header - 공통 IconButton 사용 */}
           <header className='flex h-9 w-full items-center justify-between px-5'>
             <IconButton
-              icon={<ChevronLeft size={24} className='text-[#7E8387]' />}
+              icon={<ChevronLeft size={24} className='text-neutral-800' />}
               ariaLabel='이전 단계로 이동'
               onClick={onBack}
               disabled={isSubmitting}
             />
 
             <IconButton
-              icon={<X size={24} className='text-[#7E8387]' />}
+              icon={<X size={24} className='text-neutral-800' />}
               ariaLabel='팝업 닫기'
               onClick={onClose}
               disabled={isSubmitting}
@@ -88,7 +90,7 @@ const ConditionSleepTimeModal = ({
 
           {/* Question & Time Wheel Section */}
           <section className='flex w-full flex-col items-center gap-5'>
-            <h2 className='typo-body-5 w-full text-center text-[#111111]'>
+            <h2 className='typo-body-5 w-full text-center text-black'>
               평균 수면 시간은 얼마나 되나요?
             </h2>
 
@@ -103,7 +105,7 @@ const ConditionSleepTimeModal = ({
                   ariaLabel='수면 시간 선택'
                 />
 
-                <span className='text-center text-xl font-medium leading-normal text-[#111111]'>
+                <span className='text-center text-xl font-medium leading-normal text-black'>
                   시간
                 </span>
               </div>
@@ -117,7 +119,7 @@ const ConditionSleepTimeModal = ({
                   ariaLabel='수면 분 선택'
                 />
 
-                <span className='text-center text-xl font-medium leading-normal text-[#111111]'>
+                <span className='text-center text-xl font-medium leading-normal text-black'>
                   분
                 </span>
               </div>
@@ -126,7 +128,13 @@ const ConditionSleepTimeModal = ({
         </div>
 
         {/* Footer - 공통 TextButton 사용 */}
-        <div className='flex w-full px-5'>
+        <div className='flex w-full flex-col gap-2 px-5'>
+          {errorMessage && (
+            <p role='alert' className='typo-caption-2 text-center text-semantic-600'>
+              {errorMessage}
+            </p>
+          )}
+
           <TextButton
             type='button'
             text={isSubmitting ? '저장 중...' : '완료(2/2)'}

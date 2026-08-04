@@ -1,3 +1,4 @@
+import { type KeyboardEvent } from 'react';
 import { type IngredientSummary } from '../../types/healthStatus';
 import { Omega3BottleIcon } from '@/assets';
 import { Chip } from '@/shared/components';
@@ -23,11 +24,19 @@ const RecommendedIngredientCard = ({
     }
   };
 
+  const handleCardKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.repeat || (event.key !== 'Enter' && event.key !== ' ')) return;
+
+    event.preventDefault();
+    handleCardClick();
+  };
+
   return (
     <div
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
       onClick={onClick ? handleCardClick : undefined}
+      onKeyDown={onClick ? handleCardKeyDown : undefined}
       className={clsx(
         'glass !h-auto !w-full !flex !whitespace-normal items-start gap-3 rounded-[20px] !bg-[rgba(127,153,255,0.28)] px-5 py-4 box-border transition-all',
         onClick && 'cursor-pointer hover:bg-[rgba(127,153,255,0.2)]',

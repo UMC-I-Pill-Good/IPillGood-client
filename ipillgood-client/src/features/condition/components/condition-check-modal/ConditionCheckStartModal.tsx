@@ -48,7 +48,7 @@ const ConditionCheckStartModal = ({
         {/* Header - 공통 IconButton 사용 */}
         <header className='flex h-9 w-full items-center justify-end px-5'>
           <IconButton
-            icon={<X size={24} className='text-[#7E8387]' />}
+            icon={<X size={24} className='text-neutral-800' />}
             ariaLabel='팝업 닫기'
             onClick={onClose}
           />
@@ -63,7 +63,7 @@ const ConditionCheckStartModal = ({
             </div>
 
             <div className='flex w-full flex-col items-center gap-2'>
-              <h2 className='typo-body-5 text-center text-[#111111]'>
+              <h2 className='typo-body-5 text-center text-black'>
                 이번 주 컨디션 체크
               </h2>
 

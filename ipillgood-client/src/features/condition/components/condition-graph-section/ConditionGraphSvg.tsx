@@ -41,7 +41,13 @@ const ConditionGraphSvg = ({
     >
       <defs>
         <filter id='shadow-highlight' x='-100%' y='-100%' width='300%' height='300%'>
-          <feDropShadow dx='0' dy='0' stdDeviation='5' floodColor='#7E8387' floodOpacity='0.61' />
+          <feDropShadow
+            dx='0'
+            dy='0'
+            stdDeviation='5'
+            floodColor='var(--color-neutral-800)'
+            floodOpacity='0.61'
+          />
         </filter>
       </defs>
 
@@ -116,7 +122,9 @@ const ConditionGraphSvg = ({
               cx={condition.x}
               cy={condition.y}
               r={isHighlighted ? 6 : 4.5}
-              fill={isHighlighted ? '#6580EE' : 'var(--primary, #7F99FF)'}
+              fill={
+                isHighlighted ? 'var(--color-primary-700)' : 'var(--color-primary-600)'
+              }
               filter={isHighlighted ? 'url(#shadow-highlight)' : undefined}
               style={{
                 transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',

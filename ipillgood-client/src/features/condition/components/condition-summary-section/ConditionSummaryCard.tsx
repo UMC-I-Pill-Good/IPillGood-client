@@ -27,7 +27,7 @@ const ConditionSummaryCard = ({
         >
             {/* 상단 블록: 라벨과 아이콘 */}
             <div className='flex flex-col items-center gap-2 self-stretch shrink-0'>
-                <p className='typo-caption-2 flex h-[29px] items-start justify-center whitespace-pre-wrap text-center text-[#111111] !leading-[1.15]'>
+                <p className='typo-caption-2 flex h-[29px] items-start justify-center whitespace-pre-wrap text-center text-black !leading-[1.15]'>
                     {label}
                 </p>
 
@@ -37,7 +37,7 @@ const ConditionSummaryCard = ({
             </div>
 
             {/* 하단 블록: 수치 영역 */}
-            <div className='h-[13px] text-[#7E8387] leading-none'>
+            <div className='h-[13px] text-neutral-800 leading-none'>
                 <ConditionSummaryValue
                     type={type}
                     value={value}

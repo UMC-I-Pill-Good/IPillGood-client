@@ -14,7 +14,7 @@ const ConditionMetric = ({
   return (
     <div className='flex h-[69px] w-[55px] shrink-0 flex-col items-center gap-1'>
       <div className='flex h-[45px] w-[55px] flex-col items-center gap-1'>
-        <p className='typo-caption-2 flex h-[17px] w-full items-center justify-center whitespace-nowrap text-center text-[#111111]'>
+        <p className='typo-caption-2 flex h-[17px] w-full items-center justify-center whitespace-nowrap text-center text-black'>
           {label}
         </p>
 
@@ -23,7 +23,7 @@ const ConditionMetric = ({
         </div>
       </div>
 
-      <div className='typo-caption-2 flex h-5 w-full items-baseline justify-center whitespace-nowrap text-center text-[#6580EE]'>
+      <div className='typo-caption-2 flex h-5 w-full items-baseline justify-center whitespace-nowrap text-center text-primary-700'>
         {value}
       </div>
     </div>

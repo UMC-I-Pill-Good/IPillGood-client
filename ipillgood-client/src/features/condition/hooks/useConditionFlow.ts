@@ -11,6 +11,7 @@ import { patchConditionPopupDismissed } from '../api/patchConditionPopupDismisse
 import { conditionQueryKeys } from '../constants/conditionQueryKeys';
 import { validateConditionCheck } from '../utils/conditionValidation';
 import {
+  type ConditionCheckRequest,
   type ConditionCurrentWeekResult,
   type ConditionMonthlyRecordsResult,
 } from '../types/condition';
@@ -40,18 +41,23 @@ const getDefaultMonthlyRecords = (year: number, month: number): ConditionMonthly
 });
 
 const getYearMonth = (date: string) => {
-  const [year, month] = date.split('-').map(Number);
+  const [year, month] = date.slice(0, 10).split('-').map(Number);
+
+  if (!Number.isInteger(year) || !Number.isInteger(month) || month < 1 || month > 12) {
+    return null;
+  }
+
   return { year, month };
 };
 
 export const useConditionFlow = () => {
   const queryClient = useQueryClient();
   const initialDate = new Date();
-  const [selectedYearMonth, setSelectedYearMonth] = useState({
-    year: initialDate.getFullYear(),
-    month: initialDate.getMonth() + 1,
-  });
-  const hasSyncedServerDateRef = useRef(false);
+  const [selectedYearMonth, setSelectedYearMonth] = useState<{
+    year: number;
+    month: number;
+  } | null>(null);
+  const [conditionCheckError, setConditionCheckError] = useState<string | null>(null);
   const autoPopupRecordedWeekRef = useRef<string | null>(null);
 
   const {
@@ -83,18 +89,17 @@ export const useConditionFlow = () => {
   });
 
   const currentWeekStatus = currentWeekQuery.data ?? DEFAULT_CURRENT_WEEK_STATUS;
-
-  useEffect(() => {
-    if (!currentWeekQuery.data?.today || hasSyncedServerDateRef.current) return;
-
-    setSelectedYearMonth(getYearMonth(currentWeekQuery.data.today));
-    hasSyncedServerDateRef.current = true;
-  }, [currentWeekQuery.data?.today]);
+  const activeYearMonth =
+    selectedYearMonth ??
+    getYearMonth(currentWeekStatus.today) ?? {
+      year: initialDate.getFullYear(),
+      month: initialDate.getMonth() + 1,
+    };
 
   const monthlyRecordsQuery = useQuery({
-    queryKey: conditionQueryKeys.monthlyRecords(selectedYearMonth.year, selectedYearMonth.month),
+    queryKey: conditionQueryKeys.monthlyRecords(activeYearMonth.year, activeYearMonth.month),
     queryFn: async () => {
-      const response = await getConditionSummary(selectedYearMonth.year, selectedYearMonth.month);
+      const response = await getConditionSummary(activeYearMonth.year, activeYearMonth.month);
       if (!response.isSuccess || !response.result) {
         throw new Error(response.message || '월별 컨디션 조회에 실패했습니다.');
       }
@@ -106,7 +111,7 @@ export const useConditionFlow = () => {
 
   const homeSummaryData =
     monthlyRecordsQuery.data ??
-    getDefaultMonthlyRecords(selectedYearMonth.year, selectedYearMonth.month);
+    getDefaultMonthlyRecords(activeYearMonth.year, activeYearMonth.month);
 
   useEffect(() => {
     const { autoPopupAvailable, checked, weekStartOn, sundayIntakeWarningRequired } =
@@ -147,14 +152,20 @@ export const useConditionFlow = () => {
   }, [currentWeekStatus, openCheckModal, queryClient]);
 
   const conditionCheckMutation = useMutation({
-    mutationFn: postConditionCheck,
-    onSuccess: async (response) => {
+    mutationFn: async (request: ConditionCheckRequest) => {
+      const response = await postConditionCheck(request);
+
       if (!response.isSuccess || !response.result) {
         throw new Error(response.message || '컨디션 체크 저장에 실패했습니다.');
       }
 
-      const checkedRecord = response.result;
+      return response.result;
+    },
+    onSuccess: async (checkedRecord) => {
       const checkedYearMonth = getYearMonth(checkedRecord.checkedOn);
+      const monthlyRecordsQueryKey = checkedYearMonth
+        ? conditionQueryKeys.monthlyRecords(checkedYearMonth.year, checkedYearMonth.month)
+        : conditionQueryKeys.monthlyRecordsAll();
 
       queryClient.setQueryData<ConditionCurrentWeekResult>(
         conditionQueryKeys.currentWeek(),
@@ -175,10 +186,7 @@ export const useConditionFlow = () => {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: conditionQueryKeys.currentWeek() }),
         queryClient.invalidateQueries({
-          queryKey: conditionQueryKeys.monthlyRecords(
-            checkedYearMonth.year,
-            checkedYearMonth.month,
-          ),
+          queryKey: monthlyRecordsQueryKey,
         }),
       ]);
     },
@@ -186,35 +194,57 @@ export const useConditionFlow = () => {
 
   const handleOpenStartModal = () => {
     if (!currentWeekStatus.checkAvailable || currentWeekStatus.checked) return;
+    setConditionCheckError(null);
     openCheckModal(currentWeekStatus.sundayIntakeWarningRequired, 1);
   };
 
   const handleContinueFromSunday = () => {
+    setConditionCheckError(null);
     forceOpenCheckModal(1);
   };
 
-  const handleStartCheck = () => setCheckStep(2);
-  const handleBackToStart = () => setCheckStep(1);
-
-  const handleNextVitalityStep = (selectedScore: number) => {
-    validateConditionCheck(selectedScore, sleepHours, sleepMinutes);
-    setVitalityScore(selectedScore);
-    setCheckStep(3);
+  const handleStartCheck = () => {
+    setConditionCheckError(null);
+    setCheckStep(2);
+  };
+  const handleBackToStart = () => {
+    setConditionCheckError(null);
+    setCheckStep(1);
   };
 
-  const handleBackToVitality = () => setCheckStep(2);
+  const handleNextVitalityStep = (selectedScore: number) => {
+    try {
+      validateConditionCheck(selectedScore, sleepHours, sleepMinutes);
+      setConditionCheckError(null);
+      setVitalityScore(selectedScore);
+      setCheckStep(3);
+    } catch (error) {
+      setConditionCheckError(
+        error instanceof Error ? error.message : '컨디션 입력값을 확인해 주세요.',
+      );
+    }
+  };
+
+  const handleBackToVitality = () => {
+    setConditionCheckError(null);
+    setCheckStep(2);
+  };
 
   const handleCompleteSleepStep = async (sleepTime: { hours: number; minutes: number }) => {
-    validateConditionCheck(vitalityScore, sleepTime.hours, sleepTime.minutes);
-    setSleepTime(sleepTime.hours, sleepTime.minutes);
-
     try {
+      validateConditionCheck(vitalityScore, sleepTime.hours, sleepTime.minutes);
+      setConditionCheckError(null);
+      setSleepTime(sleepTime.hours, sleepTime.minutes);
+
       await conditionCheckMutation.mutateAsync({
         vitalityScore,
         sleepHours: sleepTime.hours,
         sleepMinutes: sleepTime.minutes,
       });
     } catch (error) {
+      setConditionCheckError(
+        error instanceof Error ? error.message : '컨디션 체크 저장에 실패했습니다.',
+      );
       console.error('컨디션 체크 저장 실패:', error);
     }
   };
@@ -237,6 +267,7 @@ export const useConditionFlow = () => {
   };
 
   const handleCloseCheckModal = () => {
+    setConditionCheckError(null);
     closeCheckModal();
     if (checkStep === 4) return;
     void handleDismissPopup();
@@ -248,15 +279,17 @@ export const useConditionFlow = () => {
   };
 
   const handlePreviousMonth = () => {
-    setSelectedYearMonth(({ year, month }) =>
-      month === 1 ? { year: year - 1, month: 12 } : { year, month: month - 1 },
-    );
+    setSelectedYearMonth((previous) => {
+      const { year, month } = previous ?? activeYearMonth;
+      return month === 1 ? { year: year - 1, month: 12 } : { year, month: month - 1 };
+    });
   };
 
   const handleNextMonth = () => {
-    setSelectedYearMonth(({ year, month }) =>
-      month === 12 ? { year: year + 1, month: 1 } : { year, month: month + 1 },
-    );
+    setSelectedYearMonth((previous) => {
+      const { year, month } = previous ?? activeYearMonth;
+      return month === 12 ? { year: year + 1, month: 1 } : { year, month: month + 1 };
+    });
   };
 
   return {
@@ -271,6 +304,7 @@ export const useConditionFlow = () => {
     vitalityScore,
     sleepHours,
     sleepMinutes,
+    conditionCheckError,
     isSubmitting: conditionCheckMutation.isPending,
     closeCheckModal: handleCloseCheckModal,
     closeSundayModal: handleCloseSundayModal,

@@ -5,6 +5,8 @@ export const GRAPH_HEIGHT = 166;
 export const AXIS_LEFT = 12.6;
 export const AXIS_BOTTOM = 148.67;
 export const SCORE_INTERVAL = 25.108;
+export const POINT_START_X = 48.38;
+export const POINT_END_X = 251.05;
 
 export const WEEK_X_POSITION_LIST = [
     48.38,
