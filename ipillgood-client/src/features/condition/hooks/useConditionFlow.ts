@@ -124,6 +124,16 @@ export const useConditionFlow = () => {
       if (response.isSuccess && response.result) {
         markWeekCompleted(response.result.recordId);
         setCheckStep(4);
+
+        // 저장 성공 시 그래프와 요약 통계 데이터를 최신 상태로 갱신하기 위해 재호출
+        const currentDate = new Date();
+        const summaryRes = await getConditionSummary(
+          currentDate.getFullYear(),
+          currentDate.getMonth() + 1,
+        );
+        if (summaryRes.isSuccess && summaryRes.result) {
+          setHomeSummaryData(summaryRes.result);
+        }
       }
     } catch (error) {
       console.error('컨디션 체크 제출 중 오류 발생:', error);
