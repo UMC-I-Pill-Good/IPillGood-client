@@ -31,7 +31,7 @@ const ConditionHealthStatusSection = () => {
                     type='button'
                     text='건강 상태 선택하기'
                     size='lg'
-                    className='w-[254px] bg-[#7F99FF] rounded-lg shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'
+                    className='w-[254px] bg-primary-600 rounded-lg shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]'
                     onClick={() => router.push('/condition/health-status')}
                 />
             </div>

@@ -1,19 +1,20 @@
 'use client';
 
-import { useConditionFlow } from '../../hooks/useConditionFlow';
+import { useConditionContext } from '../ConditionProvider';
 import ConditionCheckStartModal from './ConditionCheckStartModal';
 import ConditionVitalityModal from './ConditionVitalityModal';
 import ConditionSleepTimeModal from './ConditionSleepTimeModal';
 import ConditionCheckCompleteModal from './ConditionCheckCompleteModal';
 import ConditionSundayIntakeModal from './ConditionSundayIntakeModal';
+import { useMyInfo } from '@/features/my/hooks/useMyInfo';
 
 interface ConditionCheckModalsProps {
   userName?: string;
 }
 
-const ConditionCheckModals = ({
-  userName = '아필굿',
-}: ConditionCheckModalsProps) => {
+const ConditionCheckModals = ({ userName = '아필굿' }: ConditionCheckModalsProps) => {
+  const { data: myInfo } = useMyInfo();
+  const displayUserName = myInfo?.nickname ?? userName;
   const {
     isCheckModalOpen,
     isSundayModalOpen,
@@ -21,6 +22,7 @@ const ConditionCheckModals = ({
     vitalityScore,
     sleepHours,
     sleepMinutes,
+    conditionCheckError,
     isSubmitting,
     closeCheckModal,
     closeSundayModal,
@@ -31,7 +33,7 @@ const ConditionCheckModals = ({
     handleBackToVitality,
     handleCompleteSleepStep,
     handleViewGraph,
-  } = useConditionFlow();
+  } = useConditionContext();
 
   return (
     <>
@@ -62,6 +64,7 @@ const ConditionCheckModals = ({
               key={`vitality-${vitalityScore}`}
               isOpen={true}
               initialScore={vitalityScore}
+              errorMessage={conditionCheckError}
               onBack={handleBackToStart}
               onClose={closeCheckModal}
               onNext={handleNextVitalityStep}
@@ -75,6 +78,7 @@ const ConditionCheckModals = ({
               isOpen={true}
               initialHours={sleepHours}
               initialMinutes={sleepMinutes}
+              errorMessage={conditionCheckError}
               isSubmitting={isSubmitting}
               onBack={handleBackToVitality}
               onClose={closeCheckModal}
@@ -86,7 +90,7 @@ const ConditionCheckModals = ({
           {checkStep === 4 && (
             <ConditionCheckCompleteModal
               isOpen={true}
-              userName={userName}
+              userName={displayUserName}
               onClose={closeCheckModal}
               onViewGraph={handleViewGraph}
             />
