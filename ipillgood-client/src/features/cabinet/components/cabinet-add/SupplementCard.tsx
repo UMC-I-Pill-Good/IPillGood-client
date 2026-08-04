@@ -47,7 +47,10 @@ const SupplementCard = ({ item, checked, onCheck }: Props) => {
           <div className='mb-0.5 flex items-center justify-between'>
             <p className='typo-caption-6 line-clamp-1'>{item.brand}</p>
 
-            <Link href={`/`} className='typo-caption-7 text-neutral-700 transition hover:underline'>
+            <Link
+              href={`/product/${item.productId}`}
+              className='typo-caption-7 text-neutral-700 transition hover:underline'
+            >
               더보기
             </Link>
           </div>
