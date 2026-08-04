@@ -30,7 +30,13 @@ const SupplementDetailBottomSheet = ({
       <div className='flex flex-col'>
         <section className='py-4 space-y-3 flex flex-col items-center justify-center'>
           <div className='flex items-center justify-center bg-white rounded-lg w-45 h-45'>
-            <Image src={item?.thumbnailImageUrl} alt='비타민' className='h-27.5 w-fit shrink-0' />
+            <Image
+              src={item.thumbnailImageUrl}
+              alt={item.productName}
+              width={110}
+              height={110}
+              className='h-27.5 w-fit shrink-0'
+            />
           </div>
           <article className='text-center space-y-2'>
             <p className='typo-caption-2 text-center'>영양제 브랜드</p>

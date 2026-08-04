@@ -22,7 +22,9 @@ export const getCabinetProductsSearch = async (
   return data;
 };
 
-export const postCabinetProducts = async (body: number[]): Promise<ResponseAddProducts> => {
+export const postCabinetProducts = async (body: {
+  productIds: number[];
+}): Promise<ResponseAddProducts> => {
   const { data } = await axiosInstance.post<ResponseAddProducts>('/cabinet/products', body);
 
   return data;

@@ -32,7 +32,9 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
         <Image
           src={item.thumbnailImageUrl}
           alt={item.productName}
-          className='relative z-10 h-fit w-23'
+          width={80}
+          height={80}
+          className='relative z-10 h-fit w-20'
           preload
         />
 
@@ -98,6 +100,8 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
       <Image
         src={item.thumbnailImageUrl}
         alt={item.productName}
+        width={92}
+        height={92}
         className='relative z-10 h-fit w-23'
         preload
       />

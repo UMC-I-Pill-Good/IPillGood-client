@@ -7,10 +7,12 @@ import SupplementSortList from './SupplementSortList';
 import SupplementAddSection from './SupplementAddSection';
 import { MascotSadIcon } from '@/assets';
 import { getCabinetProductsSearch } from '@/features/cabinet/api/cabinet';
+import { useSupplementSelection } from '@/features/cabinet/hooks';
 import { useInView } from 'react-intersection-observer';
 
 const SupplementSearchContent = () => {
   const [debouncedKeyword, setDebouncedKeyword] = useState<string | null>(null);
+  const { selectedIds, toggle } = useSupplementSelection();
   const [sort, setSort] = useState<'후기 많은 순' | '평점 높은 순'>('후기 많은 순');
 
   const { data, isSuccess, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
@@ -56,12 +58,12 @@ const SupplementSearchContent = () => {
           <p className='mt-4 typo-body-6 text-primary-700'>검색 결과가 존재하지 않아요...</p>
         </section>
       ) : (
-        <SupplementSortList products={products} />
+        <SupplementSortList products={products} selectedIds={selectedIds} onToggle={toggle} />
       )}
 
       {hasNextPage && <div ref={loadMoreRef} className='h-px w-full' />}
 
-      {!isEmptySearchResult && <SupplementAddSection />}
+      {!isEmptySearchResult && <SupplementAddSection selectedIds={selectedIds} />}
     </>
   );
 };
