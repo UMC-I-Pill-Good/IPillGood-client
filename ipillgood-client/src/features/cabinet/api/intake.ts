@@ -31,7 +31,12 @@ export const getIntakeConflict = async (
   memberProductId: number,
 ): Promise<ResponseIntakeConflicts> => {
   const { data } = await axiosInstance.get<ResponseIntakeConflicts>(
-    `/intake/${memberProductId}/compatibility-checks`,
+    '/intake/compatibility-checks',
+    {
+      params: {
+        memberProductId,
+      },
+    },
   );
 
   return data;
