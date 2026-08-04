@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import SupplementSearchSection from './SupplementSearchSection';
-import SupplementSortList from './SupplementSortList';
-import SupplementAddSection from './SupplementAddSection';
+import CabinetAddSearchSection from './CabinetAddSearchSection';
+import CabinetAddList from './CabinetAddList';
+import CabinetAddSection from './CabinetAddSection';
 import { MascotSadIcon } from '@/assets';
 import { getCabinetProductsSearch } from '@/features/cabinet/api/cabinet';
 import { useSupplementSelection } from '@/features/cabinet/hooks';
 import { useInView } from 'react-intersection-observer';
 
-const SupplementSearchContent = () => {
+const CabinetAddContent = () => {
   const [debouncedKeyword, setDebouncedKeyword] = useState<string | null>(null);
   const { selectedIds, toggle } = useSupplementSelection();
   const [sort, setSort] = useState<'후기 많은 순' | '평점 높은 순'>('후기 많은 순');
@@ -49,7 +49,7 @@ const SupplementSearchContent = () => {
 
   return (
     <section className='flex min-h-0 flex-1 flex-col'>
-      <SupplementSearchSection
+      <CabinetAddSearchSection
         onDebouncedKeywordChange={setDebouncedKeyword}
         sort={sort}
         setSort={setSort}
@@ -62,15 +62,15 @@ const SupplementSearchContent = () => {
             <p className='mt-4 typo-body-6 text-primary-700'>검색 결과가 존재하지 않아요...</p>
           </section>
         ) : (
-          <SupplementSortList products={products} selectedIds={selectedIds} onToggle={toggle} />
+          <CabinetAddList products={products} selectedIds={selectedIds} onToggle={toggle} />
         )}
 
         {hasNextPage && <div ref={loadMoreRef} className='h-px w-full' />}
       </div>
 
-      {!isEmptySearchResult && <SupplementAddSection selectedIds={selectedIds} />}
+      {!isEmptySearchResult && <CabinetAddSection selectedIds={selectedIds} />}
     </section>
   );
 };
 
-export default SupplementSearchContent;
+export default CabinetAddContent;

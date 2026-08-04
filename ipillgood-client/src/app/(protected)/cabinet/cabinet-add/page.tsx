@@ -1,17 +1,13 @@
-import { CabinetGrid } from '@/features/cabinet/components';
-import AddButtonSection from '@/features/cabinet/components/cabinet-add/AddButtonSection';
+import CabinetAddContent from '@/features/cabinet/components/cabinet-add/CabinetAddContent';
 import { Header } from '@/shared/layout';
 
 const CabinetAddPage = () => {
   return (
-    <main className='flex min-h-dvh flex-col pb-24'>
-      <Header showBackButton={false} title='내 캐비닛' />
+    <main className='flex h-dvh flex-col overflow-hidden'>
+      <Header title='영양제 이름' />
 
-      <p className='px-5 py-4 typo-body-10'>섭취 중인 영양제에 추가할 영양제를 클릭하세요.</p>
-
-      <CabinetGrid mode='add' />
-
-      <AddButtonSection />
+      <p className='typo-body-10 px-5 py-4'>캐비닛에 추가하고 싶은 영양제를 선택해 주세요.</p>
+      <CabinetAddContent />
     </main>
   );
 };

@@ -13,7 +13,7 @@ interface Props {
   onCheck: () => void;
 }
 
-const SupplementCard = ({ item, checked, onCheck }: Props) => {
+const CabinetAddCard = ({ item, checked, onCheck }: Props) => {
   const [emblaRef] = useEmblaCarousel({
     dragFree: true,
     containScroll: 'trimSnaps',
@@ -72,4 +72,4 @@ const SupplementCard = ({ item, checked, onCheck }: Props) => {
   );
 };
 
-export default memo(SupplementCard);
+export default memo(CabinetAddCard);

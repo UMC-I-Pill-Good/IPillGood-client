@@ -26,7 +26,7 @@ const CabinetActions = () => {
                 text='섭취 중인 영양제 추가'
                 size='sm'
                 className='px-3'
-                onClick={() => router.push('/cabinet/cabinet-add')}
+                onClick={() => router.push('/cabinet/intake-add')}
               />
               <TextButton
                 type='button'

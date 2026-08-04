@@ -7,11 +7,11 @@ import { isAxiosError } from 'axios';
 import InteractionWarningModal from '@/features/cabinet/components/modal/InteractionWarningModal';
 import { postCabinetProducts } from '@/features/cabinet/api/cabinet';
 
-interface SupplementAddSectionProps {
+interface CabinetAddSectionProps {
   selectedIds: number[];
 }
 
-const SupplementAddSection = ({ selectedIds }: SupplementAddSectionProps) => {
+const CabinetAddSection = ({ selectedIds }: CabinetAddSectionProps) => {
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const queryClient = useQueryClient();
 
@@ -62,4 +62,4 @@ const SupplementAddSection = ({ selectedIds }: SupplementAddSectionProps) => {
   );
 };
 
-export default memo(SupplementAddSection);
+export default memo(CabinetAddSection);
