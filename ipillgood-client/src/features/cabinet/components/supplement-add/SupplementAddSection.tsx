@@ -3,6 +3,7 @@
 import { TextButton } from '@/shared/components';
 import { memo, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { isAxiosError } from 'axios';
 import InteractionWarningModal from '@/features/cabinet/components/modal/InteractionWarningModal';
 import { postCabinetProducts } from '@/features/cabinet/api/cabinet';
 
@@ -26,16 +27,18 @@ const SupplementAddSection = ({ selectedIds }: SupplementAddSectionProps) => {
       queryClient.invalidateQueries({ queryKey: ['cabinetProductsSearch'] });
       setIsWarningModalOpen(false);
     },
-    onError: () => {
-      alert('캐비닛에 영양제를 추가하지 못했어요.');
+    onError: (error) => {
+      const message = isAxiosError<{ message?: string }>(error)
+        ? error.response?.data.message
+        : undefined;
+
+      alert(message ?? '캐비닛에 영양제를 추가하지 못했어요.');
     },
   });
 
-  console.log(selectedIds);
-
   return (
     <>
-      <section className='px-5 mt-auto'>
+      <section className='shrink-0 px-5 pb-28 pt-4'>
         <TextButton
           type='button'
           text='캐비닛에 추가하기'
