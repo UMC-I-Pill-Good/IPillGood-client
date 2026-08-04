@@ -12,7 +12,7 @@ const IntakeAddButtonSection = () => {
 
   return (
     <>
-      <section className='mt-auto px-5 pt-4'>
+      <section className=' px-5 pt-4'>
         <TextButton
           type='button'
           text='섭취 중인 영양제로 추가하기'

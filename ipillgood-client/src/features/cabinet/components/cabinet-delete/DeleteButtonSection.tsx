@@ -54,13 +54,7 @@ const DeleteButtonSection = ({ selectedIds }: DeleteButtonSectionProps) => {
 
       {isDeleteModalOpen && (
         <ConfirmModal
-          title={
-            <>
-              선택한 영양제를
-              <br />
-              정말 삭제하시겠습니까?
-            </>
-          }
+          title='해당 영양제를 정말 삭제하시겠습니까?'
           content='삭제한 영양제는 복구가 어렵습니다.'
           cancelLabel='아니요'
           confirmLabel='네'
