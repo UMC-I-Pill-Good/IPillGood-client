@@ -4,7 +4,7 @@ import { IntakeCycleModal, IntakeTimeModal, TextButton } from '@/shared/componen
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-const AddButtonSection = () => {
+const IntakeAddButtonSection = () => {
   const router = useRouter();
 
   const [isIntakeTimeModalOpen, setISIntakeTimeModalOpen] = useState(false);
@@ -45,4 +45,4 @@ const AddButtonSection = () => {
   );
 };
 
-export default AddButtonSection;
+export default IntakeAddButtonSection;
