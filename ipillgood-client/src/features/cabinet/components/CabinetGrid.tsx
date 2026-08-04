@@ -4,8 +4,16 @@ import { useEffect, useState } from 'react';
 import EmptyCabinetCard from './EmptyCabinetCard';
 import CabinetCard from './CabinetCard';
 import { ProductItem } from '../types/cabinet';
-import { FetchError, LoadingSpinner, SupplementDetailBottomSheet } from '@/shared/components';
-import { useCabinetProductsQuery } from '../hooks';
+import {
+  ConfirmModal,
+  FetchError,
+  LoadingSpinner,
+  SupplementDetailBottomSheet,
+} from '@/shared/components';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { patchReviewPromptsDismiss } from '../api/review-prompt';
+import { useCabinetProductsQuery, useReviewPromptsQuery } from '../hooks';
 
 interface CabinetGridProps {
   mode: 'default' | 'add' | 'delete';
@@ -15,7 +23,28 @@ interface CabinetGridProps {
 const MAX_COUNT = 9;
 
 const CabinetGrid = ({ mode, onDeleteSelectionChange }: CabinetGridProps) => {
+  const [dismissedReviewPromptId, setDismissedReviewPromptId] = useState<number | null>(null);
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
   const { data, isPending, isError, refetch } = useCabinetProductsQuery();
+
+  const { data: reviewPromptsData } = useReviewPromptsQuery({
+    enabled: mode === 'default',
+  });
+
+  const dismissReviewPromptMutation = useMutation({
+    mutationFn: patchReviewPromptsDismiss,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['reviewPrompts'] });
+    },
+  });
+
+  const duePrompt = reviewPromptsData?.result.duePrompts[0];
+  const isReviewPromptModalOpen =
+    mode === 'default' &&
+    duePrompt !== undefined &&
+    duePrompt.activeProductId !== dismissedReviewPromptId;
 
   const products = [...(data?.result.products ?? [])].sort(
     (a, b) => new Date(a.addedAt).getTime() - new Date(b.addedAt).getTime(),
@@ -74,6 +103,19 @@ const CabinetGrid = ({ mode, onDeleteSelectionChange }: CabinetGridProps) => {
     }
   };
 
+  const handleReviewPromptDismiss = () => {
+    if (duePrompt) {
+      setDismissedReviewPromptId(duePrompt.activeProductId);
+      dismissReviewPromptMutation.mutate(duePrompt.activeProductId);
+    }
+  };
+
+  const handleReviewPromptConfirm = () => {
+    if (duePrompt) {
+      router.push(`/reviews/reviews-add?productId=${duePrompt.productId}`);
+    }
+  };
+
   const slots = Array.from({ length: MAX_COUNT }, (_, index) => products[index]);
 
   if (isPending) return <LoadingSpinner />;
@@ -108,6 +150,24 @@ const CabinetGrid = ({ mode, onDeleteSelectionChange }: CabinetGridProps) => {
         onOpenChange={setIsBottomSheetOpen}
         item={selectedItem}
       />
+
+      {isReviewPromptModalOpen && (
+        <ConfirmModal
+          title={
+            <p className='break-keep typo-body-9'>
+              <span className='text-primary-700'>
+                [{duePrompt.productName} 영양제]를 추가한 지 30일이
+                지났어요!
+              </span>
+            </p>
+          }
+          content='해당 영양제의 후기를 남겨보세요.'
+          cancelLabel='닫기'
+          confirmLabel='후기 작성'
+          onCancel={handleReviewPromptDismiss}
+          onConfirm={handleReviewPromptConfirm}
+        />
+      )}
     </>
   );
 };
