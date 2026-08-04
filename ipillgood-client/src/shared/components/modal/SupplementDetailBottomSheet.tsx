@@ -32,8 +32,11 @@ const SupplementDetailBottomSheet = ({
 
   if (!data?.result) return null;
 
-  const intakeHour = Number(data.result.activeProduct.intakeTime.split(':')[0]);
-  const intakeTimeLabel = `${intakeHour >= 12 ? '오후' : '오전'} ${data.result.activeProduct.intakeTime}`;
+  const activeProduct = data.result.activeProduct;
+  const intakeHour = activeProduct ? Number(activeProduct.intakeTime.split(':')[0]) : null;
+  const intakeTimeLabel = activeProduct
+    ? `${intakeHour !== null && intakeHour >= 12 ? '오후' : '오전'} ${activeProduct.intakeTime}`
+    : '';
 
   return (
     <BottomSheet open={open} onOpenChange={onOpenChange}>
@@ -87,7 +90,7 @@ const SupplementDetailBottomSheet = ({
                   className='text-neutral flex items-center transition hover:brightness-75'
                   onClick={() => setIsOpenIntakeCycleModal(true)}
                 >
-                  {data.result.activeProduct.frequencyLabel} <ChevronRight size={20} />
+                  {activeProduct?.frequencyLabel} <ChevronRight size={20} />
                 </button>
               </div>
             </section>
