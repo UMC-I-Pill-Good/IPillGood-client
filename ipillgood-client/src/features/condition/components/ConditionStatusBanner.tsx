@@ -3,7 +3,7 @@
 import { MascotHeartIcon, MascotSearchIcon } from '@/assets';
 import { TextButton } from '@/shared/components';
 import { clsx } from 'clsx';
-import { useConditionFlow } from '../hooks/useConditionFlow';
+import { useConditionContext } from './ConditionProvider';
 
 interface ConditionStatusBannerProps {
   isCompleted?: boolean;
@@ -14,14 +14,28 @@ const ConditionStatusBanner = ({
   isCompleted: propIsCompleted,
   onOpenConditionCheck: propOnOpen,
 }: ConditionStatusBannerProps = {}) => {
-  const { currentWeekStatus, handleOpenStartModal } = useConditionFlow();
+  const { currentWeekStatus, isCurrentWeekLoading, handleOpenStartModal } =
+    useConditionContext();
+
+  if (isCurrentWeekLoading) {
+    return (
+      <section
+        className='flex w-full flex-col items-center justify-center px-5 pb-2 pt-4'
+        aria-label='이번 주 컨디션 상태를 불러오는 중'
+        aria-busy='true'
+      >
+        <div
+          className='h-[77px] w-full rounded-2xl bg-primary-200/70 motion-safe:animate-pulse motion-safe:[animation-duration:1s]'
+          aria-hidden='true'
+        />
+      </section>
+    );
+  }
 
   const isCompleted = propIsCompleted ?? currentWeekStatus.checked;
   const onOpenConditionCheck = propOnOpen ?? handleOpenStartModal;
 
-  const title = isCompleted
-    ? '이번 주 컨디션 체크 완료!'
-    : '이번 주 컨디션 체크 미완료!';
+  const title = isCompleted ? '이번 주 컨디션 체크 완료!' : '이번 주 컨디션 체크 미완료!';
 
   return (
     <section className='flex w-full flex-col items-center justify-center gap-2.5 px-5 pb-2 pt-4'>

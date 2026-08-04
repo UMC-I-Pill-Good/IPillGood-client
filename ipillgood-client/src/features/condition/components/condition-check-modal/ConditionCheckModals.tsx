@@ -1,6 +1,6 @@
 'use client';
 
-import { useConditionFlow } from '../../hooks/useConditionFlow';
+import { useConditionContext } from '../ConditionProvider';
 import ConditionCheckStartModal from './ConditionCheckStartModal';
 import ConditionVitalityModal from './ConditionVitalityModal';
 import ConditionSleepTimeModal from './ConditionSleepTimeModal';
@@ -12,9 +12,7 @@ interface ConditionCheckModalsProps {
   userName?: string;
 }
 
-const ConditionCheckModals = ({
-  userName = '아필굿',
-}: ConditionCheckModalsProps) => {
+const ConditionCheckModals = ({ userName = '아필굿' }: ConditionCheckModalsProps) => {
   const { data: myInfo } = useMyInfo();
   const displayUserName = myInfo?.nickname ?? userName;
   const {
@@ -34,7 +32,7 @@ const ConditionCheckModals = ({
     handleBackToVitality,
     handleCompleteSleepStep,
     handleViewGraph,
-  } = useConditionFlow();
+  } = useConditionContext();
 
   return (
     <>

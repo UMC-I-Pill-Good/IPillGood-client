@@ -1,9 +1,38 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { HEALTH_SYSTEM_OPTION_LIST } from '../constants/healthStatusOptionList';
+import {
+  HEALTH_CONCERN_ICON_MAP,
+  TWO_LINE_HEALTH_SYSTEM_TYPE_SET,
+} from '../constants/healthStatusOptionList';
+import { useHealthConcernCategories } from './useHealthConcernCategories';
+import { type HealthSystemType } from '../types/healthStatus';
 
 export const useHealthStatusSelection = () => {
   const router = useRouter();
+  const { data: categoryData, isLoading } = useHealthConcernCategories();
+
+  const systemList = useMemo<HealthSystemType[]>(
+    () =>
+      categoryData?.majorCategories.map((majorCategory) => {
+        const isTwoLine = TWO_LINE_HEALTH_SYSTEM_TYPE_SET.has(majorCategory.type);
+        const label = isTwoLine
+          ? majorCategory.label.replace(/\s*및\s*/, '\n및 ')
+          : majorCategory.label;
+        const iconKey = majorCategory.type as keyof typeof HEALTH_CONCERN_ICON_MAP;
+
+        return {
+          key: majorCategory.type,
+          label,
+          icon: HEALTH_CONCERN_ICON_MAP[iconKey] ?? HEALTH_CONCERN_ICON_MAP.FALLBACK,
+          isTwoLine,
+          bodyPartList: majorCategory.minorCategories.map((minorCategory) => ({
+            key: minorCategory.type,
+            label: minorCategory.label,
+          })),
+        };
+      }) ?? [],
+    [categoryData],
+  );
 
   // 대분류 및 소분류 선택 상태 (단일 선택)
   const [selectedSystemKey, setSelectedSystemKey] = useState<string | null>(null);
@@ -21,9 +50,7 @@ export const useHealthStatusSelection = () => {
   };
 
   // 현재 선택된 대분류 객체 탐색
-  const selectedSystem = HEALTH_SYSTEM_OPTION_LIST.find(
-    (system) => system.key === selectedSystemKey,
-  );
+  const selectedSystem = systemList.find((system) => system.key === selectedSystemKey);
 
   // 선택 완료 CTA 클릭 핸들러
   const handleComplete = () => {
@@ -45,16 +72,21 @@ export const useHealthStatusSelection = () => {
     }
   };
 
-  const isFormValid = Boolean(selectedSystemKey && selectedBodyPartKey);
+  const isFormValid = Boolean(
+    selectedSystem &&
+    selectedBodyPartKey &&
+    selectedSystem.bodyPartList.some((part) => part.key === selectedBodyPartKey),
+  );
 
   return {
     selectedSystemKey,
     selectedBodyPartKey,
+    systemList,
     selectedSystem,
     handleSystemSelect,
     handleBodyPartSelect,
     handleComplete,
     isFormValid,
-    isPending: false,
+    isPending: isLoading,
   };
 };

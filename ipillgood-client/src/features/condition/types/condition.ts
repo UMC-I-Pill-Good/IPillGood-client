@@ -2,13 +2,9 @@ import { type CommonResponse } from '@/shared/types/api';
 
 export type ConditionGraphDataType = {
   weekLabel: string;
-  weekNo?: number;
-  weekStartDate?: string;
+  weekNo: number;
+  recordId?: number;
   score: number | null;
-  vitality: number;
-  sleepHours: number;
-  intakeDays: number;
-  totalDays: number;
 };
 
 export type ConditionGraphPointType = ConditionGraphDataType & {
@@ -46,7 +42,7 @@ export type ConditionWeeklySummary = {
   recordId: number;
   weekStartOn: string;
   weekEndOn: string;
-  conditionScore: number | null;
+  conditionScore: number;
 };
 
 export type ConditionMonthlyRecordsResult = {
@@ -112,5 +108,3 @@ export type ConditionPopupDismissedResult = {
 };
 
 export type ConditionPopupDismissedResponse = CommonResponse<ConditionPopupDismissedResult>;
-
-

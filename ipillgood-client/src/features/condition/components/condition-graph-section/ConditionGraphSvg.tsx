@@ -12,7 +12,6 @@ import {
 interface ConditionGraphSvgProps {
   currentMonth: number;
   graphPointList: ConditionGraphPointType[];
-  graphLinePoints: string;
   hoveredPointIndex: number | null;
   selectedPointIndex: number | null;
   onHoverPoint: (index: number | null) => void;
@@ -42,13 +41,7 @@ const ConditionGraphSvg = ({
     >
       <defs>
         <filter id='shadow-highlight' x='-100%' y='-100%' width='300%' height='300%'>
-          <feDropShadow
-            dx='0'
-            dy='0'
-            stdDeviation='5'
-            floodColor='#7E8387'
-            floodOpacity='0.61'
-          />
+          <feDropShadow dx='0' dy='0' stdDeviation='5' floodColor='#7E8387' floodOpacity='0.61' />
         </filter>
       </defs>
 

@@ -19,6 +19,7 @@ const HealthStatusSelection = () => {
   const {
     selectedSystemKey,
     selectedBodyPartKey,
+    systemList,
     selectedSystem,
     handleSystemSelect,
     handleBodyPartSelect,
@@ -42,6 +43,8 @@ const HealthStatusSelection = () => {
 
       {/* 3. 대분류 신체 계통 카드 그리드 섹션 분리 */}
       <HealthSystemCardGrid
+        systemList={systemList}
+        isLoading={isPending}
         selectedSystemKey={selectedSystemKey}
         onSelectSystem={handleSystemSelect}
       />
