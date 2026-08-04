@@ -65,7 +65,10 @@ export const useAddIntakeProducts = () => {
     },
   });
 
-  const checkConflictsAndAdd = (addParams: AddIntakeProductsParams) => {
+  const checkConflictsAndAdd = (
+    addParams: AddIntakeProductsParams,
+    onCheckComplete: () => void,
+  ) => {
     intakeConflictMutation.mutate(addParams.memberProductIds, {
       onSuccess: (responses) => {
         const failedResponse = responses.find((response) => !response.isSuccess);
@@ -73,10 +76,12 @@ export const useAddIntakeProducts = () => {
         if (failedResponse) {
           if (failedResponse.code === 'INTAKE409_3') {
             setIsReAdditionWarningModalOpen(true);
+            onCheckComplete();
             return;
           }
 
           alert(failedResponse.message ?? '병용 금기 여부를 확인하지 못했어요.');
+          onCheckComplete();
           return;
         }
 
@@ -87,17 +92,21 @@ export const useAddIntakeProducts = () => {
 
         if (!hasConflicts) {
           addIntakeProductsMutation.mutate(addParams);
+          onCheckComplete();
           return;
         }
 
         if (detectedConflicts.length === 0) {
           alert('병용 금기 정보를 불러오지 못했어요.');
+          onCheckComplete();
           return;
         }
 
         setConflicts(detectedConflicts);
         setPendingAddParams(addParams);
+        onCheckComplete();
       },
+      onError: onCheckComplete,
     });
   };
 

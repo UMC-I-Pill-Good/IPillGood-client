@@ -30,12 +30,11 @@ const IntakeAddButtonSection = ({ selectedIds }: IntakeAddButtonSectionProps) =>
   const handleCycleConfirm = (cycle: string) => {
     if (!intakeTime) return;
 
-    setIsIntakeCycleModalOpen(false);
     checkConflictsAndAdd({
       memberProductIds: selectedIds,
       intakeTime,
       frequency: frequencyCycle[cycle],
-    });
+    }, () => setIsIntakeCycleModalOpen(false));
   };
 
   return (
