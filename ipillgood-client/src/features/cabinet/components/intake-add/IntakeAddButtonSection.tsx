@@ -1,10 +1,12 @@
 'use client';
 
 import InteractionWarningModal from '@/features/cabinet/components/modal/InteractionWarningModal';
+
 import { frequencyCycle } from '@/features/cabinet/constants/intake.constants';
 import { useAddIntakeProducts } from '@/features/cabinet/hooks';
 import { IntakeCycleModal, IntakeTimeModal, TextButton } from '@/shared/components';
 import { useState } from 'react';
+import ReAdditionWarningModal from '../modal/ReadditionWarningModal';
 
 interface IntakeAddButtonSectionProps {
   selectedIds: number[];
@@ -17,10 +19,12 @@ const IntakeAddButtonSection = ({ selectedIds }: IntakeAddButtonSectionProps) =>
   const {
     conflicts,
     isWarningModalOpen,
+    isReAdditionWarningModalOpen,
     isPending,
     checkConflictsAndAdd,
     confirmAdd,
     cancelAdd,
+    closeReAdditionWarningModal,
   } = useAddIntakeProducts();
 
   const handleCycleConfirm = (cycle: string) => {
@@ -70,6 +74,13 @@ const IntakeAddButtonSection = ({ selectedIds }: IntakeAddButtonSectionProps) =>
           conflicts={conflicts}
           onCancel={cancelAdd}
           onConfirm={confirmAdd}
+        />
+      )}
+
+      {isReAdditionWarningModalOpen && (
+        <ReAdditionWarningModal
+          onConfirm={closeReAdditionWarningModal}
+          onCancel={closeReAdditionWarningModal}
         />
       )}
     </>

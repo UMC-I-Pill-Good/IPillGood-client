@@ -15,6 +15,7 @@ interface AddIntakeProductsParams {
 export const useAddIntakeProducts = () => {
   const [conflicts, setConflicts] = useState<IntakeConflict[]>([]);
   const [pendingAddParams, setPendingAddParams] = useState<AddIntakeProductsParams | null>(null);
+  const [isReAdditionWarningModalOpen, setIsReAdditionWarningModalOpen] = useState(false);
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -51,11 +52,16 @@ export const useAddIntakeProducts = () => {
     mutationFn: (memberProductIds: number[]) =>
       Promise.all(memberProductIds.map(getIntakeConflict)),
     onError: (error) => {
-      const message = isAxiosError<{ message?: string }>(error)
-        ? error.response?.data.message
+      const errorData = isAxiosError<{ code?: string; message?: string }>(error)
+        ? error.response?.data
         : undefined;
 
-      alert(message ?? '병용 금기 여부를 확인하지 못했어요.');
+      if (errorData?.code === 'INTAKE409_3') {
+        setIsReAdditionWarningModalOpen(true);
+        return;
+      }
+
+      alert(errorData?.message ?? '병용 금기 여부를 확인하지 못했어요.');
     },
   });
 
@@ -65,6 +71,11 @@ export const useAddIntakeProducts = () => {
         const failedResponse = responses.find((response) => !response.isSuccess);
 
         if (failedResponse) {
+          if (failedResponse.code === 'INTAKE409_3') {
+            setIsReAdditionWarningModalOpen(true);
+            return;
+          }
+
           alert(failedResponse.message ?? '병용 금기 여부를 확인하지 못했어요.');
           return;
         }
@@ -101,12 +112,18 @@ export const useAddIntakeProducts = () => {
     setPendingAddParams(null);
   };
 
+  const closeReAdditionWarningModal = () => {
+    setIsReAdditionWarningModalOpen(false);
+  };
+
   return {
     conflicts,
     isWarningModalOpen: pendingAddParams !== null,
+    isReAdditionWarningModalOpen,
     isPending: addIntakeProductsMutation.isPending || intakeConflictMutation.isPending,
     checkConflictsAndAdd,
     confirmAdd,
     cancelAdd,
+    closeReAdditionWarningModal,
   };
 };
