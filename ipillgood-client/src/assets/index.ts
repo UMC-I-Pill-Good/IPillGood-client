@@ -14,6 +14,7 @@ export { default as MascotIcon } from './icons/mascot-default.svg';
 export { default as MascotHeartIcon } from './icons/mascot-heart.svg';
 export { default as MascotSearchIcon } from './icons/mascot-search.svg';
 export { default as MascotSadIcon } from './icons/mascot-sad.svg';
+export { default as MascotSadSmallIcon } from './icons/mascot-sad-small.svg';
 export { default as LogoIcon } from './icons/logo.svg';
 export { default as EyeIcon } from './icons/eye.svg';
 export { default as EyeOffIcon } from './icons/eyeoff.svg';

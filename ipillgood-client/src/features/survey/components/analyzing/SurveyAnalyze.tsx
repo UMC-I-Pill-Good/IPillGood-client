@@ -6,8 +6,9 @@ import ManhwaImage from '@/assets/images/manhwa.png';
 import { motion } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-import { useMyInfoQuery, useRecommendationQuery, useResetSurvey } from '@/features/survey/hooks';
+import { useRecommendationQuery, useResetSurvey } from '@/features/survey/hooks';
 import AnalyzeError from './AnalyzeError';
+import { useMyInfoQuery } from '@/shared/hooks';
 
 const container = {
   hidden: {},
