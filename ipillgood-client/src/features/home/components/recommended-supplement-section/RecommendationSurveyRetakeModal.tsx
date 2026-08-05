@@ -25,7 +25,7 @@ const RecommendationSurveyRetakeModal = ({
         text='설문 바로가기'
         variant='primary'
         size='lg'
-        href='/home'
+        href='/survey'
         className='mt-5 w-full'
       />
     </ModalShell>
