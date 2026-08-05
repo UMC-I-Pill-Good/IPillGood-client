@@ -1,3 +1,5 @@
+import { CommonResponse } from '@/shared/types';
+
 export type MascotStageType = 'SEED' | 'SPROUT' | 'FLOWER' | 'FRUIT' | 'TREE';
 
 export type StreakStatusType = 'COMPLETED' | 'MAINTAINED' | 'PENDING' | 'EXCLUDED';
@@ -22,3 +24,5 @@ export type IntakeStreakType = {
   lastRoutineDate: string | null;
   nextStageThresholdDays: number | null;
 };
+
+export type IntakeStreakResponseType = CommonResponse<IntakeStreakType>;

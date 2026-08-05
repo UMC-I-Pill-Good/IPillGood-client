@@ -2,6 +2,8 @@
 
 import { Drawer } from 'vaul';
 
+import { useScrollLock } from '@/shared/hooks/useScrollLock';
+
 interface BottomSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -9,8 +11,10 @@ interface BottomSheetProps {
 }
 
 const BottomSheet = ({ open, onOpenChange, children }: BottomSheetProps) => {
+  useScrollLock(open);
+
   return (
-    <Drawer.Root open={open} onOpenChange={onOpenChange}>
+    <Drawer.Root open={open} onOpenChange={onOpenChange} noBodyStyles>
       <Drawer.Portal>
         <Drawer.Overlay className='fixed inset-0 z-40 bg-neutral-800/20' />
         <Drawer.Content className='fixed bottom-0 left-1/2 -translate-x-1/2 z-40 w-full max-w-110 rounded-t-[40px] bg-background outline-none px-5 pb-4'>

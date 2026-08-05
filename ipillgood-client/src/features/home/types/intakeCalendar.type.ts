@@ -1,14 +1,27 @@
-export type CalendarDayStatusType = 'DONE' | 'PARTIAL' | 'NONE';
+import { CommonResponse } from '@/shared/types';
+import { StreakStatusType } from './growthStage.type';
 
-export type CalendarDayType = {
+export type DayType = {
   date: string;
-  status: CalendarDayStatusType;
+  dayOfMonth: number;
+  hasTakenRecords: boolean;
+  allCompleted: boolean;
+  streakStatus: StreakStatusType;
+  streakIncluded: boolean;
+  selectable: boolean;
   takenCount: number;
-  totalCount: number;
+  completedAt: string | null;
 };
 
-export type CalendarMonthType = {
+export type IntakeCalendarType = {
   year: number;
   month: number;
-  days: CalendarDayType[];
+  days: DayType[];
+};
+
+export type IntakeCalendarResponseType = CommonResponse<IntakeCalendarType>;
+
+export type IntakeCalendarParamsType = {
+  year: number;
+  month: number;
 };

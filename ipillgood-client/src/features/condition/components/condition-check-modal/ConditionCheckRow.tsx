@@ -19,7 +19,7 @@ const ConditionCheckRow = ({
           <Icon className='shrink-0' />
         </div>
 
-        <span className='typo-body-10 text-[#111111]'>
+        <span className='typo-body-10 text-black'>
           {label}
         </span>
       </div>

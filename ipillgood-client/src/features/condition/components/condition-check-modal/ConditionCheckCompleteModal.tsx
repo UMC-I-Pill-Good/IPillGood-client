@@ -44,7 +44,7 @@ const ConditionCheckCompleteModal = ({
         {/* Header - 4단계는 제출 완료 화면이므로 우측 X 닫기 버튼만 렌더링 */}
         <header className='flex h-9 w-full items-center justify-end px-5'>
           <IconButton
-            icon={<X size={24} className='text-[#7E8387]' />}
+            icon={<X size={24} className='text-neutral-800' />}
             ariaLabel='팝업 닫기'
             onClick={onClose}
           />
@@ -56,7 +56,7 @@ const ConditionCheckCompleteModal = ({
           <div className='flex w-full flex-col items-center gap-0'>
             {/* Title & Mascot Graphic (gap: 0px) */}
             <div className='flex w-full flex-col items-center gap-0'>
-              <h2 className='typo-body-5 w-full text-center text-[#111111]'>
+              <h2 className='typo-body-5 w-full text-center text-black'>
                 이번 주 컨디션 체크 완료!
               </h2>
 

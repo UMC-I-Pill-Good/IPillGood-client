@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { Header } from '@/shared/layout/Header';
-import { TextButton } from '@/shared/components';
+import { FetchError, TextButton } from '@/shared/components';
 import { useHealthStatusSelection } from '../../hooks/useHealthStatusSelection';
 
 import HealthStatusHeader from './HealthStatusHeader';
@@ -19,16 +19,37 @@ const HealthStatusSelection = () => {
   const {
     selectedSystemKey,
     selectedBodyPartKey,
+    systemList,
     selectedSystem,
     handleSystemSelect,
     handleBodyPartSelect,
     handleComplete,
     isFormValid,
     isPending,
+    categoryError,
+    refetchCategoryList,
   } = useHealthStatusSelection();
 
+  if (categoryError) {
+    return (
+      <div className='flex min-h-dvh w-full flex-col overflow-x-hidden bg-background'>
+        <Header
+          title='건강 상태'
+          showBackButton={true}
+          showCloseButton={true}
+          onClose={() => router.push('/condition')}
+        />
+
+        <FetchError
+          description='건강 상태 분류를 불러오지 못했습니다.'
+          onRetry={() => void refetchCategoryList()}
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className='flex min-h-dvh w-full flex-col overflow-x-hidden bg-[#F2F6FF] pb-20'>
+    <div className='flex min-h-dvh w-full flex-col overflow-x-hidden bg-background pb-20'>
       {/* 1. 공통 Header */}
       <Header
         title='건강 상태'
@@ -42,6 +63,8 @@ const HealthStatusSelection = () => {
 
       {/* 3. 대분류 신체 계통 카드 그리드 섹션 분리 */}
       <HealthSystemCardGrid
+        systemList={systemList}
+        isLoading={isPending}
         selectedSystemKey={selectedSystemKey}
         onSelectSystem={handleSystemSelect}
       />

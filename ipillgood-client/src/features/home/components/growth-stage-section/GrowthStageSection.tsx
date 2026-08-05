@@ -1,9 +1,20 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
 import { GROWTH_STAGE_OPTION_LIST } from '../../constants/growthStage.constant';
-import { mockIntakeStreak } from '../../mocks/growthStage.mock';
 import GrowthStageItem from './GrowthStageItem';
+import { getIntakeStreak } from '../../api/intake';
 
 const GrowthStageSection = () => {
-  const { streakDays, mascotStage } = mockIntakeStreak;
+  const { data } = useQuery({
+    queryKey: ['growthStage'],
+    queryFn: () => getIntakeStreak(),
+    select: (res) => res.result,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const { mascotStage, streakDays = 0 } = data ?? {};
+
   const currentIndex = GROWTH_STAGE_OPTION_LIST.findIndex((stage) => stage.value === mascotStage);
 
   return (

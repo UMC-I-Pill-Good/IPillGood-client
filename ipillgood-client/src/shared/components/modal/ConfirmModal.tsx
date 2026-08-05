@@ -42,7 +42,7 @@ const ConfirmModal = ({
         ref={contentRef}
         className='flex flex-col overflow-hidden rounded-[20px] bg-white px-7.5 py-6 w-77.5'
       >
-        <p id='confirm-modal-title' className='text-center typo-body-9 mb-2'>
+        <p id='confirm-modal-title' className='text-center typo-body-9 mb-1'>
           {title}
         </p>
         <p
@@ -52,7 +52,7 @@ const ConfirmModal = ({
           {content}
         </p>
 
-        <div className='mt-5 flex items-center gap-3'>
+        <div className='mt-4 flex items-center gap-3'>
           <TextButton
             type='button'
             text={cancelLabel}

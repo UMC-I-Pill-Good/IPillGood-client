@@ -1,14 +1,15 @@
 import Image from 'next/image';
-import { CabinetItem } from '../types/cabinet';
 import { CheckShieldIcon } from '@/assets';
 import { Check } from 'lucide-react';
 import clsx from 'clsx';
+import { ProductItem } from '../types/cabinet';
+import { memo } from 'react';
 
 interface CabinetCardProps {
-  item: CabinetItem;
+  item: ProductItem;
   mode: 'default' | 'add' | 'delete';
   isSelected: boolean;
-  onClick: () => void;
+  onClick: (item: ProductItem) => void;
 }
 
 const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
@@ -16,22 +17,29 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
     return (
       <button
         type='button'
-        onClick={onClick}
+        onClick={() => onClick(item)}
         aria-label='알림 설정 바텀시트 열기'
         aria-pressed={isSelected}
         className='group relative flex h-35 items-center justify-center rounded-[20px]'
       >
         <div className='absolute inset-0 rounded-[20px] transition group-hover:brightness-85 bg-[#F5F6FF]/20 shadow-[inset_4px_4px_20px_rgba(155,161,255,0.2),4px_4px_4px_rgba(255,255,255,0.2)]' />
 
-        {item.isTaking && (
+        {item.isActiveIntake && (
           <div className='absolute -top-3 z-10 flex h-6 items-center justify-center rounded-full bg-secondary px-3 text-white typo-caption-2'>
             섭취 중
           </div>
         )}
 
-        <Image src={item.image} alt={item.name} className='relative z-10 h-fit w-23' preload />
+        <Image
+          src={item.thumbnailImageUrl}
+          alt={item.productName}
+          width={80}
+          height={80}
+          className='relative z-10 w-20 h-27.5 ml-1'
+          preload
+        />
 
-        {item.isCertified && (
+        {item.mfdsCertified && (
           <div className='absolute bottom-2 z-10 flex h-5.5 items-center justify-center gap-0.5 rounded-full bg-point-700 px-2 text-white typo-caption-6'>
             <CheckShieldIcon />
             식약처
@@ -44,23 +52,23 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
   return (
     <button
       type='button'
-      onClick={onClick}
+      onClick={() => onClick(item)}
       aria-label='영양제 선택'
       className={clsx(
         'group relative flex h-35 items-center justify-center rounded-[20px]',
-        (mode === 'delete' || !item.isTaking) && 'cursor-pointer',
+        (mode === 'delete' || !item.isActiveIntake) && 'cursor-pointer',
       )}
     >
       <div
         className={clsx(
           'absolute inset-0 rounded-[20px] bg-[#F5F6FF]/20 shadow-[inset_4px_4px_20px_rgba(155,161,255,0.2),4px_4px_4px_rgba(255,255,255,0.2)]',
-          (mode === 'delete' || !item.isTaking) && 'transition group-hover:brightness-85',
+          (mode === 'delete' || !item.isActiveIntake) && 'transition group-hover:brightness-85',
         )}
       />
 
       {mode === 'add' && (
         <>
-          {item.isTaking ? (
+          {item.isActiveIntake ? (
             <div className='absolute -top-3 z-10 flex h-6 items-center justify-center rounded-full bg-secondary px-3 text-white typo-caption-2'>
               섭취 중
             </div>
@@ -76,7 +84,7 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
 
       {mode === 'delete' && (
         <>
-          {item.isTaking && (
+          {item.isActiveIntake && (
             <div className='absolute -top-3 z-10 flex h-6 items-center justify-center rounded-full bg-secondary px-3 text-white typo-caption-2'>
               섭취 중
             </div>
@@ -90,9 +98,16 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
         </>
       )}
 
-      <Image src={item.image} alt={item.name} className='relative z-10 h-fit w-23' preload />
+      <Image
+        src={item.thumbnailImageUrl}
+        alt={item.productName}
+        width={80}
+        height={80}
+        className='relative z-10 w-20 h-27.5 ml-1'
+        preload
+      />
 
-      {item.isCertified && (
+      {item.mfdsCertified && (
         <div className='absolute bottom-2 z-10 flex h-5.5 items-center justify-center gap-0.5 rounded-full bg-point-700 px-2 text-white typo-caption-6'>
           <CheckShieldIcon />
           식약처
@@ -102,4 +117,4 @@ const CabinetCard = ({ item, mode, isSelected, onClick }: CabinetCardProps) => {
   );
 };
 
-export default CabinetCard;
+export default memo(CabinetCard);

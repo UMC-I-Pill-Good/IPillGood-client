@@ -1,49 +1,90 @@
 'use client';
 
-import { useState } from 'react';
-import { cabinetItems } from '../mocks/cabinet.mocks';
+import { memo, useEffect, useMemo, useState } from 'react';
 import EmptyCabinetCard from './EmptyCabinetCard';
 import CabinetCard from './CabinetCard';
-import { CabinetItem } from '../types/cabinet';
-import { SupplementDetailBottomSheet } from '@/shared/components';
+import { ProductItem } from '../types/cabinet';
+import {
+  ConfirmModal,
+  FetchError,
+  LoadingSpinner,
+  SupplementDetailBottomSheet,
+} from '@/shared/components';
+import { useCabinetProductsQuery, useReviewPrompt } from '../hooks';
 
 interface CabinetGridProps {
   mode: 'default' | 'add' | 'delete';
+  onAddSelectionChange?: (selectedIds: number[]) => void;
+  onDeleteSelectionChange?: (selectedIds: number[]) => void;
 }
 
 const MAX_COUNT = 9;
 
-const CabinetGrid = ({ mode }: CabinetGridProps) => {
-  const takingIds = cabinetItems.filter((item) => item.isTaking).map((item) => item.id);
+const CabinetGrid = ({ mode, onAddSelectionChange, onDeleteSelectionChange }: CabinetGridProps) => {
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [selectedMemberProductId, setSelectedMemberProductId] = useState<number | null>(null);
 
-  const [selectedIds, setSelectedIds] = useState<number[]>(
-    mode === 'add' ? cabinetItems.filter((item) => item.isTaking).map((item) => item.id) : [],
+  const { data, isPending, isError, refetch } = useCabinetProductsQuery();
+
+  const {
+    duePrompt,
+    isOpen: isReviewPromptModalOpen,
+    dismiss,
+    navigateToReviewAdd,
+  } = useReviewPrompt(mode === 'default');
+
+  const products = useMemo(
+    () =>
+      [...(data?.result.products ?? [])].sort(
+        (a, b) => new Date(a.addedAt).getTime() - new Date(b.addedAt).getTime(),
+      ),
+    [data?.result.products],
   );
 
-  const [selectedItem, setSelectedItem] = useState<CabinetItem | null>(null);
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const takingIds = useMemo(
+    () => products.filter((item) => item.isActiveIntake).map((item) => item.memberProductId),
+    [products],
+  );
 
-  const handleAddSelect = (item: CabinetItem) => {
-    if (item.isTaking) return;
+  const [selectedIds, setSelectedIds] = useState<number[]>(
+    mode === 'add'
+      ? products.filter((item) => item.isActiveIntake).map((item) => item.memberProductId)
+      : [],
+  );
+
+  useEffect(() => {
+    if (mode === 'add') {
+      onAddSelectionChange?.(selectedIds.filter((id) => !takingIds.includes(id)));
+    }
+
+    if (mode === 'delete') {
+      onDeleteSelectionChange?.(selectedIds);
+    }
+  }, [mode, onAddSelectionChange, onDeleteSelectionChange, selectedIds, takingIds]);
+
+  const handleAddSelect = (item: ProductItem) => {
+    if (item.isActiveIntake) return;
 
     setSelectedIds((prev) => {
-      if (prev.includes(item.id)) {
+      if (prev.includes(item.memberProductId)) {
         return takingIds;
       }
 
-      return [...takingIds, item.id];
+      return [...takingIds, item.memberProductId];
     });
   };
 
-  const handleDeleteSelect = (item: CabinetItem) => {
+  const handleDeleteSelect = (item: ProductItem) => {
     setSelectedIds((prev) =>
-      prev.includes(item.id) ? prev.filter((id) => id !== item.id) : [...prev, item.id],
+      prev.includes(item.memberProductId)
+        ? prev.filter((id) => id !== item.memberProductId)
+        : [...prev, item.memberProductId],
     );
   };
 
-  const handleCardClick = (item: CabinetItem) => {
+  const handleCardClick = (item: ProductItem) => {
     if (mode === 'default') {
-      setSelectedItem(item);
+      setSelectedMemberProductId(item.memberProductId);
       setIsBottomSheetOpen(true);
       return;
     }
@@ -55,7 +96,15 @@ const CabinetGrid = ({ mode }: CabinetGridProps) => {
     }
   };
 
-  const slots = Array.from({ length: MAX_COUNT }, (_, index) => cabinetItems[index]);
+  const slots = Array.from({ length: MAX_COUNT }, (_, index) => products[index]);
+
+  if (isPending) return <LoadingSpinner />;
+
+  if (isError) {
+    return (
+      <FetchError description='캐비닛 정보를 불러오지 못했습니다.' onRetry={() => refetch()} />
+    );
+  }
 
   return (
     <>
@@ -63,12 +112,14 @@ const CabinetGrid = ({ mode }: CabinetGridProps) => {
         {slots.map((item, index) =>
           item ? (
             <CabinetCard
-              key={item.id}
+              key={item.memberProductId}
               mode={mode}
               item={item}
-              isSelected={selectedIds.includes(item.id)}
-              onClick={() => handleCardClick(item)}
+              isSelected={selectedIds.includes(item.memberProductId)}
+              onClick={handleCardClick}
             />
+          ) : mode === 'default' && index === products.length ? (
+            <EmptyCabinetCard key={`empty-${index}`} mode={mode} showAddButton />
           ) : (
             <EmptyCabinetCard key={`empty-${index}`} mode={mode} />
           ),
@@ -78,10 +129,27 @@ const CabinetGrid = ({ mode }: CabinetGridProps) => {
       <SupplementDetailBottomSheet
         open={isBottomSheetOpen}
         onOpenChange={setIsBottomSheetOpen}
-        item={selectedItem}
+        memberProductId={selectedMemberProductId}
       />
+
+      {isReviewPromptModalOpen && (
+        <ConfirmModal
+          title={
+            <p className='break-keep typo-body-9'>
+              <span className='text-primary-700'>
+                [{duePrompt?.productName} 영양제]를 추가한 지 30일이 지났어요!
+              </span>
+            </p>
+          }
+          content='해당 영양제의 후기를 남겨보세요.'
+          cancelLabel='닫기'
+          confirmLabel='후기 작성'
+          onCancel={dismiss}
+          onConfirm={navigateToReviewAdd}
+        />
+      )}
     </>
   );
 };
 
-export default CabinetGrid;
+export default memo(CabinetGrid);

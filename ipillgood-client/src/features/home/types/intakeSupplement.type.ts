@@ -1,6 +1,16 @@
-export type IntakeSupplementType = {
-  userSupplementId: number;
+import { CommonResponse } from '@/shared/types';
+
+export type ActiveProductType = {
+  activeProductId: number;
+  memberProductId: number;
+  productId: number;
   productName: string;
-  imageUrl: string;
-  taken: boolean;
+  thumbnailImageUrl: string;
 };
+
+export type ActiveProductsType = {
+  totalCount: number;
+  activeProducts: ActiveProductType[];
+};
+
+export type ActiveProductsResponseType = CommonResponse<ActiveProductsType>;

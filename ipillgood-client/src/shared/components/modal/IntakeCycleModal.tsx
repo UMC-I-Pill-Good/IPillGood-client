@@ -8,6 +8,7 @@ import { ModalCalendarIcon } from '@/assets';
 import { DropdownMenu, IconButton, ModalShell, TextButton } from '@/shared/components';
 
 interface IntakeCycleModalProps {
+  initialCycle?: string;
   onConfirm: (cycle: string) => void;
   onCancel: () => void;
 }
@@ -20,8 +21,17 @@ const cycleOptions = [
   '매일',
 ] as const;
 
-const IntakeCycleModal = ({ onConfirm, onCancel }: IntakeCycleModalProps) => {
-  const [cycle, setCycle] = useState<(typeof cycleOptions)[number]>('매일');
+const IntakeCycleModal = ({
+  initialCycle = '매일',
+  onConfirm,
+  onCancel,
+}: IntakeCycleModalProps) => {
+  const [cycle, setCycle] = useState<(typeof cycleOptions)[number]>(
+    cycleOptions.includes(initialCycle as (typeof cycleOptions)[number])
+      ? (initialCycle as (typeof cycleOptions)[number])
+      : '매일',
+  );
+
   const [openDropdown, setOpenDropdown] = useState(false);
 
   return createPortal(
