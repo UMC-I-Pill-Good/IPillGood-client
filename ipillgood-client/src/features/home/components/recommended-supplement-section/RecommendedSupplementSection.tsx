@@ -17,6 +17,7 @@ const RecommendedSupplementSection = () => {
     isSurveyRetakeModalOpen,
     setIsSurveyRetakeModalOpen,
     handleSubmit,
+    isSubmitting,
   } = useRecommendationFeedback();
 
   const { recommendation, isLoading, isError } = useRecommendation();
@@ -42,8 +43,8 @@ const RecommendedSupplementSection = () => {
       <SurveySummaryCard healthSummary={recommendation?.healthSummary ?? ''} />
       <article className='mt-2'>
         <p className='text-black typo-caption-1'>
-          <span className='text-primary-600 typo-body-9'>{myInfo?.nickname}님</span>께 아래
-          영양제들을 추천드릴게요!
+          <span className='text-primary-600 typo-body-9'>{nickname}님</span>께 아래 영양제들을
+          추천드릴게요!
         </p>
         <p className='text-neutral-800 typo-caption-6'>
           각 영양 성분 카드를 클릭하면 해당 영양 성분을 더 자세히 알 수 있어요.
@@ -66,6 +67,7 @@ const RecommendedSupplementSection = () => {
             setIsFeedbackModalOpen(false);
           }}
           onSubmit={handleSubmit}
+          isSubmitting={isSubmitting}
         />
       )}
       {/* 도움이 되어드리지 못해 죄송합니다. 모달 */}

@@ -30,11 +30,13 @@ export const useRecommendationFeedback = () => {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          timerId = setTimeout(() => {
-            setIsFeedbackModalOpen(true);
-            observer.disconnect();
-          }, 5000);
+        if (entry.intersectionRatio >= 0.6) {
+          if (!timerId) {
+            timerId = setTimeout(() => {
+              setIsFeedbackModalOpen(true);
+              observer.disconnect();
+            }, 5000);
+          }
         } else if (timerId) {
           clearTimeout(timerId);
           timerId = null;
@@ -65,12 +67,19 @@ export const useRecommendationFeedback = () => {
     },
   });
 
+  // 응답 처리 중 중복 클릭 방지
+  const handleSubmit = (responseType: 'HELPFUL' | 'UNSURE') => {
+    if (responseMutation.isPending) return;
+    responseMutation.mutate(responseType);
+  };
+
   return {
     sectionRef,
     isFeedbackModalOpen,
     setIsFeedbackModalOpen,
     isSurveyRetakeModalOpen,
     setIsSurveyRetakeModalOpen,
-    handleSubmit: responseMutation.mutate,
+    handleSubmit,
+    isSubmitting: responseMutation.isPending,
   };
 };

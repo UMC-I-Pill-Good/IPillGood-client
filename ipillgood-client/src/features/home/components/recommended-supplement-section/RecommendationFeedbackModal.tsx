@@ -4,12 +4,14 @@ interface RecommendationFeedbackModalProps {
   nickname: string;
   onClose: () => void;
   onSubmit: (responseType: 'HELPFUL' | 'UNSURE') => void;
+  isSubmitting: boolean;
 }
 
 const RecommendationFeedbackModal = ({
   nickname,
   onClose,
   onSubmit,
+  isSubmitting,
 }: RecommendationFeedbackModalProps) => {
   return (
     <ModalShell onClose={onClose} ariaLabel='정기 추천 영양제가 도움이 되셨나요?'>
@@ -26,6 +28,7 @@ const RecommendationFeedbackModal = ({
           variant='outline'
           size='sm'
           onClick={() => onSubmit('UNSURE')}
+          disabled={isSubmitting}
           className='flex-1 shadow-none'
         />
         <TextButton
@@ -34,6 +37,7 @@ const RecommendationFeedbackModal = ({
           variant='primary'
           size='sm'
           onClick={() => onSubmit('HELPFUL')}
+          disabled={isSubmitting}
           className='flex-1 shadow-[4px_4px_2px_rgba(0,0,0,0.15)]'
         />
       </div>
