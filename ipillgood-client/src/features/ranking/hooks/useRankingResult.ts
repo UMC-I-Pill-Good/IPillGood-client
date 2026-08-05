@@ -130,6 +130,7 @@ export const useRankingResult = () => {
     handleCancel: () => router.push('/ranking'),
     handleCloseFilter: () => setIsFilterOpen(false),
     handleOpenFilter,
+    handleRetry: refreshResults,
     handleResetFilter: () => setDraftFilters(DEFAULT_RANKING_FILTERS),
     handleSortChange,
     handleSubmitSearch,

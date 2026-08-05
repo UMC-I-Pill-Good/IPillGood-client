@@ -36,6 +36,7 @@ const RankingResultContainer = () => {
           onOpenFilter: controller.handleOpenFilter,
           onSortChange: controller.handleSortChange,
           onLoadMore: ranking.loadMore,
+          onRetry: controller.handleRetry,
           setSkeletonCardCount: controller.setSkeletonCardCount,
         }}
       />

@@ -17,11 +17,11 @@ type ReviewReportReason = (typeof REPORT_REASONS)[number]['value'];
 
 interface ReviewReportModalProps {
   onCancel: () => void;
-  onSubmit: (reasonList: ReviewReportReason[], detail: string) => void;
+  onSubmit: (reason: ReviewReportReason, detail: string) => void;
 }
 
 const ReviewReportModal = ({ onCancel, onSubmit }: ReviewReportModalProps) => {
-  const [selectedReasonList, setSelectedReasonList] = useState<ReviewReportReason[]>([]);
+  const [selectedReason, setSelectedReason] = useState<ReviewReportReason | null>(null);
   const [content, setContent] = useState('');
 
   return createPortal(
@@ -36,7 +36,7 @@ const ReviewReportModal = ({ onCancel, onSubmit }: ReviewReportModalProps) => {
       </p>
       <div className='flex flex-col gap-2'>
         {REPORT_REASONS.map((reason) => {
-          const isChecked = selectedReasonList.includes(reason.value);
+          const isChecked = selectedReason === reason.value;
 
           return (
             <button
@@ -44,13 +44,7 @@ const ReviewReportModal = ({ onCancel, onSubmit }: ReviewReportModalProps) => {
               type='button'
               aria-pressed={isChecked}
               className='flex items-center gap-2 text-left typo-caption-2 text-black'
-              onClick={() => {
-                setSelectedReasonList((current) =>
-                  current.includes(reason.value)
-                    ? current.filter((selectedReason) => selectedReason !== reason.value)
-                    : [...current, reason.value],
-                );
-              }}
+              onClick={() => setSelectedReason(reason.value)}
             >
               <span
                 aria-hidden='true'
@@ -92,8 +86,8 @@ const ReviewReportModal = ({ onCancel, onSubmit }: ReviewReportModalProps) => {
           variant='semantic'
           size='sm'
           className='w-31 shadow-[4px_4px_2px_rgba(0,0,0,0.15)]'
-          disabled={selectedReasonList.length === 0}
-          onClick={() => onSubmit(selectedReasonList, content)}
+          disabled={!selectedReason}
+          onClick={() => selectedReason && onSubmit(selectedReason, content)}
         />
       </div>
     </ModalShell>,

@@ -85,7 +85,7 @@ export const useRankingInfiniteProducts = ({
         }
 
         setItems(response.result?.products ?? []);
-        setTotalElements(response.result?.totalElements ?? 0);
+        setTotalElements(response.result?.totalCount ?? 0);
         setNextCursor(response.result?.nextCursor ?? null);
         setHasNext(response.result?.hasNext ?? false);
         setMessage(null);
@@ -149,7 +149,7 @@ export const useRankingInfiniteProducts = ({
         }
 
         setItems((prevItems) => [...prevItems, ...(response.result?.products ?? [])]);
-        setTotalElements(response.result?.totalElements ?? 0);
+        setTotalElements(response.result?.totalCount ?? 0);
         setNextCursor(response.result?.nextCursor ?? null);
         setHasNext(response.result?.hasNext ?? false);
         setMessage(null);

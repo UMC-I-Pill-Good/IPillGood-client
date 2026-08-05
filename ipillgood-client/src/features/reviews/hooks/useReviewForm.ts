@@ -30,13 +30,12 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
 
   useEffect(() => {
     let active = true;
-    const reviewRequest =
-      isEditMode && reviewId ? getReviewById(productId, reviewId) : Promise.resolve(null);
+    const reviewRequest = isEditMode && reviewId ? getReviewById(reviewId) : Promise.resolve(null);
 
     Promise.all([reviewRequest, getRankingProductDetail(productId)])
       .then(([review, productResponse]) => {
         if (!active) return;
-        setCanEdit(!isEditMode || Boolean(review?.mine));
+        setCanEdit(!isEditMode || Boolean(review));
         setContent(review?.content ?? '');
         setRating(review?.rating ?? 0);
         setImagePreviews(
@@ -116,10 +115,7 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
         (image): image is ReviewImagePreview & { file: File } => Boolean(image.file),
       );
       const uploadedImageKeyList = newImageList.length
-        ? await uploadReviewImages(
-            newImageList.map((image) => image.file),
-            newImageList.map((image) => imagePreviews.indexOf(image)),
-          )
+        ? await uploadReviewImages(newImageList.map((image) => image.file))
         : [];
       let uploadedImageIndex = 0;
       const imageKeys = imagePreviews.map((image) => {

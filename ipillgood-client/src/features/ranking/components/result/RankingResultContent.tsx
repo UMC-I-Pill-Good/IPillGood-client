@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import { FilterIcon } from '@/assets';
+import { FetchError } from '@/shared/components';
 import type { ProductSearchItemDto, RankingUiSort } from '../../types/ranking';
 import RankingSupplementList from '../default/RankingSupplementList';
 import SortDropdownTrigger from '../default/SortDropdownTrigger';
@@ -29,6 +30,7 @@ type RankingResultContentHandlers = {
   onOpenFilter: () => void;
   onSortChange: (sort: RankingUiSort) => void;
   onLoadMore: () => void;
+  onRetry: () => void;
   setSkeletonCardCount: Dispatch<SetStateAction<number>>;
 };
 
@@ -49,7 +51,7 @@ const RankingResultContent = ({
     hasNext,
     isLoadingMore,
   },
-  handlers: { onOpenFilter, onSortChange, onLoadMore, setSkeletonCardCount },
+  handlers: { onOpenFilter, onSortChange, onLoadMore, onRetry, setSkeletonCardCount },
 }: RankingResultContentProps) => {
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
@@ -125,9 +127,10 @@ const RankingResultContent = ({
         )}
 
         {viewState === 'error' ? (
-          <section className='flex min-h-32 w-full items-center justify-center rounded-2xl bg-white/50 px-5 py-8 typo-caption-2 text-neutral-800'>
-            {message}
-          </section>
+          <FetchError
+            description={message ?? '검색 결과를 불러오지 못했습니다.'}
+            onRetry={onRetry}
+          />
         ) : (
           <RankingSupplementList
             items={items}

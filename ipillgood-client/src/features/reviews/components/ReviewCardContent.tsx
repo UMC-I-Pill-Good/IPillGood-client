@@ -12,28 +12,28 @@ interface ReviewCardContentProps {
   onEdit: () => void;
   onDelete: () => void;
   onReport: () => void;
+  isHelpful: boolean;
+  helpfulCount: number;
+  isHelpfulUpdating: boolean;
+  onHelpfulToggle: () => void;
 }
 
-const ReviewCardContent = ({ review, onEdit, onDelete, onReport }: ReviewCardContentProps) => {
+const ReviewCardContent = ({
+  review,
+  onEdit,
+  onDelete,
+  onReport,
+  isHelpful,
+  helpfulCount,
+  isHelpfulUpdating,
+  onHelpfulToggle,
+}: ReviewCardContentProps) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const menuId = `review-menu-${review.reviewId}`;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [helpfulState, setHelpfulState] = useState({
-    isHelpful: review.helpedByMe,
-    count: review.helpfulCount,
-  });
 
   useEscapeKey(() => setIsMenuOpen(false));
   useOutsideClick(menuRef, () => setIsMenuOpen(false));
-
-  const handleHelpfulToggle = () => {
-    if (review.mine) return;
-
-    setHelpfulState((current) => ({
-      isHelpful: !current.isHelpful,
-      count: current.count + (current.isHelpful ? -1 : 1),
-    }));
-  };
 
   const handleDelete = () => {
     setIsMenuOpen(false);
@@ -44,10 +44,10 @@ const ReviewCardContent = ({ review, onEdit, onDelete, onReport }: ReviewCardCon
     <article className='glass relative flex h-auto w-full flex-col items-start gap-4 whitespace-normal rounded-5 border border-white bg-white/50 px-3 py-2 shadow-[0_4px_4px_rgba(126,131,135,0.1)]'>
       <div className='flex w-full items-start gap-2'>
         <div className='flex size-11.25 shrink-0 items-center justify-center rounded-full bg-neutral-200 text-neutral-500 mt-2'>
-          {review.profileImageKey.startsWith('http') ? (
+          {review.profileImageUrl?.startsWith('http') ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={review.profileImageKey}
+              src={review.profileImageUrl}
               alt=''
               className='size-full rounded-full object-cover'
             />
@@ -59,7 +59,7 @@ const ReviewCardContent = ({ review, onEdit, onDelete, onReport }: ReviewCardCon
           <div className='flex min-w-0 flex-col gap-1'>
             <p className='truncate typo-body-5 text-black'>{review.nickname}</p>
             <p className='typo-caption-7 text-neutral-800'>
-              {AGE_GROUP_LABEL[review.reviewerAgeGroup]} / {GENDER_LABEL[review.reviewerGender]}
+              {AGE_GROUP_LABEL[review.ageGroup]} / {GENDER_LABEL[review.gender]}
             </p>
             <ReviewRating rating={review.rating} />
           </div>
@@ -71,11 +71,11 @@ const ReviewCardContent = ({ review, onEdit, onDelete, onReport }: ReviewCardCon
 
       <p className='typo-caption-2 text-black'>{review.content}</p>
 
-      {review.imageUrls.length > 0 && (
+      {review.reviewImageUrls.length > 0 && (
         <div className='flex gap-2 overflow-x-auto hide-scrollbar'>
-          {review.imageUrls.map((imageUrl, index) => (
+          {review.reviewImageUrls.map((imageUrl) => (
             <div
-              key={review.imageKeys[index]}
+              key={imageUrl}
               className='flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-neutral-300 typo-body-2 text-neutral-800'
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -88,17 +88,17 @@ const ReviewCardContent = ({ review, onEdit, onDelete, onReport }: ReviewCardCon
       <div className='flex w-full items-center justify-between gap-2'>
         <button
           type='button'
-          disabled={review.mine}
+          disabled={review.mine || isHelpfulUpdating}
           className='flex items-center gap-1 text-primary-600 typo-caption-6'
-          onClick={handleHelpfulToggle}
+          onClick={onHelpfulToggle}
         >
           <ThumbsUp
             aria-hidden='true'
             className='size-4'
-            fill={helpfulState.isHelpful ? 'currentColor' : 'none'}
+            fill={isHelpful ? 'currentColor' : 'none'}
           />
           <span>도움이 됐어요</span>
-          <span>{helpfulState.count}</span>
+          <span>{helpfulCount}</span>
         </button>
 
         {review.mine ? (

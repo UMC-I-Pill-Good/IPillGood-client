@@ -5,7 +5,7 @@ import { Chip } from '@/shared/components';
 const SupplementIngredientCard = ({ ingredient }: { ingredient: ProductIngredient }) => (
   <article className='flex w-full items-center gap-3 whitespace-normal rounded-[20px] border border-white bg-primary-600/15 px-5 py-4 shadow-[0_4px_4px_rgba(126,131,135,0.1)]'>
     <SupplementProductImage
-      imageKey={ingredient.imageKey}
+      imageKey={ingredient.imageUrl}
       alt={`${ingredient.name} 성분 이미지`}
       className='h-18.5 w-12'
     />

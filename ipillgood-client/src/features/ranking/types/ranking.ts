@@ -1,18 +1,18 @@
-import type { AgeGroup, ApiResponse, Gender } from '@/shared/types';
+import type { ApiResponse, Gender } from '@/shared/types';
 
 export type RankingGender = Gender;
 
-export type RankingAgeGroup = AgeGroup;
+export type RankingAgeGroup = 'TEENS' | 'TWENTIES' | 'THIRTIES' | 'FORTIES' | 'FIFTIES_PLUS';
 
 export type HealthConcernMajorCategory =
   | 'NERVOUS_SYSTEM'
   | 'SENSORY_SYSTEM'
-  | 'DIGESTIVE_METABOLISM'
-  | 'ENDOCRINE_SYSTEM'
-  | 'CARDIOVASCULAR_SYSTEM'
+  | 'DIGESTIVE_METABOLIC'
+  | 'ENDOCRINE'
+  | 'CARDIOVASCULAR'
   | 'IMMUNE_SYSTEM'
-  | 'MUSCULAR_SYSTEM'
-  | 'REPRODUCTIVE_URINARY_SYSTEM';
+  | 'MUSCULOSKELETAL'
+  | 'REPRODUCTIVE_URINARY';
 
 export type RankingApiSort = 'REVIEW_COUNT' | 'RATING';
 
@@ -36,17 +36,16 @@ export type ProductSearchItemDto = {
   brand: string;
   imageUrl: string | null;
   mfdsCertified: boolean;
-  ingredientName: string[];
-  ratingAverage: number | null;
+  ingredientNames: string[];
+  averageRating: number | null;
   reviewCount: number;
-  ingredientTags: string[];
 };
 
 export type RankingResultDto = {
   keyword: string | null;
   products: ProductSearchItemDto[];
   size: number;
-  totalElements: number;
+  totalCount: number;
   hasNext: boolean;
   nextCursor: string | null;
 };
@@ -57,13 +56,11 @@ export type IngredientSummary = {
   ingredientId: number;
   name: string;
   description: string;
-  imageKey: string;
+  imageUrl: string;
   effectKeywords: string[];
 };
 
-export type ProductIngredient = IngredientSummary & {
-  adClaimRisk: boolean;
-};
+export type ProductIngredient = IngredientSummary;
 
 export type RankingProductDetailDto = {
   productId: number;
@@ -75,18 +72,23 @@ export type RankingProductDetailDto = {
   mfdsCertified: boolean;
   ratingAverage: number | null;
   reviewCount: number;
-  inCabinet: boolean;
-  ingredients: ProductIngredient[];
-  adClaimRiskIngredients: IngredientSummary[];
+  adClaimRisk: boolean;
+  adClaimRiskIngredients: string[];
 };
 
 export type RankingProductDetailApiResponse = ApiResponse<RankingProductDetailDto>;
 
-export type CombinationType = 'GOOD' | 'CAUTION';
+export type RankingProductIngredientsDto = {
+  productId: number;
+  ingredientCount: number;
+  ingredientInfos: ProductIngredient[];
+};
+
+export type RankingProductIngredientsApiResponse = ApiResponse<RankingProductIngredientsDto>;
+
 export type CompatibilityItem = {
   targetIngredientId: number;
   targetIngredientName: string;
-  type: CombinationType;
 };
 export type RankingProductCompatibilityDto = {
   productId: number;

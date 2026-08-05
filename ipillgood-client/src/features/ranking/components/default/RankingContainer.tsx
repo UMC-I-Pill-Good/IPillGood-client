@@ -29,6 +29,7 @@ const RankingContainer = () => {
   const [searchValue, setSearchValue] = useState('');
   const [recentSearches, setRecentSearches] = useState<RecentKeywordDto[]>([]);
   const [selectedSort, setSelectedSort] = useState<RankingUiSort>('REVIEW_COUNT');
+  const [requestVersion, setRequestVersion] = useState(0);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState<RankingFilterState>(DEFAULT_RANKING_FILTERS);
   const [draftFilters, setDraftFilters] = useState<RankingFilterState>(DEFAULT_RANKING_FILTERS);
@@ -40,16 +41,20 @@ const RankingContainer = () => {
     ...toRankingFilterRequestOptions(appliedFilters),
   };
   const { hasNext, isInitialLoading, isLoadingMore, items, loadMore, message, resetLoadingState } =
-    useRankingInfiniteProducts({ queryParams: rankingQueryParams });
+    useRankingInfiniteProducts({ queryParams: rankingQueryParams, requestKey: requestVersion });
 
   useEffect(() => {
     let isMounted = true;
 
-    getRecentKeywords().then((response) => {
-      if (!isMounted || !response.isSuccess) return;
+    getRecentKeywords()
+      .then((response) => {
+        if (!isMounted || !response.isSuccess) return;
 
-      setRecentSearches(response.result?.keywords ?? []);
-    });
+        setRecentSearches(response.result?.keywords ?? []);
+      })
+      .catch((error) => {
+        console.error('Failed to load recent keywords', error);
+      });
 
     return () => {
       isMounted = false;
@@ -85,19 +90,27 @@ const RankingContainer = () => {
   };
 
   const handleRemoveRecentSearch = async (keywordId: number) => {
-    const response = await deleteRecentKeyword(keywordId);
-    if (!response.isSuccess) return;
+    try {
+      const response = await deleteRecentKeyword(keywordId);
+      if (!response.isSuccess) return;
 
-    setRecentSearches((prevSearches) =>
-      prevSearches.filter((item) => item.keywordId !== keywordId),
-    );
+      setRecentSearches((prevSearches) =>
+        prevSearches.filter((item) => item.keywordId !== keywordId),
+      );
+    } catch (error) {
+      console.error('Failed to delete recent keyword', error);
+    }
   };
 
   const handleClearRecentSearches = async () => {
-    const response = await clearRecentKeywords();
-    if (!response.isSuccess) return;
+    try {
+      const response = await clearRecentKeywords();
+      if (!response.isSuccess) return;
 
-    setRecentSearches([]);
+      setRecentSearches([]);
+    } catch (error) {
+      console.error('Failed to clear recent keywords', error);
+    }
   };
 
   const handleOpenFilter = () => {
@@ -120,6 +133,11 @@ const RankingContainer = () => {
 
     resetLoadingState();
     setSelectedSort(nextSort);
+  };
+
+  const handleRetry = () => {
+    resetLoadingState();
+    setRequestVersion((version) => version + 1);
   };
 
   const handleSubmitSearch = async () => {
@@ -176,6 +194,7 @@ const RankingContainer = () => {
         isLoadingMore={isLoadingMore}
         loadMoreRef={loadMoreRef}
         onSortChange={handleSortChange}
+        onRetry={handleRetry}
       />
 
       <RankingFilterBottomSheet
