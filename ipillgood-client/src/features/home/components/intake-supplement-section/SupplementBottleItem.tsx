@@ -6,17 +6,23 @@ import Image from 'next/image';
 interface SupplementBottleItemProps {
   productName: string;
   imageUrl: string;
+  onItemClick: () => void;
   onDeleteClick: () => void;
 }
 
 const SupplementBottleItem = ({
   productName,
   imageUrl,
+  onItemClick,
   onDeleteClick,
 }: SupplementBottleItemProps) => {
   return (
     <div className='relative'>
-      <div className='transition hover:brightness-90 w-17.5 h-26.25 flex flex-col items-center bg-[#F5F6FF]/20 rounded-2xl  px-3 py-[8.5px]  shadow-[4px_4px_4px_0px_rgba(255,255,255,0.2),inset_4px_4px_20px_0px_rgba(155,161,255,0.2)]'>
+      <button
+        type='button'
+        className='transition hover:brightness-90 w-17.5 h-26.25 flex flex-col items-center bg-[#F5F6FF]/20 rounded-2xl  px-3 py-[8.5px]  shadow-[4px_4px_4px_0px_rgba(255,255,255,0.2),inset_4px_4px_20px_0px_rgba(155,161,255,0.2)]'
+        onClick={onItemClick}
+      >
         <div className='relative h-19 w-15'>
           <Image src={imageUrl} alt={productName} fill className='h-18 w-18 object-contain' />
         </div>
@@ -26,7 +32,7 @@ const SupplementBottleItem = ({
         >
           {productName}
         </span>
-      </div>
+      </button>
       <button
         type='button'
         onClick={(e) => {

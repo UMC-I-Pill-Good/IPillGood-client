@@ -37,22 +37,19 @@ const SupplementBottleList = () => {
       >
         <div className='flex gap-3'>
           {list.map((supplement: ActiveProductType) => (
-            <button
-              key={supplement.activeProductId}
-              className='shrink-0'
-              onClick={() => {
-                setSelectedProductId(supplement.memberProductId);
-                setIsDetailModalOpen(true);
-              }}
-            >
+            <div key={supplement.activeProductId} className='shrink-0'>
               <SupplementBottleItem
                 productName={supplement.productName}
                 imageUrl={supplement.thumbnailImageUrl}
+                onItemClick={() => {
+                  setSelectedProductId(supplement.memberProductId);
+                  setIsDetailModalOpen(true);
+                }}
                 onDeleteClick={() => {
                   setDeleteTargetId(supplement.activeProductId);
                 }}
               />
-            </button>
+            </div>
           ))}
         </div>
       </div>
