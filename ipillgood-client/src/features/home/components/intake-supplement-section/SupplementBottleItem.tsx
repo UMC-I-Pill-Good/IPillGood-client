@@ -24,7 +24,13 @@ const SupplementBottleItem = ({
         onClick={onItemClick}
       >
         <div className='relative h-19 w-15'>
-          <Image src={imageUrl} alt={productName} fill className='h-18 w-18 object-contain' />
+          <Image
+            src={imageUrl}
+            alt={productName}
+            fill
+            sizes='60px'
+            className='h-18 w-18 object-contain'
+          />
         </div>
         <span
           title={productName}
