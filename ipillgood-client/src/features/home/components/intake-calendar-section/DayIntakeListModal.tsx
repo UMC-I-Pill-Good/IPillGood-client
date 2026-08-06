@@ -1,10 +1,10 @@
 'use client';
 
-import { ModalShell } from '@/shared/components';
+import { IconButton, ModalShell } from '@/shared/components';
 import CheckboxList from '../CheckboxList';
 import { useQuery } from '@tanstack/react-query';
 import { getIntakeDays } from '../../api/intake';
-import { Loader2 } from 'lucide-react';
+import { Loader2, X } from 'lucide-react';
 
 interface DayIntakeListModalProps {
   date: string;
@@ -25,11 +25,12 @@ const DayIntakeListModal = ({ date, onClose }: DayIntakeListModalProps) => {
   return (
     <ModalShell
       onClose={onClose}
-      className='gap-5'
-      ariaLabel={`${Number(month)}/${Number(day)} 섭취한 영양제 목록`}
+      className='gap-5 pt-4'
+      ariaLabel={`${Number(month)}월 ${Number(day)}일 섭취한 영양제 목록`}
     >
-      <p className='typo-body-5 text-[#111] text-center'>
-        {Number(month)}/{Number(day)} 섭취한 영양제 목록
+      <IconButton icon={<X size={22} />} ariaLabel='닫기' onClick={onClose} className='ml-auto' />
+      <p className='typo-body-5 text-black text-center'>
+        {Number(month)}월 {Number(day)}일 섭취한 영양제 목록
       </p>
       {isPending ? (
         <div className='flex h-20 items-center justify-center'>
