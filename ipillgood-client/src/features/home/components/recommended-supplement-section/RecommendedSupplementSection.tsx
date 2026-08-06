@@ -35,15 +35,15 @@ const RecommendedSupplementSection = () => {
     <section className='flex flex-col gap-2 mt-8' ref={sectionRef}>
       <article className='flex justify-between items-center'>
         <h2 className='text-black typo-body-5'>정기 추천 영양 성분</h2>
-        <Link href='/survey' className='text-neutral-800 typo-caption-6'>
-          설문 수정하기
+        <Link href='/survey' className='text-neutral-800 typo-caption-6 hover:text-primary'>
+          설문 다시하기
         </Link>
       </article>
       {/* 설문 기반 영양 상태 요약 */}
       <SurveySummaryCard healthSummary={recommendation?.healthSummary ?? ''} />
       <article className='mt-2'>
         <p className='text-black typo-caption-1'>
-          <span className='text-primary-600 typo-body-9'>{nickname}님</span>께 아래 영양제들을
+          <span className='text-primary-600 typo-body-9'>{nickname} 님</span>께 아래 영양제들을
           추천드릴게요!
         </p>
         <p className='text-neutral-800 typo-caption-6'>
