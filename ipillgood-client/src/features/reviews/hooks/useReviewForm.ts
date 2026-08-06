@@ -1,5 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { type ChangeEvent, useEffect, useRef, useState } from 'react';
+import { isAxiosError } from 'axios';
 import { getRankingProductDetail } from '@/features/ranking/api/getRankingProductDetail';
 import type { RankingProductDetailDto } from '@/features/ranking/types/ranking';
 import { createReview } from '../api/createReview';
@@ -15,6 +16,27 @@ interface UseReviewFormParams {
   reviewId?: number;
 }
 
+type ReviewSubmitStage = 'imageUpload' | 'reviewSubmit';
+
+const REVIEW_SUBMIT_STAGE_LABEL: Record<ReviewSubmitStage, string> = {
+  imageUpload: '후기 이미지 업로드',
+  reviewSubmit: '후기 저장',
+};
+
+const getReviewSubmitErrorMessage = (error: unknown, stage: ReviewSubmitStage) => {
+  const stageLabel = REVIEW_SUBMIT_STAGE_LABEL[stage];
+
+  if (isAxiosError<{ code?: string; message?: string }>(error)) {
+    const errorCode = error.response?.data.code;
+    const errorMessage = error.response?.data.message;
+    const responseMessage = [errorCode, errorMessage].filter(Boolean).join(' ');
+
+    return `${stageLabel} 실패: ${responseMessage || `HTTP ${error.response?.status ?? '오류'}`}`;
+  }
+
+  return error instanceof Error ? `${stageLabel} 실패: ${error.message}` : `${stageLabel} 실패`;
+};
+
 export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams) => {
   const router = useRouter();
   const isEditMode = mode === 'edit';
@@ -25,6 +47,8 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
   const [imagePreviews, setImagePreviews] = useState<ReviewImagePreview[]>([]);
   const imagePreviewsRef = useRef<ReviewImagePreview[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
+  const [loadRequestVersion, setLoadRequestVersion] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
 
@@ -35,6 +59,9 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
     Promise.all([reviewRequest, getRankingProductDetail(productId)])
       .then(([review, productResponse]) => {
         if (!active) return;
+        if (!productResponse.isSuccess || !productResponse.result) {
+          throw new Error(productResponse.message);
+        }
         setCanEdit(!isEditMode || Boolean(review));
         setContent(review?.content ?? '');
         setRating(review?.rating ?? 0);
@@ -48,7 +75,7 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
         setProduct(productResponse.result);
       })
       .catch(() => {
-        if (active) setSubmitError('후기 정보를 불러올 수 없습니다.');
+        if (active) setLoadError('후기 정보를 불러올 수 없습니다.');
       })
       .finally(() => {
         if (active) setIsLoading(false);
@@ -57,7 +84,13 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
     return () => {
       active = false;
     };
-  }, [isEditMode, productId, reviewId]);
+  }, [isEditMode, loadRequestVersion, productId, reviewId]);
+
+  const handleRetryLoad = () => {
+    setIsLoading(true);
+    setLoadError('');
+    setLoadRequestVersion((version) => version + 1);
+  };
 
   useEffect(() => {
     imagePreviewsRef.current = imagePreviews;
@@ -109,6 +142,7 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
     if (!content.trim() || rating === 0 || isSubmitting || (isEditMode && !reviewId)) return;
     setIsSubmitting(true);
     setSubmitError('');
+    let submitStage: ReviewSubmitStage = 'imageUpload';
 
     try {
       const newImageList = imagePreviews.filter(
@@ -125,6 +159,12 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
         return imageKey;
       });
 
+      if (imageKeys.some((imageKey) => !imageKey)) {
+        throw new Error('업로드된 이미지 키를 확인할 수 없습니다.');
+      }
+
+      submitStage = 'reviewSubmit';
+
       if (isEditMode && reviewId) {
         await updateReview(reviewId, { rating, content: content.trim(), imageKeys });
         router.back();
@@ -133,13 +173,7 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
         router.push(`/reviews?productId=${productId}`);
       }
     } catch (error) {
-      setSubmitError(
-        error instanceof Error
-          ? error.message
-          : isEditMode
-            ? '후기를 수정할 수 없습니다.'
-            : '후기를 작성할 수 없습니다.',
-      );
+      setSubmitError(getReviewSubmitErrorMessage(error, submitStage));
     } finally {
       setIsSubmitting(false);
     }
@@ -152,12 +186,14 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
     rating,
     imagePreviews,
     isLoading,
+    loadError,
     isSubmitting,
     submitError,
     setContent,
     setRating,
     handleImageChange,
     handleImageRemove,
+    handleRetryLoad,
     handleSubmit,
   };
 };

@@ -147,7 +147,7 @@ const SupplementDetailBottomSheet = ({
             onClick={() => router.push(`/product/${data.result.productId}`)}
           />
           <TextButton
-            href='/reviews/reviews-add'
+            href={`/reviews/reviews-add?productId=${data.result.productId}`}
             aria-label='후기 작성 페이지 이동'
             text='후기 작성하기'
             variant='outline'

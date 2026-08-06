@@ -33,9 +33,13 @@ const RankingProductDetail = ({
         <p className='line-clamp-4 typo-body-11 text-neutral-800'>{product.description}</p>
       </div>
     </section>
-    {product.adClaimRisk && product.adClaimRiskIngredients.length > 0 && (
-      <SupplementAdvertisingNotice ingredientName={product.adClaimRiskIngredients.join(', ')} />
-    )}
+    <SupplementAdvertisingNotice
+      ingredientName={
+        product.adClaimRisk && product.adClaimRiskIngredients.length > 0
+          ? product.adClaimRiskIngredients.join(', ')
+          : undefined
+      }
+    />
     <SupplementCombinationSection compatibility={compatibility} />
     <section className='flex w-full flex-col gap-2 px-5 py-4'>
       <p className='text-center typo-caption-6 text-neutral-800'>
