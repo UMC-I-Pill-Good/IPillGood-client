@@ -1,25 +1,54 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { postReissue } from '@/app/api/reissue';
+import { useLocalStorage } from '@/shared/hooks';
 
 const CallbackPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { setTokens } = useLocalStorage();
+  const hasProcessed = useRef(false);
 
   useEffect(() => {
-    const socialSignupToken = searchParams.get('socialSignupToken');
-    const provider = searchParams.get('provider');
-
-    if (!socialSignupToken || !provider) {
+    if (hasProcessed.current) {
       return;
     }
 
-    localStorage.setItem('socialSignupToken', socialSignupToken);
-    localStorage.setItem('provider', provider);
+    hasProcessed.current = true;
 
-    router.replace('/signup/social');
-  }, [router, searchParams]);
+    const socialSignupToken = searchParams.get('socialSignupToken');
+    const provider = searchParams.get('provider');
+
+    if (socialSignupToken && provider) {
+      localStorage.setItem('socialSignupToken', socialSignupToken);
+      localStorage.setItem('provider', provider);
+
+      router.replace('/signup/social');
+      return;
+    }
+
+    const reissueAccessToken = async () => {
+      try {
+        const data = await postReissue();
+
+        if (!data.isSuccess) {
+          throw new Error(data.message);
+        }
+
+        const { accessToken, onboardingCompleted } = data.result;
+
+        setTokens(accessToken);
+        router.replace(onboardingCompleted ? '/home' : '/survey?step=1');
+      } catch (error) {
+        console.error('소셜 로그인 토큰 재발급 실패:', error);
+        router.replace('/login');
+      }
+    };
+
+    void reissueAccessToken();
+  }, [router, searchParams, setTokens]);
 
   return (
     <main className='flex flex-col items-center justify-center min-h-screen gap-5'>
