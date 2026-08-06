@@ -22,7 +22,6 @@ const RankingContainer = () => {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
   const [selectedSort, setSelectedSort] = useState<RankingUiSort>('REVIEW_COUNT');
-  const [requestVersion, setRequestVersion] = useState(0);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState<RankingFilterState>(DEFAULT_RANKING_FILTERS);
   const [draftFilters, setDraftFilters] = useState<RankingFilterState>(DEFAULT_RANKING_FILTERS);
@@ -39,8 +38,17 @@ const RankingContainer = () => {
     ...toRankingQueryParams(appliedFilters),
     ...toRankingFilterRequestOptions(appliedFilters),
   };
-  const { hasNext, isInitialLoading, isLoadingMore, items, loadMore, message } =
-    useRankingInfiniteProducts({ queryParams: rankingQueryParams, requestKey: requestVersion });
+  const {
+    hasNext,
+    isInitialLoading,
+    isLoadingMore,
+    items,
+    loadMore,
+    loadMoreErrorMessage,
+    message,
+    refetch,
+    retryLoadMore,
+  } = useRankingInfiniteProducts({ queryParams: rankingQueryParams });
   const { ref: loadMoreRef, inView } = useInView({
     threshold: 0,
     rootMargin: '160px 0px',
@@ -78,13 +86,13 @@ const RankingContainer = () => {
   };
 
   const handleRetry = () => {
-    setRequestVersion((version) => version + 1);
+    void refetch();
   };
 
-  const handleSubmitSearch = async () => {
+  const handleSubmitSearch = () => {
     const nextSearchTerm = searchValue.trim();
     if (!nextSearchTerm) return;
-    await handleSaveRecentSearch(nextSearchTerm);
+    handleSaveRecentSearch(nextSearchTerm);
 
     const searchParams = new URLSearchParams({
       search: nextSearchTerm,
@@ -117,9 +125,11 @@ const RankingContainer = () => {
         message={message}
         isInitialLoading={isInitialLoading}
         isLoadingMore={isLoadingMore}
+        loadMoreErrorMessage={loadMoreErrorMessage}
         loadMoreRef={loadMoreRef}
         onSortChange={handleSortChange}
         onRetry={handleRetry}
+        onRetryLoadMore={retryLoadMore}
       />
 
       <RankingFilterBottomSheet

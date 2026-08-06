@@ -8,17 +8,16 @@ import type { RankingQueryParams } from '../types/ranking';
 const DEFAULT_PAGE_SIZE = 20;
 const DEFAULT_ERROR_MESSAGE = '영양제 상품 목록을 불러올 수 없습니다.';
 
-interface UseRankingInfiniteProductsParams {
+type UseRankingInfiniteProductsParams = {
   queryParams: RankingQueryParams;
-  requestKey?: number;
-}
+};
 
-export const useRankingInfiniteProducts = ({
-  queryParams,
-  requestKey = 0,
-}: UseRankingInfiniteProductsParams) => {
+const getErrorMessage = (error: unknown) =>
+  error instanceof Error ? error.message : DEFAULT_ERROR_MESSAGE;
+
+export const useRankingInfiniteProducts = ({ queryParams }: UseRankingInfiniteProductsParams) => {
   const rankingQuery = useInfiniteQuery({
-    queryKey: ['rankingProducts', queryParams, requestKey],
+    queryKey: ['rankingProducts', queryParams],
     queryFn: async ({ pageParam }) => {
       const response = await getRanking({
         ...queryParams,
@@ -40,11 +39,9 @@ export const useRankingInfiniteProducts = ({
   const items = rankingQuery.data?.pages.flatMap((page) => page.products) ?? [];
   const totalElements = rankingQuery.data?.pages[0]?.totalCount ?? 0;
   const { fetchNextPage, hasNextPage, isFetchingNextPage, isFetchNextPageError } = rankingQuery;
-  const message = rankingQuery.isError
-    ? rankingQuery.error instanceof Error
-      ? rankingQuery.error.message
-      : DEFAULT_ERROR_MESSAGE
-    : null;
+  const message =
+    rankingQuery.isError && !rankingQuery.data ? getErrorMessage(rankingQuery.error) : null;
+  const loadMoreErrorMessage = isFetchNextPageError ? getErrorMessage(rankingQuery.error) : null;
 
   const loadMore = useCallback(() => {
     if (!hasNextPage || isFetchingNextPage || isFetchNextPageError) return;
@@ -52,13 +49,22 @@ export const useRankingInfiniteProducts = ({
     void fetchNextPage();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage, isFetchNextPageError]);
 
+  const retryLoadMore = useCallback(() => {
+    if (!hasNextPage || isFetchingNextPage) return;
+
+    void fetchNextPage();
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
   return {
     hasNext: hasNextPage,
     isInitialLoading: rankingQuery.isPending,
     isLoadingMore: isFetchingNextPage,
     items,
     loadMore,
+    loadMoreErrorMessage,
     message,
+    refetch: rankingQuery.refetch,
+    retryLoadMore,
     totalElements,
   };
 };

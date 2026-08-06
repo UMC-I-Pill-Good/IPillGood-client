@@ -25,6 +25,7 @@ type RankingResultContentData = {
   skeletonCardCount: number;
   hasNext: boolean;
   isLoadingMore: boolean;
+  loadMoreErrorMessage: string | null;
 };
 
 type RankingResultContentHandlers = {
@@ -32,6 +33,7 @@ type RankingResultContentHandlers = {
   onSortChange: (sort: RankingUiSort) => void;
   onLoadMore: () => void;
   onRetry: () => void;
+  onRetryLoadMore: () => void;
   setSkeletonCardCount: Dispatch<SetStateAction<number>>;
 };
 
@@ -51,8 +53,16 @@ const RankingResultContent = ({
     skeletonCardCount,
     hasNext,
     isLoadingMore,
+    loadMoreErrorMessage,
   },
-  handlers: { onOpenFilter, onSortChange, onLoadMore, onRetry, setSkeletonCardCount },
+  handlers: {
+    onOpenFilter,
+    onSortChange,
+    onLoadMore,
+    onRetry,
+    onRetryLoadMore,
+    setSkeletonCardCount,
+  },
 }: RankingResultContentProps) => {
   const { ref: loadMoreRef, inView } = useInView({
     threshold: 0,
@@ -146,6 +156,9 @@ const RankingResultContent = ({
               <RankingResultSkeletonCard key={index} />
             ))}
           </section>
+        )}
+        {loadMoreErrorMessage && (
+          <FetchError description={loadMoreErrorMessage} onRetry={onRetryLoadMore} />
         )}
         <div ref={loadMoreRef} className='h-px w-full' />
       </section>

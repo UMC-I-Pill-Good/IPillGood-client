@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { RatingStarIcon, ValidBadgeIcon } from '@/assets';
+import { Omega3BottleIcon, RatingStarIcon, ValidBadgeIcon } from '@/assets';
 import type { ProductSearchItemDto } from '../../types/ranking';
 import IngredientNameCarousel from './IngredientNameCarousel';
 import RankingBadge from './RankingBadge';
@@ -27,13 +27,18 @@ const SupplementProductCard = ({ item, displayRank }: SupplementProductCardProps
               <span className='sr-only'>식약처 인증 제품</span>
             </>
           )}
-          {imageUrl && (
+          {imageUrl ? (
             <Image
               src={imageUrl}
               alt={`${item.productName} 상품 이미지`}
               width={43}
               height={70}
               className='h-[4.375rem] w-[2.6875rem] object-contain'
+            />
+          ) : (
+            <Omega3BottleIcon
+              aria-hidden='true'
+              className='h-[4.375rem] w-[2.6875rem] overflow-visible'
             />
           )}
         </div>

@@ -14,9 +14,11 @@ interface RankingProductSectionProps {
   message: string | null;
   isInitialLoading: boolean;
   isLoadingMore: boolean;
+  loadMoreErrorMessage: string | null;
   loadMoreRef: Ref<HTMLDivElement>;
   onSortChange: (sort: RankingUiSort) => void;
   onRetry: () => void;
+  onRetryLoadMore: () => void;
 }
 
 const RankingProductSection = ({
@@ -25,9 +27,11 @@ const RankingProductSection = ({
   message,
   isInitialLoading,
   isLoadingMore,
+  loadMoreErrorMessage,
   loadMoreRef,
   onSortChange,
   onRetry,
+  onRetryLoadMore,
 }: RankingProductSectionProps) => (
   <section className='w-full px-5 py-4'>
     <div className='flex w-full flex-col gap-3'>
@@ -57,6 +61,9 @@ const RankingProductSection = ({
                 <RankingResultSkeletonCard key={index} />
               ))}
             </section>
+          )}
+          {loadMoreErrorMessage && (
+            <FetchError description={loadMoreErrorMessage} onRetry={onRetryLoadMore} />
           )}
           <div ref={loadMoreRef} className='h-px w-full' />
         </>

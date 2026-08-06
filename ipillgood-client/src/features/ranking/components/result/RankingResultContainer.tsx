@@ -31,12 +31,14 @@ const RankingResultContainer = () => {
           skeletonCardCount: controller.skeletonCardCount,
           hasNext: ranking.hasNext,
           isLoadingMore: ranking.isLoadingMore,
+          loadMoreErrorMessage: ranking.loadMoreErrorMessage,
         }}
         handlers={{
           onOpenFilter: controller.handleOpenFilter,
           onSortChange: controller.handleSortChange,
           onLoadMore: ranking.loadMore,
           onRetry: controller.handleRetry,
+          onRetryLoadMore: ranking.retryLoadMore,
           setSkeletonCardCount: controller.setSkeletonCardCount,
         }}
       />
