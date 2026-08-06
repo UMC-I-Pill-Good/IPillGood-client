@@ -40,12 +40,11 @@ export const useRankingInfiniteProducts = ({
   const items = rankingQuery.data?.pages.flatMap((page) => page.products) ?? [];
   const totalElements = rankingQuery.data?.pages[0]?.totalCount ?? 0;
   const { fetchNextPage, hasNextPage, isFetchingNextPage, isFetchNextPageError } = rankingQuery;
-  const message =
-    rankingQuery.isError && !rankingQuery.data
-      ? rankingQuery.error instanceof Error
-        ? rankingQuery.error.message
-        : DEFAULT_ERROR_MESSAGE
-      : null;
+  const message = rankingQuery.isError
+    ? rankingQuery.error instanceof Error
+      ? rankingQuery.error.message
+      : DEFAULT_ERROR_MESSAGE
+    : null;
 
   const loadMore = useCallback(() => {
     if (!hasNextPage || isFetchingNextPage || isFetchNextPageError) return;

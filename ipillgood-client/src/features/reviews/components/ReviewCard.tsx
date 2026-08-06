@@ -32,6 +32,8 @@ const ReviewCard = ({ review, productId, onDelete }: ReviewCardProps) => {
   const [isHelpful, setIsHelpful] = useState(review.helpedByMe);
   const [helpfulCount, setHelpfulCount] = useState(review.helpfulCount);
   const [isHelpfulUpdating, setIsHelpfulUpdating] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isReporting, setIsReporting] = useState(false);
   const [actionError, setActionError] = useState('');
 
   const handleHelpfulToggle = async () => {
@@ -54,6 +56,8 @@ const ReviewCard = ({ review, productId, onDelete }: ReviewCardProps) => {
   };
 
   const handleDeleteConfirm = async () => {
+    if (isDeleting) return;
+    setIsDeleting(true);
     setActionError('');
 
     try {
@@ -66,6 +70,8 @@ const ReviewCard = ({ review, productId, onDelete }: ReviewCardProps) => {
     } catch (error) {
       setIsDeleteModalOpen(false);
       setActionError(getReviewActionErrorMessage(error, '후기를 삭제할 수 없습니다.'));
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -73,6 +79,8 @@ const ReviewCard = ({ review, productId, onDelete }: ReviewCardProps) => {
     reason: Parameters<typeof createReviewReport>[1]['reason'],
     detail: string,
   ) => {
+    if (isReporting) return;
+    setIsReporting(true);
     setActionError('');
 
     try {
@@ -87,6 +95,8 @@ const ReviewCard = ({ review, productId, onDelete }: ReviewCardProps) => {
     } catch (error) {
       setIsReportModalOpen(false);
       setActionError(getReviewActionErrorMessage(error, '후기를 신고할 수 없습니다.'));
+    } finally {
+      setIsReporting(false);
     }
   };
 
@@ -115,12 +125,14 @@ const ReviewCard = ({ review, productId, onDelete }: ReviewCardProps) => {
         <ReviewDeleteModal
           onCancel={() => setIsDeleteModalOpen(false)}
           onConfirm={handleDeleteConfirm}
+          isSubmitting={isDeleting}
         />
       )}
       {isReportModalOpen && (
         <ReviewReportModal
           onCancel={() => setIsReportModalOpen(false)}
           onSubmit={handleReportSubmit}
+          isSubmitting={isReporting}
         />
       )}
     </>

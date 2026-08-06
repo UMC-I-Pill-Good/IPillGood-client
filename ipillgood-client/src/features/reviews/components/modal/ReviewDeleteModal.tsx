@@ -6,9 +6,10 @@ import { ModalShell, TextButton } from '@/shared/components';
 interface ReviewDeleteModalProps {
   onConfirm: () => void;
   onCancel: () => void;
+  isSubmitting: boolean;
 }
 
-const ReviewDeleteModal = ({ onConfirm, onCancel }: ReviewDeleteModalProps) => {
+const ReviewDeleteModal = ({ onConfirm, onCancel, isSubmitting }: ReviewDeleteModalProps) => {
   return createPortal(
     <ModalShell
       onClose={onCancel}
@@ -27,6 +28,7 @@ const ReviewDeleteModal = ({ onConfirm, onCancel }: ReviewDeleteModalProps) => {
           variant='semanticOutline'
           size='sm'
           onClick={onConfirm}
+          disabled={isSubmitting}
           className='flex-1'
         />
         <TextButton

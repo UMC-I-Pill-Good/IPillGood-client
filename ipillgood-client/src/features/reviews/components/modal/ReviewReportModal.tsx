@@ -18,9 +18,10 @@ type ReviewReportReason = (typeof REPORT_REASONS)[number]['value'];
 interface ReviewReportModalProps {
   onCancel: () => void;
   onSubmit: (reason: ReviewReportReason, detail: string) => void;
+  isSubmitting: boolean;
 }
 
-const ReviewReportModal = ({ onCancel, onSubmit }: ReviewReportModalProps) => {
+const ReviewReportModal = ({ onCancel, onSubmit, isSubmitting }: ReviewReportModalProps) => {
   const [selectedReason, setSelectedReason] = useState<ReviewReportReason | null>(null);
   const [content, setContent] = useState('');
 
@@ -86,7 +87,7 @@ const ReviewReportModal = ({ onCancel, onSubmit }: ReviewReportModalProps) => {
           variant='semantic'
           size='sm'
           className='w-31 shadow-[4px_4px_2px_rgba(0,0,0,0.15)]'
-          disabled={!selectedReason}
+          disabled={!selectedReason || isSubmitting}
           onClick={() => selectedReason && onSubmit(selectedReason, content)}
         />
       </div>
