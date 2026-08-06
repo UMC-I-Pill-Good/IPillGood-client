@@ -19,17 +19,17 @@ const CheckboxList = ({ list, checkedIdList, onToggle, readOnly = false }: Check
             onClick={() => {
               if (!readOnly) onToggle(item.id);
             }}
-            className={`relative rounded-lg border border-point-700 py-3 px-5 flex justify-center ${
+            className={`relative rounded-lg border border-point-700 py-3 px-5 flex justify-start gap-2 ${
               readOnly ? '' : 'cursor-pointer'
             }`}
           >
-            <div className='absolute left-5' onClick={(e) => e.stopPropagation()}>
-              <CheckboxButton
-                checked={checked}
-                onClick={readOnly ? undefined : () => onToggle(item.id)}
-              />
-            </div>
-            <div className='text-point-700'>{item.label}</div>
+            <CheckboxButton
+              checked={checked}
+              onClick={readOnly ? undefined : () => onToggle(item.id)}
+            />
+            <span title={item.label} className='text-point-700 truncate'>
+              {item.label}
+            </span>
           </div>
         );
       })}
