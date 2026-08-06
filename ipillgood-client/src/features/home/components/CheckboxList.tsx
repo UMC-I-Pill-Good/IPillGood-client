@@ -23,11 +23,17 @@ const CheckboxList = ({ list, checkedIdList, onToggle, readOnly = false }: Check
               readOnly ? '' : 'cursor-pointer'
             }`}
           >
-            <CheckboxButton
-              checked={checked}
-              onClick={readOnly ? undefined : () => onToggle(item.id)}
-            />
-            <span title={item.label} className='text-point-700 truncate leading-[1.3]'>
+            <div onClick={(e) => e.stopPropagation()}>
+              <CheckboxButton
+                checked={checked}
+                onClick={readOnly ? undefined : () => onToggle(item.id)}
+                ariaLabel={item.label}
+              />
+            </div>
+            <span
+              title={item.label}
+              className='min-w-0 flex-1 text-point-700 truncate leading-[1.3]'
+            >
               {item.label}
             </span>
           </div>
