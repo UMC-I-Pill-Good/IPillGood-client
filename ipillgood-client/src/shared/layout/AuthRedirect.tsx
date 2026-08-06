@@ -12,21 +12,27 @@ interface AuthRedirectProps {
 const AuthRedirect = ({ type, children }: AuthRedirectProps) => {
   const router = useRouter();
   const pathname = usePathname();
-  const { getAccessToken } = useLocalStorage();
+  const { getAccessToken, getOnboardingCompleted } = useLocalStorage();
 
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     const hasToken = !!getAccessToken();
+    const onboardingCompleted = getOnboardingCompleted();
 
     if (pathname.startsWith('/survey')) {
+      if (!hasToken) {
+        router.replace('/login');
+        return;
+      }
+
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsChecked(true);
       return;
     }
 
     if (type === 'public' && hasToken) {
-      router.replace('/home');
+      router.replace(onboardingCompleted ? '/home' : '/survey?step=1');
       return;
     }
 
@@ -35,8 +41,13 @@ const AuthRedirect = ({ type, children }: AuthRedirectProps) => {
       return;
     }
 
+    if (type === 'protected' && !onboardingCompleted) {
+      router.replace('/survey?step=1');
+      return;
+    }
+
     setIsChecked(true);
-  }, [pathname, router, type, getAccessToken]);
+  }, [pathname, router, type, getAccessToken, getOnboardingCompleted]);
 
   if (!isChecked) {
     return null;

@@ -10,7 +10,7 @@ import { useAgreementStore } from '../stores/useAgreementStore';
 export const useSocialSignupMutation = () => {
   const router = useRouter();
   const checked = useAgreementStore((state) => state.checked);
-  const { setTokens } = useLocalStorage();
+  const { setTokens, setOnboardingCompleted } = useLocalStorage();
 
   const mutation = useMutation({
     mutationFn: async (body: RequestSocialSignup) => {
@@ -26,6 +26,7 @@ export const useSocialSignupMutation = () => {
       const { accessToken, onboardingCompleted } = result;
 
       setTokens(accessToken);
+      setOnboardingCompleted(onboardingCompleted);
       router.push(onboardingCompleted ? '/home' : '/survey?step=1');
     },
     onError: (error) => {

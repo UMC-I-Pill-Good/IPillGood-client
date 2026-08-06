@@ -74,7 +74,7 @@ axiosInstance.interceptors.response.use(
       if (!refreshPromise) {
         refreshPromise = (async () => {
           try {
-            const { setTokens } = useLocalStorage();
+            const { setTokens, setOnboardingCompleted } = useLocalStorage();
 
             // 기본 axios 사용 (인터셉터 방지)
             const response = await axios.post(
@@ -86,6 +86,7 @@ axiosInstance.interceptors.response.use(
             );
 
             setTokens(response.data.result.accessToken);
+            setOnboardingCompleted(response.data.result.onboardingCompleted);
           } catch (err) {
             console.error('토큰 재발급 실패', err);
 

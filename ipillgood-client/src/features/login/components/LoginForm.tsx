@@ -10,7 +10,7 @@ import { TextButton } from '@/shared/components';
 
 const LoginForm = () => {
   const router = useRouter();
-  const { setTokens } = useLocalStorage();
+  const { setTokens, setOnboardingCompleted } = useLocalStorage();
 
   const [idValue, setIdValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
@@ -23,6 +23,7 @@ const LoginForm = () => {
       const { accessToken, onboardingCompleted } = result;
 
       setTokens(accessToken);
+      setOnboardingCompleted(onboardingCompleted);
 
       if (onboardingCompleted) {
         router.push('/home');

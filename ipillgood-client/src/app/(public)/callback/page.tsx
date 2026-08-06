@@ -8,7 +8,7 @@ import { useLocalStorage } from '@/shared/hooks';
 const CallbackPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { setTokens } = useLocalStorage();
+  const { setTokens, setOnboardingCompleted } = useLocalStorage();
   const hasProcessed = useRef(false);
 
   useEffect(() => {
@@ -40,6 +40,7 @@ const CallbackPage = () => {
         const { accessToken, onboardingCompleted } = data.result;
 
         setTokens(accessToken);
+        setOnboardingCompleted(onboardingCompleted);
         router.replace(onboardingCompleted ? '/home' : '/survey?step=1');
       } catch (error) {
         console.error('소셜 로그인 토큰 재발급 실패:', error);
@@ -48,7 +49,7 @@ const CallbackPage = () => {
     };
 
     void reissueAccessToken();
-  }, [router, searchParams, setTokens]);
+  }, [router, searchParams, setOnboardingCompleted, setTokens]);
 
   return (
     <main className='flex flex-col items-center justify-center min-h-screen gap-5'>
