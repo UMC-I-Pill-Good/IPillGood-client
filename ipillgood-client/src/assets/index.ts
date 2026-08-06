@@ -94,6 +94,7 @@ export { default as TreeIcon } from './icons/tree.svg';
 export { default as TreeLockedIcon } from './icons/tree-lock.svg';
 export { default as LockPointIcon } from './icons/lock-point.svg';
 export { default as BellGreyIcon } from './icons/bell-grey.svg';
+export { default as HomeMascotIcon } from './icons/mascot-home.svg';
 
 /* cabinet */
 export { default as EmptyBottleIcon } from './icons/cabinet/empty-bottle.svg';
