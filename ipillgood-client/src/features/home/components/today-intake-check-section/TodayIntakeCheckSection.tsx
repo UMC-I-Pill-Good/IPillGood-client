@@ -16,7 +16,7 @@ const TodayIntakeCheckSection = () => {
     isError,
   } = useIntakeToday();
 
-  if (isPending || isError || allCompleted) return null;
+  if (isPending || isError || allCompleted || pendingProducts.length === 0) return null;
 
   return (
     <section className='w-full flex flex-col justify-center items-center mt-3 gap-3 py-4 rounded-[20px] home-card-glass'>
