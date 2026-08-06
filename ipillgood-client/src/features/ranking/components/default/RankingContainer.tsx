@@ -1,7 +1,8 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 import {
   clearRecentKeywords,
   deleteRecentKeyword,
@@ -25,7 +26,6 @@ import RecentSearches from './RecentSearches';
 
 const RankingContainer = () => {
   const router = useRouter();
-  const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const [searchValue, setSearchValue] = useState('');
   const [recentSearches, setRecentSearches] = useState<RecentKeywordDto[]>([]);
   const [selectedSort, setSelectedSort] = useState<RankingUiSort>('REVIEW_COUNT');
@@ -40,8 +40,13 @@ const RankingContainer = () => {
     ...toRankingQueryParams(appliedFilters),
     ...toRankingFilterRequestOptions(appliedFilters),
   };
-  const { hasNext, isInitialLoading, isLoadingMore, items, loadMore, message, resetLoadingState } =
+  const { hasNext, isInitialLoading, isLoadingMore, items, loadMore, message } =
     useRankingInfiniteProducts({ queryParams: rankingQueryParams, requestKey: requestVersion });
+  const { ref: loadMoreRef, inView } = useInView({
+    threshold: 0,
+    rootMargin: '160px 0px',
+    skip: !hasNext,
+  });
 
   useEffect(() => {
     let isMounted = true;
@@ -62,28 +67,10 @@ const RankingContainer = () => {
   }, []);
 
   useEffect(() => {
-    if (!hasNext || isInitialLoading || isLoadingMore) return;
-
-    const loadMoreTarget = loadMoreRef.current;
-    if (!loadMoreTarget) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
-
-        loadMore();
-      },
-      {
-        rootMargin: '160px 0px',
-      },
-    );
-
-    observer.observe(loadMoreTarget);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [hasNext, isInitialLoading, isLoadingMore, loadMore]);
+    if (inView && hasNext && !isLoadingMore) {
+      loadMore();
+    }
+  }, [hasNext, inView, isLoadingMore, loadMore]);
 
   const handleChangeSearchValue = (value: string) => {
     setSearchValue(value);
@@ -123,7 +110,6 @@ const RankingContainer = () => {
   };
 
   const handleApplyFilter = () => {
-    resetLoadingState();
     setAppliedFilters(draftFilters);
     setIsFilterOpen(false);
   };
@@ -131,12 +117,10 @@ const RankingContainer = () => {
   const handleSortChange = (nextSort: RankingUiSort) => {
     if (nextSort === selectedSort) return;
 
-    resetLoadingState();
     setSelectedSort(nextSort);
   };
 
   const handleRetry = () => {
-    resetLoadingState();
     setRequestVersion((version) => version + 1);
   };
 

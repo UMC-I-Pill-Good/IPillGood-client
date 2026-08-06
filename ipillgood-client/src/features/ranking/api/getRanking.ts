@@ -28,6 +28,7 @@ export const getRanking = async (params: RankingQueryParams): Promise<RankingApi
     'healthConcernMajorCategories',
     params.healthConcernMajorCategories,
   );
+  appendSearchParam(searchParams, 'ingredientIds', params.ingredientIds);
 
   const { data } = await axiosInstance.get<RankingApiResponse>(RANKING_API_PATH, {
     params: searchParams,

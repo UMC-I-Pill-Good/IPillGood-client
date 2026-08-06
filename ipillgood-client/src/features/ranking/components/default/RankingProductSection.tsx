@@ -1,3 +1,4 @@
+import type { Ref } from 'react';
 import { FetchError } from '@/shared/components';
 import type { ProductSearchItemDto, RankingUiSort } from '../../types/ranking';
 import RankingResultSkeletonCard from '../result/RankingResultSkeletonCard';
@@ -13,7 +14,7 @@ interface RankingProductSectionProps {
   message: string | null;
   isInitialLoading: boolean;
   isLoadingMore: boolean;
-  loadMoreRef: React.RefObject<HTMLDivElement | null>;
+  loadMoreRef: Ref<HTMLDivElement>;
   onSortChange: (sort: RankingUiSort) => void;
   onRetry: () => void;
 }

@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { FilterIcon } from '@/assets';
 import { FetchError } from '@/shared/components';
 import type { ProductSearchItemDto, RankingUiSort } from '../../types/ranking';
@@ -53,35 +54,25 @@ const RankingResultContent = ({
   },
   handlers: { onOpenFilter, onSortChange, onLoadMore, onRetry, setSkeletonCardCount },
 }: RankingResultContentProps) => {
-  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const { ref: loadMoreRef, inView } = useInView({
+    threshold: 0,
+    rootMargin: '160px 0px',
+    skip: viewState !== 'loading' && !hasNext,
+  });
 
   useEffect(() => {
-    const target = loadMoreRef.current;
-    if (viewState !== 'loading' || !target) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setSkeletonCardCount((count) =>
-            Math.min(count + SKELETON_CARD_LOAD_COUNT, MAX_SKELETON_CARD_COUNT),
-          );
-        }
-      },
-      { rootMargin: '160px 0px' },
-    );
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, [setSkeletonCardCount, viewState]);
+    if (viewState === 'loading' && inView) {
+      setSkeletonCardCount((count) =>
+        Math.min(count + SKELETON_CARD_LOAD_COUNT, MAX_SKELETON_CARD_COUNT),
+      );
+    }
+  }, [inView, setSkeletonCardCount, viewState]);
 
   useEffect(() => {
-    const target = loadMoreRef.current;
-    if (!hasNext || viewState === 'loading' || viewState === 'error' || isLoadingMore || !target)
-      return;
-    const observer = new IntersectionObserver(([entry]) => entry?.isIntersecting && onLoadMore(), {
-      rootMargin: '160px 0px',
-    });
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, [hasNext, isLoadingMore, onLoadMore, viewState]);
+    if (inView && hasNext && viewState !== 'loading' && viewState !== 'error' && !isLoadingMore) {
+      onLoadMore();
+    }
+  }, [hasNext, inView, isLoadingMore, onLoadMore, viewState]);
 
   if (viewState === 'loading') {
     return (

@@ -76,7 +76,6 @@ export const useRankingResult = () => {
             : 'emptySearch';
 
   const refreshResults = () => {
-    ranking.resetLoadingState();
     setSkeletonCardCount(INITIAL_SKELETON_CARD_COUNT);
     setRequestVersion((version) => version + 1);
   };
