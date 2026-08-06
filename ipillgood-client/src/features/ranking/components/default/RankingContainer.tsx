@@ -3,15 +3,9 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import {
-  clearRecentKeywords,
-  deleteRecentKeyword,
-  getRecentKeywords,
-  saveRecentKeyword,
-} from '../../api/recentSearch';
 import { useRankingInfiniteProducts } from '../../hooks/useRankingInfiniteProducts';
+import { useRecentSearches } from '../../hooks/useRecentSearches';
 import type { RankingUiSort } from '../../types/ranking';
-import type { RecentKeywordDto } from '../../types/recentSearch';
 import { DEFAULT_RANKING_FILTERS } from '../../constants/rankingFilter';
 import type { RankingFilterState } from '../../types/rankingFilter';
 import {
@@ -27,12 +21,17 @@ import RecentSearches from './RecentSearches';
 const RankingContainer = () => {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState('');
-  const [recentSearches, setRecentSearches] = useState<RecentKeywordDto[]>([]);
   const [selectedSort, setSelectedSort] = useState<RankingUiSort>('REVIEW_COUNT');
   const [requestVersion, setRequestVersion] = useState(0);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState<RankingFilterState>(DEFAULT_RANKING_FILTERS);
   const [draftFilters, setDraftFilters] = useState<RankingFilterState>(DEFAULT_RANKING_FILTERS);
+  const {
+    recentSearchList,
+    handleSaveRecentSearch,
+    handleRemoveRecentSearch,
+    handleClearRecentSearches,
+  } = useRecentSearches();
   const rankingQueryParams = {
     size: 20,
     sort: selectedSort,
@@ -49,24 +48,6 @@ const RankingContainer = () => {
   });
 
   useEffect(() => {
-    let isMounted = true;
-
-    getRecentKeywords()
-      .then((response) => {
-        if (!isMounted || !response.isSuccess) return;
-
-        setRecentSearches(response.result?.keywords ?? []);
-      })
-      .catch((error) => {
-        console.error('Failed to load recent keywords', error);
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  useEffect(() => {
     if (inView && hasNext && !isLoadingMore) {
       loadMore();
     }
@@ -74,30 +55,6 @@ const RankingContainer = () => {
 
   const handleChangeSearchValue = (value: string) => {
     setSearchValue(value);
-  };
-
-  const handleRemoveRecentSearch = async (keywordId: number) => {
-    try {
-      const response = await deleteRecentKeyword(keywordId);
-      if (!response.isSuccess) return;
-
-      setRecentSearches((prevSearches) =>
-        prevSearches.filter((item) => item.keywordId !== keywordId),
-      );
-    } catch (error) {
-      console.error('Failed to delete recent keyword', error);
-    }
-  };
-
-  const handleClearRecentSearches = async () => {
-    try {
-      const response = await clearRecentKeywords();
-      if (!response.isSuccess) return;
-
-      setRecentSearches([]);
-    } catch (error) {
-      console.error('Failed to clear recent keywords', error);
-    }
   };
 
   const handleOpenFilter = () => {
@@ -127,23 +84,7 @@ const RankingContainer = () => {
   const handleSubmitSearch = async () => {
     const nextSearchTerm = searchValue.trim();
     if (!nextSearchTerm) return;
-    try {
-      const recentKeywordResponse = await saveRecentKeyword(nextSearchTerm);
-      const savedKeyword = recentKeywordResponse.result;
-
-      if (recentKeywordResponse.isSuccess && savedKeyword) {
-        setRecentSearches((prevSearches) =>
-          [
-            savedKeyword,
-            ...prevSearches.filter((item) => item.keyword !== savedKeyword.keyword),
-          ].slice(0, 10),
-        );
-      } else {
-        console.error('Failed to save recent keyword', recentKeywordResponse.message);
-      }
-    } catch (error) {
-      console.error('Failed to save recent keyword', error);
-    }
+    await handleSaveRecentSearch(nextSearchTerm);
 
     const searchParams = new URLSearchParams({
       search: nextSearchTerm,
@@ -165,7 +106,7 @@ const RankingContainer = () => {
       </section>
 
       <RecentSearches
-        searches={recentSearches}
+        searches={recentSearchList}
         onRemove={handleRemoveRecentSearch}
         onClear={handleClearRecentSearches}
       />
