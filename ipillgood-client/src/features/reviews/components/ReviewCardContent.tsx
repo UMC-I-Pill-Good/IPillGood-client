@@ -1,11 +1,10 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { MoreHorizontal, ThumbsUp, UserRound } from 'lucide-react';
-import { useEscapeKey, useOutsideClick } from '@/shared/hooks';
+import { ThumbsUp, UserRound } from 'lucide-react';
 import { AGE_GROUP_LABEL, GENDER_LABEL } from '@/shared/types';
 import type { RankingReviewItem } from '../types/review';
 import ReviewRating from './ReviewRating';
+import ReviewOptionsMenu from './ReviewOptionsMenu';
 
 interface ReviewCardContentProps {
   review: RankingReviewItem;
@@ -28,18 +27,6 @@ const ReviewCardContent = ({
   isHelpfulUpdating,
   onHelpfulToggle,
 }: ReviewCardContentProps) => {
-  const menuRef = useRef<HTMLDivElement>(null);
-  const menuId = `review-menu-${review.reviewId}`;
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEscapeKey(() => setIsMenuOpen(false));
-  useOutsideClick(menuRef, () => setIsMenuOpen(false));
-
-  const handleDelete = () => {
-    setIsMenuOpen(false);
-    onDelete();
-  };
-
   return (
     <article className='glass relative flex h-auto w-full flex-col items-start gap-4 whitespace-normal rounded-5 border border-white bg-white/50 px-3 py-2 shadow-[0_4px_4px_rgba(126,131,135,0.1)]'>
       <div className='flex w-full items-start gap-2'>
@@ -102,51 +89,7 @@ const ReviewCardContent = ({
         </button>
 
         {review.mine ? (
-          <div ref={menuRef} className='relative ml-auto'>
-            <button
-              type='button'
-              aria-label='후기 메뉴 열기'
-              aria-haspopup='menu'
-              aria-controls={menuId}
-              aria-expanded={isMenuOpen}
-              className='flex size-6 items-center justify-center text-neutral-800 py-2 rounded-full transition hover:bg-gray-200'
-              onClick={() => setIsMenuOpen((isOpen) => !isOpen)}
-            >
-              <MoreHorizontal aria-hidden='true' className='size-5' />
-            </button>
-            {isMenuOpen && (
-              <div
-                id={menuId}
-                role='menu'
-                className='absolute bottom-8 right-0 z-10 flex h-24 w-20.25 flex-col items-start overflow-hidden rounded-lg border border-white bg-white/80 shadow-md backdrop-blur-[20px]'
-              >
-                <button
-                  type='button'
-                  role='menuitem'
-                  className='flex h-8 w-full items-center justify-center gap-1 border-b border-neutral-300 px-2 typo-caption-2 text-black'
-                  onClick={onEdit}
-                >
-                  후기 수정
-                </button>
-                <button
-                  type='button'
-                  role='menuitem'
-                  className='flex h-8 w-full items-center justify-center gap-1 border-b border-neutral-300 px-2 typo-caption-2 text-neutral-800'
-                  onClick={handleDelete}
-                >
-                  후기 삭제
-                </button>
-                <button
-                  type='button'
-                  role='menuitem'
-                  className='flex h-8 w-full items-center justify-center gap-1 px-2 typo-caption-2 text-neutral-800'
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  취소
-                </button>
-              </div>
-            )}
-          </div>
+          <ReviewOptionsMenu reviewId={review.reviewId} onEdit={onEdit} onDelete={onDelete} />
         ) : (
           <button
             type='button'
