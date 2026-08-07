@@ -1,5 +1,9 @@
 import { axiosInstance } from '@/app/api/api';
-import { ResponseRecommendationResult, ResponseRecommendationRetry } from '../types/recommendation';
+import {
+  ResponseRecommendationConfirm,
+  ResponseRecommendationResult,
+  ResponseRecommendationRetry,
+} from '../types/recommendation';
 
 export const getRecommendation = async (
   recommendationId: number,
@@ -16,6 +20,16 @@ export const postRecommendationRetry = async (
 ): Promise<ResponseRecommendationRetry> => {
   const { data } = await axiosInstance.post<ResponseRecommendationRetry>(
     `/recommendations/${recommendationId}/retry`,
+  );
+
+  return data;
+};
+
+export const postRecommendationConfirm = async (
+  recommendationId: number,
+): Promise<ResponseRecommendationConfirm> => {
+  const { data } = await axiosInstance.post<ResponseRecommendationConfirm>(
+    `/recommendations/${recommendationId}/confirm`,
   );
 
   return data;

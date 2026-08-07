@@ -4,18 +4,48 @@ import { FetchError, LoadingSpinner, TextButton } from '@/shared/components';
 import RecommendationList from './RecommendationList';
 import { BulbIcon, CheckCircleIcon } from '@/assets';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useRecommendationQuery } from '@/features/survey/hooks';
+import { useRecommendationConfirmMutation, useRecommendationQuery } from '@/features/survey/hooks';
 import { useMyInfoQuery } from '@/shared/hooks';
+import { useEffect, useRef } from 'react';
 
 const AnalysisResultContainer = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const recommendationId = Number(searchParams.get('recommendationId'));
+  const confirmedRecommendationId = useRef<number | null>(null);
 
   const { data: myInfoData } = useMyInfoQuery();
 
   const { data, isPending, isError, refetch } = useRecommendationQuery(recommendationId);
+  const {
+    mutate: confirmRecommendation,
+    isError: isConfirmError,
+    error: confirmError,
+    reset: resetConfirmRecommendation,
+  } = useRecommendationConfirmMutation();
+
+  const recommendation = data?.result;
+
+  useEffect(() => {
+    if (
+      recommendation?.status !== 'SUCCESS' ||
+      !recommendationId ||
+      confirmedRecommendationId.current === recommendationId
+    ) {
+      return;
+    }
+
+    confirmedRecommendationId.current = recommendationId;
+    confirmRecommendation(recommendationId);
+  }, [recommendation?.status, recommendationId, confirmRecommendation]);
+
+  const handleConfirmRetry = () => {
+    confirmedRecommendationId.current = null;
+    resetConfirmRecommendation();
+    confirmedRecommendationId.current = recommendationId;
+    confirmRecommendation(recommendationId);
+  };
 
   if (isPending) {
     return <LoadingSpinner />;
@@ -25,7 +55,14 @@ const AnalysisResultContainer = () => {
     return <FetchError description='추천 결과를 불러오지 못했습니다.' onRetry={() => refetch()} />;
   }
 
-  const recommendation = data?.result;
+  if (isConfirmError) {
+    const description =
+      confirmError instanceof Error && confirmError.message
+        ? confirmError.message
+        : '추천 결과 확인에 실패했습니다. 다시 시도해주세요.';
+
+    return <FetchError description={description} onRetry={handleConfirmRetry} />;
+  }
 
   if (!recommendation || recommendation.status !== 'SUCCESS') {
     return <FetchError description='추천 결과를 확인할 수 없습니다.' />;
