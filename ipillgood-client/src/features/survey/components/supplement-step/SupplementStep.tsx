@@ -40,10 +40,10 @@ const SupplementStep = () => {
 
   // 메인/기타 영양제 분리
   const mainIngredients =
-    data?.result?.ingredients?.filter((item) => item.ingredientId <= 21) ?? [];
+    data?.result?.ingredients?.filter((item) => item.ingredientId <= 10) ?? [];
 
   const otherIngredients =
-    data?.result?.ingredients?.filter((item) => item.ingredientId >= 22) ?? [];
+    data?.result?.ingredients?.filter((item) => item.ingredientId >= 11) ?? [];
 
   const [selectedItems, setSelectedItems] = useAtom(selectedIngredientItemsAtom);
   const setCurrentIngredientIds = useSetAtom(currentIngredientIdsAtom);
@@ -129,7 +129,7 @@ const SupplementStep = () => {
         <div className='mt-8 flex flex-col space-y-4 pb-4'>
           <h1 className='typo-body-1 text-center'>기타 영양제 리스트</h1>
 
-          <div className='grid grid-cols-3 gap-2 overflow-y-auto thin-scrollbar h-120 pb-4'>
+          <div className='grid grid-cols-3 gap-2 overflow-y-auto thin-scrollbar h-130 pb-4'>
             {otherIngredients.map((item) => (
               <SelectionCard
                 key={item.ingredientId}

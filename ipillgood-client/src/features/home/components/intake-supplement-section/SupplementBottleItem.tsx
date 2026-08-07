@@ -6,32 +6,50 @@ import Image from 'next/image';
 interface SupplementBottleItemProps {
   productName: string;
   imageUrl: string;
+  onItemClick: () => void;
   onDeleteClick: () => void;
 }
 
 const SupplementBottleItem = ({
   productName,
   imageUrl,
+  onItemClick,
   onDeleteClick,
 }: SupplementBottleItemProps) => {
   return (
-    <div className='flex flex-col items-center'>
-      <div className='flex items-start'>
-        <div className='relative h-19 w-12 shrink-0'>
-          <Image src={imageUrl} fill alt={productName} className='object-contain' />
+    <div className='relative'>
+      <button
+        type='button'
+        className='transition hover:brightness-90 w-17.5 h-26.25 flex flex-col items-center bg-[#F5F6FF]/20 rounded-2xl  px-3 py-[8.5px]  shadow-[4px_4px_4px_0px_rgba(255,255,255,0.2),inset_4px_4px_20px_0px_rgba(155,161,255,0.2)]'
+        onClick={onItemClick}
+      >
+        <div className='relative h-19 w-15'>
+          <Image
+            src={imageUrl}
+            alt={productName}
+            fill
+            sizes='60px'
+            className='h-18 w-18 object-contain'
+          />
         </div>
-        <button
-          type='button'
-          onClick={onDeleteClick}
-          aria-label='삭제'
-          className='text-neutral-800 cursor-pointer'
+        <span
+          title={productName}
+          className='text-black typo-caption-6 w-11.5 truncate text-center leading-tight!'
         >
-          <X size={16} />
-        </button>
-      </div>
-      <span title={productName} className='typo-caption-6 mr-0.5 w-14 truncate text-center'>
-        {productName}
-      </span>
+          {productName}
+        </span>
+      </button>
+      <button
+        type='button'
+        onClick={(e) => {
+          e.stopPropagation();
+          onDeleteClick();
+        }}
+        aria-label='삭제'
+        className='transition hover:brightness-90 absolute -right-0.5 -top-1 size-4 rounded-full bg-secondary text-white cursor-pointer flex items-center justify-center'
+      >
+        <X size={14} />
+      </button>
     </div>
   );
 };

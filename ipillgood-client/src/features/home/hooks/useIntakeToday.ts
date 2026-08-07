@@ -36,8 +36,11 @@ export const useIntakeToday = () => {
     mutationFn: putIntakeTodayRecords,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: intakeTodayQueryKey });
+      queryClient.invalidateQueries({ queryKey: ['intakeCalendar'] });
+      queryClient.invalidateQueries({ queryKey: ['growthStage'] });
       setIsModalOpen(false);
     },
+
     onError: () => {
       alert('섭취 기록 저장에 실패했습니다.');
     },
