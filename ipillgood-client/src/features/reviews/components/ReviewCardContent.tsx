@@ -1,53 +1,40 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { MoreHorizontal, ThumbsUp, UserRound } from 'lucide-react';
-import { useEscapeKey, useOutsideClick } from '@/shared/hooks';
+import { ThumbsUp, UserRound } from 'lucide-react';
 import { AGE_GROUP_LABEL, GENDER_LABEL } from '@/shared/types';
 import type { RankingReviewItem } from '../types/review';
 import ReviewRating from './ReviewRating';
+import ReviewOptionsMenu from './ReviewOptionsMenu';
 
 interface ReviewCardContentProps {
   review: RankingReviewItem;
   onEdit: () => void;
   onDelete: () => void;
   onReport: () => void;
+  isHelpful: boolean;
+  helpfulCount: number;
+  isHelpfulUpdating: boolean;
+  onHelpfulToggle: () => void;
 }
 
-const ReviewCardContent = ({ review, onEdit, onDelete, onReport }: ReviewCardContentProps) => {
-  const menuRef = useRef<HTMLDivElement>(null);
-  const menuId = `review-menu-${review.reviewId}`;
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [helpfulState, setHelpfulState] = useState({
-    isHelpful: review.helpedByMe,
-    count: review.helpfulCount,
-  });
-
-  useEscapeKey(() => setIsMenuOpen(false));
-  useOutsideClick(menuRef, () => setIsMenuOpen(false));
-
-  const handleHelpfulToggle = () => {
-    if (review.mine) return;
-
-    setHelpfulState((current) => ({
-      isHelpful: !current.isHelpful,
-      count: current.count + (current.isHelpful ? -1 : 1),
-    }));
-  };
-
-  const handleDelete = () => {
-    setIsMenuOpen(false);
-    onDelete();
-  };
-
+const ReviewCardContent = ({
+  review,
+  onEdit,
+  onDelete,
+  onReport,
+  isHelpful,
+  helpfulCount,
+  isHelpfulUpdating,
+  onHelpfulToggle,
+}: ReviewCardContentProps) => {
   return (
     <article className='glass relative flex h-auto w-full flex-col items-start gap-4 whitespace-normal rounded-5 border border-white bg-white/50 px-3 py-2 shadow-[0_4px_4px_rgba(126,131,135,0.1)]'>
       <div className='flex w-full items-start gap-2'>
         <div className='flex size-11.25 shrink-0 items-center justify-center rounded-full bg-neutral-200 text-neutral-500 mt-2'>
-          {review.profileImageKey.startsWith('http') ? (
+          {review.profileImageUrl?.startsWith('http') ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={review.profileImageKey}
+              src={review.profileImageUrl}
               alt=''
               className='size-full rounded-full object-cover'
             />
@@ -59,7 +46,7 @@ const ReviewCardContent = ({ review, onEdit, onDelete, onReport }: ReviewCardCon
           <div className='flex min-w-0 flex-col gap-1'>
             <p className='truncate typo-body-5 text-black'>{review.nickname}</p>
             <p className='typo-caption-7 text-neutral-800'>
-              {AGE_GROUP_LABEL[review.reviewerAgeGroup]} / {GENDER_LABEL[review.reviewerGender]}
+              {AGE_GROUP_LABEL[review.ageGroup]} / {GENDER_LABEL[review.gender]}
             </p>
             <ReviewRating rating={review.rating} />
           </div>
@@ -71,11 +58,11 @@ const ReviewCardContent = ({ review, onEdit, onDelete, onReport }: ReviewCardCon
 
       <p className='typo-caption-2 text-black'>{review.content}</p>
 
-      {review.imageUrls.length > 0 && (
+      {review.reviewImageUrls.length > 0 && (
         <div className='flex gap-2 overflow-x-auto hide-scrollbar'>
-          {review.imageUrls.map((imageUrl, index) => (
+          {review.reviewImageUrls.map((imageUrl) => (
             <div
-              key={review.imageKeys[index]}
+              key={imageUrl}
               className='flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-neutral-300 typo-body-2 text-neutral-800'
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -88,65 +75,21 @@ const ReviewCardContent = ({ review, onEdit, onDelete, onReport }: ReviewCardCon
       <div className='flex w-full items-center justify-between gap-2'>
         <button
           type='button'
-          disabled={review.mine}
+          disabled={review.mine || isHelpfulUpdating}
           className='flex items-center gap-1 text-primary-600 typo-caption-6'
-          onClick={handleHelpfulToggle}
+          onClick={onHelpfulToggle}
         >
           <ThumbsUp
             aria-hidden='true'
             className='size-4'
-            fill={helpfulState.isHelpful ? 'currentColor' : 'none'}
+            fill={isHelpful ? 'currentColor' : 'none'}
           />
           <span>도움이 됐어요</span>
-          <span>{helpfulState.count}</span>
+          <span>{helpfulCount}</span>
         </button>
 
         {review.mine ? (
-          <div ref={menuRef} className='relative ml-auto'>
-            <button
-              type='button'
-              aria-label='후기 메뉴 열기'
-              aria-haspopup='menu'
-              aria-controls={menuId}
-              aria-expanded={isMenuOpen}
-              className='flex size-6 items-center justify-center text-neutral-800 py-2 rounded-full transition hover:bg-gray-200'
-              onClick={() => setIsMenuOpen((isOpen) => !isOpen)}
-            >
-              <MoreHorizontal aria-hidden='true' className='size-5' />
-            </button>
-            {isMenuOpen && (
-              <div
-                id={menuId}
-                role='menu'
-                className='absolute bottom-8 right-0 z-10 flex h-24 w-20.25 flex-col items-start overflow-hidden rounded-lg border border-white bg-white/80 shadow-md backdrop-blur-[20px]'
-              >
-                <button
-                  type='button'
-                  role='menuitem'
-                  className='flex h-8 w-full items-center justify-center gap-1 border-b border-neutral-300 px-2 typo-caption-2 text-black'
-                  onClick={onEdit}
-                >
-                  후기 수정
-                </button>
-                <button
-                  type='button'
-                  role='menuitem'
-                  className='flex h-8 w-full items-center justify-center gap-1 border-b border-neutral-300 px-2 typo-caption-2 text-neutral-800'
-                  onClick={handleDelete}
-                >
-                  후기 삭제
-                </button>
-                <button
-                  type='button'
-                  role='menuitem'
-                  className='flex h-8 w-full items-center justify-center gap-1 px-2 typo-caption-2 text-neutral-800'
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  취소
-                </button>
-              </div>
-            )}
-          </div>
+          <ReviewOptionsMenu reviewId={review.reviewId} onEdit={onEdit} onDelete={onDelete} />
         ) : (
           <button
             type='button'

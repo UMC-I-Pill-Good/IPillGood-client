@@ -1,3 +1,5 @@
+import type { Ref } from 'react';
+import { FetchError } from '@/shared/components';
 import type { ProductSearchItemDto, RankingUiSort } from '../../types/ranking';
 import RankingResultSkeletonCard from '../result/RankingResultSkeletonCard';
 import RankingSupplementList from './RankingSupplementList';
@@ -12,8 +14,11 @@ interface RankingProductSectionProps {
   message: string | null;
   isInitialLoading: boolean;
   isLoadingMore: boolean;
-  loadMoreRef: React.RefObject<HTMLDivElement | null>;
+  loadMoreErrorMessage: string | null;
+  loadMoreRef: Ref<HTMLDivElement>;
   onSortChange: (sort: RankingUiSort) => void;
+  onRetry: () => void;
+  onRetryLoadMore: () => void;
 }
 
 const RankingProductSection = ({
@@ -22,8 +27,11 @@ const RankingProductSection = ({
   message,
   isInitialLoading,
   isLoadingMore,
+  loadMoreErrorMessage,
   loadMoreRef,
   onSortChange,
+  onRetry,
+  onRetryLoadMore,
 }: RankingProductSectionProps) => (
   <section className='w-full px-5 py-4'>
     <div className='flex w-full flex-col gap-3'>
@@ -39,9 +47,7 @@ const RankingProductSection = ({
           ))}
         </section>
       ) : message ? (
-        <section className='flex min-h-32 w-full items-center justify-center rounded-2xl bg-white/50 px-5 py-8 typo-caption-2 text-neutral-800'>
-          {message}
-        </section>
+        <FetchError description={message} onRetry={onRetry} />
       ) : (
         <>
           <RankingSupplementList items={items} />
@@ -55,6 +61,9 @@ const RankingProductSection = ({
                 <RankingResultSkeletonCard key={index} />
               ))}
             </section>
+          )}
+          {loadMoreErrorMessage && (
+            <FetchError description={loadMoreErrorMessage} onRetry={onRetryLoadMore} />
           )}
           <div ref={loadMoreRef} className='h-px w-full' />
         </>

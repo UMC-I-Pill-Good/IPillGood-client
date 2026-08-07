@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { FilterIcon } from '@/assets';
+import { FetchError } from '@/shared/components';
 import type { ProductSearchItemDto, RankingUiSort } from '../../types/ranking';
 import RankingSupplementList from '../default/RankingSupplementList';
 import SortDropdownTrigger from '../default/SortDropdownTrigger';
@@ -23,12 +25,15 @@ type RankingResultContentData = {
   skeletonCardCount: number;
   hasNext: boolean;
   isLoadingMore: boolean;
+  loadMoreErrorMessage: string | null;
 };
 
 type RankingResultContentHandlers = {
   onOpenFilter: () => void;
   onSortChange: (sort: RankingUiSort) => void;
   onLoadMore: () => void;
+  onRetry: () => void;
+  onRetryLoadMore: () => void;
   setSkeletonCardCount: Dispatch<SetStateAction<number>>;
 };
 
@@ -48,38 +53,36 @@ const RankingResultContent = ({
     skeletonCardCount,
     hasNext,
     isLoadingMore,
+    loadMoreErrorMessage,
   },
-  handlers: { onOpenFilter, onSortChange, onLoadMore, setSkeletonCardCount },
+  handlers: {
+    onOpenFilter,
+    onSortChange,
+    onLoadMore,
+    onRetry,
+    onRetryLoadMore,
+    setSkeletonCardCount,
+  },
 }: RankingResultContentProps) => {
-  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const { ref: loadMoreRef, inView } = useInView({
+    threshold: 0,
+    rootMargin: '160px 0px',
+    skip: viewState !== 'loading' && !hasNext,
+  });
 
   useEffect(() => {
-    const target = loadMoreRef.current;
-    if (viewState !== 'loading' || !target) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setSkeletonCardCount((count) =>
-            Math.min(count + SKELETON_CARD_LOAD_COUNT, MAX_SKELETON_CARD_COUNT),
-          );
-        }
-      },
-      { rootMargin: '160px 0px' },
-    );
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, [setSkeletonCardCount, viewState]);
+    if (viewState === 'loading' && inView) {
+      setSkeletonCardCount((count) =>
+        Math.min(count + SKELETON_CARD_LOAD_COUNT, MAX_SKELETON_CARD_COUNT),
+      );
+    }
+  }, [inView, setSkeletonCardCount, viewState]);
 
   useEffect(() => {
-    const target = loadMoreRef.current;
-    if (!hasNext || viewState === 'loading' || viewState === 'error' || isLoadingMore || !target)
-      return;
-    const observer = new IntersectionObserver(([entry]) => entry?.isIntersecting && onLoadMore(), {
-      rootMargin: '160px 0px',
-    });
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, [hasNext, isLoadingMore, onLoadMore, viewState]);
+    if (inView && hasNext && viewState !== 'loading' && viewState !== 'error' && !isLoadingMore) {
+      onLoadMore();
+    }
+  }, [hasNext, inView, isLoadingMore, onLoadMore, viewState]);
 
   if (viewState === 'loading') {
     return (
@@ -125,9 +128,10 @@ const RankingResultContent = ({
         )}
 
         {viewState === 'error' ? (
-          <section className='flex min-h-32 w-full items-center justify-center rounded-2xl bg-white/50 px-5 py-8 typo-caption-2 text-neutral-800'>
-            {message}
-          </section>
+          <FetchError
+            description={message ?? '검색 결과를 불러오지 못했습니다.'}
+            onRetry={onRetry}
+          />
         ) : (
           <RankingSupplementList
             items={items}
@@ -152,6 +156,9 @@ const RankingResultContent = ({
               <RankingResultSkeletonCard key={index} />
             ))}
           </section>
+        )}
+        {loadMoreErrorMessage && (
+          <FetchError description={loadMoreErrorMessage} onRetry={onRetryLoadMore} />
         )}
         <div ref={loadMoreRef} className='h-px w-full' />
       </section>

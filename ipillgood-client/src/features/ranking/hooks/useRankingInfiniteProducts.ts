@@ -1,193 +1,70 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { getRanking } from '../api/getRanking';
-import type { ProductSearchItemDto, RankingQueryParams } from '../types/ranking';
-import { isHealthConcernMajorCategory, isRankingAgeGroup } from '../utils/rankingFilterQuery';
+import type { RankingQueryParams } from '../types/ranking';
 
 const DEFAULT_PAGE_SIZE = 20;
+const DEFAULT_ERROR_MESSAGE = '영양제 상품 목록을 불러올 수 없습니다.';
 
 type UseRankingInfiniteProductsParams = {
   queryParams: RankingQueryParams;
-  requestKey?: number;
 };
 
-const getRankingQueryArrays = (
-  ageGroupsKey: string,
-  healthConcernsKey: string,
-  ingredientIdsKey: string,
-) => ({
-  ageGroups: ageGroupsKey ? ageGroupsKey.split(',').filter(isRankingAgeGroup) : undefined,
-  healthConcernMajorCategories: healthConcernsKey
-    ? healthConcernsKey.split(',').filter(isHealthConcernMajorCategory)
-    : undefined,
-  ingredientIds: ingredientIdsKey
-    ? ingredientIdsKey.split(',').map(Number).filter(Number.isFinite)
-    : undefined,
-});
+const getErrorMessage = (error: unknown) =>
+  error instanceof Error ? error.message : DEFAULT_ERROR_MESSAGE;
 
-export const useRankingInfiniteProducts = ({
-  queryParams,
-  requestKey = 0,
-}: UseRankingInfiniteProductsParams) => {
-  const requestIdRef = useRef(0);
-  const isRequestingRef = useRef(false);
-  const [items, setItems] = useState<ProductSearchItemDto[]>([]);
-  const [totalElements, setTotalElements] = useState(0);
-  const [message, setMessage] = useState<string | null>(null);
-  const [nextCursor, setNextCursor] = useState<string | null>(null);
-  const [hasNext, setHasNext] = useState(false);
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-
-  const { gender, keyword, mfdsCertified, size = DEFAULT_PAGE_SIZE, sort } = queryParams;
-  const ageGroupsKey = queryParams.ageGroups?.join(',') ?? '';
-  const healthConcernsKey = queryParams.healthConcernMajorCategories?.join(',') ?? '';
-  const ingredientIdsKey = queryParams.ingredientIds?.join(',') ?? '';
-
-  const resetLoadingState = useCallback(() => {
-    requestIdRef.current += 1;
-    isRequestingRef.current = false;
-    setItems([]);
-    setTotalElements(0);
-    setMessage(null);
-    setNextCursor(null);
-    setHasNext(false);
-    setIsLoadingMore(false);
-    setIsInitialLoading(true);
-  }, []);
-
-  useEffect(() => {
-    const requestId = ++requestIdRef.current;
-    let isMounted = true;
-    isRequestingRef.current = true;
-    const arrayParams = getRankingQueryArrays(ageGroupsKey, healthConcernsKey, ingredientIdsKey);
-
-    getRanking({
-      keyword,
-      sort,
-      gender,
-      mfdsCertified,
-      ...arrayParams,
-      size,
-      cursor: undefined,
-    })
-      .then((response) => {
-        if (!isMounted || requestId !== requestIdRef.current) return;
-
-        if (!response.isSuccess) {
-          setItems([]);
-          setTotalElements(0);
-          setNextCursor(null);
-          setHasNext(false);
-          setMessage(response.message);
-          return;
-        }
-
-        setItems(response.result?.products ?? []);
-        setTotalElements(response.result?.totalElements ?? 0);
-        setNextCursor(response.result?.nextCursor ?? null);
-        setHasNext(response.result?.hasNext ?? false);
-        setMessage(null);
-      })
-      .catch(() => {
-        if (!isMounted || requestId !== requestIdRef.current) return;
-
-        setItems([]);
-        setTotalElements(0);
-        setNextCursor(null);
-        setHasNext(false);
-        setMessage('영양제 상품 목록을 불러올 수 없습니다.');
-      })
-      .finally(() => {
-        if (!isMounted || requestId !== requestIdRef.current) return;
-
-        isRequestingRef.current = false;
-        setIsInitialLoading(false);
+export const useRankingInfiniteProducts = ({ queryParams }: UseRankingInfiniteProductsParams) => {
+  const rankingQuery = useInfiniteQuery({
+    queryKey: ['rankingProducts', queryParams],
+    queryFn: async ({ pageParam }) => {
+      const response = await getRanking({
+        ...queryParams,
+        size: queryParams.size ?? DEFAULT_PAGE_SIZE,
+        cursor: pageParam,
       });
 
-    return () => {
-      isMounted = false;
-    };
-  }, [
-    ageGroupsKey,
-    gender,
-    healthConcernsKey,
-    ingredientIdsKey,
-    keyword,
-    mfdsCertified,
-    requestKey,
-    size,
-    sort,
-  ]);
+      if (!response.isSuccess || !response.result) {
+        throw new Error(response.message || DEFAULT_ERROR_MESSAGE);
+      }
+
+      return response.result;
+    },
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (lastPage) =>
+      lastPage.hasNext && lastPage.nextCursor ? lastPage.nextCursor : undefined,
+  });
+
+  const items = rankingQuery.data?.pages.flatMap((page) => page.products) ?? [];
+  const totalElements = rankingQuery.data?.pages[0]?.totalCount ?? 0;
+  const { fetchNextPage, hasNextPage, isFetchingNextPage, isFetchNextPageError } = rankingQuery;
+  const message =
+    rankingQuery.isError && !rankingQuery.data ? getErrorMessage(rankingQuery.error) : null;
+  const loadMoreErrorMessage = isFetchNextPageError ? getErrorMessage(rankingQuery.error) : null;
 
   const loadMore = useCallback(() => {
-    if (!hasNext || !nextCursor || isInitialLoading || isLoadingMore || isRequestingRef.current) {
-      return;
-    }
+    if (!hasNextPage || isFetchingNextPage || isFetchNextPageError) return;
 
-    const requestId = requestIdRef.current;
-    isRequestingRef.current = true;
-    setIsLoadingMore(true);
-    const arrayParams = getRankingQueryArrays(ageGroupsKey, healthConcernsKey, ingredientIdsKey);
+    void fetchNextPage();
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage, isFetchNextPageError]);
 
-    getRanking({
-      keyword,
-      sort,
-      gender,
-      mfdsCertified,
-      ...arrayParams,
-      size,
-      cursor: nextCursor,
-    })
-      .then((response) => {
-        if (requestId !== requestIdRef.current) return;
+  const retryLoadMore = useCallback(() => {
+    if (!hasNextPage || isFetchingNextPage) return;
 
-        if (!response.isSuccess) {
-          setMessage(response.message);
-          return;
-        }
-
-        setItems((prevItems) => [...prevItems, ...(response.result?.products ?? [])]);
-        setTotalElements(response.result?.totalElements ?? 0);
-        setNextCursor(response.result?.nextCursor ?? null);
-        setHasNext(response.result?.hasNext ?? false);
-        setMessage(null);
-      })
-      .catch(() => {
-        if (requestId !== requestIdRef.current) return;
-
-        setMessage('영양제 상품 목록을 불러올 수 없습니다.');
-      })
-      .finally(() => {
-        if (requestId !== requestIdRef.current) return;
-
-        isRequestingRef.current = false;
-        setIsLoadingMore(false);
-      });
-  }, [
-    hasNext,
-    isInitialLoading,
-    isLoadingMore,
-    nextCursor,
-    ageGroupsKey,
-    gender,
-    healthConcernsKey,
-    ingredientIdsKey,
-    keyword,
-    mfdsCertified,
-    size,
-    sort,
-  ]);
+    void fetchNextPage();
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return {
-    hasNext,
-    isInitialLoading,
-    isLoadingMore,
+    hasNext: hasNextPage,
+    isInitialLoading: rankingQuery.isPending,
+    isLoadingMore: isFetchingNextPage,
     items,
     loadMore,
+    loadMoreErrorMessage,
     message,
-    resetLoadingState,
+    refetch: rankingQuery.refetch,
+    retryLoadMore,
     totalElements,
   };
 };

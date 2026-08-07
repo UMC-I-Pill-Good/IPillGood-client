@@ -2,10 +2,14 @@ import SupplementProductImage from './SupplementProductImage';
 import type { ProductIngredient } from '../../types/ranking';
 import { Chip } from '@/shared/components';
 
-const SupplementIngredientCard = ({ ingredient }: { ingredient: ProductIngredient }) => (
+interface SupplementIngredientCardProps {
+  ingredient: ProductIngredient;
+}
+
+const SupplementIngredientCard = ({ ingredient }: SupplementIngredientCardProps) => (
   <article className='flex w-full items-center gap-3 whitespace-normal rounded-[20px] border-none no-center-glass bg-primary/30 px-5 py-4'>
     <SupplementProductImage
-      imageKey={ingredient.imageKey}
+      imageKey={ingredient.imageUrl}
       alt={`${ingredient.name} 성분 이미지`}
       className='h-18.5 w-12'
     />
