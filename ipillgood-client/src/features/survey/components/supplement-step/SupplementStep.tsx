@@ -43,7 +43,7 @@ const SupplementStep = () => {
     data?.result?.ingredients?.filter((item) => item.ingredientId <= 10) ?? [];
 
   const otherIngredients =
-    data?.result?.ingredients?.filter((item) => item.ingredientId >= 9) ?? [];
+    data?.result?.ingredients?.filter((item) => item.ingredientId >= 11) ?? [];
 
   const [selectedItems, setSelectedItems] = useAtom(selectedIngredientItemsAtom);
   const setCurrentIngredientIds = useSetAtom(currentIngredientIdsAtom);

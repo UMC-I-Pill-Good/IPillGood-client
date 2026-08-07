@@ -18,7 +18,12 @@ const AnalysisResultContainer = () => {
   const { data: myInfoData } = useMyInfoQuery();
 
   const { data, isPending, isError, refetch } = useRecommendationQuery(recommendationId);
-  const { mutate: confirmRecommendation } = useRecommendationConfirmMutation();
+  const {
+    mutate: confirmRecommendation,
+    isError: isConfirmError,
+    error: confirmError,
+    reset: resetConfirmRecommendation,
+  } = useRecommendationConfirmMutation();
 
   const recommendation = data?.result;
 
@@ -35,12 +40,28 @@ const AnalysisResultContainer = () => {
     confirmRecommendation(recommendationId);
   }, [recommendation?.status, recommendationId, confirmRecommendation]);
 
+  const handleConfirmRetry = () => {
+    confirmedRecommendationId.current = null;
+    resetConfirmRecommendation();
+    confirmedRecommendationId.current = recommendationId;
+    confirmRecommendation(recommendationId);
+  };
+
   if (isPending) {
     return <LoadingSpinner />;
   }
 
   if (isError) {
     return <FetchError description='추천 결과를 불러오지 못했습니다.' onRetry={() => refetch()} />;
+  }
+
+  if (isConfirmError) {
+    const description =
+      confirmError instanceof Error && confirmError.message
+        ? confirmError.message
+        : '추천 결과 확인에 실패했습니다. 다시 시도해주세요.';
+
+    return <FetchError description={description} onRetry={handleConfirmRetry} />;
   }
 
   if (!recommendation || recommendation.status !== 'SUCCESS') {
