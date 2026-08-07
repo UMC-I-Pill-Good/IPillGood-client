@@ -14,7 +14,7 @@ const CalendarHeader = ({ month, onPrevMonth, onNextMonth }: CalendarHeaderProps
       <button type='button' onClick={onPrevMonth} aria-label='이전 달'>
         <ChevronLeft size={20} className='text-neutral-800' />
       </button>
-      <p className='text-[#111] typo-body-10'>{month}월</p>
+      <p className='text-black typo-body-10'>{month}월</p>
       <button type='button' onClick={onNextMonth} aria-label='다음 달'>
         <ChevronRight size={20} className='text-neutral-800' />
       </button>

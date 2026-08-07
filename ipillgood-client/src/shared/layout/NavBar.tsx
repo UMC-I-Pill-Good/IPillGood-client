@@ -38,7 +38,7 @@ export const NavBar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className=' bg-white/60 backdrop-blur-lg fixed bottom-6 left-1/2 z-30 w-[calc(100%-32px)] max-w-100 rounded-full -translate-x-1/2 shadow-[4px_4px_15px_0px_rgba(0,0,0,0.15)]'>
+    <nav className=' bg-white/60 backdrop-blur-lg fixed bottom-5 left-1/2 z-30 w-[calc(100%-32px)] max-w-100 rounded-full -translate-x-1/2 shadow-[4px_4px_15px_0px_rgba(0,0,0,0.15)]'>
       <ul className='flex h-16.5 items-center justify-between'>
         {menuList.map(({ label, href, icon: Icon }) => {
           const isActive = pathname === href || pathname.startsWith(`${href}/`);

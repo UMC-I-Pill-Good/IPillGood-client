@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { keepPreviousData, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getIntakeCalendar } from '../api/intake';
 
 export const useIntakeCalendar = () => {
@@ -14,7 +14,6 @@ export const useIntakeCalendar = () => {
     queryFn: () => getIntakeCalendar({ year, month }),
     select: (res) => res.result,
     staleTime: 1000 * 60 * 5,
-    placeholderData: keepPreviousData,
   });
 
   const getAdjacentYearMonth = (offset: number) => {

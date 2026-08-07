@@ -27,3 +27,8 @@ export type ResponseRecommendationRetry = CommonResponse<{
   status: 'PENDING' | 'FAILED' | 'NO_RESULT';
   startedAt: string;
 }>;
+
+export type ResponseRecommendationConfirm = CommonResponse<{
+  recommendationId: number;
+  onboardingCompleted: boolean;
+}>;

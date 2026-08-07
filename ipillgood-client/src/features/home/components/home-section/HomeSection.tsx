@@ -1,4 +1,3 @@
-import { HeaderLogoIcon } from '@/assets';
 import IntakeSupplementSection from '../intake-supplement-section/IntakeSupplementSection';
 import TodayIntakeCheckSection from '../today-intake-check-section/TodayIntakeCheckSection';
 import IntakeCalendarSection from '../intake-calendar-section/IntakeCalendarSection';
@@ -8,13 +7,19 @@ import RecommendedSupplementSection from '../recommended-supplement-section/Reco
 const HomeSection = () => {
   return (
     <>
-      <header className='flex items-center w-full h-23'>
-        <HeaderLogoIcon className='-ml-4' role='img' aria-label='I Pill Good' />
-      </header>
+      {/* 섭취 중인 영양제 */}
       <IntakeSupplementSection />
+
+      {/* 영양제 섭취 체크 */}
       <TodayIntakeCheckSection />
+
+      {/* 영양제 복용 캘린더 */}
       <IntakeCalendarSection />
+
+      {/* 연속 섭취 */}
       <GrowthStageSection />
+
+      {/* 정기 추천 영양 성분 */}
       <RecommendedSupplementSection />
     </>
   );
