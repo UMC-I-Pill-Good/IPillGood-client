@@ -20,13 +20,18 @@ const AuthRedirect = ({ type, children }: AuthRedirectProps) => {
     const hasToken = !!getAccessToken();
     const onboardingCompleted = getOnboardingCompleted();
 
+    if (pathname.startsWith('/policy')) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setIsChecked(true);
+      return;
+    }
+
     if (pathname.startsWith('/survey')) {
       if (!hasToken) {
         router.replace('/login');
         return;
       }
 
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsChecked(true);
       return;
     }
