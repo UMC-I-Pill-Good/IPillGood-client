@@ -36,3 +36,6 @@ export { default as DropdownMenu } from './DropdownMenu';
 export { default as FetchError } from './FetchError';
 export { default as LoadMoreError } from './LoadMoreError';
 export { default as LoadingSpinner } from './LoadingSpinner';
+
+/* Toast */
+export { default as Toast } from './Toast';
