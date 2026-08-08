@@ -7,7 +7,7 @@ import { useIntakeToday } from '../../hooks/useIntakeToday';
 const TodayIntakeCheckSection = () => {
   const {
     allCompleted,
-    pendingProducts,
+    products,
     isModalOpen,
     setIsModalOpen,
     handleConfirm,
@@ -16,7 +16,7 @@ const TodayIntakeCheckSection = () => {
     isError,
   } = useIntakeToday();
 
-  if (isPending || isError || allCompleted || pendingProducts.length === 0) return null;
+  if (isPending || isError || allCompleted || products.length === 0) return null;
 
   return (
     <section className='w-full flex flex-col justify-center items-center mt-3 gap-3 py-4 rounded-[20px] home-card-glass'>
@@ -38,7 +38,7 @@ const TodayIntakeCheckSection = () => {
       />
       {isModalOpen && (
         <IntakeCheckModal
-          pendingProducts={pendingProducts}
+          products={products}
           isConfirming={isConfirming}
           onCancel={() => setIsModalOpen(false)}
           onConfirm={handleConfirm}
