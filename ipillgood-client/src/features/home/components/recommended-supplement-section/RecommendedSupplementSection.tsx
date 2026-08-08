@@ -35,7 +35,10 @@ const RecommendedSupplementSection = () => {
     <section className='flex flex-col gap-2 mt-8' ref={sectionRef}>
       <article className='flex justify-between items-center'>
         <h2 className='text-black typo-body-5'>정기 추천 영양 성분</h2>
-        <Link href='/survey' className='text-neutral-800 typo-caption-6 hover:text-primary'>
+        <Link
+          href='/survey'
+          className='flex items-center text-neutral-800 h-8 typo-caption-6 px-3 rounded-full bg-linear-[145deg] from-white via-white/40 to-white/10 shadow-[0px_4px_4px_0px_rgba(126,131,135,0.10),inset_-2px_-3px_3px_-1px_rgba(0,0,0,0.03)] border-white border transition hover:from-white/10 hover:via-white/40 hover:to-white'
+        >
           설문 다시하기
         </Link>
       </article>

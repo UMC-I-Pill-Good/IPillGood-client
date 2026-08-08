@@ -4,7 +4,7 @@ import { Header } from '@/shared/layout';
 const NotificationsPage = () => {
   return (
     <main>
-      <Header title='알림 설정' showCloseButton={true} />
+      <Header title='알림 설정' />
       <NotificationSection />
     </main>
   );
