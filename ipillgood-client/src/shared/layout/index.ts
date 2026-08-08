@@ -4,3 +4,4 @@ export { default as StepHeader } from './StepHeader';
 export { default as AuthRedirect } from './AuthRedirect';
 export { default as AdminSidebar } from './AdminSidebar';
 export { default as AdminFooter } from './AdminFooter';
+export { default as AdminHeader } from './AdminHeader';
