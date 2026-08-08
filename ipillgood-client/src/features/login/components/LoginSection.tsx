@@ -3,6 +3,9 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
+import { useSignupDraftStore } from '@/features/signup/stores/useSignupDraftStore';
+import { useAgreementStore } from '@/features/signup/stores/useAgreementStore';
 import SocialLoginForm from './SocialLoginForm';
 import LoginForm from './LoginForm';
 import LinkConnectionModal from './modal/LinkConnectionModal';
@@ -12,6 +15,11 @@ const LoginSection = () => {
   const searchParams = useSearchParams();
   const isLinkModalOpen = searchParams.get('accountLink') === 'true';
   const { submitAccountLink, cancelAccountLink, isPending } = useSocialAccountLinkMutation();
+
+  useEffect(() => {
+    useSignupDraftStore.getState().resetDraft();
+    useAgreementStore.getState().reset();
+  }, []);
 
   return (
     <>

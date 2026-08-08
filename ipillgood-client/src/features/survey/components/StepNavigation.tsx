@@ -33,6 +33,7 @@ const StepNavigation = ({ step, onBack }: StepNavigationProps) => {
         {(step > 1 || onboardingCompleted) && (
           <IconButton icon={<ChevronLeft size={26} />} ariaLabel='뒤로 가기' onClick={onBack} />
         )}
+        {step === 1 && !onboardingCompleted && <div className='size-9' />}
         <IconButton
           icon={<X size={26} />}
           ariaLabel='취소 모달 열기'
@@ -59,6 +60,7 @@ const StepNavigation = ({ step, onBack }: StepNavigationProps) => {
               설문을 <span className='text-semantic'>중단</span>하시겠습니까?
             </span>
           }
+
           onCancel={() => setIsOpenModal(false)}
           onConfirm={() => {
             resetSurvey();

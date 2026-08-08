@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useSetAtom } from 'jotai';
@@ -7,7 +7,8 @@ import { postSignup } from '../api/signup';
 import { getDuplicateCheckEmail } from '../api/duplicate';
 import { emailDuplicatedAtom } from '../atoms/signup.atom';
 import { useAgreementStore } from '../stores/useAgreementStore';
-import { useCallback } from 'react';
+import { useSignupDraftStore } from '../stores/useSignupDraftStore';
+import { useCallback, useEffect } from 'react';
 
 export const useSignupForm = () => {
   const router = useRouter();
@@ -18,15 +19,29 @@ export const useSignupForm = () => {
 
   const setEmailServerErrorMessage = useSetAtom(emailDuplicatedAtom);
   const checked = useAgreementStore((s) => s.checked);
+  const signupDraft = useSignupDraftStore.getState().draft;
+  const setSignupDraft = useSignupDraftStore((state) => state.setDraft);
 
   const form = useForm<SignupType>({
     resolver: zodResolver(signupSchema),
     mode: 'onChange',
-    defaultValues: { nickname: '', id: '', email: '', password: '', passwordConfirm: '' },
+    defaultValues: signupDraft,
   });
+  const formValues = useWatch({ control: form.control });
+
+  useEffect(() => {
+    setSignupDraft({
+      nickname: formValues.nickname ?? '',
+      id: formValues.id ?? '',
+      email: formValues.email ?? '',
+      password: formValues.password ?? '',
+      passwordConfirm: formValues.passwordConfirm ?? '',
+    });
+  }, [formValues, setSignupDraft]);
 
   const handleBack = useCallback(() => {
     if (step === 1) {
+      useSignupDraftStore.getState().resetDraft();
       router.push('/login');
       return;
     }
@@ -70,6 +85,7 @@ export const useSignupForm = () => {
 
       await postSignup(request);
       useAgreementStore.getState().reset();
+      useSignupDraftStore.getState().resetDraft();
       router.push('/signup?step=3');
     } catch (err) {
       console.error(err);
