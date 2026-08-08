@@ -23,3 +23,21 @@ export type ResponseSignup = CommonResponse<{
   onboardingCompleted: boolean;
   createdAt: string;
 }>;
+
+export type RequestSocialSignup = {
+  socialSignupToken: string;
+  policyAgreements: PolicyAgreement[];
+};
+
+export type ResponseSocialSignup = CommonResponse<{
+  memberId: number;
+  provider: 'KAKAO' | 'NAVER';
+  nickname: string;
+  email: string;
+  profileImageUrl: string;
+  onboardingCompleted: boolean;
+  createdAt: string;
+  accessToken: string;
+  tokenType: string;
+  expiresIn: number;
+}>;

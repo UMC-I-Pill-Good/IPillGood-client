@@ -2,10 +2,10 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { postKakaoSignup } from '@/features/login/api/social-login';
-import { type RequestSocialSignup } from '@/features/login/types/social-login';
 import { useLocalStorage } from '@/shared/hooks';
 import { useAgreementStore } from '../stores/useAgreementStore';
+import { RequestSocialSignup } from '../types/signup';
+import { postKakaoSignup } from '../api/signup';
 
 export const useSocialSignupMutation = () => {
   const router = useRouter();
