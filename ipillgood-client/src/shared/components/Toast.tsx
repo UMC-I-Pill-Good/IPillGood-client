@@ -20,7 +20,7 @@ const Toast = () => {
             lineHeight: '16px',
             whiteSpace: 'nowrap',
             wordBreak: 'keep-all',
-            minWidth: '300px',
+            minWidth: '350px',
           },
         },
         error: {
@@ -36,7 +36,7 @@ const Toast = () => {
             lineHeight: '16px',
             whiteSpace: 'nowrap',
             wordBreak: 'keep-all',
-            minWidth: '300px',
+            minWidth: '350px',
           },
         },
       }}

@@ -53,7 +53,11 @@ const ExamplePage = () => {
           바텀시트 오픈
         </button>
         <button
-          onClick={() => showToast.success('성공했습니다')}
+          onClick={() =>
+            showToast.success(
+              '성공했습니다 성공했습니다 성공했습니다 성공했습니다 성공했습니다 성공했습니다',
+            )
+          }
           className='bg-green-400 text-white px-4 py-2 rounded'
         >
           성공 토스트
