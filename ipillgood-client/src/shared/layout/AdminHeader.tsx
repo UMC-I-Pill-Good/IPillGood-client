@@ -15,7 +15,7 @@ const AdminHeader = () => {
   }
 
   return (
-    <header className='flex shrink-0 items-center justify-between bg-white px-5 py-4'>
+    <header className='flex shrink-0 items-center justify-between bg-white px-5 py-5'>
       <div className='flex w-full flex-col justify-center gap-1'>
         <div className='flex items-center gap-1 text-center text-sm leading-none whitespace-nowrap'>
           <span className='font-medium text-neutral'>{headerContent.parentTitle} &gt;</span>
