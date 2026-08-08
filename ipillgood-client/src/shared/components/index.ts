@@ -23,6 +23,9 @@ export { default as Input } from './Input';
 export { SearchBar } from './SearchBar';
 export { default as AdminSearchBar } from './AdminSearchBar';
 
+/* pagination */
+export { default as AdminPagination } from './AdminPagination';
+
 /* selectionCard */
 export { default as SelectionCard } from './SelectionCard';
 

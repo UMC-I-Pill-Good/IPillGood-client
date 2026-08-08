@@ -1,16 +1,16 @@
-// 작업 하실 때 아래 주석에 맞게 레이아웃 추가해주시고 해당 주석처리들은 제거해주세요.
+import type { ReactNode } from 'react';
 
-// import AdminHeader from '@/shared/layout'
-// import AdminSidebar from '@/shared/layout';
+import { AdminFooter, AdminHeader, AdminSidebar } from '@/shared/layout';
 
-const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+const AdminLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className='mx-auto min-h-dvh w-full max-w-7xl bg-background'>
-      {/*AdminHeader  */}
-
-      {children}
-
-      {/*AdminSidebar  */}
+    <div className='mx-auto flex min-h-dvh w-full max-w-7xl bg-background'>
+      <AdminSidebar />
+      <div className='flex min-w-0 flex-1 flex-col'>
+        <AdminHeader />
+        <div className='flex flex-1 flex-col'>{children}</div>
+        <AdminFooter />
+      </div>
     </div>
   );
 };

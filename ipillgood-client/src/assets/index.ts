@@ -118,5 +118,6 @@ export { default as ForkKnifeIcon } from './icons/fork-knife.svg';
 export { default as AdminChevronIcon } from './icons/admin/chevron-up.svg';
 export { default as AdminDashboardIcon } from './icons/admin/dashboard.svg';
 export { default as AdminLogoutIcon } from './icons/admin/logout-vector.svg';
-export { default as AdminLogoIcon } from './icons/admin/logo.svg';
 export { default as AdminSearchIcon } from './icons/admin/search.svg';
+export { default as AdminPaginationChevronIcon } from './icons/admin/pagination-chevron.svg';
+export { default as AdminLogoIcon } from './icons/admin/logo.svg';
