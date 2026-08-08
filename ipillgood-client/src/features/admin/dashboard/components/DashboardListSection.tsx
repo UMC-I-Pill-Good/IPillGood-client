@@ -2,24 +2,30 @@
 
 import { useState } from 'react';
 
-import { AdminPagination } from '@/shared/components';
-
+import type { DashboardTableType } from '../types/Dashboard';
 import DashboardSectionHeader from './DashboardSectionHeader';
+import DashboardTable from './DashboardTable';
 
 interface DashboardListSectionProps {
   title: string;
   href: string;
   totalPages: number;
+  tableType: DashboardTableType;
 }
 
-const DashboardListSection = ({ title, href, totalPages }: DashboardListSectionProps) => {
+const DashboardListSection = ({
+  title,
+  href,
+  totalPages,
+  tableType,
+}: DashboardListSectionProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   return (
     <section className='flex flex-col gap-2'>
       <DashboardSectionHeader title={title} href={href} />
-      <div>{/* 관리자 공통 테이블 사용 */}</div>
-      <AdminPagination
+      <DashboardTable
+        tableType={tableType}
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={setCurrentPage}
