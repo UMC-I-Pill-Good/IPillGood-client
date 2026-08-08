@@ -37,6 +37,9 @@ export const useAddIntakeProducts = () => {
       queryClient.invalidateQueries({ queryKey: ['cabinetProducts'] });
       queryClient.invalidateQueries({ queryKey: ['activeProducts'] });
       queryClient.invalidateQueries({ queryKey: intakeTodayQueryKey });
+      queryClient.invalidateQueries({ queryKey: ['intakeCalendar'] });
+      queryClient.invalidateQueries({ queryKey: ['growthStage'] });
+
       router.push('/cabinet');
     },
     onError: (error) => {
