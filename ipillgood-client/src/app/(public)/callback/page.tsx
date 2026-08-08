@@ -19,13 +19,22 @@ const CallbackPage = () => {
     hasProcessed.current = true;
 
     const socialSignupToken = searchParams.get('socialSignupToken');
+    const accountLinkToken = searchParams.get('accountLinkToken');
     const provider = searchParams.get('provider');
 
     if (socialSignupToken && provider) {
-      localStorage.setItem('socialSignupToken', socialSignupToken);
-      localStorage.setItem('provider', provider);
+      sessionStorage.setItem('socialSignupToken', socialSignupToken);
+      sessionStorage.setItem('provider', provider);
 
       router.replace('/signup/social');
+      return;
+    }
+
+    // 임시 토큰은 세션 스토리지 활용
+    if (accountLinkToken && (provider === 'kakao' || provider === 'naver')) {
+      sessionStorage.setItem('accountLinkToken', accountLinkToken);
+      sessionStorage.setItem('accountLinkProvider', provider);
+      router.replace('/login?accountLink=true');
       return;
     }
 

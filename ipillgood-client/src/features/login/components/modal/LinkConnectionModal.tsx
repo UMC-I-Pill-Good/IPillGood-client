@@ -16,10 +16,10 @@ const LinkConnectionModal = ({ onConfirm, onCancel, isPending }: LogoutModalProp
     >
       <div className='flex flex-col items-center'>
         <div className='w-25 h-25 rounded-full bg-primary-200 flex items-center justify-center mb-4'>
-          <Link2Off size={50} className='text-primary' />
+          <Link2Off size={42} className='text-primary' strokeWidth={2.5} />
         </div>
         <p className='text-center typo-body-1 mb-2 text-black'>이미 가입된 계정이 있어요</p>
-        <p className='text-center typo-body-10 text-neutral-800'>
+        <p className='text-center typo-body-10 text-neutral-800 leading-6!'>
           이미 해당 이메일로 가입된 계정이 있어요. <br />
           기존 계정에 <span className='text-primary-600 typo-body-5'>[카카오/네이버] </span>
           로그인을

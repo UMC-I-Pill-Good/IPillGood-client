@@ -61,7 +61,7 @@ axiosInstance.interceptors.response.use(
     }
 
     // 로그인, 회원가입 등 인증이 필요 없는 요청은 refresh 로직 대상에서 제외
-    const AUTH_FREE_URLS = ['/auth/login', '/auth/signup'];
+    const AUTH_FREE_URLS = ['/auth/login', '/auth/signup', '/auth/kakao/link', '/auth/naver/link'];
 
     if (AUTH_FREE_URLS.some((url) => request.url?.includes(url))) {
       return Promise.reject(error);

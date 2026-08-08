@@ -35,14 +35,14 @@ export const useSocialSignupMutation = () => {
       router.push('/login');
     },
     onSettled: () => {
-      localStorage.removeItem('socialSignupToken');
-      localStorage.removeItem('provider');
+      sessionStorage.removeItem('socialSignupToken');
+      sessionStorage.removeItem('provider');
     },
   });
 
   const submitSocialSignup = () => {
-    const socialSignupToken = localStorage.getItem('socialSignupToken');
-    const provider = localStorage.getItem('provider');
+    const socialSignupToken = sessionStorage.getItem('socialSignupToken');
+    const provider = sessionStorage.getItem('provider');
 
     if (!socialSignupToken || provider !== 'kakao') {
       alert('카카오 회원가입 정보를 찾을 수 없습니다. 다시 로그인해주세요.');
