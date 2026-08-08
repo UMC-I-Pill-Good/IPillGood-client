@@ -5,7 +5,10 @@ import { useRouter } from 'next/navigation';
 import { useLocalStorage } from '@/shared/hooks';
 import { useAgreementStore } from '../stores/useAgreementStore';
 import { RequestSocialSignup } from '../types/signup';
-import { postKakaoSignup } from '../api/signup';
+import { postKakaoSignup, postNaverSignup } from '../api/signup';
+
+type SocialProvider = 'kakao' | 'naver';
+type SocialSignupPayload = RequestSocialSignup & { provider: SocialProvider };
 
 export const useSocialSignupMutation = () => {
   const router = useRouter();
@@ -13,8 +16,8 @@ export const useSocialSignupMutation = () => {
   const { setTokens, setOnboardingCompleted } = useLocalStorage();
 
   const mutation = useMutation({
-    mutationFn: async (body: RequestSocialSignup) => {
-      const response = await postKakaoSignup(body);
+    mutationFn: async ({ provider, ...body }: SocialSignupPayload) => {
+      const response = provider === 'kakao' ? await postKakaoSignup(body) : await postNaverSignup(body);
 
       if (!response.isSuccess) {
         throw new Error(response.message);
@@ -44,13 +47,14 @@ export const useSocialSignupMutation = () => {
     const socialSignupToken = sessionStorage.getItem('socialSignupToken');
     const provider = sessionStorage.getItem('provider');
 
-    if (!socialSignupToken || provider !== 'kakao') {
-      alert('카카오 회원가입 정보를 찾을 수 없습니다. 다시 로그인해주세요.');
+    if (!socialSignupToken || (provider !== 'kakao' && provider !== 'naver')) {
+      alert('소셜 회원가입 정보를 찾을 수 없습니다. 다시 로그인해주세요.');
       router.push('/login');
       return;
     }
 
     mutation.mutate({
+      provider,
       socialSignupToken,
       policyAgreements: [
         { policyDocumentId: 1, agreed: checked.terms },
