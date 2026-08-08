@@ -74,8 +74,10 @@ const SupplementDetailBottomSheet = ({
             />
           </div>
           <article className='text-center space-y-2'>
-            <p className='typo-caption-2 text-center'>{data.result.brand}</p>
-            <p className='typo-subtitle-4 text-center line-clamp-1'>{data.result.productName}</p>
+            <p className='typo-caption-2 text-center mb-1'>{data.result.brand}</p>
+            <p className='typo-subtitle-4 text-center truncate leading-tight!'>
+              {data.result.productName}
+            </p>
           </article>
         </section>
 
