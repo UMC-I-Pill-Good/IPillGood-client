@@ -3,13 +3,13 @@
 import { AdminPaginationChevronIcon } from '@/assets';
 import { cn } from '@/shared/utils/cn';
 
-interface AdminPaginationProps {
+export type AdminPaginationProps = {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
   pageGroupSize?: number;
   className?: string;
-}
+};
 
 const AdminPagination = ({
   currentPage,

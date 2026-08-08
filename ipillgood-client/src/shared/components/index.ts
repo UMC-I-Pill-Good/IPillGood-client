@@ -25,6 +25,11 @@ export { default as AdminSearchBar } from './AdminSearchBar';
 
 /* pagination */
 export { default as AdminPagination } from './AdminPagination';
+export type { AdminPaginationProps } from './AdminPagination';
+
+/* table */
+export { default as AdminTable } from './AdminTable';
+export type { AdminTableColumn } from './AdminTable';
 
 /* selectionCard */
 export { default as SelectionCard } from './SelectionCard';
