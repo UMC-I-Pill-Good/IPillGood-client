@@ -66,7 +66,7 @@ const AdminTable = <T,>({
           <table
             aria-label={ariaLabel}
             className={cn(
-              'w-full table-fixed border-separate border-spacing-0 typo-body-2 text-black',
+              'w-full table-fixed border-separate border-spacing-0 typo-body-6 text-black',
               tableClassName,
             )}
           >
