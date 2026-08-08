@@ -122,6 +122,7 @@ export { default as AdminSearchIcon } from './icons/admin/search.svg';
 export { default as AdminFilterChevronIcon } from './icons/admin/filter-chevron.svg';
 export { default as AdminPaginationChevronIcon } from './icons/admin/pagination-chevron.svg';
 export { default as AdminLogoIcon } from './icons/admin/logo.svg';
+export { default as AdminUserIcon } from './icons/admin/AdminUserIcon.svg';
 export { default as FaqDeleteIcon } from './icons/admin/FaqDeleteIcon.svg';
 export { default as FaqDeleteVectorIcon } from './icons/admin/FaqDeleteVectorIcon.svg';
 export { default as FaqDoneIcon } from './icons/admin/FaqDoneIcon.svg';
