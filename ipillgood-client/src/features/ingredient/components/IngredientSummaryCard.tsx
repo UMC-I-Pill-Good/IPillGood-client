@@ -16,7 +16,7 @@ const IngredientSummaryCard = ({ name, imageUrl, description }: IngredientSummar
         <Image src={imageUrl} alt={name} fill className='object-contain' />
       </div>
 
-      <p className='typo-caption-2 text-neutral-800'>
+      <p className='typo-caption-2 text-neutral-900'>
         <span className='text-black'>{name}</span>
         {description.slice(name.length)}
       </p>
