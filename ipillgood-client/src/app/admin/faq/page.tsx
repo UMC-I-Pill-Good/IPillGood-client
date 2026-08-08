@@ -1,17 +1,7 @@
-'use client';
-
-import { useState } from 'react';
-
-import { AdminSearchBar } from '@/shared/components';
+import { FaqManagementContent } from '@/features/admin/faq';
 
 const FaqManagementPage = () => {
-  const [searchValue, setSearchValue] = useState('');
-
-  return (
-    <main className='p-5'>
-      <AdminSearchBar value={searchValue} onChange={setSearchValue} placeholder='제목으로 검색' />
-    </main>
-  );
+  return <FaqManagementContent />;
 };
 
 export default FaqManagementPage;
