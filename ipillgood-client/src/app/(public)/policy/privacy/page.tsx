@@ -1,7 +1,11 @@
 import PolicyDocumentSection from '@/features/policy/components/PolicyDocumentSection';
 import { Header } from '@/shared/layout';
 
-const PrivacyPolicyPage = async ({ searchParams }: PageProps<'/policy/privacy'>) => {
+interface PrivacyPolicyPageProps {
+  searchParams: Promise<{ type?: string }>;
+}
+
+const PrivacyPolicyPage = async ({ searchParams }: PrivacyPolicyPageProps) => {
   const { type } = await searchParams;
   const isSignup = type === 'signup';
 

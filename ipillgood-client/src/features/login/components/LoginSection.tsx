@@ -55,7 +55,7 @@ const LoginSection = () => {
 
         <Link
           href='/signup'
-          className='mt-1.5 block text-center typo-body-10 text-[#58616A] transition hover:underline'
+          className='mt-3 block text-center typo-body-10 text-[#58616A] transition hover:underline'
         >
           회원 가입하러 가기
         </Link>

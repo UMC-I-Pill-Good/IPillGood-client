@@ -1,7 +1,11 @@
 import PolicyDocumentSection from '@/features/policy/components/PolicyDocumentSection';
 import { Header } from '@/shared/layout';
 
-const HealthPolicyPage = async ({ searchParams }: PageProps<'/policy/health'>) => {
+interface HealthPolicyPageProps {
+  searchParams: Promise<{ type?: string }>;
+}
+
+const HealthPolicyPage = async ({ searchParams }: HealthPolicyPageProps) => {
   const { type } = await searchParams;
   const isSignup = type === 'signup';
 
