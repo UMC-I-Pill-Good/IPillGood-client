@@ -39,16 +39,16 @@ const PolicyDocumentSection = ({ documentType, isSignup }: PolicyDocumentSection
   return (
     <section className='flex h-[calc(100dvh-4.375rem)] flex-col overflow-hidden px-5 py-4'>
       {isSignup ? (
-        <p className='shrink-0 typo-caption-1 text-neutral-800'>
+        <p className='shrink-0 typo-caption-1 text-neutral-800 mb-8'>
           {data?.title}을 위해 동의해 주세요
         </p>
       ) : (
-        <p className='shrink-0 typo-caption-1 text-neutral-800'>
+        <p className='shrink-0 typo-caption-1 text-neutral-800 mb-8'>
           최종 업데이트: <time dateTime={effectiveAt}>{formattedDate}</time>
         </p>
       )}
 
-      {isSignup && <p className='typo-body-5 mt-8 mb-2'>{data?.title}</p>}
+      {isSignup && <p className='typo-body-5 mb-2'>{data?.title}</p>}
 
       {isLoading ? (
         <div className='min-h-0 flex-1 animate-pulse rounded-[20px] bg-neutral-100' />
