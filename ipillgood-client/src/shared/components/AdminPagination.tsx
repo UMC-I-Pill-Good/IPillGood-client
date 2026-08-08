@@ -1,7 +1,7 @@
 'use client';
 
 import { AdminPaginationChevronIcon } from '@/assets';
-import { cn } from '@/shared/utils';
+import { cn } from '@/shared/utils/cn';
 
 interface AdminPaginationProps {
   currentPage: number;

@@ -3,7 +3,7 @@
 import type { ChangeEvent, FormEvent } from 'react';
 
 import { AdminSearchIcon } from '@/assets';
-import { cn } from '@/shared/utils';
+import { cn } from '@/shared/utils/cn';
 
 interface AdminSearchBarProps {
   value: string;
