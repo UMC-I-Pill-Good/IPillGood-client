@@ -33,7 +33,7 @@ const PolicyDocumentSection = ({ documentType }: PolicyDocumentSectionProps) => 
       {isLoading ? (
         <div className='h-40 rounded-[20px] animate-pulse bg-neutral-100' />
       ) : (
-        <article className='bg-white px-3 py-4 rounded-[20px] text-black whitespace-pre-wrap'>
+        <article className='bg-white px-3 py-4 rounded-[20px] text-black whitespace-pre-wrap leading-5'>
           {content}
         </article>
       )}

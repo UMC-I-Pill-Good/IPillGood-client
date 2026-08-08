@@ -1,8 +1,11 @@
+'use client';
+
 import { ConfirmModal, IconButton } from '@/shared/components';
 import clsx from 'clsx';
 import { ChevronLeft, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocalStorage } from '@/shared/hooks';
 import { useResetSurvey } from '../hooks/useResetSurvey';
 
 interface StepNavigationProps {
@@ -14,13 +17,22 @@ const StepNavigation = ({ step, onBack }: StepNavigationProps) => {
   const router = useRouter();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [onboardingCompleted, setOnboardingCompleted] = useState(false);
 
   const { resetSurvey } = useResetSurvey(); // 설문 상태 초기화
+  const { getOnboardingCompleted } = useLocalStorage();
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setOnboardingCompleted(getOnboardingCompleted());
+  }, [getOnboardingCompleted]);
 
   return (
     <section>
       <article className='flex items-center justify-between'>
-        <IconButton icon={<ChevronLeft size={26} />} ariaLabel='뒤로 가기' onClick={onBack} />
+        {(step > 1 || onboardingCompleted) && (
+          <IconButton icon={<ChevronLeft size={26} />} ariaLabel='뒤로 가기' onClick={onBack} />
+        )}
         <IconButton
           icon={<X size={26} />}
           ariaLabel='취소 모달 열기'

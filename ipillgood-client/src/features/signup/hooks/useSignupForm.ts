@@ -27,10 +27,11 @@ export const useSignupForm = () => {
 
   const handleBack = useCallback(() => {
     if (step === 1) {
-      router.back();
+      router.push('/login');
       return;
     }
-    router.push('/signup?step=1');
+
+    router.back();
   }, [step, router]);
 
   const onSubmit = form.handleSubmit(async (data) => {
