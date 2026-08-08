@@ -18,7 +18,7 @@ const IngredientSection = () => {
     return (
       <>
         <Header title='영양성분' />
-        <p className='px-5 py-10 text-center typo-body-10 text-neutral-800'>
+        <p className='px-5 py-10 text-center typo-body-10 text-neutral-900'>
           성분 정보를 불러오지 못했습니다.
         </p>
       </>
@@ -30,7 +30,7 @@ const IngredientSection = () => {
     return (
       <>
         <Header title='영양성분' />
-        <p className='px-5 py-10 text-center typo-body-10 text-neutral-800'>불러오는 중...</p>
+        <p className='px-5 py-10 text-center typo-body-10 text-neutral-900'>불러오는 중...</p>
       </>
     );
   }
@@ -51,7 +51,7 @@ const IngredientSection = () => {
   return (
     <>
       <Header title={name} />
-      <section className='px-5 pt-4 pb-22 flex-1 flex flex-col'>
+      <section className='px-5 pt-4 pb-24.5 flex-1 flex flex-col'>
         <IngredientSummaryCard name={name} imageUrl={imageUrl} description={description} />
         <IngredientEffectSection effects={effects} />
         <IngredientInfoGridSection

@@ -1,8 +1,8 @@
 'use client';
 
 import useEmblaCarousel from 'embla-carousel-react';
-import type { KeyboardEvent } from 'react';
 import { Chip } from '@/shared/components';
+import { useEmblaKeyboardNav } from '@/shared/hooks';
 
 interface IngredientNameCarouselProps {
   ingredientNameList: string[];
@@ -15,16 +15,7 @@ const IngredientNameCarousel = ({ ingredientNameList }: IngredientNameCarouselPr
     containScroll: 'trimSnaps',
   });
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'ArrowLeft') {
-      event.preventDefault();
-      emblaApi?.scrollPrev();
-    }
-    if (event.key === 'ArrowRight') {
-      event.preventDefault();
-      emblaApi?.scrollNext();
-    }
-  };
+  const handleKeyDown = useEmblaKeyboardNav(emblaApi);
 
   return (
     <div

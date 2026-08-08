@@ -15,14 +15,14 @@ const PolicyDocumentSection = ({ documentType }: PolicyDocumentSectionProps) => 
   // 임시 (UI 미정)
   if (isError || (!isLoading && !data)) {
     return (
-      <section className='flex flex-col px-5 py-4 gap-8 pb-25.5'>
+      <section className='flex flex-col px-5 py-4 gap-8 pb-28.5'>
         <p className='typo-caption-1 text-neutral-800'>문서를 불러오지 못했습니다.</p>
       </section>
     );
   }
 
   return (
-    <section className='flex flex-col px-5 py-4 gap-8 pb-25.5'>
+    <section className='flex flex-col px-5 py-4 gap-8 pb-28.5'>
       {isLoading ? (
         <div className='w-24 h-3.5 rounded animate-pulse bg-neutral-100' />
       ) : (

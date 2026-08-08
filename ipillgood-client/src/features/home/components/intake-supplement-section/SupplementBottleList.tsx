@@ -5,6 +5,7 @@ import SupplementBottleItem from './SupplementBottleItem';
 import { ActiveProductType } from '../../types/intakeSupplement.type';
 import { useState } from 'react';
 import { ConfirmModal, SupplementDetailBottomSheet } from '@/shared/components';
+import { useEmblaKeyboardNav } from '@/shared/hooks';
 import { useIntakeSupplement } from '../../hooks/useIntakeSupplement';
 
 const SupplementBottleList = () => {
@@ -20,10 +21,7 @@ const SupplementBottleList = () => {
   });
 
   // 키보드 접근성
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowLeft') emblaApi?.scrollPrev();
-    if (e.key === 'ArrowRight') emblaApi?.scrollNext();
-  };
+  const handleKeyDown = useEmblaKeyboardNav(emblaApi);
 
   return (
     <>

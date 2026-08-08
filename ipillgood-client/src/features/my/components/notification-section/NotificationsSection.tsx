@@ -15,7 +15,7 @@ const NotificationSection = () => {
 
   // TODO: 푸시 알림이 OFF일때 전체 알림 OFF
   return (
-    <section className='flex flex-col px-5 py-4 gap-8'>
+    <section className='flex flex-col px-5 py-4 gap-8 pb-28.5'>
       <p className='typo-body-6 text-neutral-800'>섭취 중인 영양제의 알림을 설정해 보세요.</p>
 
       <NotificationCard title='전체 알림 ON/OFF'>

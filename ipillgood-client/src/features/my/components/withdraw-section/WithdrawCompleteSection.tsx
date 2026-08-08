@@ -9,7 +9,7 @@ const WithdrawCompleteSection = () => {
   const router = useRouter();
 
   return (
-    <section className='flex flex-col flex-1 items-center justify-center pt-12.75 pb-20 px-5'>
+    <section className='flex flex-col flex-1 items-center justify-center pt-12.75 pb-28.5 px-5'>
       <div className='flex items-center justify-center w-25 h-25 rounded-full bg-primary-200'>
         <Check size={60} className='text-primary-600' />
       </div>

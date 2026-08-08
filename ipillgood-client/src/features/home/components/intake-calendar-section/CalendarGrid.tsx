@@ -19,7 +19,7 @@ const CalendarGrid = ({ year, month, days, onDayClick }: CalendarGridProps) => {
   return (
     <div className='grid grid-cols-7 place-items-center gap-y-2 -mx-3'>
       {WEEKDAY_LABEL_LIST.map((label) => (
-        <div key={label} className='typo-caption-5 text-primary-600'>
+        <div key={label} className='typo-caption-5 text-primary-700'>
           {label}
         </div>
       ))}
@@ -36,7 +36,7 @@ const CalendarGrid = ({ year, month, days, onDayClick }: CalendarGridProps) => {
             key={day.date}
             onClick={day.selectable ? () => onDayClick(day.date) : undefined}
             className={`relative z-0 h-6.75 flex items-center justify-center w-6.75 typo-caption-6 ${
-              isFuture ? 'text-neutral-800' : 'text-[#111]'
+              isFuture ? 'text-neutral-800' : 'text-black'
             } ${day.selectable ? 'cursor-pointer' : 'cursor-default'}`}
           >
             <div className='absolute -z-10'>
