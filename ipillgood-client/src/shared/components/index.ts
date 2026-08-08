@@ -21,6 +21,7 @@ export { default as Input } from './Input';
 
 /* search */
 export { SearchBar } from './SearchBar';
+export { default as AdminSearchBar } from './AdminSearchBar';
 
 /* selectionCard */
 export { default as SelectionCard } from './SelectionCard';
