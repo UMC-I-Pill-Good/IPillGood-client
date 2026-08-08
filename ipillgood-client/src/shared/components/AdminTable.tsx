@@ -55,7 +55,7 @@ const AdminTable = <T,>({
   className,
   tableClassName,
 }: AdminTableProps<T>) => {
-  const normalizedMinRows = Math.max(0, Math.floor(minRows ?? 0));
+  const normalizedMinRows = Number.isFinite(minRows) ? Math.max(0, Math.floor(minRows ?? 0)) : 0;
   const emptyRowCount = Math.max(0, normalizedMinRows - data.length);
   const emptyRowList = Array.from({ length: emptyRowCount });
 
