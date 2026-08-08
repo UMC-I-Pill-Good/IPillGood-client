@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { MascotSadIcon } from '@/assets';
-import { FetchError, LoadingSpinner, TextButton } from '@/shared/components';
+import { FetchError, LoadMoreError, LoadingSpinner, TextButton } from '@/shared/components';
 import { Header } from '@/shared/layout';
 import { getRankingProductDetail } from '@/features/ranking/api/getRankingProductDetail';
 import SupplementDetailSummaryCard from '@/features/ranking/components/detail/SupplementDetailSummaryCard';
@@ -44,7 +44,7 @@ const ReviewList = ({ productId }: ReviewListProps) => {
   const reviewList = reviewQuery.data?.pages.flatMap((page) => page.reviews) ?? [];
   const reviewCount = reviewQuery.data?.pages[0]?.reviewCount ?? 0;
   const isPending = productQuery.isPending || reviewQuery.isPending;
-  const isError = productQuery.isError || reviewQuery.isError;
+  const isInitialError = productQuery.isError || (reviewQuery.isError && !reviewQuery.data);
 
   const handleRetry = () => {
     void Promise.all([productQuery.refetch(), reviewQuery.refetch()]);
@@ -59,7 +59,7 @@ const ReviewList = ({ productId }: ReviewListProps) => {
         </section>
       )}
       {isPending && <LoadingSpinner />}
-      {isError && (
+      {isInitialError && (
         <FetchError description='후기 정보를 불러오지 못했습니다.' onRetry={handleRetry} />
       )}
       {productQuery.data && reviewQuery.data && (
@@ -85,7 +85,12 @@ const ReviewList = ({ productId }: ReviewListProps) => {
                   onDelete={() => void reviewQuery.refetch()}
                 />
               ))}
-              {reviewQuery.hasNextPage && (
+              {reviewQuery.isFetchNextPageError ? (
+                <LoadMoreError
+                  message='후기를 추가로 불러오지 못했습니다.'
+                  onRetry={() => void reviewQuery.fetchNextPage()}
+                />
+              ) : reviewQuery.hasNextPage ? (
                 <TextButton
                   type='button'
                   text={reviewQuery.isFetchingNextPage ? '불러오는 중...' : '후기 더보기'}
@@ -95,7 +100,7 @@ const ReviewList = ({ productId }: ReviewListProps) => {
                   className='mx-auto mt-2 px-5'
                   onClick={() => reviewQuery.fetchNextPage()}
                 />
-              )}
+              ) : null}
             </div>
           )}
         </section>

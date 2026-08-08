@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { FilterIcon } from '@/assets';
-import { FetchError } from '@/shared/components';
+import { FetchError, LoadMoreError } from '@/shared/components';
 import type { ProductSearchItemDto, RankingUiSort } from '../../types/ranking';
 import RankingSupplementList from '../default/RankingSupplementList';
 import SortDropdownTrigger from '../default/SortDropdownTrigger';
@@ -158,7 +158,7 @@ const RankingResultContent = ({
           </section>
         )}
         {loadMoreErrorMessage && (
-          <FetchError description={loadMoreErrorMessage} onRetry={onRetryLoadMore} />
+          <LoadMoreError message={loadMoreErrorMessage} onRetry={onRetryLoadMore} />
         )}
         <div ref={loadMoreRef} className='h-px w-full' />
       </section>
