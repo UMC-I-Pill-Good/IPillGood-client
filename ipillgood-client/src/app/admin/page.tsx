@@ -8,13 +8,11 @@ const AdminDashboardPage = () => {
         <DashboardListSection
           title='최근 신고된 후기'
           href='/admin/reviews'
-          totalPages={5}
           tableType='reviews'
         />
         <DashboardListSection
           title='최근 신고된 FAQ'
           href='/admin/faq'
-          totalPages={5}
           tableType='faq'
         />
       </div>

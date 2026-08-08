@@ -1,7 +1,6 @@
 import { AdminTable } from '@/shared/components';
 import type { AdminTableColumn } from '@/shared/components';
 
-import { DASHBOARD_FAQ_LIST, DASHBOARD_REVIEW_LIST } from '../constants/DashboardList';
 import type {
   DashboardFaqItemType,
   DashboardReviewItemType,
@@ -35,6 +34,8 @@ const DASHBOARD_FAQ_COLUMN_LIST: readonly AdminTableColumn<DashboardFaqItemType>
 
 interface DashboardTableProps {
   tableType: DashboardTableType;
+  reviewList: DashboardReviewItemType[];
+  faqList: DashboardFaqItemType[];
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
@@ -42,6 +43,8 @@ interface DashboardTableProps {
 
 const DashboardTable = ({
   tableType,
+  reviewList,
+  faqList,
   currentPage,
   totalPages,
   onPageChange,
@@ -52,7 +55,7 @@ const DashboardTable = ({
     return (
       <AdminTable
         columns={DASHBOARD_REVIEW_COLUMN_LIST}
-        data={DASHBOARD_REVIEW_LIST}
+        data={reviewList}
         getRowKey={(review) => review.id}
         minRows={6}
         tableMinWidth={1031}
@@ -66,7 +69,7 @@ const DashboardTable = ({
   return (
     <AdminTable
       columns={DASHBOARD_FAQ_COLUMN_LIST}
-      data={DASHBOARD_FAQ_LIST}
+      data={faqList}
       getRowKey={(faq) => faq.id}
       minRows={6}
       tableMinWidth={1031}
