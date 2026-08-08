@@ -30,4 +30,5 @@ export { default as DropdownMenu } from './DropdownMenu';
 
 /* Fetch */
 export { default as FetchError } from './FetchError';
+export { default as LoadMoreError } from './LoadMoreError';
 export { default as LoadingSpinner } from './LoadingSpinner';
