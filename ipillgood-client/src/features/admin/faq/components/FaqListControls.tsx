@@ -2,26 +2,46 @@
 
 import { useState } from 'react';
 
-import { AdminPagination, TextButton } from '@/shared/components';
+import { TextButton } from '@/shared/components';
 
+import type { FaqItemType } from '../types/Faq';
+import FaqDeleteModal from './FaqDeleteModal';
 import FaqFormModal from './FaqFormModal';
+import FaqTable from './FaqTable';
 
 const FAQ_TOTAL_PAGES = 5;
 
 const FaqListControls = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+  const [editingFaq, setEditingFaq] = useState<FaqItemType>();
+  const [deletingFaq, setDeletingFaq] = useState<FaqItemType>();
 
   const handleAddButtonClick = () => {
+    setEditingFaq(undefined);
     setIsFormModalOpen(true);
   };
 
   const handleFormModalClose = () => {
     setIsFormModalOpen(false);
+    setEditingFaq(undefined);
+  };
+
+  const handleEditButtonClick = (faq: FaqItemType) => {
+    setEditingFaq(faq);
+    setIsFormModalOpen(true);
+  };
+
+  const handleDeleteButtonClick = (faq: FaqItemType) => {
+    setDeletingFaq(faq);
+  };
+
+  const handleDeleteModalClose = () => {
+    setDeletingFaq(undefined);
   };
 
   return (
-    <section aria-label='FAQ 목록 제어' className='flex min-h-0 flex-1 flex-col px-10 pb-2'>
+    <section aria-label='FAQ 목록 제어' className='flex min-h-0 flex-1 flex-col gap-2 px-10 pb-2'>
       <div className='flex justify-end'>
         <TextButton
           text='+ FAQ 추가'
@@ -31,16 +51,15 @@ const FaqListControls = () => {
           className='px-3'
         />
       </div>
-      <div className='flex-1'>
-        {/* FAQ 테이블 관리 열에서 src/assets/icons/admin의 수정 및 삭제 아이콘 사용 */}
-      </div>
-      <AdminPagination
+      <FaqTable
         currentPage={currentPage}
         totalPages={FAQ_TOTAL_PAGES}
         onPageChange={setCurrentPage}
-        className='mt-auto'
+        onEdit={handleEditButtonClick}
+        onDelete={handleDeleteButtonClick}
       />
-      {isFormModalOpen && <FaqFormModal onClose={handleFormModalClose} />}
+      {isFormModalOpen && <FaqFormModal faq={editingFaq} onClose={handleFormModalClose} />}
+      {deletingFaq && <FaqDeleteModal onClose={handleDeleteModalClose} />}
     </section>
   );
 };

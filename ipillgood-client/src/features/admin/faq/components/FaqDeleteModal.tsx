@@ -3,7 +3,6 @@
 import { useState } from 'react';
 
 import {
-  FaqDoneIcon,
   FaqDoneVectorIcon,
   FaqModalCloseIcon,
   FaqWarningIcon,
@@ -41,9 +40,14 @@ const FaqDeleteModal = ({ onClose, onDelete }: FaqDeleteModalProps) => {
         </button>
 
         <div className='flex w-full items-center justify-center gap-2'>
-          <div className='relative size-10 shrink-0 overflow-hidden rounded-full bg-primary-200'>
-            <FaqDoneIcon aria-hidden='true' className='absolute inset-[20%] size-6' />
-            <FaqDoneVectorIcon aria-hidden='true' className='absolute inset-[20%] size-6' />
+          <div className='flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary-200'>
+            <span className='relative block h-[14px] w-[18px] shrink-0 overflow-hidden'>
+              <FaqDoneVectorIcon
+                aria-hidden='true'
+                className='absolute left-0 top-0 origin-top-left'
+                style={{ transform: 'scale(0.4091)' }}
+              />
+            </span>
           </div>
           <p className='w-[300px] text-xl font-semibold leading-none text-black'>
             삭제 처리되었습니다.

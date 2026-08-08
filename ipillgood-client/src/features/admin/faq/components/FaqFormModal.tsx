@@ -6,15 +6,20 @@ import { FaqModalCloseIcon } from '@/assets';
 import { ModalShell, TextButton } from '@/shared/components';
 
 import { FAQ_FORM_CATEGORY_LIST, type FaqCategoryType } from '../constants/FaqCategory';
+import type { FaqItemType } from '../types/Faq';
 
 interface FaqFormModalProps {
   onClose: () => void;
+  faq?: FaqItemType;
 }
 
-const FaqFormModal = ({ onClose }: FaqFormModalProps) => {
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<FaqCategoryType>('추천/성분');
+const FaqFormModal = ({ onClose, faq }: FaqFormModalProps) => {
+  const [question, setQuestion] = useState(faq?.question ?? '');
+  const [answer, setAnswer] = useState(faq?.answer ?? '');
+  const [selectedCategory, setSelectedCategory] = useState<FaqCategoryType>(
+    faq?.category ?? '추천/성분',
+  );
+  const modalTitle = faq ? 'FAQ 수정' : 'FAQ 추가';
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -23,18 +28,23 @@ const FaqFormModal = ({ onClose }: FaqFormModalProps) => {
 
   return (
     <ModalShell
-      ariaLabel='FAQ 추가'
+      ariaLabel={modalTitle}
       onClose={onClose}
       className='!w-[470px] !gap-8 !rounded-[20px] !px-5 !py-8 shadow-[4px_4px_20px_rgba(126,131,135,0.2)]'
     >
-      <button type='button' aria-label='FAQ 추가 모달 닫기' onClick={onClose} className='self-end'>
+      <button
+        type='button'
+        aria-label={`${modalTitle} 모달 닫기`}
+        onClick={onClose}
+        className='self-end'
+      >
         <FaqModalCloseIcon aria-hidden='true' className='size-[30px]' />
       </button>
 
       <form onSubmit={handleSubmit} className='flex w-full flex-col gap-8'>
         <div className='flex flex-col gap-4'>
           <div className='flex flex-col gap-8'>
-            <h2 className='text-2xl font-semibold leading-none text-black'>FAQ 추가</h2>
+            <h2 className='text-2xl font-semibold leading-none text-black'>{modalTitle}</h2>
 
             <div className='flex flex-col gap-4'>
               <label className='flex flex-col gap-2 text-xl font-medium leading-none text-black'>
