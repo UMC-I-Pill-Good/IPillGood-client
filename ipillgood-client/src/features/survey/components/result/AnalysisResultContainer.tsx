@@ -18,6 +18,7 @@ const AnalysisResultContainer = () => {
   const { data: myInfoData } = useMyInfoQuery();
 
   const { data, isPending, isError, refetch } = useRecommendationQuery(recommendationId);
+
   const {
     mutate: confirmRecommendation,
     isError: isConfirmError,
