@@ -14,6 +14,19 @@ export type DashboardFaqItemType = {
   createdAt: string;
 };
 
+export type DashboardFaqApiItemType = {
+  faqId: number;
+  question: string;
+  updatedAt: string;
+};
+
+export type DashboardFaqListResultType = {
+  faqs: DashboardFaqApiItemType[];
+  totalCount: number;
+  totalPages: number;
+  currentPage: number;
+};
+
 export type DashboardReviewReportApiItemType = {
   reportId: number;
   reviewContent: string;

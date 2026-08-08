@@ -51,7 +51,7 @@ const FaqFormModal = ({ onClose, onSubmit, faq, isSubmitting = false }: FaqFormM
     <ModalShell
       ariaLabel={modalTitle}
       onClose={onClose}
-      className='!w-[470px] !gap-8 !rounded-[20px] !px-5 !py-8 shadow-[4px_4px_20px_rgba(126,131,135,0.2)]'
+      className='w-[470px]! gap-8! rounded-[20px]! px-5! py-8! shadow-[4px_4px_20px_rgba(126,131,135,0.2)]'
     >
       <button
         type='button'

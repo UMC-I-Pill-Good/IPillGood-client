@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import {
   FaqDoneVectorIcon,
@@ -18,8 +18,22 @@ interface FaqDeleteModalProps {
 const FaqDeleteModal = ({ onClose, onDelete }: FaqDeleteModalProps) => {
   const [isDeleteComplete, setIsDeleteComplete] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const deletionLockRef = useRef(false);
+
+  const handleClose = () => {
+    if (deletionLockRef.current) {
+      return;
+    }
+
+    onClose();
+  };
 
   const handleDeleteClick = async () => {
+    if (deletionLockRef.current) {
+      return;
+    }
+
+    deletionLockRef.current = true;
     setIsDeleting(true);
 
     try {
@@ -28,6 +42,7 @@ const FaqDeleteModal = ({ onClose, onDelete }: FaqDeleteModalProps) => {
     } catch {
       // API 오류 시 확인 모달을 유지합니다.
     } finally {
+      deletionLockRef.current = false;
       setIsDeleting(false);
     }
   };
@@ -36,13 +51,13 @@ const FaqDeleteModal = ({ onClose, onDelete }: FaqDeleteModalProps) => {
     return (
       <ModalShell
         ariaLabel='FAQ 삭제 처리 완료'
-        onClose={onClose}
-        className='!h-28 !w-[380px] !gap-0 !rounded-none !px-3 !py-2 shadow-[4px_4px_20px_rgba(126,131,135,0.2)]'
+        onClose={handleClose}
+        className='h-28! w-[380px]! gap-0! rounded-none! px-3! py-2! shadow-[4px_4px_20px_rgba(126,131,135,0.2)]'
       >
         <button
           type='button'
           aria-label='FAQ 삭제 처리 완료 모달 닫기'
-          onClick={onClose}
+          onClick={handleClose}
           disabled={isDeleting}
           className='self-end'
         >
@@ -70,13 +85,14 @@ const FaqDeleteModal = ({ onClose, onDelete }: FaqDeleteModalProps) => {
   return (
     <ModalShell
       ariaLabel='FAQ 삭제 확인'
-      onClose={onClose}
-      className='!w-[380px] !gap-[60px] !rounded-[20px] !px-10 !py-5 shadow-[4px_4px_20px_rgba(126,131,135,0.2)]'
+      onClose={handleClose}
+      className='w-[380px]! gap-[60px]! rounded-[20px]! px-10! py-5! shadow-[4px_4px_20px_rgba(126,131,135,0.2)]'
     >
       <button
         type='button'
         aria-label='FAQ 삭제 확인 모달 닫기'
-        onClick={onClose}
+        onClick={handleClose}
+        disabled={isDeleting}
         className='self-end'
       >
         <FaqModalCloseIcon aria-hidden='true' className='size-[30px]' />
@@ -98,7 +114,8 @@ const FaqDeleteModal = ({ onClose, onDelete }: FaqDeleteModalProps) => {
           text='취소'
           variant='semanticOutline'
           size='sm'
-          onClick={onClose}
+          onClick={handleClose}
+          disabled={isDeleting}
           className='w-[124px] shadow-none'
         />
         <TextButton
