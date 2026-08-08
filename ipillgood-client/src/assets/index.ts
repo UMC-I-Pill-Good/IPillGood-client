@@ -113,3 +113,11 @@ export { default as BanIcon } from './icons/ban.svg';
 export { default as NoFoodIcon } from './icons/no-food.svg';
 export { default as ClockIcon } from './icons/clock.svg';
 export { default as ForkKnifeIcon } from './icons/fork-knife.svg';
+
+/* admin */
+export { default as AdminChevronIcon } from './icons/admin/chevron-up.svg';
+export { default as AdminDashboardIcon } from './icons/admin/dashboard.svg';
+export { default as AdminLogoutIcon } from './icons/admin/logout-vector.svg';
+export { default as AdminSearchIcon } from './icons/admin/search.svg';
+export { default as AdminPaginationChevronIcon } from './icons/admin/pagination-chevron.svg';
+export { default as AdminLogoIcon } from './icons/admin/logo.svg';
