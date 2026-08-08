@@ -9,7 +9,7 @@ import { cn } from '@/shared/utils/cn';
 
 import { FAQ_CATEGORY_LIST, type FaqCategoryType } from '../constants/FaqCategory';
 
-const FAQ_FILTER_OPTION_LIST = FAQ_CATEGORY_LIST.filter((category) => category !== '전체');
+const FAQ_FILTER_OPTION_LIST = FAQ_CATEGORY_LIST;
 
 interface FaqCategoryFilterProps {
   value: FaqCategoryType;

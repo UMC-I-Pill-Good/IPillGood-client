@@ -12,15 +12,24 @@ import { ModalShell, TextButton } from '@/shared/components';
 
 interface FaqDeleteModalProps {
   onClose: () => void;
-  onDelete?: () => void;
+  onDelete: () => Promise<void>;
 }
 
 const FaqDeleteModal = ({ onClose, onDelete }: FaqDeleteModalProps) => {
   const [isDeleteComplete, setIsDeleteComplete] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  const handleDeleteClick = () => {
-    onDelete?.();
-    setIsDeleteComplete(true);
+  const handleDeleteClick = async () => {
+    setIsDeleting(true);
+
+    try {
+      await onDelete();
+      setIsDeleteComplete(true);
+    } catch {
+      // API 오류 시 확인 모달을 유지합니다.
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   if (isDeleteComplete) {
@@ -34,6 +43,7 @@ const FaqDeleteModal = ({ onClose, onDelete }: FaqDeleteModalProps) => {
           type='button'
           aria-label='FAQ 삭제 처리 완료 모달 닫기'
           onClick={onClose}
+          disabled={isDeleting}
           className='self-end'
         >
           <FaqModalCloseIcon aria-hidden='true' className='size-[30px]' />
@@ -96,6 +106,7 @@ const FaqDeleteModal = ({ onClose, onDelete }: FaqDeleteModalProps) => {
           variant='semantic'
           size='sm'
           onClick={handleDeleteClick}
+          disabled={isDeleting}
           className='w-[124px] shadow-[4px_4px_2px_rgba(0,0,0,0.15)]'
         />
       </div>

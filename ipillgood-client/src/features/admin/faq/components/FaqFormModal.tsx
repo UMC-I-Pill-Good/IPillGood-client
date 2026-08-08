@@ -4,16 +4,19 @@ import { useState, type FormEvent } from 'react';
 
 import { FaqModalCloseIcon } from '@/assets';
 import { ModalShell, TextButton } from '@/shared/components';
+import { showToast } from '@/shared/utils/toast';
 
 import { FAQ_FORM_CATEGORY_LIST, type FaqCategoryType } from '../constants/FaqCategory';
-import type { FaqItemType } from '../types/Faq';
+import type { FaqFormValueType, FaqItemType } from '../types/Faq';
 
 interface FaqFormModalProps {
   onClose: () => void;
+  onSubmit: (value: FaqFormValueType) => Promise<void>;
   faq?: FaqItemType;
+  isSubmitting?: boolean;
 }
 
-const FaqFormModal = ({ onClose, faq }: FaqFormModalProps) => {
+const FaqFormModal = ({ onClose, onSubmit, faq, isSubmitting = false }: FaqFormModalProps) => {
   const [question, setQuestion] = useState(faq?.question ?? '');
   const [answer, setAnswer] = useState(faq?.answer ?? '');
   const [selectedCategory, setSelectedCategory] = useState<FaqCategoryType>(
@@ -21,9 +24,27 @@ const FaqFormModal = ({ onClose, faq }: FaqFormModalProps) => {
   );
   const modalTitle = faq ? 'FAQ 수정' : 'FAQ 추가';
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onClose();
+
+    const trimmedQuestion = question.trim();
+    const trimmedAnswer = answer.trim();
+
+    if (!trimmedQuestion || !trimmedAnswer) {
+      showToast.error('질문과 답변을 모두 입력해 주세요.');
+      return;
+    }
+
+    try {
+      await onSubmit({
+        question: trimmedQuestion,
+        answer: trimmedAnswer,
+        category: selectedCategory as Exclude<FaqCategoryType, '전체'>,
+      });
+      onClose();
+    } catch {
+      // API 오류 시 입력 내용을 유지합니다.
+    }
   };
 
   return (
@@ -52,6 +73,8 @@ const FaqFormModal = ({ onClose, faq }: FaqFormModalProps) => {
                 <input
                   value={question}
                   onChange={(event) => setQuestion(event.target.value)}
+                  maxLength={200}
+                  disabled={isSubmitting}
                   placeholder='질문을 입력하세요'
                   className='h-[45px] rounded-lg border border-neutral bg-white px-2 py-3 text-xl font-medium leading-none outline-none placeholder:text-neutral focus-visible:border-primary'
                 />
@@ -62,6 +85,8 @@ const FaqFormModal = ({ onClose, faq }: FaqFormModalProps) => {
                 <textarea
                   value={answer}
                   onChange={(event) => setAnswer(event.target.value)}
+                  maxLength={2000}
+                  disabled={isSubmitting}
                   placeholder='답변을 입력하세요'
                   className='h-[181px] resize-none rounded-lg border border-neutral bg-white px-2 py-3 text-xl font-medium leading-none outline-none placeholder:text-neutral focus-visible:border-primary'
                 />
@@ -81,6 +106,7 @@ const FaqFormModal = ({ onClose, faq }: FaqFormModalProps) => {
                     text={category}
                     variant={isSelected ? 'secondary' : 'assistive'}
                     size='sm'
+                    disabled={isSubmitting}
                     onClick={() => setSelectedCategory(category)}
                     className={
                       isSelected ? 'bg-secondary px-4 hover:bg-secondary-600' : 'px-4 text-neutral'
@@ -98,6 +124,7 @@ const FaqFormModal = ({ onClose, faq }: FaqFormModalProps) => {
             variant='outline'
             size='sm'
             onClick={onClose}
+            disabled={isSubmitting}
             className='w-32 border-secondary text-secondary shadow-none'
           />
           <TextButton
@@ -105,6 +132,7 @@ const FaqFormModal = ({ onClose, faq }: FaqFormModalProps) => {
             text='저장'
             variant='primary'
             size='sm'
+            disabled={isSubmitting}
             className='w-32 shadow-[4px_4px_2px_rgba(0,0,0,0.15)]'
           />
         </div>

@@ -1,7 +1,6 @@
 import { AdminTable } from '@/shared/components';
 import type { AdminTableColumn } from '@/shared/components';
 
-import { FAQ_LIST } from '../constants/FaqList';
 import type { FaqItemType } from '../types/Faq';
 import FaqTableActions from './FaqTableActions';
 
@@ -50,6 +49,7 @@ const getFaqTableColumnList = (
 ];
 
 interface FaqTableProps {
+  faqList: FaqItemType[];
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
@@ -57,11 +57,18 @@ interface FaqTableProps {
   onDelete: (faq: FaqItemType) => void;
 }
 
-const FaqTable = ({ currentPage, totalPages, onPageChange, onEdit, onDelete }: FaqTableProps) => {
+const FaqTable = ({
+  faqList,
+  currentPage,
+  totalPages,
+  onPageChange,
+  onEdit,
+  onDelete,
+}: FaqTableProps) => {
   return (
     <AdminTable
       columns={getFaqTableColumnList(onEdit, onDelete)}
-      data={FAQ_LIST}
+      data={faqList}
       getRowKey={(faq) => faq.id}
       minRows={11}
       tableMinWidth={1031}
