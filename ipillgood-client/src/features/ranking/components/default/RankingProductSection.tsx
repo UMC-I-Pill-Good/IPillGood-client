@@ -1,5 +1,5 @@
 import type { Ref } from 'react';
-import { FetchError } from '@/shared/components';
+import { FetchError, LoadMoreError } from '@/shared/components';
 import type { ProductSearchItemDto, RankingUiSort } from '../../types/ranking';
 import RankingResultSkeletonCard from '../result/RankingResultSkeletonCard';
 import RankingSupplementList from './RankingSupplementList';
@@ -63,7 +63,7 @@ const RankingProductSection = ({
             </section>
           )}
           {loadMoreErrorMessage && (
-            <FetchError description={loadMoreErrorMessage} onRetry={onRetryLoadMore} />
+            <LoadMoreError message={loadMoreErrorMessage} onRetry={onRetryLoadMore} />
           )}
           <div ref={loadMoreRef} className='h-px w-full' />
         </>
