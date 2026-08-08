@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
 import {
   genderAtom,
@@ -18,6 +18,8 @@ import { RequestSurveyInfo } from '../types/survey';
 import { LIFESTYLE_VALUE_MAP } from '../constants/lifestyle.constants';
 
 export const useSubmitSurveyMutation = () => {
+  const queryClient = useQueryClient();
+
   // survey step 1
   const birthYear = useAtomValue(birthYearAtom);
   const gender = useAtomValue(genderAtom);
@@ -78,6 +80,9 @@ export const useSubmitSurveyMutation = () => {
       };
 
       return postSurvey(body);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['recommendationCurrent'] });
     },
   });
 };
