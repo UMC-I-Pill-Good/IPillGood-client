@@ -1,6 +1,7 @@
 'use client';
 
 import { Header } from '@/shared/layout';
+import { FetchError, LoadingSpinner } from '@/shared/components';
 import SupplementDetailSummaryCard from '@/features/ranking/components/detail/SupplementDetailSummaryCard';
 import { useReviewForm } from '../hooks/useReviewForm';
 import type { ReviewFormMode } from '../types/reviewForm';
@@ -23,12 +24,14 @@ const ReviewForm = ({ mode, productId, reviewId }: ReviewFormProps) => {
     rating,
     imagePreviews,
     isLoading,
+    loadError,
     isSubmitting,
     submitError,
     setContent,
     setRating,
     handleImageChange,
     handleImageRemove,
+    handleRetryLoad,
     handleSubmit,
   } = useReviewForm({ mode, productId, reviewId });
 
@@ -36,7 +39,16 @@ const ReviewForm = ({ mode, productId, reviewId }: ReviewFormProps) => {
     return (
       <main className='min-h-dvh bg-background'>
         <Header title={title} />
-        <p className='p-5 typo-body-10 text-neutral-800'>후기 정보를 불러오는 중입니다.</p>
+        <LoadingSpinner />
+      </main>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <main className='min-h-dvh bg-background'>
+        <Header title={title} />
+        <FetchError description={loadError} onRetry={handleRetryLoad} />
       </main>
     );
   }
@@ -45,9 +57,10 @@ const ReviewForm = ({ mode, productId, reviewId }: ReviewFormProps) => {
     return (
       <main className='min-h-dvh bg-background'>
         <Header title={title} />
-        <p role={submitError ? 'alert' : undefined} className='p-5 typo-body-10 text-neutral-800'>
-          {submitError || '수정할 후기를 찾을 수 없습니다.'}
-        </p>
+        <FetchError
+          title='후기를 수정할 수 없어요'
+          description='수정할 후기를 찾을 수 없거나 수정 권한이 없습니다.'
+        />
       </main>
     );
   }

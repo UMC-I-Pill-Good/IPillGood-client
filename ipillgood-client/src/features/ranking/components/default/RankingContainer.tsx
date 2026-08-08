@@ -1,16 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
-import {
-  clearRecentKeywords,
-  deleteRecentKeyword,
-  getRecentKeywords,
-  saveRecentKeyword,
-} from '../../api/recentSearch';
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { useRankingInfiniteProducts } from '../../hooks/useRankingInfiniteProducts';
+import { useRecentSearches } from '../../hooks/useRecentSearches';
 import type { RankingUiSort } from '../../types/ranking';
-import type { RecentKeywordDto } from '../../types/recentSearch';
 import { DEFAULT_RANKING_FILTERS } from '../../constants/rankingFilter';
 import type { RankingFilterState } from '../../types/rankingFilter';
 import {
@@ -25,13 +20,17 @@ import RecentSearches from './RecentSearches';
 
 const RankingContainer = () => {
   const router = useRouter();
-  const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const [searchValue, setSearchValue] = useState('');
-  const [recentSearches, setRecentSearches] = useState<RecentKeywordDto[]>([]);
   const [selectedSort, setSelectedSort] = useState<RankingUiSort>('REVIEW_COUNT');
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState<RankingFilterState>(DEFAULT_RANKING_FILTERS);
   const [draftFilters, setDraftFilters] = useState<RankingFilterState>(DEFAULT_RANKING_FILTERS);
+  const {
+    recentSearchList,
+    handleSaveRecentSearch,
+    handleRemoveRecentSearch,
+    handleClearRecentSearches,
+  } = useRecentSearches();
   const rankingQueryParams = {
     size: 20,
     sort: selectedSort,
@@ -39,65 +38,31 @@ const RankingContainer = () => {
     ...toRankingQueryParams(appliedFilters),
     ...toRankingFilterRequestOptions(appliedFilters),
   };
-  const { hasNext, isInitialLoading, isLoadingMore, items, loadMore, message, resetLoadingState } =
-    useRankingInfiniteProducts({ queryParams: rankingQueryParams });
+  const {
+    hasNext,
+    isInitialLoading,
+    isLoadingMore,
+    items,
+    loadMore,
+    loadMoreErrorMessage,
+    message,
+    refetch,
+    retryLoadMore,
+  } = useRankingInfiniteProducts({ queryParams: rankingQueryParams });
+  const { ref: loadMoreRef, inView } = useInView({
+    threshold: 0,
+    rootMargin: '160px 0px',
+    skip: !hasNext,
+  });
 
   useEffect(() => {
-    let isMounted = true;
-
-    getRecentKeywords().then((response) => {
-      if (!isMounted || !response.isSuccess) return;
-
-      setRecentSearches(response.result?.keywords ?? []);
-    });
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!hasNext || isInitialLoading || isLoadingMore) return;
-
-    const loadMoreTarget = loadMoreRef.current;
-    if (!loadMoreTarget) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
-
-        loadMore();
-      },
-      {
-        rootMargin: '160px 0px',
-      },
-    );
-
-    observer.observe(loadMoreTarget);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [hasNext, isInitialLoading, isLoadingMore, loadMore]);
+    if (inView && hasNext && !isLoadingMore) {
+      loadMore();
+    }
+  }, [hasNext, inView, isLoadingMore, loadMore]);
 
   const handleChangeSearchValue = (value: string) => {
     setSearchValue(value);
-  };
-
-  const handleRemoveRecentSearch = async (keywordId: number) => {
-    const response = await deleteRecentKeyword(keywordId);
-    if (!response.isSuccess) return;
-
-    setRecentSearches((prevSearches) =>
-      prevSearches.filter((item) => item.keywordId !== keywordId),
-    );
-  };
-
-  const handleClearRecentSearches = async () => {
-    const response = await clearRecentKeywords();
-    if (!response.isSuccess) return;
-
-    setRecentSearches([]);
   };
 
   const handleOpenFilter = () => {
@@ -110,7 +75,6 @@ const RankingContainer = () => {
   };
 
   const handleApplyFilter = () => {
-    resetLoadingState();
     setAppliedFilters(draftFilters);
     setIsFilterOpen(false);
   };
@@ -118,30 +82,17 @@ const RankingContainer = () => {
   const handleSortChange = (nextSort: RankingUiSort) => {
     if (nextSort === selectedSort) return;
 
-    resetLoadingState();
     setSelectedSort(nextSort);
   };
 
-  const handleSubmitSearch = async () => {
+  const handleRetry = () => {
+    void refetch();
+  };
+
+  const handleSubmitSearch = () => {
     const nextSearchTerm = searchValue.trim();
     if (!nextSearchTerm) return;
-    try {
-      const recentKeywordResponse = await saveRecentKeyword(nextSearchTerm);
-      const savedKeyword = recentKeywordResponse.result;
-
-      if (recentKeywordResponse.isSuccess && savedKeyword) {
-        setRecentSearches((prevSearches) =>
-          [
-            savedKeyword,
-            ...prevSearches.filter((item) => item.keyword !== savedKeyword.keyword),
-          ].slice(0, 10),
-        );
-      } else {
-        console.error('Failed to save recent keyword', recentKeywordResponse.message);
-      }
-    } catch (error) {
-      console.error('Failed to save recent keyword', error);
-    }
+    handleSaveRecentSearch(nextSearchTerm);
 
     const searchParams = new URLSearchParams({
       search: nextSearchTerm,
@@ -163,7 +114,7 @@ const RankingContainer = () => {
       </section>
 
       <RecentSearches
-        searches={recentSearches}
+        searches={recentSearchList}
         onRemove={handleRemoveRecentSearch}
         onClear={handleClearRecentSearches}
       />
@@ -174,8 +125,11 @@ const RankingContainer = () => {
         message={message}
         isInitialLoading={isInitialLoading}
         isLoadingMore={isLoadingMore}
+        loadMoreErrorMessage={loadMoreErrorMessage}
         loadMoreRef={loadMoreRef}
         onSortChange={handleSortChange}
+        onRetry={handleRetry}
+        onRetryLoadMore={retryLoadMore}
       />
 
       <RankingFilterBottomSheet

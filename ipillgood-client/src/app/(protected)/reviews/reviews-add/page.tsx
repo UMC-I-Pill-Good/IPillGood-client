@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation';
+
 import ReviewForm from '@/features/reviews/components/ReviewForm';
 
 interface ReviewsAddPageProps {
@@ -6,7 +8,11 @@ interface ReviewsAddPageProps {
 
 const ReviewsAddPage = async ({ searchParams }: ReviewsAddPageProps) => {
   const { productId } = await searchParams;
-  const resolvedProductId = Number(productId) || 9001;
+  const resolvedProductId = Number(productId);
+
+  if (!Number.isSafeInteger(resolvedProductId) || resolvedProductId <= 0) {
+    notFound();
+  }
 
   return <ReviewForm mode='add' productId={resolvedProductId} />;
 };

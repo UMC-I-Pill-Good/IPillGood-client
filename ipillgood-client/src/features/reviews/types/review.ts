@@ -6,22 +6,16 @@ export type ReviewReportReason = 'AD_PROMOTION' | 'ABUSE' | 'FALSE_INFO' | 'PERS
 export type ReviewImageContentType = 'image/jpeg' | 'image/png' | 'image/webp';
 
 export type ReviewImageUploadRequest = {
-  images: {
-    fileName: string;
-    contentType: ReviewImageContentType;
-    displayOrder: number;
-  }[];
+  contentTypes: ReviewImageContentType[];
 };
 
 export type PresignedReviewUpload = {
-  imageKey: string;
-  presignedUrl: string;
-  displayOrder: number;
-  expiresAt: string;
+  key: string;
+  uploadUrl: string;
 };
 
 export type ReviewImageUploadResult = {
-  uploads: PresignedReviewUpload[];
+  images: PresignedReviewUpload[];
 };
 
 export type ReviewImageUploadApiResponse = ApiResponse<ReviewImageUploadResult>;
@@ -36,13 +30,12 @@ export type RankingReviewQuery = {
 export type RankingReviewItem = {
   reviewId: number;
   nickname: string;
-  profileImageKey: string;
-  reviewerAgeGroup: AgeGroup;
-  reviewerGender: Gender;
+  profileImageUrl: string | null;
+  ageGroup: AgeGroup;
+  gender: Gender;
   rating: number;
   content: string;
-  imageKeys: string[];
-  imageUrls: string[];
+  reviewImageUrls: string[];
   helpfulCount: number;
   helpedByMe: boolean;
   mine: boolean;
@@ -55,7 +48,7 @@ export type RankingReviewResult = {
   ratingAverage: number | null;
   reviews: RankingReviewItem[];
   size: number;
-  nextCursor: string;
+  nextCursor: string | null;
   sort: ReviewSort;
   hasNext: boolean;
 };
@@ -71,22 +64,70 @@ export type CreateReviewRequest = {
 
 export type CreateReviewResult = {
   reviewId: number;
+  productId: number;
+  rating: number;
+  content: string;
+  imageUrls: string[];
+  helpfulCount: number;
+  createdAt: string;
 };
 
 export type CreateReviewApiResponse = ApiResponse<CreateReviewResult>;
 
 export type UpdateRankingReviewRequest = {
-  rating?: number | null;
-  content?: string | null;
-  imageKeys?: string[];
+  rating: number;
+  content: string;
+  imageKeys: string[];
 };
 
 export type UpdateRankingReviewResult = {
   reviewId: number;
   rating: number;
   content: string;
-  imageKeys: string[];
+  imageUrls: string[];
   updatedAt: string;
 };
 
 export type UpdateRankingReviewApiResponse = ApiResponse<UpdateRankingReviewResult>;
+
+export type MyReviewResult = {
+  reviewId: number;
+  productId: number;
+  rating: number;
+  content: string;
+  imageKeys: string[];
+  imageUrls: string[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type MyReviewApiResponse = ApiResponse<MyReviewResult>;
+
+export type DeleteReviewResult = {
+  deleted: boolean;
+  reviewId: number;
+};
+
+export type DeleteReviewApiResponse = ApiResponse<DeleteReviewResult>;
+
+export type ReviewHelpfulResult = {
+  helpful: boolean;
+  reviewId: number;
+  helpfulCount: number;
+};
+
+export type ReviewHelpfulApiResponse = ApiResponse<ReviewHelpfulResult>;
+
+export type CreateReviewReportRequest = {
+  reason: ReviewReportReason;
+  detail?: string | null;
+};
+
+export type CreateReviewReportResult = {
+  reportId: number;
+  reviewId: number;
+  reason: ReviewReportReason;
+  createdAt: string;
+};
+
+export type CreateReviewReportApiResponse = ApiResponse<CreateReviewReportResult>;

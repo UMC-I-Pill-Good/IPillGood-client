@@ -11,8 +11,8 @@ const IngredientEffectSection = ({ effects }: IngredientEffectSectionProps) => {
       {/* ::marker는 margin을 지원하지 않아 list-style 대신 불렛을 직접 렌더링 */}
       <ul className='flex flex-col gap-1'>
         {displayEffects.map((effect) => (
-          <li key={effect} className='flex items-center text-neutral-800 typo-caption-2'>
-            <span className='w-1 h-1 rounded-full bg-neutral-800 mx-2.5' />
+          <li key={effect} className='flex items-center text-neutral-900 typo-caption-2'>
+            <span className='w-0.75 h-0.75 rounded-full bg-neutral-900 mx-2.5' />
             {effect}
           </li>
         ))}

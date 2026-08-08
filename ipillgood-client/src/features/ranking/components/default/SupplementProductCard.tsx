@@ -1,64 +1,17 @@
-'use client';
-
-import useEmblaCarousel from 'embla-carousel-react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { type KeyboardEvent, useState } from 'react';
 import { Omega3BottleIcon, RatingStarIcon, ValidBadgeIcon } from '@/assets';
-import { Chip } from '@/shared/components';
 import type { ProductSearchItemDto } from '../../types/ranking';
+import IngredientNameCarousel from './IngredientNameCarousel';
 import RankingBadge from './RankingBadge';
 
 interface SupplementProductCardProps {
   item: ProductSearchItemDto;
   displayRank: number;
 }
-interface IngredientNameListProps {
-  ingredientNameList: string[];
-}
-
-const IngredientNameCarousel = ({ ingredientNameList }: IngredientNameListProps) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: 'start',
-    dragFree: true,
-    containScroll: 'trimSnaps',
-  });
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'ArrowLeft') {
-      event.preventDefault();
-      emblaApi?.scrollPrev();
-    }
-    if (event.key === 'ArrowRight') {
-      event.preventDefault();
-      emblaApi?.scrollNext();
-    }
-  };
-
-  return (
-    <div
-      ref={emblaRef}
-      className='w-full overflow-x-auto'
-      role='region'
-      aria-roledescription='carousel'
-      aria-label='영양 성분 목록'
-      tabIndex={0}
-      onKeyDown={handleKeyDown}
-    >
-      <div className='flex gap-1'>
-        {ingredientNameList.map((ingredientName) => (
-          <div key={ingredientName} className='shrink-0'>
-            <Chip text={ingredientName} variant='point' />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
 const SupplementProductCard = ({ item, displayRank }: SupplementProductCardProps) => {
-  const [hasImageError, setHasImageError] = useState(false);
   const imageUrl = item.imageUrl?.trim();
-  const shouldShowImage = Boolean(imageUrl) && !hasImageError;
-  const ratingAverage = item.ratingAverage ?? 0;
+  const averageRating = item.averageRating ?? 0;
   return (
     <article className='ranking-product-card flex w-full items-center justify-center gap-3 px-5 py-4'>
       <RankingBadge rank={displayRank} />
@@ -74,13 +27,13 @@ const SupplementProductCard = ({ item, displayRank }: SupplementProductCardProps
               <span className='sr-only'>식약처 인증 제품</span>
             </>
           )}
-          {shouldShowImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+          {imageUrl ? (
+            <Image
               src={imageUrl}
               alt={`${item.productName} 상품 이미지`}
+              width={43}
+              height={70}
               className='h-[4.375rem] w-[2.6875rem] object-contain'
-              onError={() => setHasImageError(true)}
             />
           ) : (
             <Omega3BottleIcon
@@ -109,13 +62,13 @@ const SupplementProductCard = ({ item, displayRank }: SupplementProductCardProps
               <div className='flex min-w-0 items-center gap-1.5'>
                 <RatingStarIcon className='size-2.5 shrink-0' aria-hidden='true' />
                 <span className='min-w-0 truncate'>
-                  {ratingAverage.toFixed(1)} ({item.reviewCount.toLocaleString('ko-KR')})
+                  {averageRating.toFixed(1)} ({item.reviewCount.toLocaleString('ko-KR')})
                 </span>
               </div>
             </div>
           </div>
 
-          <IngredientNameCarousel ingredientNameList={item.ingredientName} />
+          <IngredientNameCarousel ingredientNameList={item.ingredientNames} />
         </div>
       </div>
     </article>

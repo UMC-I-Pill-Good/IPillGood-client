@@ -1,3 +1,4 @@
+import { axiosInstance } from '@/app/api/api';
 import type {
   ClearRecentKeywordsApiResponse,
   DeleteRecentKeywordApiResponse,
@@ -5,80 +6,36 @@ import type {
   SaveRecentKeywordApiResponse,
 } from '../types/recentSearch';
 
-export const MOCK_RECENT_KEYWORDS_API_PATH = '/api/mock/recent-keywords';
+const RECENT_KEYWORDS_API_PATH = '/search/recent-keywords';
 
-export const getRecentKeywords =
-  async (): Promise<RecentKeywordsApiResponse> => {
-    const response = await fetch(MOCK_RECENT_KEYWORDS_API_PATH);
+export const getRecentKeywords = async (): Promise<RecentKeywordsApiResponse> => {
+  const { data } = await axiosInstance.get<RecentKeywordsApiResponse>(RECENT_KEYWORDS_API_PATH);
 
-    if (!response.ok) {
-      return {
-        isSuccess: false,
-        code: 'COMMON500_1',
-        message: '최근 검색어를 불러올 수 없습니다.',
-        result: null,
-      };
-    }
+  return data;
+};
 
-    return response.json() as Promise<RecentKeywordsApiResponse>;
-  };
+export const saveRecentKeyword = async (keyword: string): Promise<SaveRecentKeywordApiResponse> => {
+  const { data } = await axiosInstance.post<SaveRecentKeywordApiResponse>(
+    RECENT_KEYWORDS_API_PATH,
+    { keyword },
+  );
 
-export const saveRecentKeyword = async (
-  keyword: string,
-): Promise<SaveRecentKeywordApiResponse> => {
-  const response = await fetch(MOCK_RECENT_KEYWORDS_API_PATH, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ keyword }),
-  });
-
-  if (!response.ok) {
-    return {
-      isSuccess: false,
-      code: 'COMMON500_1',
-      message: '최근 검색어를 저장할 수 없습니다.',
-      result: null,
-    };
-  }
-
-  return response.json() as Promise<SaveRecentKeywordApiResponse>;
+  return data;
 };
 
 export const deleteRecentKeyword = async (
   keywordId: number,
 ): Promise<DeleteRecentKeywordApiResponse> => {
-  const response = await fetch(`${MOCK_RECENT_KEYWORDS_API_PATH}/${keywordId}`, {
-    method: 'DELETE',
-  });
+  const { data } = await axiosInstance.delete<DeleteRecentKeywordApiResponse>(
+    `${RECENT_KEYWORDS_API_PATH}/${keywordId}`,
+  );
 
-  if (!response.ok) {
-    return {
-      isSuccess: false,
-      code: 'COMMON500_1',
-      message: '최근 검색어를 삭제할 수 없습니다.',
-      result: null,
-    };
-  }
-
-  return response.json() as Promise<DeleteRecentKeywordApiResponse>;
+  return data;
 };
 
-export const clearRecentKeywords =
-  async (): Promise<ClearRecentKeywordsApiResponse> => {
-    const response = await fetch(MOCK_RECENT_KEYWORDS_API_PATH, {
-      method: 'DELETE',
-    });
+export const clearRecentKeywords = async (): Promise<ClearRecentKeywordsApiResponse> => {
+  const { data } =
+    await axiosInstance.delete<ClearRecentKeywordsApiResponse>(RECENT_KEYWORDS_API_PATH);
 
-    if (!response.ok) {
-      return {
-        isSuccess: false,
-        code: 'COMMON500_1',
-        message: '최근 검색어를 전체 삭제할 수 없습니다.',
-        result: null,
-      };
-    }
-
-    return response.json() as Promise<ClearRecentKeywordsApiResponse>;
-  };
+  return data;
+};

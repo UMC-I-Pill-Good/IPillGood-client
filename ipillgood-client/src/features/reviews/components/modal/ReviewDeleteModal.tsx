@@ -6,12 +6,18 @@ import { ModalShell, TextButton } from '@/shared/components';
 interface ReviewDeleteModalProps {
   onConfirm: () => void;
   onCancel: () => void;
+  isSubmitting: boolean;
 }
 
-const ReviewDeleteModal = ({ onConfirm, onCancel }: ReviewDeleteModalProps) => {
+const ReviewDeleteModal = ({ onConfirm, onCancel, isSubmitting }: ReviewDeleteModalProps) => {
+  const handleCancel = () => {
+    if (isSubmitting) return;
+    onCancel();
+  };
+
   return createPortal(
     <ModalShell
-      onClose={onCancel}
+      onClose={handleCancel}
       ariaLabel='후기 삭제 확인'
       className='border border-white shadow-[4px_4px_40px_rgba(126,131,135,0.16)]'
     >
@@ -27,13 +33,15 @@ const ReviewDeleteModal = ({ onConfirm, onCancel }: ReviewDeleteModalProps) => {
           variant='semanticOutline'
           size='sm'
           onClick={onConfirm}
+          disabled={isSubmitting}
           className='flex-1'
         />
         <TextButton
           text='아니요'
           variant='semantic'
           size='sm'
-          onClick={onCancel}
+          onClick={handleCancel}
+          disabled={isSubmitting}
           className='flex-1'
         />
       </div>

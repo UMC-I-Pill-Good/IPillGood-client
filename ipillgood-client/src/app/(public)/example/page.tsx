@@ -13,6 +13,7 @@ import {
   BottomSheet,
 } from '@/shared/components';
 import { Header } from '@/shared/layout';
+import { showToast } from '@/shared/utils';
 import { Bone, Brain, ChevronLeft, HeartPulse, X } from 'lucide-react';
 import { useState } from 'react';
 
@@ -50,6 +51,22 @@ const ExamplePage = () => {
           className='bg-blue-500 text-white px-4 py-2 rounded'
         >
           바텀시트 오픈
+        </button>
+        <button
+          onClick={() =>
+            showToast.success(
+              '성공했습니다 성공했습니다 성공했습니다 성공했습니다 성공했습니다 성공했습니다',
+            )
+          }
+          className='bg-green-400 text-white px-4 py-2 rounded'
+        >
+          성공 토스트
+        </button>
+        <button
+          onClick={() => showToast.error('실패했습니다')}
+          className='bg-red-400 text-white px-4 py-2 rounded'
+        >
+          실패 토스트
         </button>
 
         <TextButton type='button' text='텍스트' variant='primary' size='xl' className='w-88.5' />

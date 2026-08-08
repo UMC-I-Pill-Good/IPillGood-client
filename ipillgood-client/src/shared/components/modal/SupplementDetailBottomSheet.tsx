@@ -73,9 +73,14 @@ const SupplementDetailBottomSheet = ({
               className='h-27.5 w-20 shrink-0'
             />
           </div>
-          <article className='text-center space-y-2'>
-            <p className='typo-caption-2 text-center'>{data.result.brand}</p>
-            <p className='typo-subtitle-4 text-center line-clamp-1'>{data.result.productName}</p>
+          <article className='text-center space-y-2 w-[80%]'>
+            <p className='typo-caption-2 text-center mb-1'>{data.result.brand}</p>
+            <p
+              title={data.result.productName}
+              className='typo-subtitle-4 text-center truncate leading-tight!'
+            >
+              {data.result.productName}
+            </p>
           </article>
         </section>
 
@@ -147,8 +152,7 @@ const SupplementDetailBottomSheet = ({
             onClick={() => router.push(`/product/${data.result.productId}`)}
           />
           <TextButton
-            href='/reviews/reviews-add'
-            aria-label='후기 작성 페이지 이동'
+            href={`/reviews/reviews-add?productId=${data.result.productId}`}
             text='후기 작성하기'
             variant='outline'
             size='xl'

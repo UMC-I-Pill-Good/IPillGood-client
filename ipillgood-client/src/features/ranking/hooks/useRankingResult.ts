@@ -2,7 +2,6 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
-import { saveRecentKeyword } from '../api/recentSearch';
 import { DEFAULT_RANKING_FILTERS } from '../constants/rankingFilter';
 import type { RankingUiSort } from '../types/ranking';
 import type { RankingFilterState } from '../types/rankingFilter';
@@ -13,6 +12,7 @@ import {
   toRankingQueryParams,
 } from '../utils/rankingFilterQuery';
 import { useRankingInfiniteProducts } from './useRankingInfiniteProducts';
+import { useSaveRecentSearch } from './useRecentSearches';
 
 const INITIAL_SKELETON_CARD_COUNT = 4;
 
@@ -34,7 +34,6 @@ export const useRankingResult = () => {
   const [searchValue, setSearchValue] = useState(initialSearchTerm);
   const [submittedSearchTerm, setSubmittedSearchTerm] = useState(initialSearchTerm);
   const [selectedSort, setSelectedSort] = useState<RankingUiSort>('REVIEW_COUNT');
-  const [requestVersion, setRequestVersion] = useState(0);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState<RankingFilterState>(initialFilters);
   const [draftFilters, setDraftFilters] = useState<RankingFilterState>(initialFilters);
@@ -59,10 +58,8 @@ export const useRankingResult = () => {
     ...toRankingQueryParams(appliedFilters),
     ...toRankingFilterRequestOptions(appliedFilters),
   };
-  const ranking = useRankingInfiniteProducts({
-    queryParams: rankingQueryParams,
-    requestKey: requestVersion,
-  });
+  const ranking = useRankingInfiniteProducts({ queryParams: rankingQueryParams });
+  const handleSaveRecentSearch = useSaveRecentSearch();
   const activeFilterCount = getActiveFilterCount(appliedFilters);
   const viewState: 'loading' | 'error' | 'success' | 'emptyFilter' | 'emptySearch' =
     ranking.isInitialLoading
@@ -75,10 +72,8 @@ export const useRankingResult = () => {
             ? 'emptyFilter'
             : 'emptySearch';
 
-  const refreshResults = () => {
-    ranking.resetLoadingState();
+  const resetSkeletonCardCount = () => {
     setSkeletonCardCount(INITIAL_SKELETON_CARD_COUNT);
-    setRequestVersion((version) => version + 1);
   };
 
   const syncResultUrl = (nextSearchTerm: string, nextFilters: RankingFilterState) => {
@@ -87,27 +82,19 @@ export const useRankingResult = () => {
     router.replace(`/ranking/result?${nextSearchParams.toString()}`);
   };
 
-  const handleSubmitSearch = async () => {
+  const handleSubmitSearch = () => {
     const nextSearchTerm = searchValue.trim();
     if (!nextSearchTerm) return;
 
-    try {
-      const response = await saveRecentKeyword(nextSearchTerm);
-      if (!response.isSuccess) {
-        console.error('Failed to save recent keyword', response.message);
-      }
-    } catch (error) {
-      console.error('Failed to save recent keyword', error);
-    }
-
-    refreshResults();
+    handleSaveRecentSearch(nextSearchTerm);
+    resetSkeletonCardCount();
     setSubmittedSearchTerm(nextSearchTerm);
     syncResultUrl(nextSearchTerm, appliedFilters);
   };
 
   const handleSortChange = (nextSort: RankingUiSort) => {
     if (nextSort === selectedSort) return;
-    refreshResults();
+    resetSkeletonCardCount();
     setSelectedSort(nextSort);
   };
 
@@ -118,7 +105,7 @@ export const useRankingResult = () => {
 
   const handleApplyFilter = () => {
     const nextFilters = draftFilters;
-    refreshResults();
+    resetSkeletonCardCount();
     setAppliedFilters(nextFilters);
     setIsFilterOpen(false);
     syncResultUrl(submittedSearchTerm, nextFilters);
@@ -130,6 +117,10 @@ export const useRankingResult = () => {
     handleCancel: () => router.push('/ranking'),
     handleCloseFilter: () => setIsFilterOpen(false),
     handleOpenFilter,
+    handleRetry: () => {
+      resetSkeletonCardCount();
+      void ranking.refetch();
+    },
     handleResetFilter: () => setDraftFilters(DEFAULT_RANKING_FILTERS),
     handleSortChange,
     handleSubmitSearch,

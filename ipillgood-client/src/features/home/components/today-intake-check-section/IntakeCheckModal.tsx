@@ -6,19 +6,21 @@ import { useState } from 'react';
 import { ScheduledProductType } from '../../types/intakeToday.type';
 
 interface IntakeCheckModalProps {
-  pendingProducts: ScheduledProductType[];
+  products: ScheduledProductType[];
   isConfirming: boolean;
   onCancel: () => void;
   onConfirm: (checkedIdList: number[]) => void;
 }
 
 const IntakeCheckModal = ({
-  pendingProducts,
+  products,
   isConfirming,
   onCancel,
   onConfirm,
 }: IntakeCheckModalProps) => {
-  const [checkedIdList, setCheckedIdList] = useState<number[]>([]);
+  const [checkedIdList, setCheckedIdList] = useState<number[]>(() =>
+    products.filter((p) => p.taken).map((p) => p.activeProductId),
+  );
 
   const handleToggleCheck = (activeProductId: number) => {
     setCheckedIdList((prev) =>
@@ -35,7 +37,7 @@ const IntakeCheckModal = ({
         <p className='typo-caption-2 text-neutral-800'>건강한 루틴이 쌓이고 있어요!</p>
       </div>
       <CheckboxList
-        list={pendingProducts.map((p) => ({
+        list={products.map((p) => ({
           id: p.activeProductId,
           label: p.productName,
         }))}

@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getIntakeToday, patchPopUpShown, putIntakeTodayRecords } from '../api/intake';
 
 export const intakeTodayQueryKey = ['intakeToday'];
@@ -50,14 +50,9 @@ export const useIntakeToday = () => {
     recordsMutation.mutate({ takenActiveProductIds: checkedIdList });
   };
 
-  const pendingProducts = useMemo(
-    () => data?.scheduledProducts.filter((p) => !p.taken) ?? [],
-    [data?.scheduledProducts],
-  );
-
   return {
     allCompleted: data?.allCompleted,
-    pendingProducts,
+    products: data?.scheduledProducts ?? [],
     isModalOpen,
     setIsModalOpen,
     handleConfirm,

@@ -1,6 +1,7 @@
+import { axiosInstance } from '@/app/api/api';
 import type { RankingApiResponse, RankingQueryParams } from '../types/ranking';
 
-export const MOCK_RANKING_API_PATH = '/api/mock/ranking';
+const RANKING_API_PATH = '/search/products';
 
 const appendSearchParam = (
   searchParams: URLSearchParams,
@@ -12,9 +13,7 @@ const appendSearchParam = (
   searchParams.set(key, Array.isArray(value) ? value.join(',') : String(value));
 };
 
-export const getRanking = async (
-  params: RankingQueryParams,
-): Promise<RankingApiResponse> => {
+export const getRanking = async (params: RankingQueryParams): Promise<RankingApiResponse> => {
   const searchParams = new URLSearchParams();
 
   appendSearchParam(searchParams, 'size', params.size ?? 20);
@@ -31,18 +30,9 @@ export const getRanking = async (
   );
   appendSearchParam(searchParams, 'ingredientIds', params.ingredientIds);
 
-  const response = await fetch(
-    `${MOCK_RANKING_API_PATH}?${searchParams.toString()}`,
-  );
+  const { data } = await axiosInstance.get<RankingApiResponse>(RANKING_API_PATH, {
+    params: searchParams,
+  });
 
-  if (!response.ok) {
-    return {
-      isSuccess: false,
-      code: 'COMMON500_1',
-      message: '영양제 상품 목록을 불러올 수 없습니다.',
-      result: null,
-    };
-  }
-
-  return response.json() as Promise<RankingApiResponse>;
+  return data;
 };

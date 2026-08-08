@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import useEmblaCarousel from 'embla-carousel-react';
-import { type KeyboardEvent } from 'react';
 import { TextButton } from '@/shared/components';
+import { useEmblaKeyboardNav } from '@/shared/hooks';
 import { AlternativeFoodType } from '../types/ingredient';
 import AlternativeFoodCard from './AlternativeFoodCard';
 
@@ -24,16 +24,7 @@ const AlternativeFoodSection = ({ alternativeFoods, name }: AlternativeFoodSecti
     router.push(`/ranking/result?search=${encodeURIComponent(name)}`);
   };
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'ArrowLeft') {
-      event.preventDefault();
-      emblaApi?.scrollPrev();
-    }
-    if (event.key === 'ArrowRight') {
-      event.preventDefault();
-      emblaApi?.scrollNext();
-    }
-  };
+  const handleKeyDown = useEmblaKeyboardNav(emblaApi);
 
   return (
     <section className='flex flex-1 flex-col'>
@@ -49,7 +40,7 @@ const AlternativeFoodSection = ({ alternativeFoods, name }: AlternativeFoodSecti
             </p>
           </div>
           <div
-            className='mt-4 mb-4 overflow-hidden mask-l-from-99% mask-r-from-99%'
+            className='mt-4 mb-1 overflow-hidden mask-l-from-99% mask-r-from-99%'
             ref={emblaRef}
             role='region'
             aria-roledescription='carousel'
@@ -57,7 +48,7 @@ const AlternativeFoodSection = ({ alternativeFoods, name }: AlternativeFoodSecti
             tabIndex={0}
             onKeyDown={handleKeyDown}
           >
-            <div className='flex gap-1'>
+            <div className='flex gap-1 pb-3'>
               {alternativeFoods.map((food) => (
                 <div key={food.name} className='w-[30%] shrink-0 px-1'>
                   <AlternativeFoodCard title={food.name} desc={food.contentPer100g} />
@@ -72,7 +63,7 @@ const AlternativeFoodSection = ({ alternativeFoods, name }: AlternativeFoodSecti
         variant='primary'
         size='xl'
         text='관련 영양제 검색하러 가기'
-        className='w-full mt-auto'
+        className='w-full mt-auto mb-4'
         onClick={handleSearchClick}
       />
     </section>
