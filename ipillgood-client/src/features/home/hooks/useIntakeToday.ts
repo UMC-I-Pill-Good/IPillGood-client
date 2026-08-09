@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { getIntakeToday, patchPopUpShown, putIntakeTodayRecords } from '../api/intake';
+import { showToast } from '@/shared/utils';
 
 export const intakeTodayQueryKey = ['intakeToday'];
 
@@ -39,10 +40,11 @@ export const useIntakeToday = () => {
       queryClient.invalidateQueries({ queryKey: ['intakeCalendar'] });
       queryClient.invalidateQueries({ queryKey: ['growthStage'] });
       setIsModalOpen(false);
+      showToast.success('오늘도 잘 챙기셨어요!');
     },
 
     onError: () => {
-      alert('섭취 기록 저장에 실패했습니다.');
+      showToast.error('섭취 기록에 실패했어요. 다시 시도해 주세요.');
     },
   });
 

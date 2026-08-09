@@ -5,6 +5,7 @@ import {
   patchNotificationSettingsIntake,
   patchIntakeActiveProducts,
 } from '../api/notification';
+import { showToast } from '@/shared/utils';
 
 export const intakeNotificationSettingsQueryKey = ['intakeNotificationSettings'];
 
@@ -25,6 +26,9 @@ export const useNotificationSettings = () => {
   const updateIntakePushMutation = useMutation({
     mutationFn: patchNotificationSettingsIntake,
     onSuccess: invalidate,
+    onError: () => {
+      showToast.error('알림 설정 변경에 실패했어요.');
+    },
   });
 
   const updateProductMutation = useMutation({
@@ -36,6 +40,9 @@ export const useNotificationSettings = () => {
       notificationEnabled: boolean;
     }) => patchIntakeActiveProducts(activeProductId, { notificationEnabled }),
     onSuccess: invalidate,
+    onError: () => {
+      showToast.error('알림 설정 변경에 실패했어요.');
+    },
   });
 
   const activeProducts = data?.activeProducts ?? [];

@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { postLogout } from '../api/auth';
 import { deletePushTokens } from '../api/notification';
+import { showToast } from '@/shared/utils';
 
 export const useLogout = (onSuccess?: () => void) => {
   const router = useRouter();
@@ -34,7 +35,7 @@ export const useLogout = (onSuccess?: () => void) => {
       router.push('/login');
     },
     onError: () => {
-      alert('로그아웃에 실패했습니다.');
+      showToast.error('로그아웃에 실패했어요. 다시 시도해 주세요.');
     },
   });
 

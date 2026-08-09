@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getNotificationSettingsMe, patchNotificationSettingsMe } from '../api/notification';
 import { intakeNotificationSettingsQueryKey } from './useNotificationSettings';
+import { showToast } from '@/shared/utils';
 
 export const appPushSettingQueryKey = ['appPushSetting'];
 
@@ -18,6 +19,9 @@ export const usePushAlarmSettings = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: appPushSettingQueryKey });
       queryClient.invalidateQueries({ queryKey: intakeNotificationSettingsQueryKey });
+    },
+    onError: () => {
+      showToast.error('알림 설정 변경에 실패했어요.');
     },
   });
 
