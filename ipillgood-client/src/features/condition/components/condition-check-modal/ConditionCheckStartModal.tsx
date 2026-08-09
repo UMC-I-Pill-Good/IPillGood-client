@@ -28,7 +28,6 @@ const ConditionCheckStartModal = ({
       onClose={onClose}
       ariaLabel='컨디션 체크 시작 팝업'
     >
-        {/* Header - 공통 IconButton 사용 */}
         <header className='flex h-9 w-full items-center justify-end px-5'>
           <IconButton
             icon={<X size={24} className='text-neutral-800' />}
@@ -37,9 +36,7 @@ const ConditionCheckStartModal = ({
           />
         </header>
 
-        {/* Body */}
         <div className='flex w-full flex-col items-center gap-4 px-5 py-4'>
-          {/* Intro Section */}
           <div className='flex w-full flex-col items-center gap-2'>
             <div className='flex items-center justify-center py-1'>
               <ConditionCheckCircleIcon className='size-[79px] shrink-0' />
@@ -56,7 +53,6 @@ const ConditionCheckStartModal = ({
             </div>
           </div>
 
-          {/* Condition rows */}
           <div className='flex w-full flex-col items-center justify-center gap-2 rounded-lg py-2'>
             <ConditionCheckRow
               icon={ConditionVitalityIcon}
@@ -76,7 +72,6 @@ const ConditionCheckStartModal = ({
           </div>
         </div>
 
-        {/* Footer - 공통 TextButton 사용 */}
         <div className='flex w-full px-5 pt-4'>
           <TextButton
             type='button'

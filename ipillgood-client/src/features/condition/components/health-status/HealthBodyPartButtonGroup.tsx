@@ -9,9 +9,6 @@ interface HealthBodyPartButtonGroupProps {
   onSelectBodyPart: (bodyPartKey: string) => void;
 }
 
-/**
- * 선택된 대분류에 따른 세부 신체 부위 버튼 그룹 렌더링 전담 컴포넌트
- */
 const HealthBodyPartButtonGroup = ({
   selectedSystem,
   selectedBodyPartKey,

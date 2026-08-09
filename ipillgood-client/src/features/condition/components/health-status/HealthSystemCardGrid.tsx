@@ -11,9 +11,6 @@ interface HealthSystemCardGridProps {
   onSelectSystem: (systemKey: string) => void;
 }
 
-/**
- * 대분류 8개 신체 계통 SelectionCard 4열 그리드 렌더링 전담 컴포넌트
- */
 const HealthSystemCardGrid = ({
   systemList,
   isLoading,

@@ -24,7 +24,6 @@ const ConditionStatusBanner = ({
   return (
     <section className='flex w-full flex-col items-center justify-center gap-2.5 px-5 pb-2 pt-4'>
       {isCompleted ? (
-        /* 1. 체크 완료 배너 */
         <div
           className={clsx(
             'relative flex h-[77px] w-full items-center justify-center rounded-2xl bg-primary-300 py-4 px-4 text-left gap-2',
@@ -51,7 +50,6 @@ const ConditionStatusBanner = ({
           </div>
         </div>
       ) : (
-        /* 2. 체크 미완료 배너 */
         <div
           className={clsx(
             'relative flex w-full flex-col items-center rounded-2xl bg-primary-300 px-4 text-left shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
@@ -81,7 +79,6 @@ const ConditionStatusBanner = ({
             </div>
           </div>
 
-          {/* 공통 TextButton - 일요일 및 체크 가능일 때만 노출 */}
           {currentWeekStatus.checkAvailable && (
             <TextButton
               type='button'

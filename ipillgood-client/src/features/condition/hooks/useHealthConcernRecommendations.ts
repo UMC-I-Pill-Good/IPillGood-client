@@ -8,9 +8,6 @@ interface UseHealthConcernRecommendationsParams {
   minorCategory?: string | null;
 }
 
-/**
- * 건강 상태 추천 성분 조회 TanStack Query 훅
- */
 export const useHealthConcernRecommendations = ({
   majorCategory,
   minorCategory,

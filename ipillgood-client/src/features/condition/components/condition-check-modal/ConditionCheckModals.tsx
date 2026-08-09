@@ -36,7 +36,6 @@ const ConditionCheckModals = ({ userName = '아필굿' }: ConditionCheckModalsPr
 
   return (
     <>
-      {/* 0단계 일요일 영양제 미섭취 경고 모달 (isSundayModalOpen 일 때만 렌더링하여 스크롤 락 방지) */}
       {isSundayModalOpen && (
         <ConditionSundayIntakeModal
           isOpen={true}
@@ -45,10 +44,8 @@ const ConditionCheckModals = ({ userName = '아필굿' }: ConditionCheckModalsPr
         />
       )}
 
-      {/* 컨디션 체크 시작/진행 모달들 */}
       {isCheckModalOpen && (
         <>
-          {/* 1단계 시작 팝업 모달 */}
           {checkStep === 1 && (
             <ConditionCheckStartModal
               isOpen={true}
@@ -57,7 +54,6 @@ const ConditionCheckModals = ({ userName = '아필굿' }: ConditionCheckModalsPr
             />
           )}
 
-          {/* 2단계 활력 선택 팝업 모달 */}
           {checkStep === 2 && (
             <ConditionVitalityModal
               key={`vitality-${vitalityScore}`}
@@ -69,7 +65,6 @@ const ConditionCheckModals = ({ userName = '아필굿' }: ConditionCheckModalsPr
             />
           )}
 
-          {/* 3단계 수면시간 선택 팝업 모달 */}
           {checkStep === 3 && (
             <ConditionSleepTimeModal
               key={`sleep-${sleepHours}-${sleepMinutes}`}
@@ -83,7 +78,6 @@ const ConditionCheckModals = ({ userName = '아필굿' }: ConditionCheckModalsPr
             />
           )}
 
-          {/* 4단계 완료 축하 마스코트 팝업 모달 */}
           {checkStep === 4 && (
             <ConditionCheckCompleteModal
               isOpen={true}

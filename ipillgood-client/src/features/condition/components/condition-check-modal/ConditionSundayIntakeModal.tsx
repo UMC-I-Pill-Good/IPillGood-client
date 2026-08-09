@@ -23,7 +23,6 @@ const ConditionSundayIntakeModal = ({
       backdropClassName='px-4'
       contentClassName='w-full max-w-[310px] items-center justify-center gap-5 rounded-2xl border-0 px-7.5 py-6 shadow-[4px_4px_40px_0_rgba(0,0,0,0.12)]'
     >
-        {/* 1. 텍스트 안내 영역 (시맨틱 색상 토큰 text-black, text-semantic-600 적용) */}
         <div className='flex flex-col items-center justify-center gap-2 text-center'>
           <h3
             id='sunday-warning-title'
@@ -39,7 +38,6 @@ const ConditionSundayIntakeModal = ({
           </p>
         </div>
 
-        {/* 2. 하단 버튼 영역 */}
         <div className='flex w-full items-center justify-center gap-2.5'>
           <TextButton
             type='button'

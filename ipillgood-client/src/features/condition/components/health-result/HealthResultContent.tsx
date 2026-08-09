@@ -51,7 +51,6 @@ const HealthResultContent = () => {
     isLoading,
     error,
     isValid,
-    handleBack,
     handleClose,
     handleIngredientClick,
   } = useHealthResultFlow();
@@ -61,9 +60,7 @@ const HealthResultContent = () => {
       <div className='mx-auto min-h-dvh w-full max-w-110 bg-background pb-24 flex flex-col overflow-x-hidden'>
         <Header
           title='건강 상태 결과'
-          showBackButton={true}
           showCloseButton={true}
-          onBack={handleBack}
           onClose={handleClose}
         />
       </div>
@@ -75,9 +72,7 @@ const HealthResultContent = () => {
       <div className='mx-auto min-h-dvh w-full max-w-110 bg-background pb-24 flex flex-col overflow-x-hidden'>
         <Header
           title={`궁금 상태: ${majorCategoryLabel} - ${minorCategoryLabel}`}
-          showBackButton={true}
           showCloseButton={true}
-          onBack={handleBack}
           onClose={handleClose}
         />
         <HealthResultSkeleton />
@@ -90,9 +85,7 @@ const HealthResultContent = () => {
       <div className='mx-auto min-h-dvh w-full max-w-110 bg-background pb-24 flex flex-col overflow-x-hidden'>
         <Header
           title={`궁금 상태: ${majorCategoryLabel} - ${minorCategoryLabel}`}
-          showBackButton={true}
           showCloseButton={true}
-          onBack={handleBack}
           onClose={handleClose}
         />
       </div>
@@ -101,19 +94,14 @@ const HealthResultContent = () => {
 
   return (
     <div className='mx-auto min-h-dvh w-full max-w-110 bg-background pb-24 flex flex-col items-stretch overflow-x-hidden'>
-      {/* 1. Header */}
       <Header
         title={`궁금 상태: ${majorCategoryLabel} - ${minorCategoryLabel}`}
-        showBackButton={true}
         showCloseButton={true}
-        onBack={handleBack}
         onClose={handleClose}
       />
 
-      {/* 2. 감퇴 원인 섹션 */}
       <HealthDeclineCauseSection declineCause={data.declineCause} />
 
-      {/* 3. 추천 성분 섹션 */}
       <RecommendedIngredientSection
         ingredientList={data.recommendedIngredients}
         onIngredientClick={handleIngredientClick}

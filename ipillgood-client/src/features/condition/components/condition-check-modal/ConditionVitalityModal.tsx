@@ -39,9 +39,7 @@ const ConditionVitalityModal = ({
       ariaLabel='활력 선택 팝업'
       contentClassName='items-center justify-center gap-8'
     >
-        {/* Upper Content */}
         <div className='flex w-full flex-col gap-8'>
-          {/* Header - 공통 IconButton 사용 */}
           <header className='flex h-9 w-full items-center justify-between px-5'>
             <IconButton
               icon={<ChevronLeft size={24} className='text-neutral-800' />}
@@ -56,13 +54,11 @@ const ConditionVitalityModal = ({
             />
           </header>
 
-          {/* Question & Options Section */}
           <section className='flex w-full flex-col items-center justify-center gap-6'>
             <h2 className='typo-body-5 w-full text-center text-black'>
               이번 주 전반적인 활력은 어땠나요?
             </h2>
 
-            {/* Vitality options (1 ~ 5) */}
             <div className='flex w-full items-center justify-center gap-[7px] px-5'>
               {VITALITY_OPTION_LIST.map((option) => (
                 <VitalityOptionButton
@@ -76,7 +72,6 @@ const ConditionVitalityModal = ({
           </section>
         </div>
 
-        {/* Footer - 공통 TextButton 사용 */}
         <div className='flex w-full flex-col px-5'>
           <TextButton
             type='button'

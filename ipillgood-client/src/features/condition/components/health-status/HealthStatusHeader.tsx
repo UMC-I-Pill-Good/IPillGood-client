@@ -1,8 +1,5 @@
 'use client';
 
-/**
- * 궁금한 건강 상태 선택 상단 안내 타이틀 렌더링 전담 컴포넌트
- */
 const HealthStatusHeader = () => {
   return (
     <section className='flex w-full flex-col gap-2.5 px-5 pt-4 pb-0 box-border'>
