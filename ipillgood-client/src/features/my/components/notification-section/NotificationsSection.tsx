@@ -2,8 +2,11 @@
 import NotificationItem from './NotificationItem';
 import NotificationCard from './NotificationCard';
 import { useNotificationSettings } from '../../hooks/useNotificationSettings';
+import { usePushAlarmSettings } from '../../hooks/usePushAlarmSettings';
+import { SupplementDetailBottomSheet } from '@/shared/components';
 
 const NotificationSection = () => {
+  const { isPushAlarmOn } = usePushAlarmSettings();
   const {
     intakePushEnabled,
     activeProducts,
@@ -11,9 +14,9 @@ const NotificationSection = () => {
     handleToggleIntakePush,
     handleToggleProduct,
     handleSelectProduct,
+    handleCloseProduct,
   } = useNotificationSettings();
 
-  // TODO: 푸시 알림이 OFF일때 전체 알림 OFF
   return (
     <section className='flex flex-col px-5 py-4 gap-8 pb-28.5'>
       <p className='typo-body-6 text-neutral-800'>섭취 중인 영양제의 알림을 설정해 보세요.</p>
@@ -23,6 +26,7 @@ const NotificationSection = () => {
           label='복용 알림 ON/OFF'
           isChecked={intakePushEnabled}
           onToggle={handleToggleIntakePush}
+          disabled={!isPushAlarmOn}
         />
       </NotificationCard>
 
@@ -33,14 +37,19 @@ const NotificationSection = () => {
             label={product.productName}
             isChecked={product.notificationEnabled}
             onToggle={() => handleToggleProduct(product.activeProductId)}
-            disabled={!intakePushEnabled}
+            disabled={!intakePushEnabled || !isPushAlarmOn}
             onClick={() => handleSelectProduct(product.activeProductId)}
           />
         ))}
       </NotificationCard>
 
-      {/* TODO: 개별 영양제 모달 추가 */}
-      {selectedProduct && <></>}
+      <SupplementDetailBottomSheet
+        open={!!selectedProduct}
+        onOpenChange={(open) => {
+          if (!open) handleCloseProduct();
+        }}
+        memberProductId={selectedProduct?.memberProductId ?? null}
+      />
     </section>
   );
 };
