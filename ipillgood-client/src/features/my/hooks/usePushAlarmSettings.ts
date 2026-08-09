@@ -8,7 +8,7 @@ export const appPushSettingQueryKey = ['appPushSetting'];
 export const usePushAlarmSettings = () => {
   const queryClient = useQueryClient();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: appPushSettingQueryKey,
     queryFn: getNotificationSettingsMe,
     select: (res) => res.result,
@@ -33,6 +33,8 @@ export const usePushAlarmSettings = () => {
   return {
     isPushAlarmOn: data?.pushEnabled,
     isPushAlarmLoading: isLoading,
+    isPushAlarmError: isError,
+    refetchPushAlarm: refetch,
     handleTogglePushAlarm,
     updatePushSetting,
   };

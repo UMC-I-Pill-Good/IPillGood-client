@@ -13,7 +13,7 @@ export const useNotificationSettings = () => {
   const queryClient = useQueryClient();
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
-  const { data } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: intakeNotificationSettingsQueryKey,
     queryFn: getNotificationSettingsIntake,
     select: (res) => res.result,
@@ -70,6 +70,9 @@ export const useNotificationSettings = () => {
     intakePushEnabled: data?.intakePushEnabled ?? false,
     activeProducts,
     selectedProduct,
+    isLoading,
+    isError,
+    refetch,
     handleToggleIntakePush,
     handleToggleProduct,
     handleSelectProduct,

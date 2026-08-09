@@ -12,7 +12,7 @@ const ProfileSection = () => {
     useNicknameChange();
 
   return (
-    <section className='flex flex-col px-5 pt-4 flex-1 pb-22'>
+    <section className='flex flex-col px-5 pt-4 flex-1 pb-28.5'>
       <h2 className='typo-body-5 text-black mb-8'>회원가입 시 입력한 정보를 수정할 수 있어요!</h2>
 
       <Input

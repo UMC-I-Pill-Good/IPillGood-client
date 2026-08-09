@@ -1,6 +1,6 @@
 'use client';
 
-import { TextButton } from '@/shared/components';
+import { FetchError, LoadingSpinner, TextButton } from '@/shared/components';
 import FaqAccordion from './FaqAccordion';
 import ContactSection from './ContactSection';
 import { useRouter } from 'next/navigation';
@@ -8,19 +8,18 @@ import { useSupport } from '../../hooks/useSupport';
 
 const InquirySection = () => {
   const router = useRouter();
-  const { data, isLoading } = useSupport();
+  const { data, isLoading, isError, refetch } = useSupport();
   const { faqs, contactEmail, operatingHours, closedDays } = data ?? {};
+
+  if (isLoading) return <LoadingSpinner />;
+
+  if (isError) {
+    return <FetchError description='문의 정보를 불러오지 못했습니다.' onRetry={() => refetch()} />;
+  }
 
   return (
     <section className='px-5 pt-4 flex flex-col flex-1 pb-20'>
-      {/* 임시 UI */}
-      {isLoading ? (
-        <div className='flex flex-col items-center py-5'>
-          <div className='w-24 h-3.5 rounded animate-pulse bg-neutral-100' />
-        </div>
-      ) : (
-        <FaqAccordion faqList={faqs ?? []} title='자주 묻는 질문 (FAQ)' />
-      )}
+      <FaqAccordion faqList={faqs ?? []} title='자주 묻는 질문 (FAQ)' />
 
       <TextButton
         type='button'

@@ -51,7 +51,7 @@ const PasswordChangeSheet = ({ open, onOpenChange }: PasswordChangeSheetProps) =
           variant='primary'
           size='xl'
           disabled={!isValid || isSubmitting}
-          className='mt-53.5 w-full'
+          className='mt-53.5 w-full mb-4'
         />
       </form>
     </BottomSheet>

@@ -6,7 +6,6 @@ import Image from 'next/image';
 
 const ProfileCard = () => {
   const { data, isLoading } = useMyInfo();
-  const { nickname, profileImageUrl } = data ?? {};
 
   return (
     <div className='flex px-5 py-4 gap-3 bg-linear-[165deg] from-primary-300/50 to-primary-300/70 rounded-[20px] shadow-[0px_4px_4px_0px_rgba(126,131,135,0.10)]'>
@@ -14,8 +13,8 @@ const ProfileCard = () => {
         {isLoading ? (
           <div className='w-full h-full animate-pulse bg-primary-200' />
         ) : (
-          profileImageUrl && (
-            <Image width={80} height={80} src={profileImageUrl} alt='프로필 사진' />
+          data?.profileImageUrl && (
+            <Image width={80} height={80} src={data.profileImageUrl} alt='프로필 사진' />
           )
         )}
       </div>
@@ -23,7 +22,7 @@ const ProfileCard = () => {
         {isLoading ? (
           <div className='w-16 h-4 rounded animate-pulse bg-primary-300' />
         ) : (
-          <p className='text-black typo-body-2'>{nickname}</p>
+          <p className='text-black typo-body-2'>{data?.nickname ?? '회원'}</p>
         )}
         <Link
           href='/my/profile'

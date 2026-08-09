@@ -8,7 +8,7 @@ export const useFaqFilter = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<FaqCategoryType | 'ALL'>('ALL');
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['faqs', selectedCategory, searchKeyword],
     queryFn: () =>
       getFaqs({
@@ -45,6 +45,7 @@ export const useFaqFilter = () => {
     handleSearch,
     isLoading,
     isError,
+    refetch,
     handleSelectCategory,
   };
 };
