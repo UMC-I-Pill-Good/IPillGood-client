@@ -20,12 +20,16 @@ export const useForegroundMessage = () => {
 
         // new Notification()은 Android Chrome 등 모바일 브라우저에서 지원하지 않으므로
         // 서비스워커의 showNotification()으로 데스크톱/모바일 모두에서 표시
-        navigator.serviceWorker.ready.then((registration) => {
-          registration.showNotification(notification.title ?? '', {
-            body: notification.body,
-            icon: notification.icon,
+        navigator.serviceWorker
+          .getRegistration('/firebase-cloud-messaging-push-scope')
+          .then((registration) => {
+            if (!registration) return;
+
+            registration.showNotification(notification.title ?? '', {
+              body: notification.body,
+              icon: notification.icon,
+            });
           });
-        });
       });
     });
 
