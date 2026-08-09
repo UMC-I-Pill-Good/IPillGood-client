@@ -32,24 +32,24 @@ export const useFcmTokens = () => {
       return { permission, isRegistered: false };
     }
 
-    const messaging = await getMessagingInstance();
-    if (!messaging) return { permission, isRegistered: false };
-
-    // FCM 토큰 발급
-    const token = await getToken(messaging, {
-      vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-    });
-
-    if (!token) return { permission, isRegistered: false };
-
-    // 발급받은 토큰을 서버에 등록해서 이 기기로 푸시를 보낼 수 있게 함
     try {
+      const messaging = await getMessagingInstance();
+      if (!messaging) return { permission, isRegistered: false };
+
+      // FCM 토큰 발급
+      const token = await getToken(messaging, {
+        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+      });
+
+      if (!token) return { permission, isRegistered: false };
+
+      // 발급받은 토큰을 서버에 등록해서 이 기기로 푸시를 보낼 수 있게 함
       await registerMutation.mutateAsync({ platform: 'WEB', token });
+
+      return { permission, isRegistered: true };
     } catch {
       return { permission, isRegistered: false };
     }
-
-    return { permission, isRegistered: true };
   };
 
   return { handleRegisterFcmTokens, isRegistering: registerMutation.isPending };
