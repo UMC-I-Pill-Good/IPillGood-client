@@ -1,6 +1,6 @@
+import { intakeNotificationSettingsQueryKey } from './../../my/hooks/useNotificationSettings';
 import { patchActiveProduct } from '@/features/cabinet/api/intake';
 import { RequestIntakeUpdate } from '@/features/cabinet/types/intake';
-import { intakeTodayQueryKey } from '@/features/home/hooks/useIntakeToday';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 
@@ -22,8 +22,10 @@ export const usePatchIntakeProductMutation = () => {
       }
 
       queryClient.invalidateQueries({ queryKey: ['cabinetProductDetail'] });
-      queryClient.invalidateQueries({ queryKey: ['activeProducts'] });
-      queryClient.invalidateQueries({ queryKey: intakeTodayQueryKey });
+      queryClient.invalidateQueries({
+        queryKey: intakeNotificationSettingsQueryKey,
+        refetchType: 'all',
+      });
     },
     onError: (error) => {
       const message = isAxiosError<{ message?: string }>(error)
