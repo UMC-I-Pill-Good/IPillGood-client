@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { FetchError } from '@/shared/components';
+
 import { REVIEW_REPORT_PAGE_SIZE } from '../constants/ReviewReport';
 import { useAdminReviewReportListQuery } from '../hooks/useAdminReviewReportListQuery';
 import type { ReportedReviewType, ReportStatusFilterType } from '../types/ReviewReport';
@@ -50,13 +52,20 @@ const ReviewManagementContent = () => {
         onSearch={handleSearch}
         onStatusChange={handleStatusChange}
       />
-      {reportListQuery.isError && (
-        <p role='alert' className='px-10 pb-2 text-sm text-semantic-500'>
-          후기 신고 목록을 불러오지 못했습니다.
-        </p>
-      )}
       <section aria-label='후기 신고 목록' className='flex min-h-0 flex-1 flex-col px-10 pb-2'>
-        <div aria-busy={reportListQuery.isPending} className='flex min-h-0 flex-1 flex-col'>
+        {reportListQuery.isPending && (
+          <p role='status' className='flex flex-1 items-center justify-center text-lg text-neutral'>
+            후기 신고 목록을 불러오는 중입니다.
+          </p>
+        )}
+        {reportListQuery.isError && (
+          <FetchError
+            description='후기 신고 목록을 불러오지 못했습니다.'
+            onRetry={() => void reportListQuery.refetch()}
+            className='min-h-0 flex-1'
+          />
+        )}
+        {!reportListQuery.isPending && !reportListQuery.isError && (
           <ReviewReportTable
             reviewList={reviewList}
             currentPage={currentPage}
@@ -64,7 +73,7 @@ const ReviewManagementContent = () => {
             onPageChange={setCurrentPage}
             onViewReview={(review) => setSelectedReportId(review.id)}
           />
-        </div>
+        )}
       </section>
       {selectedReportId !== null && (
         <ReviewReportModal reportId={selectedReportId} onClose={() => setSelectedReportId(null)} />

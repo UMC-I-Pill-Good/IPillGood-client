@@ -97,9 +97,9 @@ const AdminSidebar = () => {
                           : undefined
                       }
                       className={cn(
-                        'px-2 py-1 text-base font-medium leading-none text-neutral transition-colors',
+                        'rounded-lg px-2 py-2 text-base font-medium leading-none text-neutral transition-colors',
                         (pathname === menu.href || pathname.startsWith(`${menu.href}/`)) &&
-                          'bg-secondary-200 text-secondary-900',
+                          'bg-secondary-100 text-black',
                       )}
                     >
                       {menu.childLabel}
@@ -112,7 +112,7 @@ const AdminSidebar = () => {
         </nav>
       </div>
 
-      <div className='flex h-[54px] items-center bg-secondary-200 px-5 py-4'>
+      <div className='bg-secondary-200 px-5 py-[15px]'>
         <button
           type='button'
           onClick={handleLogoutClick}

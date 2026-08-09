@@ -4,13 +4,17 @@ import { useState, type FormEvent } from 'react';
 import { isAxiosError } from 'axios';
 
 import { FaqModalCloseIcon } from '@/assets';
-import { ModalShell, TextButton } from '@/shared/components';
+import { FetchError, ModalShell, TextButton } from '@/shared/components';
 import { showToast } from '@/shared/utils/toast';
 
 import { REVIEW_REPORT_STATUS_LABEL_MAP } from '../constants/ReviewReport';
 import { useAdminReviewReportDetailQuery } from '../hooks/useAdminReviewReportDetailQuery';
 import { useAdminReviewReportMutation } from '../hooks/useAdminReviewReportMutation';
-import type { ReportedReviewStatusType, ReviewReportDetailResultType } from '../types/ReviewReport';
+import type {
+  ProcessableReviewStatusType,
+  ReportedReviewStatusType,
+  ReviewReportDetailResultType,
+} from '../types/ReviewReport';
 
 const REVIEW_STATUS_LIST: readonly ReportedReviewStatusType[] = [
   'PENDING',
@@ -27,6 +31,8 @@ interface ReviewReportModalProps {
 interface ReviewReportModalFormProps {
   review: ReviewReportDetailResultType;
   onClose: () => void;
+  onSubmit: (status: ProcessableReviewStatusType, reason: string) => Promise<void>;
+  isSubmitting: boolean;
 }
 
 const getErrorMessage = (error: unknown, fallbackMessage: string) => {
@@ -43,12 +49,16 @@ const formatWrittenAt = (writtenAt: string) => {
   return `${date} / ${time.slice(0, 5)}`;
 };
 
-const ReviewReportModalForm = ({ review, onClose }: ReviewReportModalFormProps) => {
+const ReviewReportModalForm = ({
+  review,
+  onClose,
+  onSubmit,
+  isSubmitting,
+}: ReviewReportModalFormProps) => {
   const [selectedStatus, setSelectedStatus] = useState<ReportedReviewStatusType>(
     review.status.type,
   );
   const [processingReason, setProcessingReason] = useState(review.processReason ?? '');
-  const processMutation = useAdminReviewReportMutation();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -61,17 +71,9 @@ const ReviewReportModalForm = ({ review, onClose }: ReviewReportModalFormProps) 
     const trimmedReason = processingReason.trim();
 
     try {
-      const response = await processMutation.mutateAsync({
-        reportId: review.reportId,
-        body: {
-          status: selectedStatus,
-          processReason: trimmedReason || undefined,
-        },
-      });
-      showToast.success(response.message || '후기 신고 처리가 저장되었습니다.');
-      onClose();
-    } catch (error) {
-      showToast.error(getErrorMessage(error, '후기 신고 처리를 저장하지 못했습니다.'));
+      await onSubmit(selectedStatus, trimmedReason);
+    } catch {
+      // API 오류 시 선택 상태와 처리 사유를 유지합니다.
     }
   };
 
@@ -105,7 +107,7 @@ const ReviewReportModalForm = ({ review, onClose }: ReviewReportModalFormProps) 
 
         <div className='grid grid-cols-[131px_1fr] items-start px-3 py-2 text-xl font-medium leading-none text-black'>
           <span>후기 내용</span>
-          <div className='h-[142px] rounded-[20px] border border-neutral p-2.5 leading-normal text-neutral'>
+          <div className='h-[142px] overflow-y-auto whitespace-pre-wrap break-words rounded-[20px] border border-neutral p-2.5 leading-normal text-neutral'>
             {review.content}
           </div>
         </div>
@@ -142,7 +144,7 @@ const ReviewReportModalForm = ({ review, onClose }: ReviewReportModalFormProps) 
           value={processingReason}
           onChange={(event) => setProcessingReason(event.target.value)}
           maxLength={200}
-          disabled={processMutation.isPending}
+          disabled={isSubmitting}
           placeholder='처리 사유를 입력하세요 (선택)'
           className='h-[142px] resize-none rounded-[20px] border border-neutral p-2.5 text-xl font-medium leading-normal text-black outline-none placeholder:text-neutral focus-visible:border-primary'
         />
@@ -154,7 +156,7 @@ const ReviewReportModalForm = ({ review, onClose }: ReviewReportModalFormProps) 
           variant='outline'
           size='sm'
           onClick={onClose}
-          disabled={processMutation.isPending}
+          disabled={isSubmitting}
           className='w-32 border-secondary text-secondary shadow-none'
         />
         <TextButton
@@ -162,7 +164,7 @@ const ReviewReportModalForm = ({ review, onClose }: ReviewReportModalFormProps) 
           text='저장'
           variant='primary'
           size='sm'
-          disabled={processMutation.isPending}
+          disabled={isSubmitting}
           className='w-32 shadow-[4px_4px_2px_rgba(0,0,0,0.15)]'
         />
       </div>
@@ -172,17 +174,42 @@ const ReviewReportModalForm = ({ review, onClose }: ReviewReportModalFormProps) 
 
 const ReviewReportModal = ({ reportId, onClose }: ReviewReportModalProps) => {
   const detailQuery = useAdminReviewReportDetailQuery(reportId);
+  const processMutation = useAdminReviewReportMutation();
+
+  const handleClose = () => {
+    if (!processMutation.isPending) {
+      onClose();
+    }
+  };
+
+  const handleSubmit = async (status: ProcessableReviewStatusType, processingReason: string) => {
+    try {
+      const response = await processMutation.mutateAsync({
+        reportId,
+        body: {
+          status,
+          processReason: processingReason || undefined,
+        },
+      });
+      showToast.success(response.message || '후기 신고 처리가 저장되었습니다.');
+      onClose();
+    } catch (error) {
+      showToast.error(getErrorMessage(error, '후기 신고 처리를 저장하지 못했습니다.'));
+      throw error;
+    }
+  };
 
   return (
     <ModalShell
       ariaLabel='후기 신고 상세'
-      onClose={onClose}
+      onClose={handleClose}
       className='max-h-[calc(100dvh-40px)] w-[871px]! max-w-[calc(100vw-40px)] gap-4! overflow-y-auto rounded-[20px]! px-10! py-8! shadow-[4px_4px_20px_rgba(126,131,135,0.2)]'
     >
       <button
         type='button'
         aria-label='후기 신고 상세 모달 닫기'
-        onClick={onClose}
+        onClick={handleClose}
+        disabled={processMutation.isPending}
         className='self-end'
       >
         <FaqModalCloseIcon aria-hidden='true' className='size-[30px]' />
@@ -192,13 +219,19 @@ const ReviewReportModal = ({ reportId, onClose }: ReviewReportModalProps) => {
         <p className='py-24 text-center text-xl text-neutral'>신고 상세를 불러오는 중입니다.</p>
       )}
       {detailQuery.isError && (
-        <div className='flex flex-col items-center gap-4 py-24' role='alert'>
-          <p className='text-xl text-semantic-500'>신고 상세를 불러오지 못했습니다.</p>
-          <TextButton text='다시 시도' size='sm' onClick={() => void detailQuery.refetch()} />
-        </div>
+        <FetchError
+          description='신고 상세를 불러오지 못했습니다.'
+          onRetry={() => void detailQuery.refetch()}
+          className='min-h-0 py-24'
+        />
       )}
       {detailQuery.data?.result && (
-        <ReviewReportModalForm review={detailQuery.data.result} onClose={onClose} />
+        <ReviewReportModalForm
+          review={detailQuery.data.result}
+          onClose={handleClose}
+          onSubmit={handleSubmit}
+          isSubmitting={processMutation.isPending}
+        />
       )}
     </ModalShell>
   );
