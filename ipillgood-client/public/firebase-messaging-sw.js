@@ -11,5 +11,19 @@ firebase.initializeApp({
   appId: '1:468498872243:web:6734c5f64948e8b0b0bdc6',
 });
 
-// 앱이 안 열려있을 때 날아오는 푸시는 notification 필드 기반으로 브라우저가 자동으로 알림을 띄움
 firebase.messaging();
+
+self.addEventListener('push', (event) => {
+  if (!event.data) return;
+
+  const payload = event.data.json();
+  const { notification } = payload;
+  if (!notification) return;
+
+  event.waitUntil(
+    self.registration.showNotification(notification.title ?? '', {
+      body: notification.body,
+      icon: notification.icon,
+    }),
+  );
+});
