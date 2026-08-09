@@ -41,6 +41,7 @@ const LinkConnectionModal = ({
           variant='outline'
           size='sm'
           onClick={onCancel}
+          disabled={isPending}
           className='flex-1'
         />
         <TextButton
