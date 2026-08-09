@@ -16,7 +16,7 @@ const WithdrawAction = ({ onWithdrawSuccess }: WithdrawActionProps) => {
 
   return (
     <>
-      <label className='flex px-5 gap-1 items-center'>
+      <label className='flex pr-5 pl-1 gap-1 items-center'>
         <CheckboxButton checked={isAgreed} onClick={handleToggleAgree} />
         <span className='typo-caption-2 text-black'>
           위 내용을 모두 확인했으며, 회원 탈퇴에 동의합니다.
