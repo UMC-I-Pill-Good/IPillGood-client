@@ -1,6 +1,5 @@
 'use client';
 
-import { showToast } from '@/shared/utils';
 import { useConditionStore } from '../store/useConditionStore';
 import { validateConditionCheck } from '../utils/conditionValidation';
 import { useConditionCheckMutation } from './useConditionCheckMutation';
@@ -48,20 +47,15 @@ export const useConditionFlow = () => {
       validateConditionCheck(selectedScore, sleepHours, sleepMinutes);
       setVitalityScore(selectedScore);
       setCheckStep(3);
-    } catch (error) {
-      showToast.error(
-        error instanceof Error ? error.message : '컨디션 입력값을 확인해 주세요.',
-      );
+    } catch {
+      return;
     }
   };
 
   const handleCompleteSleepStep = (sleepTime: { hours: number; minutes: number }) => {
     try {
       validateConditionCheck(vitalityScore, sleepTime.hours, sleepTime.minutes);
-    } catch (error) {
-      showToast.error(
-        error instanceof Error ? error.message : '컨디션 입력값을 확인해 주세요.',
-      );
+    } catch {
       return;
     }
 

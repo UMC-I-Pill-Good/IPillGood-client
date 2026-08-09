@@ -36,7 +36,8 @@ export const useHealthConcernRecommendations = ({
   useConditionErrorToast(
     query.error,
     query.isError,
-    '건강 상태 추천 정보를 불러오지 못했습니다.',
+    '정보를 불러오지 못했어요. 다시 시도해 주세요.',
+    true,
   );
 
   return query;

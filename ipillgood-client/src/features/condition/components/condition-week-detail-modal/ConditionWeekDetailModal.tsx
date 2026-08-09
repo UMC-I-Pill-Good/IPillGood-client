@@ -9,7 +9,6 @@ import { X } from 'lucide-react';
 import { getConditionWeekDetail } from '../../api/getConditionWeekDetail';
 import { type ConditionWeekDetailResult } from '../../types/condition';
 import { conditionQueryKeys } from '../../constants/conditionQueryKeys';
-import { useConditionErrorToast } from '../../hooks/useConditionErrorToast';
 import ConditionMetric from './ConditionMetric';
 
 interface ConditionWeekDetailModalProps {
@@ -35,8 +34,6 @@ const ConditionWeekDetailModal = ({
     data: detailData,
     isLoading,
     isFetching,
-    error,
-    isError,
   } = useQuery<ConditionWeekDetailResult>({
     queryKey: conditionQueryKeys.weekDetail(recordId),
     queryFn: async () => {
@@ -48,12 +45,6 @@ const ConditionWeekDetailModal = ({
     },
     staleTime: 5 * 60_000,
   });
-
-  useConditionErrorToast(
-    error,
-    isError,
-    '주차별 컨디션 정보를 불러오지 못했습니다.',
-  );
 
   const displayVitality = isLoading ? '-' : (detailData?.vitalityScore ?? '-');
   const displaySleepHours = isLoading

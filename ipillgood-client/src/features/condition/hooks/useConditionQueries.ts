@@ -7,7 +7,6 @@ import {
   type ConditionCurrentWeekResult,
   type ConditionMonthlyRecordsResult,
 } from '../types/condition';
-import { useConditionErrorToast } from './useConditionErrorToast';
 
 const DEFAULT_CURRENT_WEEK_STATUS: ConditionCurrentWeekResult = {
   today: '',
@@ -86,17 +85,6 @@ export const useConditionQueries = () => {
     placeholderData: keepPreviousData,
     staleTime: 5 * 60_000,
   });
-
-  useConditionErrorToast(
-    currentWeekQuery.error,
-    currentWeekQuery.isError,
-    '이번 주 컨디션 상태를 불러오지 못했습니다.',
-  );
-  useConditionErrorToast(
-    monthlyRecordsQuery.error,
-    monthlyRecordsQuery.isError,
-    '월별 컨디션 기록을 불러오지 못했습니다.',
-  );
 
   const handlePreviousMonth = () => {
     setSelectedYearMonth((previous) => {

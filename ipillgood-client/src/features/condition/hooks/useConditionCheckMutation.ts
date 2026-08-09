@@ -3,7 +3,6 @@ import { showToast } from '@/shared/utils';
 import { postConditionCheck } from '../api/postConditionCheck';
 import { conditionQueryKeys } from '../constants/conditionQueryKeys';
 import { type ConditionCheckRequest, type ConditionCurrentWeekResult } from '../types/condition';
-import { getConditionErrorMessage } from '../utils/conditionError';
 import { getConditionYearMonth } from './useConditionQueries';
 
 interface UseConditionCheckMutationParams {
@@ -46,16 +45,15 @@ export const useConditionCheckMutation = ({
             : previous,
       );
       onCompleted();
+      showToast.success('이번 주 컨디션이 기록됐어요!');
 
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: conditionQueryKeys.currentWeek() }),
         queryClient.invalidateQueries({ queryKey: monthlyRecordsQueryKey }),
       ]);
     },
-    onError: (error) => {
-      showToast.error(
-        getConditionErrorMessage(error, '컨디션 체크를 저장하지 못했습니다.'),
-      );
+    onError: () => {
+      showToast.error('컨디션 기록에 실패했어요. 다시 시도해 주세요.');
     },
   });
 };
