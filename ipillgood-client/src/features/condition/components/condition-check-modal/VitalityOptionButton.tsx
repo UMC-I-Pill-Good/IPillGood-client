@@ -6,7 +6,7 @@ import {
   ConditionScore5Icon,
 } from '@/assets';
 import { clsx } from 'clsx';
-import { type VitalityOption } from '../../constants/conditionPopup';
+import { type VitalityOption } from '../../types/condition';
 
 interface VitalityOptionButtonProps {
   option: VitalityOption;

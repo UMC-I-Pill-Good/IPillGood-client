@@ -22,7 +22,6 @@ const HealthSystemCardGrid = ({
 }: HealthSystemCardGridProps) => {
   return (
     <section className='flex w-full justify-center px-5 py-4 box-border'>
-      {/* 팀원 피드백: max 너비(max-w-[349px]) 제거 */}
       <div
         className='grid w-full grid-cols-4 gap-2'
         aria-label={isLoading ? '건강 상태 분류를 불러오는 중' : undefined}

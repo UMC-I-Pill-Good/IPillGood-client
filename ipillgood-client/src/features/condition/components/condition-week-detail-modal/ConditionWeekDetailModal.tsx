@@ -1,16 +1,15 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ConditionIntakeIcon, ConditionSleepIcon, ConditionVitalityIcon } from '@/assets';
 import { IconButton } from '@/shared/components';
 import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
-import { showToast } from '@/shared/utils';
 import { X } from 'lucide-react';
 import { getConditionWeekDetail } from '../../api/getConditionWeekDetail';
 import { type ConditionWeekDetailResult } from '../../types/condition';
 import { conditionQueryKeys } from '../../constants/conditionQueryKeys';
-import { getConditionErrorMessage } from '../../utils/conditionError';
+import { useConditionErrorToast } from '../../hooks/useConditionErrorToast';
 import ConditionMetric from './ConditionMetric';
 
 interface ConditionWeekDetailModalProps {
@@ -50,13 +49,11 @@ const ConditionWeekDetailModal = ({
     staleTime: 5 * 60_000,
   });
 
-  useEffect(() => {
-    if (!isError) return;
-
-    showToast.error(
-      getConditionErrorMessage(error, '주차별 컨디션 정보를 불러오지 못했습니다.'),
-    );
-  }, [error, isError]);
+  useConditionErrorToast(
+    error,
+    isError,
+    '주차별 컨디션 정보를 불러오지 못했습니다.',
+  );
 
   const displayVitality = isLoading ? '-' : (detailData?.vitalityScore ?? '-');
   const displaySleepHours = isLoading

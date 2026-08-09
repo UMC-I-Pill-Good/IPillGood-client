@@ -1,8 +1,4 @@
-export type VitalityOption = {
-  score: number;
-  label: string;
-  type: 'down' | 'neutral' | 'up';
-};
+import { type VitalityOption } from '../types/condition';
 
 export const VITALITY_OPTION_LIST: VitalityOption[] = [
   { score: 1, label: '매우 불만족', type: 'down' },

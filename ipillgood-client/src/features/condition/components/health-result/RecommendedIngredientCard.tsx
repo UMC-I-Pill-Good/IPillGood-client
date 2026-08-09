@@ -1,4 +1,5 @@
 import { type KeyboardEvent } from 'react';
+import Image from 'next/image';
 import { type IngredientSummary } from '../../types/healthStatus';
 import { Omega3BottleIcon } from '@/assets';
 import { Chip } from '@/shared/components';
@@ -31,6 +32,12 @@ const RecommendedIngredientCard = ({
     handleCardClick();
   };
 
+  const ingredientImageUrl = ingredient.imageUrl
+    ? ingredient.imageUrl.startsWith('http') || ingredient.imageUrl.startsWith('/')
+      ? ingredient.imageUrl
+      : `/${ingredient.imageUrl}`
+    : null;
+
   return (
     <div
       role={onClick ? 'button' : undefined}
@@ -44,11 +51,12 @@ const RecommendedIngredientCard = ({
     >
       {/* 1. 성분 이미지 영역 (서버에서 받은 이미지 URL이 있으면 이미지를 그리고, 없으면 기본 아이콘 표시) */}
       <div className='flex w-[54px] shrink-0 items-center justify-center self-center overflow-visible'>
-        {ingredient.imageUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={ingredient.imageUrl}
+        {ingredientImageUrl ? (
+          <Image
+            src={ingredientImageUrl}
             alt={ingredient.name}
+            width={54}
+            height={80}
             className='block h-[80px] w-[54px] object-contain overflow-visible'
           />
         ) : (

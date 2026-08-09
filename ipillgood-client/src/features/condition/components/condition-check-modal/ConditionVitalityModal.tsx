@@ -1,11 +1,11 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { IconButton, TextButton } from '@/shared/components';
-import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
 import { ChevronLeft, X } from 'lucide-react';
 import { VITALITY_OPTION_LIST } from '../../constants/conditionPopup';
 import VitalityOptionButton from './VitalityOptionButton';
+import ConditionCheckModalLayout from './ConditionCheckModalLayout';
 
 interface ConditionVitalityModalProps {
   isOpen: boolean;
@@ -22,16 +22,7 @@ const ConditionVitalityModal = ({
   onClose,
   onNext,
 }: ConditionVitalityModalProps) => {
-  const contentRef = useRef<HTMLDivElement>(null);
   const [selectedScore, setSelectedScore] = useState<number>(initialScore);
-
-  useScrollLock();
-  useEscapeKey(onClose);
-  useOutsideClick(contentRef, onClose);
-
-  if (!isOpen) {
-    return null;
-  }
 
   const handleSelectScore = (score: number) => {
     setSelectedScore(score);
@@ -42,17 +33,12 @@ const ConditionVitalityModal = ({
   };
 
   return (
-    <div
-      className='fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-5'
-      role='dialog'
-      aria-modal='true'
-      aria-label='활력 선택 팝업'
+    <ConditionCheckModalLayout
+      isOpen={isOpen}
+      onClose={onClose}
+      ariaLabel='활력 선택 팝업'
+      contentClassName='items-center justify-center gap-8'
     >
-      <div
-        ref={contentRef}
-        className='flex w-[351px] flex-col items-center justify-center gap-8 rounded-[20px] border border-white bg-white py-4 shadow-[4px_4px_40px_0_rgba(126,131,135,0.2)]'
-        style={{ fontFamily: 'Pretendard, sans-serif' }}
-      >
         {/* Upper Content */}
         <div className='flex w-full flex-col gap-8'>
           {/* Header - 공통 IconButton 사용 */}
@@ -101,8 +87,7 @@ const ConditionVitalityModal = ({
             onClick={handleNext}
           />
         </div>
-      </div>
-    </div>
+    </ConditionCheckModalLayout>
   );
 };
 

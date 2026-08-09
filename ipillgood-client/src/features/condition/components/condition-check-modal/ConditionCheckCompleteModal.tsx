@@ -1,10 +1,9 @@
 'use client';
 
-import { useRef } from 'react';
 import { MascotThumbsUpIcon } from '@/assets';
 import { IconButton, TextButton } from '@/shared/components';
-import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
 import { X } from 'lucide-react';
+import ConditionCheckModalLayout from './ConditionCheckModalLayout';
 
 interface ConditionCheckCompleteModalProps {
   isOpen: boolean;
@@ -19,28 +18,13 @@ const ConditionCheckCompleteModal = ({
   onClose,
   onViewGraph,
 }: ConditionCheckCompleteModalProps) => {
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  useScrollLock();
-  useEscapeKey(onClose);
-  useOutsideClick(contentRef, onClose);
-
-  if (!isOpen) {
-    return null;
-  }
-
   return (
-    <div
-      className='fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-5'
-      role='dialog'
-      aria-modal='true'
-      aria-label='컨디션 체크 완료 팝업'
+    <ConditionCheckModalLayout
+      isOpen={isOpen}
+      onClose={onClose}
+      ariaLabel='컨디션 체크 완료 팝업'
+      contentClassName='items-center justify-center gap-8'
     >
-      <div
-        ref={contentRef}
-        className='flex w-[351px] flex-col items-center justify-center gap-8 rounded-[20px] border border-white bg-white py-4 shadow-[4px_4px_40px_0_rgba(126,131,135,0.2)]'
-        style={{ fontFamily: 'Pretendard, sans-serif' }}
-      >
         {/* Header - 4단계는 제출 완료 화면이므로 우측 X 닫기 버튼만 렌더링 */}
         <header className='flex h-9 w-full items-center justify-end px-5'>
           <IconButton
@@ -84,8 +68,7 @@ const ConditionCheckCompleteModal = ({
             onClick={onViewGraph}
           />
         </section>
-      </div>
-    </div>
+    </ConditionCheckModalLayout>
   );
 };
 

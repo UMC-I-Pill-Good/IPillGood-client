@@ -1,6 +1,5 @@
 'use client';
 
-import { useRef } from 'react';
 import {
   ConditionCheckCircleIcon,
   ConditionVitalityIcon,
@@ -8,9 +7,9 @@ import {
   ConditionIntakeIcon,
 } from '@/assets';
 import { IconButton, TextButton } from '@/shared/components';
-import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
 import { X } from 'lucide-react';
 import ConditionCheckRow from './ConditionCheckRow';
+import ConditionCheckModalLayout from './ConditionCheckModalLayout';
 
 interface ConditionCheckStartModalProps {
   isOpen: boolean;
@@ -23,28 +22,12 @@ const ConditionCheckStartModal = ({
   onClose,
   onStart,
 }: ConditionCheckStartModalProps) => {
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  useScrollLock();
-  useEscapeKey(onClose);
-  useOutsideClick(contentRef, onClose);
-
-  if (!isOpen) {
-    return null;
-  }
-
   return (
-    <div
-      className='fixed inset-0 z-50 flex items-center justify-center bg-black/30 p-5'
-      role='dialog'
-      aria-modal='true'
-      aria-label='컨디션 체크 시작 팝업'
+    <ConditionCheckModalLayout
+      isOpen={isOpen}
+      onClose={onClose}
+      ariaLabel='컨디션 체크 시작 팝업'
     >
-      <div
-        ref={contentRef}
-        className='flex w-[351px] flex-col rounded-[20px] border border-white bg-white py-4 shadow-[4px_4px_40px_0_rgba(126,131,135,0.2)]'
-        style={{ fontFamily: 'Pretendard, sans-serif' }}
-      >
         {/* Header - 공통 IconButton 사용 */}
         <header className='flex h-9 w-full items-center justify-end px-5'>
           <IconButton
@@ -104,8 +87,7 @@ const ConditionCheckStartModal = ({
             onClick={onStart}
           />
         </div>
-      </div>
-    </div>
+    </ConditionCheckModalLayout>
   );
 };
 

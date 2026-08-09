@@ -56,16 +56,16 @@ const ConditionStatusBanner = ({
           className={clsx(
             'relative flex w-full flex-col items-center rounded-2xl bg-primary-300 px-4 text-left shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
             currentWeekStatus.checkAvailable
-              ? 'h-[148px] justify-between pt-3 pb-4'
+              ? 'justify-between pb-4 pt-3'
               : 'h-[77px] justify-center py-4',
           )}
         >
-          <div className='flex flex-row items-center justify-center gap-2 mx-auto min-w-0 shrink-0 w-full pl-6'>
-            <div className='flex flex-col justify-center min-w-0 pt-1'>
+          <div className='mx-auto flex w-full min-w-0 shrink-0 flex-row items-center justify-center gap-2 pl-6'>
+            <div className='flex min-w-0 flex-col justify-center gap-1'>
               <p className='text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
                 {title}
               </p>
-              <p className='text-xs font-medium leading-tight tracking-normal text-white mt-1'>
+              <p className='text-xs font-medium leading-tight tracking-normal text-white'>
                 매주 일요일에 컨디션 체크 알림을 보내드려요!
                 <br />
                 매주 체크하고, 변화를 기록해 보세요.
@@ -88,7 +88,7 @@ const ConditionStatusBanner = ({
               text='이번 주 컨디션 체크하러 가기'
               size='lg'
               onClick={onOpenConditionCheck}
-              className='mx-auto mt-1 h-10.5 w-full max-w-[290px] rounded-lg bg-primary-600 text-white text-base font-medium shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] hover:bg-primary-700 transition-all'
+              className='mx-auto h-10.5 w-full max-w-[290px] rounded-lg bg-primary-600 text-base font-medium text-white shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] transition-all hover:bg-primary-700'
             />
           )}
         </div>

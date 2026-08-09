@@ -23,7 +23,6 @@ const HealthBodyPartButtonGroup = ({
         더 자세한 부위를 선택해 주세요.
       </h2>
 
-      {/* 팀원 피드백: max 너비(max-w-[353px]) 제거 */}
       <div className='flex w-full flex-wrap items-start content-start justify-start gap-2.5 py-4'>
         {selectedSystem ? (
           selectedSystem.bodyPartList.map((part) => (
