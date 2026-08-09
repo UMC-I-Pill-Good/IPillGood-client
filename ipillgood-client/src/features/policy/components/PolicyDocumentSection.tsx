@@ -61,7 +61,12 @@ const PolicyDocumentSection = ({ documentType, isSignup }: PolicyDocumentSection
       {isSignup && (
         <section className='shrink-0 space-y-4'>
           <div className='bg-white/50 h-11 p-4 rounded-xl glass w-full flex items-center justify-start gap-2'>
-            <CheckboxButton checked={isChecked} onClick={() => toggle(agreementKey)} size='lg' />
+            <CheckboxButton
+              ariaLabel='위 내용에 동의합니다'
+              checked={isChecked}
+              onClick={() => toggle(agreementKey)}
+              size='lg'
+            />
             <p className='typo-body-9'>위 내용에 동의합니다</p>
           </div>
 

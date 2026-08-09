@@ -1,8 +1,9 @@
+import { baseURL } from '@/app/api/api';
 import { KakaoIcon, NaverIcon } from '@/assets';
 
 const OAUTH_URL = {
-  kakao: `${process.env.NEXT_PUBLIC_API_URL}/auth/kakao/login`,
-  naver: `${process.env.NEXT_PUBLIC_API_URL}/auth/naver/login`,
+  kakao: `${baseURL}/auth/kakao/login`,
+  naver: `${baseURL}/auth/naver/login`,
 };
 
 const SocialLoginForm = () => {

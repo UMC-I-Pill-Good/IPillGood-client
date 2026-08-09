@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSignupDraftStore } from '@/features/signup/stores/useSignupDraftStore';
 import { useAgreementStore } from '@/features/signup/stores/useAgreementStore';
 import SocialLoginForm from './SocialLoginForm';
@@ -14,11 +14,19 @@ import { useSocialAccountLinkMutation } from '../hooks/useSocialAccountLinkMutat
 const LoginSection = () => {
   const searchParams = useSearchParams();
   const isLinkModalOpen = searchParams.get('accountLink') === 'true';
+  const [accountLinkProvider, setAccountLinkProvider] = useState<'kakao' | 'naver' | null>(null);
   const { submitAccountLink, cancelAccountLink, isPending } = useSocialAccountLinkMutation();
 
   useEffect(() => {
     useSignupDraftStore.getState().resetDraft();
     useAgreementStore.getState().reset();
+
+    const provider = sessionStorage.getItem('accountLinkProvider');
+
+    if (provider === 'kakao' || provider === 'naver') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setAccountLinkProvider(provider);
+    }
   }, []);
 
   return (
@@ -61,8 +69,9 @@ const LoginSection = () => {
         </Link>
       </motion.section>
 
-      {isLinkModalOpen && (
+      {isLinkModalOpen && accountLinkProvider && (
         <LinkConnectionModal
+          provider={accountLinkProvider}
           onConfirm={submitAccountLink}
           onCancel={cancelAccountLink}
           isPending={isPending}

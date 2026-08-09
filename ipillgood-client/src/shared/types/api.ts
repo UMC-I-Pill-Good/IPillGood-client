@@ -6,8 +6,8 @@ export type CommonResponse<T> = {
 };
 
 export type ResponeReissueResult = CommonResponse<{
-  accessToken: 'string';
-  tokenType: 'string';
+  accessToken: string;
+  tokenType: string;
   expiresIn: number;
   memberId: number;
   onboardingCompleted: boolean;
