@@ -15,7 +15,7 @@ interface PolicyDocumentSectionProps {
 const PolicyDocumentSection = ({ documentType, isSignup }: PolicyDocumentSectionProps) => {
   const router = useRouter();
 
-  const { data, isLoading, isError } = usePolicyDocument(documentType);
+  const { data, isLoading, isError, refetch } = usePolicyDocument(documentType);
   const { content, effectiveAt } = data ?? {};
 
   const formattedDate = effectiveAt?.slice(0, 10).replaceAll('-', '.');
@@ -30,7 +30,7 @@ const PolicyDocumentSection = ({ documentType, isSignup }: PolicyDocumentSection
   if (isError || (!isLoading && !data)) {
     return (
       <section className='flex flex-col px-5 py-4 gap-8'>
-        <FetchError />
+        <FetchError onRetry={() => refetch()} />
       </section>
     );
   }

@@ -1,12 +1,11 @@
 'use client';
-import { SearchBar } from '@/shared/components';
+import { FetchError, LoadingSpinner, SearchBar } from '@/shared/components';
 import { useFaqFilter } from '../../hooks/useFaqFilter';
 import FaqAccordion from './FaqAccordion';
 import FaqCategoryOptions from './FaqCategoryOptions';
 import ContactSection from './ContactSection';
 import { useSupport } from '../../hooks/useSupport';
 import { MascotSadIcon } from '@/assets';
-import { Loader2 } from 'lucide-react';
 
 const FaqSection = () => {
   const {
@@ -17,6 +16,7 @@ const FaqSection = () => {
     handleSearch,
     isLoading,
     isError,
+    refetch,
     handleSelectCategory,
   } = useFaqFilter();
 
@@ -24,20 +24,16 @@ const FaqSection = () => {
 
   const renderFaqList = () => {
     if (isLoading) {
-      return (
-        <div className='flex flex-col items-center py-15 gap-4'>
-          <Loader2 className='text-primary size-10 animate-spin' />
-          <p className='typo-body-10 text-neutral'>데이터를 불러오고 있습니다...</p>
-        </div>
-      );
+      return <LoadingSpinner className='min-h-0 py-15' />;
     }
 
     if (isError) {
       return (
-        <div className='flex flex-col items-center py-5'>
-          <MascotSadIcon />
-          <p className='typo-body-6 text-primary-700'>FAQ를 불러오지 못했습니다.</p>
-        </div>
+        <FetchError
+          className='min-h-0 py-15'
+          description='FAQ를 불러오지 못했습니다.'
+          onRetry={() => refetch()}
+        />
       );
     }
 

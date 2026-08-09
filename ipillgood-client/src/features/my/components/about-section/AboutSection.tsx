@@ -14,27 +14,17 @@ const AboutSection = () => {
 
       <div className='flex flex-col gap-2 w-full mt-auto'>
         <TextButton
-          type='button'
-          onClick={() =>
-            window.open(
-              'https://grandiose-front-c83.notion.site/3b72a4a6a3d0800f8a06f20ff0a3d838?source=copy_link',
-              '_blank',
-              'noopener,noreferrer',
-            )
-          }
+          href='https://grandiose-front-c83.notion.site/3b72a4a6a3d0800f8a06f20ff0a3d838?source=copy_link'
+          target='_blank'
+          rel='noopener noreferrer'
           text='서비스 소개 (Notion)'
           size='xl'
           className='w-full'
         />
         <TextButton
-          type='button'
-          onClick={() =>
-            window.open(
-              'https://grandiose-front-c83.notion.site/3b72a4a6a3d080aa820fccccacd70c5f?source=copy_link',
-              '_blank',
-              'noopener,noreferrer',
-            )
-          }
+          href='https://grandiose-front-c83.notion.site/3b72a4a6a3d080aa820fccccacd70c5f?source=copy_link'
+          target='_blank'
+          rel='noopener noreferrer'
           text='오픈소스 기술 (Notion)'
           size='xl'
           className='w-full'
