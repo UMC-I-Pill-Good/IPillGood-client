@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { TextButton } from '@/shared/components';
@@ -15,6 +15,7 @@ interface ProductPurchaseSectionProps {
 
 const ProductPurchaseSection = ({ productId }: ProductPurchaseSectionProps) => {
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
+  const openedPurchaseProductIdRef = useRef<number | null>(null);
   const purchaseCheckQuery = useQuery({
     queryKey: ['product-purchase-check', productId],
     queryFn: async () => {
@@ -30,6 +31,9 @@ const ProductPurchaseSection = ({ productId }: ProductPurchaseSectionProps) => {
   const purchaseCheck = purchaseCheckQuery.data;
 
   const openPurchasePage = (purchaseUrl: string) => {
+    if (openedPurchaseProductIdRef.current === productId) return;
+
+    openedPurchaseProductIdRef.current = productId;
     window.open(purchaseUrl, '_blank', 'noopener,noreferrer');
   };
 
