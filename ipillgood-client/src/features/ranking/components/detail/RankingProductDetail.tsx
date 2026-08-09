@@ -1,4 +1,3 @@
-import { TextButton } from '@/shared/components';
 import type {
   ProductIngredient,
   RankingProductCompatibilityDto,
@@ -8,6 +7,7 @@ import SupplementAdvertisingNotice from './SupplementAdvertisingNotice';
 import SupplementCombinationSection from './SupplementCombinationSection';
 import SupplementDetailSummaryCard from './SupplementDetailSummaryCard';
 import SupplementIngredientBottomSheet from './SupplementIngredientBottomSheet';
+import ProductPurchaseSection from './ProductPurchaseSection';
 
 interface RankingProductDetailProps {
   product: RankingProductDetailDto;
@@ -41,19 +41,7 @@ const RankingProductDetail = ({
       }
     />
     <SupplementCombinationSection compatibility={compatibility} />
-    <section className='flex w-full flex-col gap-2 px-5 py-4'>
-      <p className='text-center typo-caption-6 text-neutral-800'>
-        질병 치료 및 의약품을 복용 중이라면 의사 상담 후 섭취를 추천드려요.
-      </p>
-      <TextButton
-        href={product.purchaseUrl}
-        target='_blank'
-        rel='noopener noreferrer'
-        text='구매하러 가기'
-        size='xl'
-        className='h-13 w-full rounded-lg px-2 typo-body-2'
-      />
-    </section>
+    <ProductPurchaseSection productId={product.productId} />
   </>
 );
 
