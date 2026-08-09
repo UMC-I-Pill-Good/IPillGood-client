@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { showToast } from '@/shared/utils';
 import { useHealthConcernRecommendations } from './useHealthConcernRecommendations';
 
 /**
@@ -27,6 +29,12 @@ export const useHealthResultFlow = () => {
   };
 
   const isValid = Boolean(majorCategory && minorCategory);
+
+  useEffect(() => {
+    if (isValid) return;
+
+    showToast.error('선택된 건강 상태 정보가 없습니다. 다시 선택해 주세요.');
+  }, [isValid]);
 
   return {
     majorCategoryLabel,

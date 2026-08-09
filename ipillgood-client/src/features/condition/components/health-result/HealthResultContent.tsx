@@ -66,9 +66,6 @@ const HealthResultContent = () => {
           onBack={handleBack}
           onClose={handleClose}
         />
-        <div className='flex flex-1 items-center justify-center p-5 text-center text-neutral-500 typo-body-5 leading-none'>
-          선택된 건강 상태 정보가 없습니다. 다시 선택해 주세요.
-        </div>
       </div>
     );
   }
@@ -98,9 +95,6 @@ const HealthResultContent = () => {
           onBack={handleBack}
           onClose={handleClose}
         />
-        <div className='flex flex-1 items-center justify-center p-5 text-center text-neutral-500 typo-body-5 leading-none'>
-          오류가 발생했습니다. 잠시 후 다시 시도해 주세요.
-        </div>
       </div>
     );
   }

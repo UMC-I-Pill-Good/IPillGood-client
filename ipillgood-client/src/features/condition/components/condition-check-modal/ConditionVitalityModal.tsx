@@ -10,7 +10,6 @@ import VitalityOptionButton from './VitalityOptionButton';
 interface ConditionVitalityModalProps {
   isOpen: boolean;
   initialScore?: number;
-  errorMessage?: string | null;
   onBack: () => void;
   onClose: () => void;
   onNext: (score: number) => void;
@@ -19,7 +18,6 @@ interface ConditionVitalityModalProps {
 const ConditionVitalityModal = ({
   isOpen,
   initialScore = 3,
-  errorMessage,
   onBack,
   onClose,
   onNext,
@@ -93,13 +91,7 @@ const ConditionVitalityModal = ({
         </div>
 
         {/* Footer - 공통 TextButton 사용 */}
-        <div className='flex w-full flex-col gap-2 px-5'>
-          {errorMessage && (
-            <p role='alert' className='typo-caption-2 text-center text-semantic-600'>
-              {errorMessage}
-            </p>
-          )}
-
+        <div className='flex w-full flex-col px-5'>
           <TextButton
             type='button'
             text='다음(1/2)'

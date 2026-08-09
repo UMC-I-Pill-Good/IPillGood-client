@@ -22,7 +22,6 @@ const ConditionCheckModals = ({ userName = '아필굿' }: ConditionCheckModalsPr
     vitalityScore,
     sleepHours,
     sleepMinutes,
-    conditionCheckError,
     isSubmitting,
     closeCheckModal,
     closeSundayModal,
@@ -64,7 +63,6 @@ const ConditionCheckModals = ({ userName = '아필굿' }: ConditionCheckModalsPr
               key={`vitality-${vitalityScore}`}
               isOpen={true}
               initialScore={vitalityScore}
-              errorMessage={conditionCheckError}
               onBack={handleBackToStart}
               onClose={closeCheckModal}
               onNext={handleNextVitalityStep}
@@ -78,7 +76,6 @@ const ConditionCheckModals = ({ userName = '아필굿' }: ConditionCheckModalsPr
               isOpen={true}
               initialHours={sleepHours}
               initialMinutes={sleepMinutes}
-              errorMessage={conditionCheckError}
               isSubmitting={isSubmitting}
               onBack={handleBackToVitality}
               onClose={closeCheckModal}

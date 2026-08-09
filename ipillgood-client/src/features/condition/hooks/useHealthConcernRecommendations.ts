@@ -1,6 +1,9 @@
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { showToast } from '@/shared/utils';
 import { getHealthConcernRecommendations } from '../api/getHealthConcernRecommendations';
 import { type HealthConcernRecommendationsResponse } from '../types/healthStatus';
+import { getConditionErrorMessage } from '../utils/conditionError';
 
 interface UseHealthConcernRecommendationsParams {
   majorCategory?: string | null;
@@ -16,7 +19,7 @@ export const useHealthConcernRecommendations = ({
 }: UseHealthConcernRecommendationsParams) => {
   const isEnabled = Boolean(majorCategory && minorCategory);
 
-  return useQuery<HealthConcernRecommendationsResponse['result'] | null, Error>({
+  const query = useQuery<HealthConcernRecommendationsResponse['result'] | null, Error>({
     queryKey: ['health-concerns', 'recommendations', majorCategory, minorCategory],
     queryFn: async () => {
       if (!majorCategory || !minorCategory) return null;
@@ -31,4 +34,14 @@ export const useHealthConcernRecommendations = ({
     },
     enabled: isEnabled,
   });
+
+  useEffect(() => {
+    if (!query.isError) return;
+
+    showToast.error(
+      getConditionErrorMessage(query.error, '건강 상태 추천 정보를 불러오지 못했습니다.'),
+    );
+  }, [query.error, query.isError]);
+
+  return query;
 };

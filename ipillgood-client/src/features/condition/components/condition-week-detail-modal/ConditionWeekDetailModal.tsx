@@ -1,14 +1,16 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ConditionIntakeIcon, ConditionSleepIcon, ConditionVitalityIcon } from '@/assets';
 import { IconButton } from '@/shared/components';
 import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
+import { showToast } from '@/shared/utils';
 import { X } from 'lucide-react';
 import { getConditionWeekDetail } from '../../api/getConditionWeekDetail';
 import { type ConditionWeekDetailResult } from '../../types/condition';
 import { conditionQueryKeys } from '../../constants/conditionQueryKeys';
+import { getConditionErrorMessage } from '../../utils/conditionError';
 import ConditionMetric from './ConditionMetric';
 
 interface ConditionWeekDetailModalProps {
@@ -33,9 +35,9 @@ const ConditionWeekDetailModal = ({
   const {
     data: detailData,
     isLoading,
-    isError,
     isFetching,
-    refetch,
+    error,
+    isError,
   } = useQuery<ConditionWeekDetailResult>({
     queryKey: conditionQueryKeys.weekDetail(recordId),
     queryFn: async () => {
@@ -47,6 +49,14 @@ const ConditionWeekDetailModal = ({
     },
     staleTime: 5 * 60_000,
   });
+
+  useEffect(() => {
+    if (!isError) return;
+
+    showToast.error(
+      getConditionErrorMessage(error, '주차별 컨디션 정보를 불러오지 못했습니다.'),
+    );
+  }, [error, isError]);
 
   const displayVitality = isLoading ? '-' : (detailData?.vitalityScore ?? '-');
   const displaySleepHours = isLoading
@@ -135,19 +145,6 @@ const ConditionWeekDetailModal = ({
           />
         </div>
 
-        {isError && (
-          <div role='alert' className='typo-caption-7 text-center text-neutral-700'>
-            컨디션 정보를 불러오지 못했습니다.{' '}
-            <button
-              type='button'
-              className='underline disabled:no-underline'
-              disabled={isFetching}
-              onClick={() => void refetch()}
-            >
-              {isFetching ? '다시 시도 중...' : '다시 시도'}
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );

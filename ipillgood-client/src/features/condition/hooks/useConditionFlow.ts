@@ -15,6 +15,8 @@ import { patchConditionPopupAutoShown } from '../api/patchConditionPopupAutoShow
 import { patchConditionPopupDismissed } from '../api/patchConditionPopupDismissed';
 import { conditionQueryKeys } from '../constants/conditionQueryKeys';
 import { validateConditionCheck } from '../utils/conditionValidation';
+import { getConditionErrorMessage } from '../utils/conditionError';
+import { showToast } from '@/shared/utils';
 import {
   type ConditionCheckRequest,
   type ConditionCurrentWeekResult,
@@ -62,7 +64,6 @@ export const useConditionFlow = () => {
     year: number;
     month: number;
   } | null>(null);
-  const [conditionCheckError, setConditionCheckError] = useState<string | null>(null);
   const autoPopupRecordedWeekRef = useRef<string | null>(null);
 
   const {
@@ -120,6 +121,28 @@ export const useConditionFlow = () => {
     getDefaultMonthlyRecords(activeYearMonth.year, activeYearMonth.month);
 
   useEffect(() => {
+    if (!currentWeekQuery.isError) return;
+
+    showToast.error(
+      getConditionErrorMessage(
+        currentWeekQuery.error,
+        '이번 주 컨디션 상태를 불러오지 못했습니다.',
+      ),
+    );
+  }, [currentWeekQuery.error, currentWeekQuery.isError]);
+
+  useEffect(() => {
+    if (!monthlyRecordsQuery.isError) return;
+
+    showToast.error(
+      getConditionErrorMessage(
+        monthlyRecordsQuery.error,
+        '월별 컨디션 기록을 불러오지 못했습니다.',
+      ),
+    );
+  }, [monthlyRecordsQuery.error, monthlyRecordsQuery.isError]);
+
+  useEffect(() => {
     const { autoPopupAvailable, checked, weekStartOn, sundayIntakeWarningRequired } =
       currentWeekStatus;
 
@@ -165,9 +188,11 @@ export const useConditionFlow = () => {
         throw new Error(response.message || '컨디션 체크 저장에 실패했습니다.');
       }
 
-      return response.result;
+      return {
+        checkedRecord: response.result,
+      };
     },
-    onSuccess: async (checkedRecord) => {
+    onSuccess: async ({ checkedRecord }) => {
       const checkedYearMonth = getYearMonth(checkedRecord.checkedOn);
       const monthlyRecordsQueryKey = checkedYearMonth
         ? conditionQueryKeys.monthlyRecords(checkedYearMonth.year, checkedYearMonth.month)
@@ -196,61 +221,64 @@ export const useConditionFlow = () => {
         }),
       ]);
     },
+    onError: (error) => {
+      showToast.error(
+        getConditionErrorMessage(error, '컨디션 체크를 저장하지 못했습니다.'),
+      );
+    },
   });
 
   const handleOpenStartModal = () => {
     if (!currentWeekStatus.checkAvailable || currentWeekStatus.checked) return;
-    setConditionCheckError(null);
     openCheckModal(currentWeekStatus.sundayIntakeWarningRequired, 1);
   };
 
   const handleContinueFromSunday = () => {
-    setConditionCheckError(null);
     forceOpenCheckModal(1);
   };
 
   const handleStartCheck = () => {
-    setConditionCheckError(null);
     setCheckStep(2);
   };
   const handleBackToStart = () => {
-    setConditionCheckError(null);
     setCheckStep(1);
   };
 
   const handleNextVitalityStep = (selectedScore: number) => {
     try {
       validateConditionCheck(selectedScore, sleepHours, sleepMinutes);
-      setConditionCheckError(null);
       setVitalityScore(selectedScore);
       setCheckStep(3);
     } catch (error) {
-      setConditionCheckError(
+      showToast.error(
         error instanceof Error ? error.message : '컨디션 입력값을 확인해 주세요.',
       );
     }
   };
 
   const handleBackToVitality = () => {
-    setConditionCheckError(null);
     setCheckStep(2);
   };
 
   const handleCompleteSleepStep = async (sleepTime: { hours: number; minutes: number }) => {
     try {
       validateConditionCheck(vitalityScore, sleepTime.hours, sleepTime.minutes);
-      setConditionCheckError(null);
-      setSleepTime(sleepTime.hours, sleepTime.minutes);
+    } catch (error) {
+      showToast.error(
+        error instanceof Error ? error.message : '컨디션 입력값을 확인해 주세요.',
+      );
+      return;
+    }
 
+    setSleepTime(sleepTime.hours, sleepTime.minutes);
+
+    try {
       await conditionCheckMutation.mutateAsync({
         vitalityScore,
         sleepHours: sleepTime.hours,
         sleepMinutes: sleepTime.minutes,
       });
     } catch (error) {
-      setConditionCheckError(
-        error instanceof Error ? error.message : '컨디션 체크 저장에 실패했습니다.',
-      );
       console.error('컨디션 체크 저장 실패:', error);
     }
   };
@@ -273,7 +301,6 @@ export const useConditionFlow = () => {
   };
 
   const handleCloseCheckModal = () => {
-    setConditionCheckError(null);
     closeCheckModal();
     if (checkStep === 4) return;
     void handleDismissPopup();
@@ -308,7 +335,6 @@ export const useConditionFlow = () => {
     vitalityScore,
     sleepHours,
     sleepMinutes,
-    conditionCheckError,
     isSubmitting: conditionCheckMutation.isPending,
     closeCheckModal: handleCloseCheckModal,
     closeSundayModal: handleCloseSundayModal,

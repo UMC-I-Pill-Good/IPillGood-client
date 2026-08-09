@@ -14,7 +14,6 @@ interface ConditionSleepTimeModalProps {
   isOpen: boolean;
   initialHours?: number;
   initialMinutes?: number;
-  errorMessage?: string | null;
   isSubmitting?: boolean;
   onBack: () => void;
   onClose: () => void;
@@ -25,7 +24,6 @@ const ConditionSleepTimeModal = ({
   isOpen,
   initialHours = 7,
   initialMinutes = 30,
-  errorMessage,
   isSubmitting = false,
   onBack,
   onClose,
@@ -128,13 +126,7 @@ const ConditionSleepTimeModal = ({
         </div>
 
         {/* Footer - 공통 TextButton 사용 */}
-        <div className='flex w-full flex-col gap-2 px-5'>
-          {errorMessage && (
-            <p role='alert' className='typo-caption-2 text-center text-semantic-600'>
-              {errorMessage}
-            </p>
-          )}
-
+        <div className='flex w-full flex-col px-5'>
           <TextButton
             type='button'
             text={isSubmitting ? '저장 중...' : '완료(2/2)'}
