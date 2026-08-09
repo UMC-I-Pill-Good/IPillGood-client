@@ -42,7 +42,6 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    console.log('error', error);
     const request: CustomInternalAxiosRequestConfig = error.config;
 
     if (!request) {
@@ -61,7 +60,7 @@ axiosInstance.interceptors.response.use(
     }
 
     // 로그인, 회원가입 등 인증이 필요 없는 요청은 refresh 로직 대상에서 제외
-    const AUTH_FREE_URLS = ['/auth/login', '/auth/signup'];
+    const AUTH_FREE_URLS = ['/auth/login', '/auth/signup', '/auth/kakao/link', '/auth/naver/link'];
 
     if (AUTH_FREE_URLS.some((url) => request.url?.includes(url))) {
       return Promise.reject(error);
@@ -74,7 +73,7 @@ axiosInstance.interceptors.response.use(
       if (!refreshPromise) {
         refreshPromise = (async () => {
           try {
-            const { setTokens } = useLocalStorage();
+            const { setTokens, setOnboardingCompleted } = useLocalStorage();
 
             // 기본 axios 사용 (인터셉터 방지)
             const response = await axios.post(
@@ -86,6 +85,7 @@ axiosInstance.interceptors.response.use(
             );
 
             setTokens(response.data.result.accessToken);
+            setOnboardingCompleted(response.data.result.onboardingCompleted);
           } catch (err) {
             console.error('토큰 재발급 실패', err);
 

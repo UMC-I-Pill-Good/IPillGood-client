@@ -25,7 +25,7 @@ export const Header = ({
   const isBackOnly = showBackButton && !showCloseButton;
 
   return (
-    <header className='flex h-17.5 w-full items-center gap-2 bg-neutral-100 px-5 shadow-[0px_4px_4px_0px_rgba(126,131,135,0.10)]'>
+    <header className='flex h-17.5 w-full items-center gap-2 px-5'>
       {showBackButton && (
         <IconButton icon={<ChevronLeft size={26} />} ariaLabel='뒤로 가기' onClick={handleBack} />
       )}

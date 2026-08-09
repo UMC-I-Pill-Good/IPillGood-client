@@ -97,3 +97,21 @@ export type RankingProductCompatibilityDto = {
   cautionCombinations: CompatibilityItem[];
 };
 export type RankingProductCompatibilityApiResponse = ApiResponse<RankingProductCompatibilityDto>;
+
+export type ProductPurchaseConflict = {
+  type: 'CAUTION';
+  currentIngredientId: number;
+  currentIngredientName: string;
+  purchaseProductIngredientId: number;
+  purchaseIngredientName: string;
+  reason: string;
+};
+
+export type ProductPurchaseCheckDto = {
+  productId: number;
+  purchaseUrl: string;
+  hasConflict: boolean;
+  conflicts: ProductPurchaseConflict[];
+};
+
+export type ProductPurchaseCheckApiResponse = ApiResponse<ProductPurchaseCheckDto>;
