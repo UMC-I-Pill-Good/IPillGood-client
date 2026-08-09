@@ -42,12 +42,12 @@ const ConditionSummarySection = ({
         aria-label='컨디션 요약을 불러오는 중'
         aria-busy='true'
       >
-        <div className='h-[21px] w-28 rounded-full bg-neutral-200 motion-safe:animate-pulse motion-safe:[animation-duration:1s]' />
-        <div className='grid h-[105px] w-full grid-cols-3 gap-2' aria-hidden='true'>
+        <div className='h-5 w-28 rounded-full bg-neutral-200 motion-safe:animate-pulse motion-safe:[animation-duration:1s]' />
+        <div className='grid w-full grid-cols-3 gap-3' aria-hidden='true'>
           {Array.from({ length: 3 }, (_, index) => (
             <div
               key={`condition-summary-skeleton-${index}`}
-              className='h-[105px] w-full rounded-xl bg-white/70 motion-safe:animate-pulse motion-safe:[animation-duration:1s]'
+              className='min-h-26 w-full rounded-xl bg-white/70 motion-safe:animate-pulse motion-safe:[animation-duration:1s]'
             />
           ))}
         </div>
@@ -57,11 +57,11 @@ const ConditionSummarySection = ({
 
   return (
     <section className='flex w-full flex-col gap-2 px-5 pt-4 pb-0'>
-      <div className='flex h-[21px] w-full items-center gap-1'>
+      <div className='flex w-full items-center gap-1'>
         <h2 className='typo-body-5 whitespace-nowrap text-black'>{summaryTitle}</h2>
       </div>
 
-      <div className='grid h-[105px] w-full grid-cols-3 gap-2'>
+      <div className='grid w-full grid-cols-3 gap-3'>
         <ConditionSummaryCard type='vitality' label='평균 활력' value={averageVitality} total={5} />
 
         <ConditionSummaryCard type='sleep' label='평균 수면' value={averageSleepHours} />

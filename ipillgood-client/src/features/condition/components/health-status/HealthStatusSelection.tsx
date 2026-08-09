@@ -35,9 +35,8 @@ const HealthStatusSelection = () => {
       <div className='flex min-h-dvh w-full flex-col overflow-x-hidden bg-background'>
         <Header
           title='건강 상태'
-          showBackButton={true}
-          showCloseButton={true}
-          onClose={() => router.push('/condition')}
+          showBackButton
+          onBack={() => router.push('/condition')}
         />
 
         <FetchError
@@ -53,9 +52,8 @@ const HealthStatusSelection = () => {
       {/* 1. 공통 Header */}
       <Header
         title='건강 상태'
-        showBackButton={true}
-        showCloseButton={true}
-        onClose={() => router.push('/condition')}
+        showBackButton
+        onBack={() => router.push('/condition')}
       />
 
       {/* 2. 상단 안내 헤더 섹션 분리 */}
