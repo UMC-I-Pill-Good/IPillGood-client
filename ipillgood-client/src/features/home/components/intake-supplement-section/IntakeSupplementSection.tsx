@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import SupplementBottleList from './SupplementBottleList';
 import { Plus } from 'lucide-react';

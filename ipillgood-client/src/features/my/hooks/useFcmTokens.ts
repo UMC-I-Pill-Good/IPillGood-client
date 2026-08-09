@@ -29,23 +29,27 @@ export const useFcmTokens = () => {
     // 'granted'가 아니면(denied 또는 default) FCM 토큰 등록 없이 여기서 종료
     // denied로 인한 서버 값 동기화는 앱 전역 PushPermissionWatcher가 처리
     if (permission !== 'granted') {
-      return permission;
+      return { permission, isRegistered: false };
     }
 
     const messaging = await getMessagingInstance();
-    if (!messaging) return permission;
+    if (!messaging) return { permission, isRegistered: false };
 
     // FCM 토큰 발급
     const token = await getToken(messaging, {
       vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
     });
 
-    if (!token) return permission;
+    if (!token) return { permission, isRegistered: false };
 
     // 발급받은 토큰을 서버에 등록해서 이 기기로 푸시를 보낼 수 있게 함
-    registerMutation.mutate({ platform: 'WEB', token });
+    try {
+      await registerMutation.mutateAsync({ platform: 'WEB', token });
+    } catch {
+      return { permission, isRegistered: false };
+    }
 
-    return permission;
+    return { permission, isRegistered: true };
   };
 
   return { handleRegisterFcmTokens, isRegistering: registerMutation.isPending };

@@ -14,16 +14,22 @@ export const useLogout = (onSuccess?: () => void) => {
       // 로그아웃 전에 이 기기의 푸시 토큰을 서버에서 먼저 삭제
       // (postLogout 이후엔 인증이 풀려서 삭제 요청이 실패할 수 있음)
       const pushTokenId = getPushTokenId();
-      if (pushTokenId) {
-        await deletePushTokens(Number(pushTokenId)).catch(() => {});
-      }
+      // 삭제 실패 시 pushTokenId를 지우지 않고 남겨둬서, 다음 FCM 토큰 등록 시점에
+      // (useFcmTokens의 이전 토큰 정리 로직으로) 재시도될 수 있게 함
+      const pushTokenDeleted = pushTokenId
+        ? await deletePushTokens(Number(pushTokenId))
+            .then(() => true)
+            .catch(() => false)
+        : true;
 
       await postLogout();
+
+      return { pushTokenDeleted };
     },
-    onSuccess: () => {
+    onSuccess: ({ pushTokenDeleted }) => {
       onSuccess?.();
       clearTokens();
-      clearPushTokenId();
+      if (pushTokenDeleted) clearPushTokenId();
       queryClient.clear();
       router.push('/login');
     },

@@ -4,18 +4,14 @@ import { ToggleButton } from '@/shared/components';
 import SectionCard from '../SectionCard';
 import SectionItem from '../SectionItem';
 import { usePushAlarmSettings } from '../../hooks/usePushAlarmSettings';
-import { usePushPermissionSync } from '../../hooks/usePushPermissionSync';
 import { useFcmTokens } from '../../hooks/useFcmTokens';
 import { useState } from 'react';
 import PushPermissionDeniedModal from './PermissionDeniedModal';
 
 const AlarmSettingSection = () => {
   const [isPermissionDeniedModalOpen, setIsPermissionDeniedModalOpen] = useState(false);
-  const { isPushAlarmOn, handleTogglePushAlarm, updatePushSetting } = usePushAlarmSettings();
+  const { isPushAlarmOn, handleTogglePushAlarm } = usePushAlarmSettings();
   const { handleRegisterFcmTokens } = useFcmTokens();
-
-  // 브라우저 알림 권한이 외부에서 바뀌는 것을 감지해서, 서버 설정값을 자동으로 동기화
-  usePushPermissionSync(isPushAlarmOn, updatePushSetting);
 
   const handleToggle = async () => {
     // 브라우저 알림 차단된 경우
@@ -24,13 +20,13 @@ const AlarmSettingSection = () => {
       return;
     }
 
-    // 브라우저 알림 권한 설정 전
+    // 브라우저 알림 권한 설정 전 -> FCM 토큰 등록까지 성공한 경우에만 서버 설정을 켬
     if (Notification.permission === 'default') {
-      const permission = await handleRegisterFcmTokens();
+      const { permission, isRegistered } = await handleRegisterFcmTokens();
       if (permission === 'denied') {
         setIsPermissionDeniedModalOpen(true);
-        return;
       }
+      if (permission !== 'granted' || !isRegistered) return;
     }
     handleTogglePushAlarm();
   };

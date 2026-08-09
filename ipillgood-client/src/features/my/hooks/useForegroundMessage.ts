@@ -6,21 +6,32 @@ import { getMessagingInstance } from '@/shared/utils/firebase';
 // 클라이언트에서 직접 메시지를 받아 알림으로 표시
 export const useForegroundMessage = () => {
   useEffect(() => {
+    // effect가 정리된 뒤에 getMessagingInstance()가 뒤늦게 resolve되면서
+    // 리스너가 등록되는 것을 막기 위한 플래그
+    let isActive = true;
     let unsubscribe: (() => void) | undefined;
 
     getMessagingInstance().then((messaging) => {
-      if (!messaging) return;
+      if (!messaging || !isActive) return;
 
       unsubscribe = onMessage(messaging, (payload) => {
-        if (!payload.notification) return;
+        const { notification } = payload;
+        if (!notification) return;
 
-        new Notification(payload.notification.title ?? '', {
-          body: payload.notification.body,
-          icon: payload.notification.icon,
+        // new Notification()은 Android Chrome 등 모바일 브라우저에서 지원하지 않으므로
+        // 서비스워커의 showNotification()으로 데스크톱/모바일 모두에서 표시
+        navigator.serviceWorker.ready.then((registration) => {
+          registration.showNotification(notification.title ?? '', {
+            body: notification.body,
+            icon: notification.icon,
+          });
         });
       });
     });
 
-    return () => unsubscribe?.();
+    return () => {
+      isActive = false;
+      unsubscribe?.();
+    };
   }, []);
 };
