@@ -60,6 +60,9 @@ const HealthResultContent = () => {
       <div className='mx-auto min-h-dvh w-full max-w-110 bg-background pb-24 flex flex-col overflow-x-hidden'>
         <Header
           title='건강 상태 결과'
+          titleClassName='text-left! leading-7!'
+          leftSpacerClassName='w-8'
+          showBackButton={false}
           showCloseButton={true}
           onClose={handleClose}
         />
@@ -72,6 +75,9 @@ const HealthResultContent = () => {
       <div className='mx-auto min-h-dvh w-full max-w-110 bg-background pb-24 flex flex-col overflow-x-hidden'>
         <Header
           title={`궁금 상태: ${majorCategoryLabel} - ${minorCategoryLabel}`}
+          titleClassName='text-left! leading-7!'
+          leftSpacerClassName='w-8'
+          showBackButton={false}
           showCloseButton={true}
           onClose={handleClose}
         />
@@ -85,6 +91,9 @@ const HealthResultContent = () => {
       <div className='mx-auto min-h-dvh w-full max-w-110 bg-background pb-24 flex flex-col overflow-x-hidden'>
         <Header
           title={`궁금 상태: ${majorCategoryLabel} - ${minorCategoryLabel}`}
+          titleClassName='text-left! leading-7!'
+          leftSpacerClassName='w-8'
+          showBackButton={false}
           showCloseButton={true}
           onClose={handleClose}
         />
@@ -96,6 +105,9 @@ const HealthResultContent = () => {
     <div className='mx-auto min-h-dvh w-full max-w-110 bg-background pb-24 flex flex-col items-stretch overflow-x-hidden'>
       <Header
         title={`궁금 상태: ${majorCategoryLabel} - ${minorCategoryLabel}`}
+        titleClassName='text-left! leading-7!'
+        leftSpacerClassName='w-8'
+        showBackButton={false}
         showCloseButton={true}
         onClose={handleClose}
       />

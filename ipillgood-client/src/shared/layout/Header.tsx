@@ -2,6 +2,7 @@
 import { ChevronLeft, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { IconButton } from '@/shared/components';
+import { cn } from '@/shared/utils';
 
 interface HeaderProps {
   title?: string;
@@ -9,6 +10,8 @@ interface HeaderProps {
   showCloseButton?: boolean; // 기본 false
   onBack?: () => void; // 없으면 router.back()
   onClose?: () => void; // 없으면 router.back()
+  titleClassName?: string;
+  leftSpacerClassName?: string;
 }
 
 export const Header = ({
@@ -17,6 +20,8 @@ export const Header = ({
   showCloseButton = false,
   onBack,
   onClose,
+  titleClassName,
+  leftSpacerClassName,
 }: HeaderProps) => {
   const router = useRouter();
   const handleBack = onBack ?? (() => router.back());
@@ -31,11 +36,15 @@ export const Header = ({
       )}
 
       {isBackOnly ? (
-        <h1 className='typo-subtitle-4 text-neutral-900'>{title}</h1>
+        <h1 className={cn('typo-subtitle-4 text-neutral-900', titleClassName)}>{title}</h1>
       ) : (
         <>
-          {!showBackButton && <div className='w-9' />}
-          <h1 className='flex-1 text-center typo-subtitle-4 text-neutral-900'>{title}</h1>
+          {!showBackButton && <div className={cn('w-9 shrink-0', leftSpacerClassName)} />}
+          <h1
+            className={cn('flex-1 text-center typo-subtitle-4 text-neutral-900', titleClassName)}
+          >
+            {title}
+          </h1>
           {!showCloseButton && <div className='w-9' />}
         </>
       )}
