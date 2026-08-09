@@ -7,7 +7,7 @@ interface ConditionErrorResponse {
 
 export const getConditionErrorMessage = (error: unknown, fallbackMessage: string) => {
   if (isAxiosError<ConditionErrorResponse>(error)) {
-    return error.response?.data.message ?? fallbackMessage;
+    return error.response?.data?.message ?? fallbackMessage;
   }
 
   if (error instanceof Error) {

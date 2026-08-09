@@ -21,7 +21,7 @@ const ConditionHealthStatusSection = () => {
                         궁금한 건강 상태가 있으신가요?
                     </h2>
 
-                    <p className='typo-caption-7 w-full whitespace-nowrap text-center text-neutral-800'>
+                    <p className='typo-caption-7 w-full text-center text-neutral-800'>
                         신체 부위와 관련 상태를 선택하면 맞춤 정보를
                         드려요.
                     </p>

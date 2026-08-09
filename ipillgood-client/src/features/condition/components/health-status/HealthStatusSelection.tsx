@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { Header } from '@/shared/layout/Header';
-import { TextButton } from '@/shared/components';
+import { FetchError, TextButton } from '@/shared/components';
 import { useHealthStatusSelection } from '../../hooks/useHealthStatusSelection';
 
 import HealthStatusHeader from './HealthStatusHeader';
@@ -23,6 +23,7 @@ const HealthStatusSelection = () => {
     isFormValid,
     isPending,
     categoryError,
+    refetchCategoryList,
   } = useHealthStatusSelection();
 
   if (categoryError) {
@@ -34,6 +35,10 @@ const HealthStatusSelection = () => {
           onBack={() => router.push('/condition')}
         />
 
+        <FetchError
+          description='건강 상태 분류를 불러오지 못했습니다.'
+          onRetry={() => void refetchCategoryList()}
+        />
       </div>
     );
   }

@@ -24,7 +24,7 @@ export const useConditionCheckMutation = ({
 
       return response.result;
     },
-    onSuccess: async (checkedRecord) => {
+    onSuccess: (checkedRecord) => {
       const checkedYearMonth = getConditionYearMonth(checkedRecord.checkedOn);
       const monthlyRecordsQueryKey = checkedYearMonth
         ? conditionQueryKeys.monthlyRecords(checkedYearMonth.year, checkedYearMonth.month)
@@ -47,10 +47,8 @@ export const useConditionCheckMutation = ({
       onCompleted();
       showToast.success('이번 주 컨디션이 기록됐어요!');
 
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: conditionQueryKeys.currentWeek() }),
-        queryClient.invalidateQueries({ queryKey: monthlyRecordsQueryKey }),
-      ]);
+      void queryClient.invalidateQueries({ queryKey: conditionQueryKeys.currentWeek() });
+      void queryClient.invalidateQueries({ queryKey: monthlyRecordsQueryKey });
     },
     onError: () => {
       showToast.error('컨디션 기록에 실패했어요. 다시 시도해 주세요.');

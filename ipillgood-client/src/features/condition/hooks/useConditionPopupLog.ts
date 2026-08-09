@@ -16,23 +16,24 @@ export const useConditionPopupLog = ({
   openCheckModal,
 }: UseConditionPopupLogParams) => {
   const queryClient = useQueryClient();
-  const autoPopupRecordedWeekRef = useRef<string | null>(null);
+  const autoPopupShownWeekRef = useRef<string | null>(null);
+  const autoPopupRecordingWeekRef = useRef<string | null>(null);
 
   useEffect(() => {
     const { autoPopupAvailable, checked, weekStartOn, sundayIntakeWarningRequired } =
       currentWeekStatus;
 
-    if (
-      !autoPopupAvailable ||
-      checked ||
-      !weekStartOn ||
-      autoPopupRecordedWeekRef.current === weekStartOn
-    ) {
+    if (!autoPopupAvailable || checked || !weekStartOn) {
       return;
     }
 
-    autoPopupRecordedWeekRef.current = weekStartOn;
-    openCheckModal(sundayIntakeWarningRequired, 1);
+    if (autoPopupShownWeekRef.current !== weekStartOn) {
+      autoPopupShownWeekRef.current = weekStartOn;
+      openCheckModal(sundayIntakeWarningRequired, 1);
+    }
+
+    if (autoPopupRecordingWeekRef.current === weekStartOn) return;
+    autoPopupRecordingWeekRef.current = weekStartOn;
 
     const recordAutoPopupShown = async () => {
       try {
@@ -53,7 +54,7 @@ export const useConditionPopupLog = ({
               : previous,
         );
       } catch (error) {
-        autoPopupRecordedWeekRef.current = null;
+        autoPopupRecordingWeekRef.current = null;
         console.error('자동 팝업 노출 기록 실패:', error);
       }
     };

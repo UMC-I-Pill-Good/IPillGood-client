@@ -29,7 +29,8 @@ export const useHealthResultFlow = () => {
     if (isValid) return;
 
     showToast.error('선택된 건강 상태 정보가 없습니다. 다시 선택해 주세요.');
-  }, [isValid]);
+    router.replace('/condition');
+  }, [isValid, router]);
 
   return {
     majorCategoryLabel,
