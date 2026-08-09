@@ -7,7 +7,7 @@ export const ADMIN_HEADER_LIST = [
   },
   {
     pathname: '/admin/reviews',
-    parentTitle: '후기 관리',
+    parentTitle: 'FAQ 관리',
     currentTitle: '후기 신고',
     pageTitle: '신고된 후기 목록',
   },

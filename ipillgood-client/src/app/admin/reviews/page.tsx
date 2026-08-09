@@ -1,5 +1,7 @@
+import { ReviewManagementContent } from '@/features/admin/reviews';
+
 const ReviewManagementPage = () => {
-  return <main></main>;
+  return <ReviewManagementContent />;
 };
 
 export default ReviewManagementPage;
