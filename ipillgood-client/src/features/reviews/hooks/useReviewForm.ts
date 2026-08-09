@@ -9,6 +9,7 @@ import { uploadReviewImages } from '../api/uploadReviewImages';
 import type { ReviewFormMode, ReviewImagePreview } from '../types/reviewForm';
 import { getReviewErrorMessage } from '../utils/reviewError';
 import { useReviewImages } from './useReviewImages';
+import { showToast } from '@/shared/utils';
 
 type UseReviewFormParams = {
   mode: ReviewFormMode;
@@ -115,10 +116,14 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
         router.back();
       } else {
         await createReview({ productId, rating, content: content.trim(), imageKeys });
+        showToast.success('후기가 등록됐어요!');
         router.push(`/reviews?productId=${productId}`);
       }
     } catch (error) {
       setSubmitError(getReviewSubmitErrorMessage(error, submitStage));
+      if (!isEditMode) {
+        showToast.error('후기 등록에 실패했어요. 다시 시도해 주세요.');
+      }
     } finally {
       setIsSubmitting(false);
     }

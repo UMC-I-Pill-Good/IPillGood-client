@@ -3,6 +3,7 @@ import { myInfoQueryKey, useMyInfo } from './useMyInfo';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { patchProfile } from '../api/member';
 import { nicknameSchema } from '../schemas/nicknameSchema';
+import { showToast } from '@/shared/utils';
 
 // 통과하면 '', 실패하면 에러 메시지 반환
 const validateNickname = (value: string) => {
@@ -32,9 +33,10 @@ export const useNicknameChange = () => {
     // 수정 성공 시 내 정보 캐시를 무효화해 최신 닉네임을 다시 불러옴
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: myInfoQueryKey });
+      showToast.success('프로필이 저장됐어요.');
     },
     onError: () => {
-      alert('프로필 수정에 실패했습니다.');
+      showToast.error('저장에 실패했어요. 다시 시도해 주세요.');
     },
   });
 

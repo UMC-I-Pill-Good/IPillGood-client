@@ -1,6 +1,7 @@
 import { getIntakeConflict, postIntakeProduct } from '@/features/cabinet/api/intake';
 import { IntakeConflict } from '@/features/cabinet/types/intake';
 import { intakeTodayQueryKey } from '@/features/home/hooks/useIntakeToday';
+import { showToast } from '@/shared/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -40,14 +41,11 @@ export const useAddIntakeProducts = () => {
       queryClient.invalidateQueries({ queryKey: ['intakeCalendar'] });
       queryClient.invalidateQueries({ queryKey: ['growthStage'] });
 
+      showToast.success('섭취 중인 영양제에 추가됐어요!');
       router.push('/cabinet');
     },
-    onError: (error) => {
-      const message = isAxiosError<{ message?: string }>(error)
-        ? error.response?.data.message
-        : undefined;
-
-      alert(message ?? '섭취 중인 영양제로 추가하지 못했어요.');
+    onError: () => {
+      showToast.error('추가에 실패했어요. 다시 시도해 주세요.');
     },
   });
 

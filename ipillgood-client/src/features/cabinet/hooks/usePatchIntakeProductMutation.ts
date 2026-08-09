@@ -2,11 +2,13 @@ import { intakeNotificationSettingsQueryKey } from './../../my/hooks/useNotifica
 import { patchActiveProduct } from '@/features/cabinet/api/intake';
 import { RequestIntakeUpdate } from '@/features/cabinet/types/intake';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { isAxiosError } from 'axios';
+import { showToast } from '@/shared/utils';
 
 interface PatchActiveProductParams {
   activeProductId: number;
   body: RequestIntakeUpdate;
+  successMessage?: string;
+  errorMessage?: string;
 }
 
 export const usePatchIntakeProductMutation = () => {
@@ -15,7 +17,7 @@ export const usePatchIntakeProductMutation = () => {
   return useMutation({
     mutationFn: ({ activeProductId, body }: PatchActiveProductParams) =>
       patchActiveProduct(activeProductId, body),
-    onSuccess: (response) => {
+    onSuccess: (response, variables) => {
       if (!response.isSuccess) {
         alert(response.message);
         return;
@@ -26,13 +28,13 @@ export const usePatchIntakeProductMutation = () => {
         queryKey: intakeNotificationSettingsQueryKey,
         refetchType: 'all',
       });
-    },
-    onError: (error) => {
-      const message = isAxiosError<{ message?: string }>(error)
-        ? error.response?.data.message
-        : undefined;
 
-      alert(message ?? '섭취 정보를 수정하지 못했어요.');
+      if (variables.successMessage) {
+        showToast.success(variables.successMessage);
+      }
+    },
+    onError: (_error, variables) => {
+      showToast.error(variables.errorMessage ?? '저장에 실패했어요. 다시 시도해 주세요.');
     },
   });
 };

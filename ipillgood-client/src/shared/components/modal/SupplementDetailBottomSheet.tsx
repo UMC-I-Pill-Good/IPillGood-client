@@ -47,11 +47,14 @@ const SupplementDetailBottomSheet = ({
     ? `${intakeHour !== null && intakeHour >= 12 ? '오후' : '오전'} ${activeProduct.intakeTime}`
     : '';
 
-  const updateActiveProduct = (body: {
-    intakeTime?: string;
-    frequency?: string;
-    notificationEnabled?: boolean;
-  }) => {
+  const updateActiveProduct = (
+    body: {
+      intakeTime?: string;
+      frequency?: string;
+      notificationEnabled?: boolean;
+    },
+    messages?: { successMessage?: string; errorMessage?: string },
+  ) => {
     if (!activeProduct) return;
 
     patchActiveProductMutation.mutate({
@@ -61,6 +64,8 @@ const SupplementDetailBottomSheet = ({
         frequency: body.frequency ?? activeProduct.frequency,
         notificationEnabled: body.notificationEnabled ?? notificationEnabled,
       },
+      successMessage: messages?.successMessage,
+      errorMessage: messages?.errorMessage,
     });
   };
 
@@ -121,7 +126,10 @@ const SupplementDetailBottomSheet = ({
                 <ToggleButton
                   isChecked={notificationEnabled}
                   onClick={() => {
-                    updateActiveProduct({ notificationEnabled: !notificationEnabled });
+                    updateActiveProduct(
+                      { notificationEnabled: !notificationEnabled },
+                      { errorMessage: '알림 설정 변경에 실패했어요.' },
+                    );
                   }}
                 />
               </div>
@@ -190,7 +198,7 @@ const SupplementDetailBottomSheet = ({
           onCancel={() => setIsOpenIntakeTimeModal(false)}
           onConfirm={(intakeTime) => {
             setIsOpenIntakeTimeModal(false);
-            updateActiveProduct({ intakeTime });
+            updateActiveProduct({ intakeTime }, { successMessage: '복용 시간이 변경됐어요.' });
           }}
         />
       )}
@@ -201,7 +209,10 @@ const SupplementDetailBottomSheet = ({
           onCancel={() => setIsOpenIntakeCycleModal(false)}
           onConfirm={(cycle) => {
             setIsOpenIntakeCycleModal(false);
-            updateActiveProduct({ frequency: frequencyCycle[cycle] });
+            updateActiveProduct(
+              { frequency: frequencyCycle[cycle] },
+              { successMessage: '복용 주기가 변경됐어요.' },
+            );
           }}
         />
       )}
