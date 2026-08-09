@@ -6,6 +6,7 @@ import FaqCategoryOptions from './FaqCategoryOptions';
 import ContactSection from './ContactSection';
 import { useSupport } from '../../hooks/useSupport';
 import { MascotSadIcon } from '@/assets';
+import { Loader2 } from 'lucide-react';
 
 const FaqSection = () => {
   const {
@@ -23,16 +24,15 @@ const FaqSection = () => {
 
   const renderFaqList = () => {
     if (isLoading) {
-      // 임시 UI
       return (
-        <div className='flex flex-col items-center py-5'>
-          <div className='w-24 h-3.5 rounded animate-pulse bg-neutral-100' />
+        <div className='flex flex-col items-center py-15 gap-4'>
+          <Loader2 className='text-primary size-10 animate-spin' />
+          <p className='typo-body-10 text-neutral'>데이터를 불러오고 있습니다...</p>
         </div>
       );
     }
 
     if (isError) {
-      // 임시 UI
       return (
         <div className='flex flex-col items-center py-5'>
           <MascotSadIcon />
@@ -43,7 +43,7 @@ const FaqSection = () => {
 
     if (filteredFaqList.length === 0) {
       return (
-        <div className='flex flex-col items-center py-5'>
+        <div className='flex flex-col items-center py-5 '>
           <MascotSadIcon />
           <p className='typo-body-6 text-primary-700'>검색 결과가 존재하지 않아요...</p>
         </div>
@@ -54,7 +54,7 @@ const FaqSection = () => {
   };
 
   return (
-    <section className='px-5 pt-4 pb-22 flex-1 flex flex-col'>
+    <section className='px-5 pt-4 pb-28.5 flex-1 flex flex-col'>
       <h2 className='text-black typo-body-5'>자주 묻는 질문 (FAQ)</h2>
       <SearchBar
         isFilterButton={false}
@@ -70,15 +70,16 @@ const FaqSection = () => {
         onSelectCategory={handleSelectCategory}
       />
 
-      {renderFaqList()}
-
-      <ContactSection
-        contactEmail={data?.contactEmail ?? ''}
-        showTitle={false}
-        showHours={false}
-        caption='원하는 질문이 없으신가요? 상단 메일로 문의해 주세요!'
-        className='mt-auto flex flex-col gap-2'
-      />
+      <div className='flex flex-col gap-22 flex-1'>
+        {renderFaqList()}
+        <ContactSection
+          contactEmail={data?.contactEmail ?? ''}
+          showTitle={false}
+          showHours={false}
+          caption='원하는 질문이 없으신가요? 상단 메일로 문의해 주세요!'
+          className='mt-auto flex flex-col gap-2'
+        />
+      </div>
     </section>
   );
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckboxButton, TextButton } from '@/shared/components';
+import { CheckboxButton, FetchError, LoadingSpinner, TextButton } from '@/shared/components';
 import { useRouter } from 'next/navigation';
 import { usePolicyDocument } from '../hooks/usePolicyDocument';
 import { DocumentCategoryType } from '../types/policy.type';
@@ -27,17 +27,16 @@ const PolicyDocumentSection = ({ documentType, isSignup }: PolicyDocumentSection
   const agreementKey = agreementKeyByDocumentType[documentType];
   const isChecked = checked[agreementKey];
 
-  // 임시 (UI 미정)
   if (isError || (!isLoading && !data)) {
     return (
       <section className='flex flex-col px-5 py-4 gap-8'>
-        <p className='typo-caption-1 text-neutral-800'>문서를 불러오지 못했습니다.</p>
+        <FetchError />
       </section>
     );
   }
 
   return (
-    <section className='flex h-[calc(100dvh-4.375rem)] flex-col overflow-hidden px-5 py-4'>
+    <section className='flex h-[calc(100dvh-4.375rem)] flex-col overflow-hidden px-5 pt-4 pb-10.5'>
       {isSignup ? (
         <p className='shrink-0 typo-caption-1 text-neutral-800 mb-8'>
           {data?.title}을 위해 동의해 주세요
@@ -51,7 +50,7 @@ const PolicyDocumentSection = ({ documentType, isSignup }: PolicyDocumentSection
       {isSignup && <p className='typo-body-5 mb-2'>{data?.title}</p>}
 
       {isLoading ? (
-        <div className='min-h-0 flex-1 animate-pulse rounded-[20px] bg-neutral-100' />
+        <LoadingSpinner />
       ) : (
         <article className='min-h-0 flex-1 overflow-y-auto thin-scrollbar rounded-[20px] bg-white px-3 py-4 whitespace-pre-wrap leading-5 text-black mb-4'>
           {content}
