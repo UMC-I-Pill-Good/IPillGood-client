@@ -14,6 +14,12 @@ export type ConditionGraphPointType = ConditionGraphDataType & {
 
 export type ConditionSummaryType = 'vitality' | 'sleep' | 'intake';
 
+export type VitalityOption = {
+  score: number;
+  label: string;
+  type: 'down' | 'neutral' | 'up';
+};
+
 // 1. POST /api/v1/conditions/weekly-records (주간 컨디션 체크 저장)
 export type ConditionCheckRequest = {
   vitalityScore: number;

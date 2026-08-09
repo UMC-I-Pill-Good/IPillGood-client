@@ -33,9 +33,7 @@ const ConditionWeekDetailModal = ({
   const {
     data: detailData,
     isLoading,
-    isError,
     isFetching,
-    refetch,
   } = useQuery<ConditionWeekDetailResult>({
     queryKey: conditionQueryKeys.weekDetail(recordId),
     queryFn: async () => {
@@ -135,19 +133,6 @@ const ConditionWeekDetailModal = ({
           />
         </div>
 
-        {isError && (
-          <div role='alert' className='typo-caption-7 text-center text-neutral-700'>
-            컨디션 정보를 불러오지 못했습니다.{' '}
-            <button
-              type='button'
-              className='underline disabled:no-underline'
-              disabled={isFetching}
-              onClick={() => void refetch()}
-            >
-              {isFetching ? '다시 시도 중...' : '다시 시도'}
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );

@@ -39,25 +39,20 @@ export const useHealthStatusSelection = () => {
     [categoryData],
   );
 
-  // 대분류 및 소분류 선택 상태 (단일 선택)
   const [selectedSystemKey, setSelectedSystemKey] = useState<string | null>(null);
   const [selectedBodyPartKey, setSelectedBodyPartKey] = useState<string | null>(null);
 
-  // 상단 대분류 카드 클릭 핸들러
   const handleSystemSelect = (systemKey: string) => {
     setSelectedSystemKey(systemKey);
-    setSelectedBodyPartKey(null); // 대분류 전환 시 소분류 선택 초기화
+    setSelectedBodyPartKey(null);
   };
 
-  // 하단 소분류 칩 클릭 핸들러
   const handleBodyPartSelect = (bodyPartKey: string) => {
     setSelectedBodyPartKey(bodyPartKey);
   };
 
-  // 현재 선택된 대분류 객체 탐색
   const selectedSystem = systemList.find((system) => system.key === selectedSystemKey);
 
-  // 선택 완료 CTA 클릭 핸들러
   const handleComplete = () => {
     if (!selectedSystemKey || !selectedBodyPartKey || !selectedSystem) return;
 

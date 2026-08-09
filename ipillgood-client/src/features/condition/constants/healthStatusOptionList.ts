@@ -8,9 +8,6 @@ import {
   MuscleIcon,
   ReproductiveIcon,
 } from '@/assets';
-/**
- * 건강 고민 대분류 아이콘 매핑
- */
 export const HEALTH_CONCERN_ICON_MAP = {
   NERVOUS_SYSTEM: NervousIcon,
   SENSORY_SYSTEM: EyeHealthIcon,

@@ -1,4 +1,5 @@
 import { type KeyboardEvent } from 'react';
+import Image from 'next/image';
 import { type IngredientSummary } from '../../types/healthStatus';
 import { Omega3BottleIcon } from '@/assets';
 import { Chip } from '@/shared/components';
@@ -11,9 +12,6 @@ interface RecommendedIngredientCardProps {
   onClick?: (ingredientId: number) => void;
 }
 
-/**
- * 추천 영양 성분 카드 컴포넌트
- */
 const RecommendedIngredientCard = ({
   ingredient,
   onClick,
@@ -31,6 +29,12 @@ const RecommendedIngredientCard = ({
     handleCardClick();
   };
 
+  const ingredientImageUrl = ingredient.imageUrl
+    ? ingredient.imageUrl.startsWith('http') || ingredient.imageUrl.startsWith('/')
+      ? ingredient.imageUrl
+      : `/${ingredient.imageUrl}`
+    : null;
+
   return (
     <div
       role={onClick ? 'button' : undefined}
@@ -42,13 +46,13 @@ const RecommendedIngredientCard = ({
         onClick && 'cursor-pointer hover:bg-[rgba(127,153,255,0.2)]',
       )}
     >
-      {/* 1. 성분 이미지 영역 (서버에서 받은 이미지 URL이 있으면 이미지를 그리고, 없으면 기본 아이콘 표시) */}
       <div className='flex w-[54px] shrink-0 items-center justify-center self-center overflow-visible'>
-        {ingredient.imageUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={ingredient.imageUrl}
+        {ingredientImageUrl ? (
+          <Image
+            src={ingredientImageUrl}
             alt={ingredient.name}
+            width={54}
+            height={80}
             className='block h-[80px] w-[54px] object-contain overflow-visible'
           />
         ) : (
@@ -56,11 +60,8 @@ const RecommendedIngredientCard = ({
         )}
       </div>
 
-      {/* 2. 우측 상세 정보 영역 */}
       <div className='flex min-w-0 flex-1 flex-col gap-2'>
-        {/* 상단 정보 그룹 */}
         <div className='flex min-w-0 flex-col items-start gap-1 w-full'>
-          {/* 캐비닛 내 존재 배지 */}
           {ingredient.hasCabinetProduct && (
             <Chip
               text='캐비닛 내 존재'
@@ -69,9 +70,7 @@ const RecommendedIngredientCard = ({
             />
           )}
 
-          {/* 성분명과 추천 이유 텍스트 영역에만 왼쪽 들여쓰기 pl-1 부여 */}
           <div className='flex min-w-0 flex-col items-start gap-2 w-full pl-1'>
-            {/* 성분명 행 */}
             <div className='flex w-full min-w-0 items-center justify-between'>
               <h3 className='min-w-0 typo-body-5 text-black truncate leading-none'>
                 {ingredient.name}
@@ -84,7 +83,6 @@ const RecommendedIngredientCard = ({
               </span>
             </div>
 
-            {/* 추천 이유 */}
             <div className='flex min-w-0 flex-col items-start gap-0.5 w-full'>
               <span className='w-full typo-body-10 text-primary-700 leading-none'>
                 추천 이유
@@ -96,7 +94,6 @@ const RecommendedIngredientCard = ({
           </div>
         </div>
 
-        {/* 3. 효능 키워드 칩 목록 (들여쓰기 없이 원래 자리 유지) */}
         <IngredientKeywordList
           ingredientId={ingredient.ingredientId}
           keywordList={ingredient.effectKeywords}

@@ -77,10 +77,8 @@ const TimeWheelPicker = ({
 
   return (
     <div className='relative h-24 w-[87px]'>
-      {/* 가운데 선택 표시 선 (absolute 고정!) */}
       <div className='pointer-events-none absolute left-0 right-0 top-8 bottom-8 border-y border-neutral-500' />
 
-      {/* 스크롤 피커 바퀴 */}
       <div
         ref={containerRef}
         role='listbox'

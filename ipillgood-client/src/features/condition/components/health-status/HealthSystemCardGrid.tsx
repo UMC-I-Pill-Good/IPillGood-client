@@ -11,9 +11,6 @@ interface HealthSystemCardGridProps {
   onSelectSystem: (systemKey: string) => void;
 }
 
-/**
- * 대분류 8개 신체 계통 SelectionCard 4열 그리드 렌더링 전담 컴포넌트
- */
 const HealthSystemCardGrid = ({
   systemList,
   isLoading,
@@ -22,7 +19,6 @@ const HealthSystemCardGrid = ({
 }: HealthSystemCardGridProps) => {
   return (
     <section className='flex w-full justify-center px-5 py-4 box-border'>
-      {/* 팀원 피드백: max 너비(max-w-[349px]) 제거 */}
       <div
         className='grid w-full grid-cols-4 gap-2'
         aria-label={isLoading ? '건강 상태 분류를 불러오는 중' : undefined}

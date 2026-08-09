@@ -5,9 +5,6 @@ interface IngredientKeywordListProps {
   keywordList: string[];
 }
 
-/**
- * 추천 성분별 효능 키워드 목록 컴포넌트 (목록의 flex-wrap 배치 담당)
- */
 const IngredientKeywordList = ({
   ingredientId,
   keywordList,
