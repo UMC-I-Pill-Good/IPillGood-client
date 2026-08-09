@@ -1,15 +1,44 @@
-export type IntakeFrequencyType = 'EVERY_DAY'; // TODO: 다른 주기 값 확인되면 유니온에 추가
+import { CommonResponse } from '@/shared/types';
 
-export type IntakeNotificationSettingType = {
-  activeProductId: number;
-  productName: string;
-  intakeTime: string; // "HH:mm" (LocalTime)
-  frequency: IntakeFrequencyType;
-  notificationEnabled: boolean;
+// ----- 앱 푸시 설정 조회(GET /notification-settings/me) -----
+export type NotificationSettingsMeType = {
+  pushEnabled: boolean;
 };
 
-export type NotificationSettingsType = {
+export type NotificationSettingsMeResponseType = CommonResponse<NotificationSettingsMeType>;
+
+// ----- 복용 알림 설정 통합 조회(GET /notification-settings/intake) -----
+export type NotificationSettingsIntakeType = {
   pushEnabled: boolean;
   intakePushEnabled: boolean;
-  activeProducts: IntakeNotificationSettingType[];
+  activeProductCount: number;
+  activeProducts: ActiveProductType[];
 };
+
+export type ActiveProductType = {
+  activeProductId: number;
+  memberProductId: number;
+  productId: number;
+  productName: string;
+  notificationEnabled: boolean;
+  intakeTime: string;
+};
+
+export type NotificationSettingsIntakeResponseType = CommonResponse<NotificationSettingsIntakeType>;
+
+// ------ 푸시 토큰 등록(POST /push-tokens) ------
+export type PlatformType = 'WEB';
+
+export type PushTokensRequestType = {
+  platform: PlatformType;
+  token: string;
+};
+
+export type PushTokensType = {
+  pushTokenId: number;
+  platform: PlatformType;
+  active: boolean;
+  lastSeenAt: string;
+};
+
+export type PushTokensResponseType = CommonResponse<PushTokensType>;
