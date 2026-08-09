@@ -41,7 +41,6 @@ const ConditionGraphSection = () => {
   const {
     homeSummaryData,
     currentWeekStatus,
-    isMonthlyRecordsLoading,
     isMonthlyRecordsFetching,
     handlePreviousMonth,
     handleNextMonth,
@@ -120,24 +119,6 @@ const ConditionGraphSection = () => {
     homeSummaryData.year !== currentYear
       ? `${homeSummaryData.year}년 ${homeSummaryData.month}월`
       : `${homeSummaryData.month}월`;
-  if (isMonthlyRecordsLoading) {
-    return (
-      <section
-        className='flex w-full flex-col px-5 py-4'
-        aria-label='월별 컨디션 그래프를 불러오는 중'
-        aria-busy='true'
-      >
-        <div className='flex w-full flex-col gap-2' aria-hidden='true'>
-          <div className='flex flex-col gap-2'>
-            <div className='h-5 w-44 rounded-full bg-neutral-200 motion-safe:animate-pulse motion-safe:[animation-duration:1s]' />
-            <div className='h-3 w-56 rounded-full bg-neutral-200 motion-safe:animate-pulse motion-safe:[animation-duration:1s]' />
-          </div>
-          <div className='h-[268px] w-full rounded-2xl bg-white/70 motion-safe:animate-pulse motion-safe:[animation-duration:1s]' />
-        </div>
-      </section>
-    );
-  }
-
   return (
     <>
       <section className='flex w-full flex-col px-5 py-4'>

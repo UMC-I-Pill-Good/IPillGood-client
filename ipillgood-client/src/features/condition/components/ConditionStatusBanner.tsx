@@ -14,23 +14,7 @@ const ConditionStatusBanner = ({
   isCompleted: propIsCompleted,
   onOpenConditionCheck: propOnOpen,
 }: ConditionStatusBannerProps = {}) => {
-  const { currentWeekStatus, isCurrentWeekLoading, handleOpenStartModal } =
-    useConditionContext();
-
-  if (isCurrentWeekLoading) {
-    return (
-      <section
-        className='flex w-full flex-col items-center justify-center px-5 pb-2 pt-4'
-        aria-label='이번 주 컨디션 상태를 불러오는 중'
-        aria-busy='true'
-      >
-        <div
-          className='h-[77px] w-full rounded-2xl bg-primary-200/70 motion-safe:animate-pulse motion-safe:[animation-duration:1s]'
-          aria-hidden='true'
-        />
-      </section>
-    );
-  }
+  const { currentWeekStatus, handleOpenStartModal } = useConditionContext();
 
   const isCompleted = propIsCompleted ?? currentWeekStatus.checked;
   const onOpenConditionCheck = propOnOpen ?? handleOpenStartModal;

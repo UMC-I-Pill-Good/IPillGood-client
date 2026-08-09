@@ -27,9 +27,16 @@ const ConditionGraphSvg = ({
   onSelectPoint,
 }: ConditionGraphSvgProps) => {
   const validPoints = graphPointList.filter((p) => p.score !== null);
+  const firstValidPointIndex = graphPointList.findIndex((point) => point.score !== null);
+  const leadingUncheckedPoints =
+    firstValidPointIndex === -1
+      ? graphPointList
+      : graphPointList.slice(0, firstValidPointIndex);
+  // 첫 기록 전 미체크 주차만 X축 위 시작점으로 사용하고, 기록 사이의 빈 주차는 건너뛴다.
+  const linePointList = [...leadingUncheckedPoints, ...validPoints];
   const pathD = [
     `M ${AXIS_LEFT} ${AXIS_BOTTOM}`,
-    ...validPoints.map(({ x, y }) => `L ${x} ${y}`),
+    ...linePointList.map(({ x, y }) => `L ${x} ${y}`),
   ].join(' ');
 
   return (

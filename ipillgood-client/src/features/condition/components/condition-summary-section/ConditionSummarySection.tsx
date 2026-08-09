@@ -16,8 +16,7 @@ const ConditionSummarySection = ({
   intakeDays: propIntakeDays,
   totalDays: propTotalDays,
 }: ConditionSummarySectionProps = {}) => {
-  const { homeSummaryData, currentWeekStatus, isMonthlyRecordsLoading } =
-    useConditionContext();
+  const { homeSummaryData, currentWeekStatus } = useConditionContext();
 
   const formatScore = (val: number | null | undefined): number => {
     if (val === undefined || val === null) return 0;
@@ -34,26 +33,6 @@ const ConditionSummarySection = ({
     serverYearMonth === displayedYearMonth
       ? '이번 달 컨디션 요약'
       : `${homeSummaryData.month}월 컨디션 요약`;
-
-  if (isMonthlyRecordsLoading) {
-    return (
-      <section
-        className='flex w-full flex-col gap-2 px-5 pb-0 pt-4'
-        aria-label='컨디션 요약을 불러오는 중'
-        aria-busy='true'
-      >
-        <div className='h-5 w-28 rounded-full bg-neutral-200 motion-safe:animate-pulse motion-safe:[animation-duration:1s]' />
-        <div className='grid w-full grid-cols-3 gap-3' aria-hidden='true'>
-          {Array.from({ length: 3 }, (_, index) => (
-            <div
-              key={`condition-summary-skeleton-${index}`}
-              className='min-h-26 w-full rounded-xl bg-white/70 motion-safe:animate-pulse motion-safe:[animation-duration:1s]'
-            />
-          ))}
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className='flex w-full flex-col gap-2 px-5 pt-4 pb-0'>

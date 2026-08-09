@@ -1,7 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { useConditionStore } from '../store/useConditionStore';
 import { getConditionSummary } from '../api/getConditionSummary';
 import { getConditionCurrentWeek } from '../api/getConditionCurrentWeek';
@@ -106,6 +111,7 @@ export const useConditionFlow = () => {
       return response.result;
     },
     enabled: Boolean(currentWeekQuery.data?.today),
+    placeholderData: keepPreviousData,
     staleTime: 5 * 60_000,
   });
 
@@ -295,8 +301,6 @@ export const useConditionFlow = () => {
   return {
     homeSummaryData,
     currentWeekStatus,
-    isCurrentWeekLoading: currentWeekQuery.isLoading,
-    isMonthlyRecordsLoading: currentWeekQuery.isLoading || monthlyRecordsQuery.isLoading,
     isMonthlyRecordsFetching: monthlyRecordsQuery.isFetching,
     isCheckModalOpen,
     isSundayModalOpen,
