@@ -18,7 +18,7 @@ const ConditionSummaryValue = ({
                     {value}
                 </span>
 
-                <span className='ml-1 font-[var(--font-dm-sans)] typo-caption-7'>
+                <span className='ml-1 font-[var(--font-dm-sans)] typo-caption-7 text-neutral-600'>
                      h
                 </span>
             </div>
@@ -36,7 +36,7 @@ const ConditionSummaryValue = ({
                     /
                 </span>
 
-                <span className='typo-caption-7'>
+                <span className='typo-caption-7 text-neutral-600'>
                     {total}일
                 </span>
             </div>
@@ -53,7 +53,7 @@ const ConditionSummaryValue = ({
                 /
             </span>
 
-            <span className='typo-caption-7'>
+            <span className='typo-caption-7 text-neutral-600'>
                 {total}
             </span>
         </div>
