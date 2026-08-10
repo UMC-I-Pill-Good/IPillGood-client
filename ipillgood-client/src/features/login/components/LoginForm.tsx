@@ -7,6 +7,7 @@ import { postLogin } from '../api/login';
 import { useRouter } from 'next/navigation';
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
 import { TextButton } from '@/shared/components';
+import { isAdminAccessToken } from '@/shared/utils/authToken';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -24,6 +25,11 @@ const LoginForm = () => {
 
       setTokens(accessToken);
       setOnboardingCompleted(onboardingCompleted);
+
+      if (isAdminAccessToken(accessToken)) {
+        router.push('/admin');
+        return;
+      }
 
       if (onboardingCompleted) {
         router.push('/home');

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
+import { isAdminAccessToken } from '@/shared/utils/authToken';
 
 interface AuthRedirectProps {
   type: 'public' | 'protected';
@@ -17,7 +18,8 @@ const AuthRedirect = ({ type, children }: AuthRedirectProps) => {
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
-    const hasToken = !!getAccessToken();
+    const accessToken = getAccessToken();
+    const hasToken = !!accessToken;
     const onboardingCompleted = getOnboardingCompleted();
 
     if (pathname.startsWith('/policy')) {
@@ -37,7 +39,9 @@ const AuthRedirect = ({ type, children }: AuthRedirectProps) => {
     }
 
     if (type === 'public' && hasToken) {
-      router.replace(onboardingCompleted ? '/home' : '/survey?step=1');
+      router.replace(
+        isAdminAccessToken(accessToken) ? '/admin' : onboardingCompleted ? '/home' : '/survey?step=1',
+      );
       return;
     }
 
