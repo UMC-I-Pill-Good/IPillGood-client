@@ -14,8 +14,6 @@ const blurActiveElement = () => {
 
 const SocialLoginForm = () => {
   const handleSocialLogin = (url: string) => {
-    // iOS PWA에서 로그인 입력창의 암호 자동 완성 UI가 OAuth 이동을
-    // 가리지 않도록 현재 포커스를 먼저 해제한다.
     blurActiveElement();
     window.location.assign(url);
   };
