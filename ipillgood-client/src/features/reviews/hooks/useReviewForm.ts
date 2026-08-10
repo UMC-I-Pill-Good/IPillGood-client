@@ -1,5 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { getRankingProductDetail } from '@/features/ranking/api/getRankingProductDetail';
 import type { RankingProductDetailDto } from '@/features/ranking/types/ranking';
 import { createReview } from '../api/createReview';
@@ -8,6 +9,7 @@ import { updateReview } from '../api/updateReview';
 import { uploadReviewImages } from '../api/uploadReviewImages';
 import type { ReviewFormMode, ReviewImagePreview } from '../types/reviewForm';
 import { getReviewErrorMessage } from '../utils/reviewError';
+import { invalidateReviewQueries } from '../utils/invalidateReviewQueries';
 import { useReviewImages } from './useReviewImages';
 import { showToast } from '@/shared/utils';
 
@@ -31,6 +33,7 @@ const getReviewSubmitErrorMessage = (error: unknown, stage: ReviewSubmitStage) =
 
 export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams) => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const isEditMode = mode === 'edit';
   const [product, setProduct] = useState<RankingProductDetailDto | null>(null);
   const [canEdit, setCanEdit] = useState(!isEditMode);
@@ -116,6 +119,7 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
         router.back();
       } else {
         await createReview({ productId, rating, content: content.trim(), imageKeys });
+        await invalidateReviewQueries(queryClient, productId);
         showToast.success('후기가 등록됐어요!');
         router.push(`/reviews?productId=${productId}`);
       }
