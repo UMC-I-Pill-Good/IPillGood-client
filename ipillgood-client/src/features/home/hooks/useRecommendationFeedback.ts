@@ -4,6 +4,7 @@ import {
   postRecommendationFeedbackCyclesResponse,
 } from '../api/recommendationFeedback';
 import { useCallback, useEffect, useState } from 'react';
+import { showToast } from '@/shared/utils';
 
 export const useRecommendationFeedback = () => {
   const { data } = useQuery({
@@ -64,6 +65,10 @@ export const useRecommendationFeedback = () => {
       }
       // due 캐시 무효화
       queryClient.invalidateQueries({ queryKey: ['recommendationFeedbackCyclesDue'] });
+      showToast.success('소중한 의견 감사해요!');
+    },
+    onError: () => {
+      showToast.error('의견 전송에 실패했어요.');
     },
   });
 

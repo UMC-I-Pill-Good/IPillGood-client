@@ -13,7 +13,7 @@ interface SectionItemProps {
 
 const SectionItem = ({ label, icon: Icon, right, href, onClick }: SectionItemProps) => {
   const isInteractive = Boolean(href || onClick);
-  const rowClassName = `relative flex w-full py-5 px-4 transition-colors ${
+  const rowClassName = `relative flex w-full py-5 px-4 ${
     isInteractive ? 'hover:bg-neutral-100 active:bg-neutral-200' : ''
   }`;
 

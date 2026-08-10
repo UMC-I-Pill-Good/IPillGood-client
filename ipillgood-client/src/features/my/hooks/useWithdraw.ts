@@ -1,6 +1,7 @@
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteMember } from '../api/member';
+import { showToast } from '@/shared/utils';
 
 export const useWithdraw = (onWithdrawSuccess: () => void) => {
   const { clearTokens } = useLocalStorage();
@@ -14,7 +15,7 @@ export const useWithdraw = (onWithdrawSuccess: () => void) => {
       onWithdrawSuccess();
     },
     onError: () => {
-      alert('회원 탈퇴에 실패했습니다.');
+      showToast.error('탈퇴 처리에 실패했어요. 다시 시도해 주세요.');
     },
   });
 

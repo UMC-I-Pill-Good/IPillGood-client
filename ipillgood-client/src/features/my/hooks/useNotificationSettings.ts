@@ -1,42 +1,81 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { MOCK_NOTIFICATION_SETTINGS } from '../mocks/notification.mock';
-import type { IntakeNotificationSettingType } from '../types/notification.type';
+import {
+  getNotificationSettingsIntake,
+  patchNotificationSettingsIntake,
+  patchIntakeActiveProducts,
+} from '../api/notification';
+import { showToast } from '@/shared/utils';
+
+export const intakeNotificationSettingsQueryKey = ['intakeNotificationSettings'];
 
 export const useNotificationSettings = () => {
-  // TODO: 상태 가져오기
-  const [intakePushEnabled, setIntakePushEnabled] = useState(
-    MOCK_NOTIFICATION_SETTINGS.intakePushEnabled,
-  );
-  const [activeProducts, setActiveProducts] = useState<IntakeNotificationSettingType[]>(
-    MOCK_NOTIFICATION_SETTINGS.activeProducts,
-  );
+  const queryClient = useQueryClient();
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
+
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: intakeNotificationSettingsQueryKey,
+    queryFn: getNotificationSettingsIntake,
+    select: (res) => res.result,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const invalidate = () =>
+    queryClient.invalidateQueries({ queryKey: intakeNotificationSettingsQueryKey });
+
+  const updateIntakePushMutation = useMutation({
+    mutationFn: patchNotificationSettingsIntake,
+    onSuccess: invalidate,
+    onError: () => {
+      showToast.error('알림 설정 변경에 실패했어요.');
+    },
+  });
+
+  const updateProductMutation = useMutation({
+    mutationFn: ({
+      activeProductId,
+      notificationEnabled,
+    }: {
+      activeProductId: number;
+      notificationEnabled: boolean;
+    }) => patchIntakeActiveProducts(activeProductId, { notificationEnabled }),
+    onSuccess: invalidate,
+    onError: () => {
+      showToast.error('알림 설정 변경에 실패했어요.');
+    },
+  });
+
+  const activeProducts = data?.activeProducts ?? [];
   const selectedProduct = activeProducts.find((p) => p.activeProductId === selectedProductId);
 
   const handleToggleIntakePush = () => {
-    // TODO: 로직
-    setIntakePushEnabled((v) => !v);
+    if (!data) return;
+    updateIntakePushMutation.mutate({ intakePushEnabled: !data.intakePushEnabled });
   };
 
   const handleToggleProduct = (activeProductId: number) => {
-    // TODO: 로직
-    setActiveProducts((prev) =>
-      prev.map((p) =>
-        p.activeProductId === activeProductId
-          ? { ...p, notificationEnabled: !p.notificationEnabled }
-          : p,
-      ),
-    );
+    const product = activeProducts.find((p) => p.activeProductId === activeProductId);
+    if (!product) return;
+    updateProductMutation.mutate({
+      activeProductId,
+      notificationEnabled: !product.notificationEnabled,
+    });
   };
 
   const handleSelectProduct = (activeProductId: number) => setSelectedProductId(activeProductId);
 
+  const handleCloseProduct = () => setSelectedProductId(null);
+
   return {
-    intakePushEnabled,
+    intakePushEnabled: data?.intakePushEnabled ?? false,
     activeProducts,
     selectedProduct,
+    isLoading,
+    isError,
+    refetch,
     handleToggleIntakePush,
     handleToggleProduct,
     handleSelectProduct,
+    handleCloseProduct,
   };
 };

@@ -1,5 +1,6 @@
 const ACCESS_TOKEN_KEY = 'accessToken';
 const REFRESH_TOKEN_KEY = 'refreshToken';
+const PUSH_TOKEN_ID_KEY = 'pushTokenId';
 const ONBOARDING_COMPLETED_KEY = 'onboardingCompleted';
 
 export const useLocalStorage = () => {
@@ -17,6 +18,18 @@ export const useLocalStorage = () => {
 
   const getRefreshToken = () => {
     return localStorage.getItem(REFRESH_TOKEN_KEY);
+  };
+
+  const setPushTokenId = (pushTokenId: number) => {
+    localStorage.setItem(PUSH_TOKEN_ID_KEY, String(pushTokenId));
+  };
+
+  const getPushTokenId = () => {
+    return localStorage.getItem(PUSH_TOKEN_ID_KEY);
+  };
+
+  const clearPushTokenId = () => {
+    localStorage.removeItem(PUSH_TOKEN_ID_KEY);
   };
 
   const setOnboardingCompleted = (onboardingCompleted: boolean) => {
@@ -37,8 +50,11 @@ export const useLocalStorage = () => {
     setTokens,
     getAccessToken,
     getRefreshToken,
+    clearTokens,
+    setPushTokenId,
+    getPushTokenId,
+    clearPushTokenId,
     setOnboardingCompleted,
     getOnboardingCompleted,
-    clearTokens,
   };
 };

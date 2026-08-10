@@ -11,6 +11,8 @@ import { getCabinetProductsDetail } from '@/features/cabinet/api/cabinet';
 import { usePatchIntakeProductMutation } from '@/features/cabinet/hooks';
 import { frequencyCycle } from '@/features/cabinet/constants/intake.constants';
 import { useRouter } from 'next/navigation';
+import { usePushAlarmSettings } from '@/features/my/hooks/usePushAlarmSettings';
+import { useNotificationSettings } from '@/features/my/hooks/useNotificationSettings';
 
 interface SupplementDetailBottomSheetProps {
   open: boolean;
@@ -33,6 +35,8 @@ const SupplementDetailBottomSheet = ({
     enabled: open && memberProductId !== null,
   });
   const patchActiveProductMutation = usePatchIntakeProductMutation();
+  const { isPushAlarmOn } = usePushAlarmSettings();
+  const { intakePushEnabled } = useNotificationSettings();
 
   if (!data?.result) return null;
 
@@ -43,11 +47,14 @@ const SupplementDetailBottomSheet = ({
     ? `${intakeHour !== null && intakeHour >= 12 ? '오후' : '오전'} ${activeProduct.intakeTime}`
     : '';
 
-  const updateActiveProduct = (body: {
-    intakeTime?: string;
-    frequency?: string;
-    notificationEnabled?: boolean;
-  }) => {
+  const updateActiveProduct = (
+    body: {
+      intakeTime?: string;
+      frequency?: string;
+      notificationEnabled?: boolean;
+    },
+    messages?: { successMessage?: string; errorMessage?: string },
+  ) => {
     if (!activeProduct) return;
 
     patchActiveProductMutation.mutate({
@@ -57,6 +64,8 @@ const SupplementDetailBottomSheet = ({
         frequency: body.frequency ?? activeProduct.frequency,
         notificationEnabled: body.notificationEnabled ?? notificationEnabled,
       },
+      successMessage: messages?.successMessage,
+      errorMessage: messages?.errorMessage,
     });
   };
 
@@ -90,14 +99,37 @@ const SupplementDetailBottomSheet = ({
             <p className='typo-body-9 text-primary'>개별알림</p>
           </div>
 
-          {data.result.isActiveIntake ? (
+          {!isPushAlarmOn ? (
+            <section className='no-center-glass px-5 pt-6 pb-5 rounded-[20px] flex flex-col items-center justify-between gap-2'>
+              <TimerOffIcon />
+
+              <p className='text-center typo-body-10'>푸시 알림이 꺼져 있어요.</p>
+
+              <p className='text-neutral typo-caption-6'>
+                푸시 알림을 켜면 이 영양제에 대한 알림을 설정할 수 있어요!
+              </p>
+            </section>
+          ) : !intakePushEnabled ? (
+            <section className='no-center-glass px-5 pt-6 pb-5 rounded-[20px] flex flex-col items-center justify-between gap-2'>
+              <TimerOffIcon />
+
+              <p className='text-center typo-body-10'>복용 알림이 꺼져 있어요.</p>
+
+              <p className='text-neutral typo-caption-6'>
+                복용 알림을 켜면 이 영양제에 대한 알림을 설정할 수 있어요!
+              </p>
+            </section>
+          ) : data.result.isActiveIntake ? (
             <section className='space-y-2'>
               <div className='no-center-glass px-5 rounded-[20px] flex items-center justify-between h-13'>
                 <p className='typo-body-10'>복용 알림 ON/OFF</p>
                 <ToggleButton
                   isChecked={notificationEnabled}
                   onClick={() => {
-                    updateActiveProduct({ notificationEnabled: !notificationEnabled });
+                    updateActiveProduct(
+                      { notificationEnabled: !notificationEnabled },
+                      { errorMessage: '알림 설정 변경에 실패했어요.' },
+                    );
                   }}
                 />
               </div>
@@ -166,7 +198,7 @@ const SupplementDetailBottomSheet = ({
           onCancel={() => setIsOpenIntakeTimeModal(false)}
           onConfirm={(intakeTime) => {
             setIsOpenIntakeTimeModal(false);
-            updateActiveProduct({ intakeTime });
+            updateActiveProduct({ intakeTime }, { successMessage: '복용 시간이 변경됐어요.' });
           }}
         />
       )}
@@ -177,7 +209,10 @@ const SupplementDetailBottomSheet = ({
           onCancel={() => setIsOpenIntakeCycleModal(false)}
           onConfirm={(cycle) => {
             setIsOpenIntakeCycleModal(false);
-            updateActiveProduct({ frequency: frequencyCycle[cycle] });
+            updateActiveProduct(
+              { frequency: frequencyCycle[cycle] },
+              { successMessage: '복용 주기가 변경됐어요.' },
+            );
           }}
         />
       )}

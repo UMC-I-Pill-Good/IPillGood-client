@@ -1,11 +1,16 @@
 import { Loader2 } from 'lucide-react';
+import { cn } from '../utils';
 
-const LoadingSpinner = () => {
+interface LoadingSpinnerProps {
+  className?: string;
+}
+
+const LoadingSpinner = ({ className }: LoadingSpinnerProps) => {
   return (
     <div
       role='status'
       aria-live='polite'
-      className='flex min-h-[80vh] flex-col items-center justify-center gap-4'
+      className={cn('flex min-h-[80vh] flex-col items-center justify-center gap-4', className)}
     >
       <Loader2 className='text-primary size-10 animate-spin' />
 
