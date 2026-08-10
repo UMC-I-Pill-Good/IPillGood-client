@@ -6,14 +6,28 @@ const OAUTH_URL = {
   naver: `${baseURL}/auth/naver/login`,
 };
 
+const blurActiveElement = () => {
+  if (document.activeElement instanceof HTMLElement) {
+    document.activeElement.blur();
+  }
+};
+
 const SocialLoginForm = () => {
+  const handleSocialLogin = (url: string) => {
+    // iOS PWA에서 로그인 입력창의 암호 자동 완성 UI가 OAuth 이동을
+    // 가리지 않도록 현재 포커스를 먼저 해제한다.
+    blurActiveElement();
+    window.location.assign(url);
+  };
+
   return (
     <>
       <button
         type='button'
         aria-label='카카오 계정으로 로그인'
         className='bg-[#FEE500] h-13 flex items-center justify-center gap-2.5 w-full py-2.5 rounded-lg typo-body-2 transition hover:brightness-95 active:brightness-90 shadow-[0_4px_4px_rgba(126,131,135,0.1)] mb-2.5'
-        onClick={() => (window.location.href = OAUTH_URL.kakao)}
+        onPointerDown={blurActiveElement}
+        onClick={() => handleSocialLogin(OAUTH_URL.kakao)}
       >
         <KakaoIcon />
         카카오 로그인
@@ -22,7 +36,8 @@ const SocialLoginForm = () => {
         type='button'
         aria-label='네이버 계정으로 로그인'
         className='bg-[#05AC4F] h-13 flex items-center justify-center gap-2.5 w-full py-2.5 rounded-lg typo-body-2 text-white transition hover:brightness-95 active:brightness-90 shadow-[0_4px_4px_rgba(126,131,135,0.1)]'
-        onClick={() => (window.location.href = OAUTH_URL.naver)}
+        onPointerDown={blurActiveElement}
+        onClick={() => handleSocialLogin(OAUTH_URL.naver)}
       >
         <NaverIcon />
         네이버 로그인
