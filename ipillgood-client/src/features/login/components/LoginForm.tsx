@@ -62,6 +62,7 @@ const LoginForm = () => {
         </label>
         <input
           id='login-id'
+          name='username'
           type='text'
           className='w-full py-3 border-b border-neutral-500 text-neutral-800 placeholder:text-neutral-700 focus:outline-none typo-body-2 pl-12 pr-5'
           placeholder='아이디'
@@ -79,6 +80,7 @@ const LoginForm = () => {
         </label>
         <input
           id='login-password'
+          name='password'
           type='password'
           className='w-full py-3 border-b border-neutral-500 text-neutral-800 placeholder:text-neutral-700 focus:outline-none typo-body-2 pl-12 pr-5'
           placeholder='비밀번호'
