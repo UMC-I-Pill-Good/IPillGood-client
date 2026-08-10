@@ -3,6 +3,7 @@
 import { useCallback } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getRanking } from '../api/getRanking';
+import { rankingQueryKeys } from '../constants/rankingQueryKeys';
 import type { RankingQueryParams } from '../types/ranking';
 
 const DEFAULT_PAGE_SIZE = 20;
@@ -17,7 +18,7 @@ const getErrorMessage = (error: unknown) =>
 
 export const useRankingInfiniteProducts = ({ queryParams }: UseRankingInfiniteProductsParams) => {
   const rankingQuery = useInfiniteQuery({
-    queryKey: ['rankingProducts', queryParams],
+    queryKey: [...rankingQueryKeys.products(), queryParams],
     queryFn: async ({ pageParam }) => {
       const response = await getRanking({
         ...queryParams,
