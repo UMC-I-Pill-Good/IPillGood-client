@@ -12,18 +12,3 @@ firebase.initializeApp({
 });
 
 firebase.messaging();
-
-self.addEventListener('push', (event) => {
-  if (!event.data) return;
-
-  const payload = event.data.json();
-  const { notification } = payload;
-  if (!notification) return;
-
-  event.waitUntil(
-    self.registration.showNotification(notification.title ?? '', {
-      body: notification.body,
-      icon: notification.icon,
-    }),
-  );
-});
