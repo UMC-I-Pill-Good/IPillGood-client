@@ -1,28 +1,11 @@
+import { axiosInstance } from '@/app/api/api';
 import { type ConditionCurrentWeekResponse } from '../types/condition';
 
-/**
- * 이번 주 컨디션 체크 상태 조회 (GET /api/v1/conditions/current-week)
- */
+/** GET /api/v1/conditions/current-week */
 export const getConditionCurrentWeek = async (): Promise<ConditionCurrentWeekResponse> => {
-  console.log('API GET /api/v1/conditions/current-week 호출');
-
-  // 더미 데이터 반환
-  return {
-    isSuccess: true,
-    code: 'SUCCESS200_1',
-    message: '이번 주 컨디션 체크 상태 조회에 성공했습니다.',
-    result: {
-      today: '2026-07-26',
-      weekStartOn: '2026-07-20',
-      weekEndOn: '2026-07-26',
-      isSunday: true,
-      checkAvailable: true,
-      checked: false,
-      recordId: null,
-      autoPopupAvailable: true,
-      autoShownAt: null,
-      dismissedAt: null,
-      sundayIntakeWarningRequired: true,
-    },
-  };
+  const response = await axiosInstance.get<ConditionCurrentWeekResponse>(
+    '/conditions/current-week',
+  );
+  return response.data;
 };
+

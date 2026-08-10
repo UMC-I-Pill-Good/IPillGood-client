@@ -1,8 +1,7 @@
 'use client';
 
-import { useRef } from 'react';
-import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
 import { TextButton } from '@/shared/components';
+import ConditionCheckModalLayout from './ConditionCheckModalLayout';
 
 interface ConditionSundayIntakeModalProps {
   isOpen: boolean;
@@ -15,28 +14,15 @@ const ConditionSundayIntakeModal = ({
   onClose,
   onContinue,
 }: ConditionSundayIntakeModalProps) => {
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  useScrollLock();
-  useEscapeKey(onClose);
-  useOutsideClick(contentRef, onClose);
-
-  if (!isOpen) return null;
-
   return (
-    <div
-      className='fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4'
-      role='dialog'
-      aria-modal='true'
-      aria-labelledby='sunday-warning-title'
-      aria-describedby='sunday-warning-content'
+    <ConditionCheckModalLayout
+      isOpen={isOpen}
+      onClose={onClose}
+      ariaLabelledBy='sunday-warning-title'
+      ariaDescribedBy='sunday-warning-content'
+      backdropClassName='px-4'
+      contentClassName='w-full max-w-[310px] items-center justify-center gap-5 rounded-2xl border-0 px-7.5 py-6 shadow-[4px_4px_40px_0_rgba(0,0,0,0.12)]'
     >
-      {/* Tailwind 표준 유틸리티 (rounded-2xl, px-7.5, py-6, max-w-[310px]) 적용 */}
-      <div
-        ref={contentRef}
-        className='flex w-full max-w-[310px] flex-col items-center justify-center gap-5 rounded-2xl bg-white px-7.5 py-6 shadow-[4px_4px_40px_0_rgba(0,0,0,0.12)]'
-      >
-        {/* 1. 텍스트 안내 영역 (시맨틱 색상 토큰 text-black, text-semantic-600 적용) */}
         <div className='flex flex-col items-center justify-center gap-2 text-center'>
           <h3
             id='sunday-warning-title'
@@ -52,7 +38,6 @@ const ConditionSundayIntakeModal = ({
           </p>
         </div>
 
-        {/* 2. 하단 버튼 영역 */}
         <div className='flex w-full items-center justify-center gap-2.5'>
           <TextButton
             type='button'
@@ -71,8 +56,7 @@ const ConditionSundayIntakeModal = ({
             className='flex-1'
           />
         </div>
-      </div>
-    </div>
+    </ConditionCheckModalLayout>
   );
 };
 

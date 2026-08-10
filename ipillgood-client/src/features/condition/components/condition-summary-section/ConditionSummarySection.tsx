@@ -1,7 +1,7 @@
 'use client';
 
 import ConditionSummaryCard from './ConditionSummaryCard';
-import { useConditionFlow } from '../../hooks/useConditionFlow';
+import { useConditionContext } from '../ConditionProvider';
 
 interface ConditionSummarySectionProps {
   averageVitality?: number;
@@ -16,7 +16,7 @@ const ConditionSummarySection = ({
   intakeDays: propIntakeDays,
   totalDays: propTotalDays,
 }: ConditionSummarySectionProps = {}) => {
-  const { homeSummaryData } = useConditionFlow();
+  const { homeSummaryData, currentWeekStatus } = useConditionContext();
 
   const formatScore = (val: number | null | undefined): number => {
     if (val === undefined || val === null) return 0;
@@ -27,32 +27,27 @@ const ConditionSummarySection = ({
   const averageSleepHours = propSleep ?? formatScore(homeSummaryData.averageSleepHours);
   const intakeDays = propIntakeDays ?? formatScore(homeSummaryData.averageIntakeDaysCount);
   const totalDays = propTotalDays ?? 7;
+  const serverYearMonth = currentWeekStatus.today ? currentWeekStatus.today.slice(0, 7) : '';
+  const displayedYearMonth = `${homeSummaryData.year}-${String(homeSummaryData.month).padStart(2, '0')}`;
+  const summaryTitle =
+    serverYearMonth === displayedYearMonth
+      ? '이번 달 컨디션 요약'
+      : `${homeSummaryData.month}월 컨디션 요약`;
 
   return (
     <section className='flex w-full flex-col gap-2 px-5 pt-4 pb-0'>
-      <div className='flex h-[21px] w-full items-center gap-1'>
-        <h2 className='typo-body-5 whitespace-nowrap text-[#111111]'>
-          이번 달 컨디션 요약
-        </h2>
+      <div className='flex w-full items-center gap-1'>
+        <h2 className='typo-body-5 whitespace-nowrap text-black'>{summaryTitle}</h2>
       </div>
 
-      <div className='grid h-[91px] w-full grid-cols-3 gap-2'>
-        <ConditionSummaryCard
-          type='vitality'
-          label='평균 활력'
-          value={averageVitality}
-          total={5}
-        />
+      <div className='grid w-full grid-cols-3 gap-3'>
+        <ConditionSummaryCard type='vitality' label='평균 활력' value={averageVitality} total={5} />
 
-        <ConditionSummaryCard
-          type='sleep'
-          label='평균 수면'
-          value={averageSleepHours}
-        />
+        <ConditionSummaryCard type='sleep' label='평균 수면' value={averageSleepHours} />
 
         <ConditionSummaryCard
           type='intake'
-          label='섭취 기록'
+          label={'주차별 평균\n섭취 기록'}
           value={intakeDays}
           total={totalDays}
         />

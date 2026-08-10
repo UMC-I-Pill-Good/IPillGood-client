@@ -2,7 +2,7 @@
 
 import { Input, TextButton } from '@/shared/components';
 import BottomSheet from '@/shared/components/modal/BottomSheet';
-import { usePasswordChangeForm } from '../../hooks/usePasswordChangeForm';
+import { usePasswordChange } from '../../hooks/usePasswordChange';
 
 interface PasswordChangeSheetProps {
   open: boolean;
@@ -10,7 +10,10 @@ interface PasswordChangeSheetProps {
 }
 
 const PasswordChangeSheet = ({ open, onOpenChange }: PasswordChangeSheetProps) => {
-  const { register, errors, isValid, handlePasswordSubmit } = usePasswordChangeForm(onOpenChange);
+  const { register, errors, isValid, isSubmitting, handlePasswordSubmit } = usePasswordChange(
+    open,
+    onOpenChange,
+  );
 
   return (
     <BottomSheet open={open} onOpenChange={onOpenChange}>
@@ -29,7 +32,7 @@ const PasswordChangeSheet = ({ open, onOpenChange }: PasswordChangeSheetProps) =
           type='password'
           hasPasswordToggle
           label='새 비밀번호'
-          placeholder='영문, 숫자 포함 8~16자'
+          placeholder='영문, 숫자, 특수문자 포함 8~16자'
           error={errors.newPassword?.message}
           {...register('newPassword')}
         />
@@ -47,8 +50,8 @@ const PasswordChangeSheet = ({ open, onOpenChange }: PasswordChangeSheetProps) =
           text='변경 완료'
           variant='primary'
           size='xl'
-          disabled={!isValid}
-          className='mt-53.5 w-full'
+          disabled={!isValid || isSubmitting}
+          className='mt-53.5 w-full mb-4'
         />
       </form>
     </BottomSheet>

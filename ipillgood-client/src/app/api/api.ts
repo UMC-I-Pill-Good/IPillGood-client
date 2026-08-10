@@ -1,1 +1,124 @@
-// init
+import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
+import axios, { type InternalAxiosRequestConfig } from 'axios';
+
+interface CustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
+
+let refreshPromise: Promise<void> | null = null;
+
+export const baseURL = process.env.NEXT_PUBLIC_API_URL;
+
+if (!baseURL) {
+  console.error(
+    '[axiosInstance] NEXT_PUBLIC_API_URL 이 설정되어 있지 않습니다. .env.local 을 확인하세요.',
+  );
+}
+
+// 인스턴스 정의
+export const axiosInstance = axios.create({
+  baseURL,
+  withCredentials: true,
+});
+
+// 요청 인터셉터 : 모든 요청 전에 accessToken을 Authozation 헤더에 추가
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const { getAccessToken } = useLocalStorage();
+    const accessToken = getAccessToken();
+
+    if (accessToken && config.headers) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => {
+    console.error('request 실패', error);
+    return Promise.reject(error);
+  },
+);
+
+// 응답 인터셉터 : 401에러 발생 -> refresh토큰을 통한 토큰 갱신
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const request: CustomInternalAxiosRequestConfig = error.config;
+
+    if (!request) {
+      return Promise.reject(error);
+    }
+
+    // reissue 자체 실패는 바로 로그인
+    if (request.url?.includes('/auth/reissue')) {
+      const { clearTokens } = useLocalStorage();
+
+      clearTokens();
+
+      window.location.href = '/login';
+
+      return Promise.reject(error);
+    }
+
+    // 로그인, 회원가입 등 인증이 필요 없는 요청은 refresh 로직 대상에서 제외
+    const AUTH_FREE_URLS = ['/auth/login', '/auth/signup', '/auth/kakao/link', '/auth/naver/link'];
+
+    if (AUTH_FREE_URLS.some((url) => request.url?.includes(url))) {
+      return Promise.reject(error);
+    }
+
+    // accessToken 만료
+    if (error.response?.status === 401 && !request._retry) {
+      request._retry = true;
+
+      if (!refreshPromise) {
+        refreshPromise = (async () => {
+          try {
+            const { setTokens, setOnboardingCompleted } = useLocalStorage();
+
+            // 기본 axios 사용 (인터셉터 방지)
+            const response = await axios.post(
+              `${baseURL}/auth/reissue`,
+              {},
+              {
+                withCredentials: true,
+              },
+            );
+
+            setTokens(response.data.result.accessToken);
+            setOnboardingCompleted(response.data.result.onboardingCompleted);
+          } catch (err) {
+            console.error('토큰 재발급 실패', err);
+
+            const { clearTokens } = useLocalStorage();
+
+            clearTokens();
+
+            window.location.href = '/login';
+
+            throw err;
+          } finally {
+            refreshPromise = null;
+          }
+        })();
+      }
+
+      try {
+        await refreshPromise;
+
+        // 재발급된 새 accessToken을 재요청 헤더에 반영
+        const { getAccessToken } = useLocalStorage();
+
+        const newAccessToken = getAccessToken();
+
+        if (newAccessToken && request.headers) {
+          request.headers.Authorization = `Bearer ${newAccessToken}`;
+        }
+
+        return axiosInstance(request);
+      } catch (err) {
+        return Promise.reject(err);
+      }
+    }
+    return Promise.reject(error);
+  },
+);

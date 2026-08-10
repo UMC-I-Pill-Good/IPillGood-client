@@ -8,6 +8,7 @@ export { default as ConditionVitalityModal } from './condition-check-modal/Condi
 export { default as ConditionSleepTimeModal } from './condition-check-modal/ConditionSleepTimeModal';
 export { default as ConditionCheckCompleteModal } from './condition-check-modal/ConditionCheckCompleteModal';
 export { default as ConditionCheckModals } from './condition-check-modal/ConditionCheckModals';
+export { ConditionProvider } from './ConditionProvider';
 export { default as HealthStatusSelection } from './health-status/HealthStatusSelection';
 export { default as HealthMinorConcernButton } from './health-status/HealthMinorConcernButton';
 export { default as HealthResultContent } from './health-result/HealthResultContent';

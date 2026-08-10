@@ -26,15 +26,23 @@ const checkboxButtonVariants = cva(
 interface CheckboxButtonProps extends VariantProps<typeof checkboxButtonVariants> {
   onClick?: () => void;
   className?: string;
+  ariaLabel?: string;
 }
 
-const CheckboxButton = ({ size = 'sm', checked, onClick, className }: CheckboxButtonProps) => {
+const CheckboxButton = ({
+  size = 'sm',
+  checked,
+  onClick,
+  className,
+  ariaLabel,
+}: CheckboxButtonProps) => {
   return (
     <button
       type='button'
       onClick={onClick}
       role='checkbox'
       aria-checked={!!checked}
+      aria-label={ariaLabel}
       className={cn(checkboxButtonVariants({ size, checked }), className)}
     >
       <Check size={size === 'sm' ? 12 : 14} strokeWidth={3} />

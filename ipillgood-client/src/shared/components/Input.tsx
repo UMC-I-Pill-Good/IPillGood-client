@@ -41,7 +41,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     const isPasswordInput = type === 'password';
 
-    const inputType = hasPasswordToggle && isPasswordVisible ? 'text' : type;
+    const inputType = isPasswordInput && isPasswordVisible ? 'text' : type;
 
     const handleTogglePasswordVisible = () => {
       setIsPasswordVisible((prev) => !prev);

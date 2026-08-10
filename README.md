@@ -89,6 +89,12 @@
 ![Discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)
 ![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
 
+### **Interaction**
+
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
+![Embla Carousel](https://img.shields.io/badge/Embla_Carousel-000000?style=for-the-badge&logoColor=white)
+![Vaul](https://img.shields.io/badge/Vaul-000000?style=for-the-badge&logoColor=white)
+
 <br>
 
 ## 📁 폴더 구조

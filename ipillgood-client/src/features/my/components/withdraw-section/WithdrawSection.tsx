@@ -22,7 +22,7 @@ const WithdrawSection = () => {
   return (
     <>
       <Header title='회원 탈퇴 확인' />
-      <section className='flex flex-col pb-20 px-5 pt-6.5 flex-1'>
+      <section className='flex flex-col pb-28.5 px-5 pt-6.5 flex-1'>
         <WithdrawWarning />
         <WithdrawInfoList />
         <WithdrawAction onWithdrawSuccess={() => setIsWithdrawn(true)} />

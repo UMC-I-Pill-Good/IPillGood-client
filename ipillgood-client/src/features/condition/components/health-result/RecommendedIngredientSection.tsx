@@ -3,13 +3,12 @@ import RecommendedIngredientCard from './RecommendedIngredientCard';
 
 interface RecommendedIngredientSectionProps {
   ingredientList: IngredientSummary[];
+  onIngredientClick?: (ingredientId: number) => void;
 }
 
-/**
- * 추천 영양 성분 목록 섹션 컴포넌트
- */
 const RecommendedIngredientSection = ({
   ingredientList,
+  onIngredientClick,
 }: RecommendedIngredientSectionProps) => {
   const hasRecommendedIngredients = ingredientList.length > 0;
 
@@ -25,6 +24,7 @@ const RecommendedIngredientSection = ({
             <RecommendedIngredientCard
               key={ingredient.ingredientId}
               ingredient={ingredient}
+              onClick={onIngredientClick}
             />
           ))}
         </div>

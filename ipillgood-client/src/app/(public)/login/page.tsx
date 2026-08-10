@@ -1,6 +1,7 @@
-import LoginForm from '@/features/login/components/LoginForm';
+import { Suspense } from 'react';
 import { LogoSection } from './ui/LogoSection';
 import { Background } from './ui/Background';
+import LoginSection from '@/features/login/components/LoginSection';
 
 const LoginPage = () => {
   return (
@@ -10,7 +11,9 @@ const LoginPage = () => {
 
       {/* Content */}
       <LogoSection />
-      <LoginForm />
+      <Suspense fallback={null}>
+        <LoginSection />
+      </Suspense>
     </main>
   );
 };

@@ -1,11 +1,18 @@
-import { PrivacyPolicySection } from '@/features/policy/components';
+import PolicyDocumentSection from '@/features/policy/components/PolicyDocumentSection';
 import { Header } from '@/shared/layout';
 
-const PrivacyPolicyPage = () => {
+interface PrivacyPolicyPageProps {
+  searchParams: Promise<{ type?: string }>;
+}
+
+const PrivacyPolicyPage = async ({ searchParams }: PrivacyPolicyPageProps) => {
+  const { type } = await searchParams;
+  const isSignup = type === 'signup';
+
   return (
     <main>
       <Header title='개인정보 처리방침' />
-      <PrivacyPolicySection />
+      <PolicyDocumentSection documentType='PRIVACY_COLLECTION' isSignup={isSignup} />
     </main>
   );
 };

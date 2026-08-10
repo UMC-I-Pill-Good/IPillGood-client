@@ -130,8 +130,6 @@ export const WheelSelectTime = <T extends string | number>({
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (!scrollRef.current) return;
 
-    e.preventDefault(); // 브라우저 기본 스크롤 방지
-
     scrollRef.current.scrollBy({
       top: e.deltaY,
       behavior: 'smooth',

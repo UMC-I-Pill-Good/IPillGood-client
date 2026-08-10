@@ -1,18 +1,22 @@
 'use client';
 
+import { useState } from 'react';
 import { CheckboxButton, TextButton } from '@/shared/components';
-import { useWithdrawAction } from '@/features/my/hooks/useWithdrawAction';
+import { useWithdraw } from '../../hooks/useWithdraw';
 
 interface WithdrawActionProps {
   onWithdrawSuccess: () => void;
 }
 
 const WithdrawAction = ({ onWithdrawSuccess }: WithdrawActionProps) => {
-  const { isAgreed, handleToggleAgree, handleClickWithdraw } = useWithdrawAction(onWithdrawSuccess);
+  const [isAgreed, setIsAgreed] = useState(false);
+  const { handleClickWithdraw, isWithdrawing } = useWithdraw(onWithdrawSuccess);
+
+  const handleToggleAgree = () => setIsAgreed((v) => !v);
 
   return (
     <>
-      <label className='flex px-5 gap-1 items-center'>
+      <label className='flex pr-5 pl-1 gap-1 items-center'>
         <CheckboxButton checked={isAgreed} onClick={handleToggleAgree} />
         <span className='typo-caption-2 text-black'>
           위 내용을 모두 확인했으며, 회원 탈퇴에 동의합니다.
@@ -25,7 +29,7 @@ const WithdrawAction = ({ onWithdrawSuccess }: WithdrawActionProps) => {
         text='탈퇴하기'
         size='xl'
         onClick={handleClickWithdraw}
-        disabled={!isAgreed}
+        disabled={!isAgreed || isWithdrawing}
         className='w-full mt-auto'
       />
     </>

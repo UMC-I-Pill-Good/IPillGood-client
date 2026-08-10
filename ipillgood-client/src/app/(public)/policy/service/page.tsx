@@ -1,13 +1,20 @@
-import { ServiceTermSection } from '@/features/policy/components';
+import PolicyDocumentSection from '@/features/policy/components/PolicyDocumentSection';
 import { Header } from '@/shared/layout';
 
-const ServicePage = () => {
+interface ServicePolicyPageProps {
+  searchParams: Promise<{ type?: string }>;
+}
+
+const ServicePolicyPage = async ({ searchParams }: ServicePolicyPageProps) => {
+  const { type } = await searchParams;
+  const isSignup = type === 'signup';
+
   return (
     <main>
       <Header title='서비스 이용약관' />
-      <ServiceTermSection />
+      <PolicyDocumentSection documentType='SERVICE_TERMS' isSignup={isSignup} />
     </main>
   );
 };
 
-export default ServicePage;
+export default ServicePolicyPage;

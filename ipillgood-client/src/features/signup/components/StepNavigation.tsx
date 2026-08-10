@@ -1,6 +1,7 @@
 import { IconButton } from '@/shared/components';
 import clsx from 'clsx';
 import { ChevronLeft } from 'lucide-react';
+import { memo } from 'react';
 
 interface StepNavigationProps {
   step: number;
@@ -27,4 +28,4 @@ const StepNavigation = ({ step, onBack }: StepNavigationProps) => {
   );
 };
 
-export default StepNavigation;
+export default memo(StepNavigation);

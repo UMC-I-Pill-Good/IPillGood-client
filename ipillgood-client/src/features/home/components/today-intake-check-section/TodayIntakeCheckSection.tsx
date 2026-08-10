@@ -1,15 +1,25 @@
 'use client';
 
 import { TextButton } from '@/shared/components';
-import { useTodayIntakeCheck } from '../../hooks/useTodayIntakeCheck';
 import IntakeCheckModal from './IntakeCheckModal';
+import { useIntakeToday } from '../../hooks/useIntakeToday';
 
 const TodayIntakeCheckSection = () => {
-  const { isModalOpen, handleCheckIntake, handleModalCancel, handleModalConfirm } =
-    useTodayIntakeCheck();
+  const {
+    allCompleted,
+    products,
+    isModalOpen,
+    setIsModalOpen,
+    handleConfirm,
+    isConfirming,
+    isPending,
+    isError,
+  } = useIntakeToday();
+
+  if (isPending || isError || allCompleted || products.length === 0) return null;
 
   return (
-    <section className='w-full flex flex-col justify-center items-center  mt-4  gap-3 py-4 rounded-[20px] border border-white bg-white/50 shadow-[0px_4px_4px_0px_rgba(126,131,135,0.10)]'>
+    <section className='w-full flex flex-col justify-center items-center mt-3 gap-3 py-4 rounded-[20px] home-card-glass'>
       <article className='flex flex-col justify-center items-center gap-0.5'>
         <p className='typo-body-9'>
           오늘 아직 <span className='text-primary-600'>영양제</span>를 섭취하지 않았어요!
@@ -24,10 +34,15 @@ const TodayIntakeCheckSection = () => {
         variant='primary'
         size='sm'
         className='rounded-full w-43 h-9'
-        onClick={handleCheckIntake}
+        onClick={() => setIsModalOpen(true)}
       />
       {isModalOpen && (
-        <IntakeCheckModal onCancel={handleModalCancel} onConfirm={handleModalConfirm} />
+        <IntakeCheckModal
+          products={products}
+          isConfirming={isConfirming}
+          onCancel={() => setIsModalOpen(false)}
+          onConfirm={handleConfirm}
+        />
       )}
     </section>
   );

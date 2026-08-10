@@ -28,7 +28,10 @@ const NotificationItem = ({
       )}
     >
       <span className='typo-body-10 text-black'>{label}</span>
-      <span className='absolute right-4 top-1/2 -translate-y-1/2'>
+      <span
+        className='absolute right-4 top-1/2 -translate-y-1/2'
+        onClick={(e) => e.stopPropagation()}
+      >
         <ToggleButton isChecked={isChecked} onClick={onToggle} disabled={disabled} />
       </span>
     </div>

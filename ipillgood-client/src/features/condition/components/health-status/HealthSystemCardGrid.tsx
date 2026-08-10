@@ -2,25 +2,41 @@
 
 import { SelectionCard } from '@/shared/components';
 import { clsx } from 'clsx';
-import { HEALTH_SYSTEM_OPTION_LIST } from '../../constants/healthStatusOptionList';
+import { type HealthSystemType } from '../../types/healthStatus';
 
 interface HealthSystemCardGridProps {
+  systemList: HealthSystemType[];
+  isLoading: boolean;
   selectedSystemKey: string | null;
   onSelectSystem: (systemKey: string) => void;
 }
 
-/**
- * 대분류 8개 신체 계통 SelectionCard 4열 그리드 렌더링 전담 컴포넌트
- */
 const HealthSystemCardGrid = ({
+  systemList,
+  isLoading,
   selectedSystemKey,
   onSelectSystem,
 }: HealthSystemCardGridProps) => {
   return (
     <section className='flex w-full justify-center px-5 py-4 box-border'>
-      {/* 팀원 피드백: max 너비(max-w-[349px]) 제거 */}
-      <div className='grid w-full grid-cols-4 gap-2'>
-        {HEALTH_SYSTEM_OPTION_LIST.map((system) => {
+      <div
+        className='grid w-full grid-cols-4 gap-2'
+        aria-label={isLoading ? '건강 상태 분류를 불러오는 중' : undefined}
+        aria-busy={isLoading || undefined}
+      >
+        {isLoading &&
+          Array.from({ length: 8 }, (_, index) => (
+            <div
+              key={`health-system-skeleton-${index}`}
+              className='flex h-[110px] w-full flex-col items-center justify-center gap-3 rounded-2xl bg-white/60 motion-safe:animate-pulse motion-safe:[animation-duration:1s]'
+              aria-hidden='true'
+            >
+              <span className='size-8 rounded-full bg-neutral-200' />
+              <span className='h-3 w-10 rounded-full bg-neutral-200' />
+            </div>
+          ))}
+
+        {systemList.map((system) => {
           const isSelected = selectedSystemKey === system.key;
           const isTwoLine12px = Boolean(system.isTwoLine);
 

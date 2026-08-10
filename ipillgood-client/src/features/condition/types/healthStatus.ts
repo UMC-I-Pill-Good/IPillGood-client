@@ -1,13 +1,14 @@
+import { type CommonResponse } from '@/shared/types/api';
 import type { ComponentType, SVGProps } from 'react';
 
-// 1. GET /api/v1/health-concerns/recommendations (건강 상태 추천 성분 조회)
+// 1. GET /api/v1/health-concerns (건강 상태 추천 성분 조회)
 export type IngredientSummary = {
   ingredientId: number;
   name: string;
   description: string;
-  imageKey: string;
+  imageUrl: string;
   effectKeywords: string[];
-  inCabinet: boolean;
+  hasCabinetProduct: boolean;
 };
 
 export type HealthConcernRecommendationsResult = {
@@ -18,12 +19,8 @@ export type HealthConcernRecommendationsResult = {
   recommendedIngredients: IngredientSummary[];
 };
 
-export type HealthConcernRecommendationsResponse = {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: HealthConcernRecommendationsResult;
-};
+export type HealthConcernRecommendationsResponse =
+  CommonResponse<HealthConcernRecommendationsResult>;
 
 // 3. UI 정적 객체 기반 렌더링용 타입
 export type HealthBodyPartType = {
@@ -37,5 +34,23 @@ export type HealthSystemType = {
   label: string;
   icon: ComponentType<SVGProps<SVGSVGElement>>;
   bodyPartList: HealthBodyPartType[];
-  isTwoLine?: boolean; // 12px 2줄 줄바꿈 적용 여부 플래그
+  isTwoLine?: boolean;
 };
+
+// 4. GET /api/v1/health-concerns/categories (건강 상태 카테고리 목록 조회)
+export type MinorCategory = {
+  type: string;
+  label: string;
+};
+
+export type MajorCategory = {
+  type: string;
+  label: string;
+  minorCategories: MinorCategory[];
+};
+
+export type HealthConcernCategoriesResult = {
+  majorCategories: MajorCategory[];
+};
+
+export type HealthConcernCategoriesResponse = CommonResponse<HealthConcernCategoriesResult>;

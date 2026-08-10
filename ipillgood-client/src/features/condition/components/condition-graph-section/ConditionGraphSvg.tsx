@@ -12,8 +12,8 @@ import {
 interface ConditionGraphSvgProps {
   currentMonth: number;
   graphPointList: ConditionGraphPointType[];
-  graphLinePoints: string;
   hoveredPointIndex: number | null;
+  selectedPointIndex: number | null;
   onHoverPoint: (index: number | null) => void;
   onSelectPoint: (index: number) => void;
 }
@@ -22,13 +22,21 @@ const ConditionGraphSvg = ({
   currentMonth,
   graphPointList,
   hoveredPointIndex,
+  selectedPointIndex,
   onHoverPoint,
   onSelectPoint,
 }: ConditionGraphSvgProps) => {
   const validPoints = graphPointList.filter((p) => p.score !== null);
+  const firstValidPointIndex = graphPointList.findIndex((point) => point.score !== null);
+  const leadingUncheckedPoints =
+    firstValidPointIndex === -1
+      ? graphPointList
+      : graphPointList.slice(0, firstValidPointIndex);
+  // 첫 기록 전 미체크 주차만 X축 위 시작점으로 사용하고, 기록 사이의 빈 주차는 건너뛴다.
+  const linePointList = [...leadingUncheckedPoints, ...validPoints];
   const pathD = [
     `M ${AXIS_LEFT} ${AXIS_BOTTOM}`,
-    ...validPoints.map(({ x, y }) => `L ${x} ${y}`),
+    ...linePointList.map(({ x, y }) => `L ${x} ${y}`),
   ].join(' ');
 
   return (
@@ -38,7 +46,18 @@ const ConditionGraphSvg = ({
       viewBox={`0 0 ${GRAPH_WIDTH} ${GRAPH_HEIGHT}`}
       className='absolute left-1/2 top-[67px] h-[166px] w-[284px] -translate-x-1/2 overflow-visible'
     >
-      {/* 가이드라인 및 점수 라벨 */}
+      <defs>
+        <filter id='shadow-highlight' x='-100%' y='-100%' width='300%' height='300%'>
+          <feDropShadow
+            dx='0'
+            dy='0'
+            stdDeviation='5'
+            floodColor='var(--color-neutral-800)'
+            floodOpacity='0.61'
+          />
+        </filter>
+      </defs>
+
       {GUIDE_LINE_LIST.map(({ score, y }) => (
         <g key={score}>
           <line
@@ -51,14 +70,14 @@ const ConditionGraphSvg = ({
           />
 
           <text
-            x='3.4'
+            x='9'
             y={y}
             fill='var(--color-neutral-800)'
-            fontFamily='Inter, sans-serif'
-            fontSize='8'
+            fontFamily='Pretendard, sans-serif'
+            fontSize='12'
             fontWeight='500'
             letterSpacing='-0.011em'
-            textAnchor='middle'
+            textAnchor='end'
             dominantBaseline='middle'
           >
             {score}
@@ -66,7 +85,6 @@ const ConditionGraphSvg = ({
         </g>
       ))}
 
-      {/* Y축 & X축 라인 */}
       <line
         x1={AXIS_LEFT}
         y1='0'
@@ -85,7 +103,6 @@ const ConditionGraphSvg = ({
         strokeWidth='1'
       />
 
-      {/* 꺾은선 패스 */}
       <path
         d={pathD}
         fill='none'
@@ -96,45 +113,75 @@ const ConditionGraphSvg = ({
         style={{ transition: 'd 0.5s cubic-bezier(0.4, 0, 0.2, 1)' }}
       />
 
-      {/* 주차별 데이터 포인트 점 및 호버 효과 */}
       {graphPointList.map((condition, index) => {
-        if (condition.score === null) return null; // 데이터가 없는 주차는 점/선을 그리지 않음
+        if (condition.score === null) return null;
+
+        const isHighlighted = hoveredPointIndex === index || selectedPointIndex === index;
+        const isHovered = hoveredPointIndex === index;
+        const tooltipWidth = 58;
+        const tooltipHeight = 36;
+        const tooltipPointGap = 20;
+        const tooltipX = condition.x - tooltipWidth / 2;
+        const tooltipY = condition.y - tooltipHeight - tooltipPointGap;
 
         return (
           <g key={condition.weekLabel}>
-            {hoveredPointIndex === index && (
-              <line
-                x1={condition.x}
-                y1={AXIS_BOTTOM}
-                x2={condition.x}
-                y2={condition.y}
-                stroke='#B1B8BE'
-                strokeWidth='1.5'
-                pointerEvents='none'
-                style={{ transition: 'all 0.3s ease-out' }}
-              />
+            {isHovered && (
+              <>
+                <line
+                  x1={condition.x}
+                  y1={tooltipY + tooltipHeight}
+                  x2={condition.x}
+                  y2={AXIS_BOTTOM}
+                  stroke='var(--color-neutral-400)'
+                  strokeWidth='1'
+                  pointerEvents='none'
+                />
+
+                <g pointerEvents='none'>
+                  <rect
+                    x={tooltipX}
+                    y={tooltipY}
+                    width={tooltipWidth}
+                    height={tooltipHeight}
+                    rx='8'
+                    fill='var(--color-primary-600)'
+                  />
+                  <text
+                    x={condition.x}
+                    y={tooltipY + tooltipHeight / 2 + 1}
+                    fill='var(--color-white)'
+                    fontFamily='Pretendard, sans-serif'
+                    fontSize='12'
+                    fontWeight='500'
+                    textAnchor='middle'
+                    dominantBaseline='middle'
+                  >
+                    <tspan x={condition.x} dy='-7'>
+                      {condition.weekLabel}
+                    </tspan>
+                    <tspan x={condition.x} dy='14' fontWeight='400'>
+                      {condition.score}점
+                    </tspan>
+                  </text>
+                </g>
+              </>
             )}
 
-            {/* 데이터 포인트 점 */}
             <circle
               cx={condition.x}
               cy={condition.y}
-              r={hoveredPointIndex === index ? 4.87 : 3}
+              r={isHighlighted ? 6 : 4.5}
               fill={
-                hoveredPointIndex === index
-                  ? '#6580EE'
-                  : 'var(--primary, #7F99FF)'
+                isHighlighted ? 'var(--color-primary-700)' : 'var(--color-primary-600)'
               }
+              filter={isHighlighted ? 'url(#shadow-highlight)' : undefined}
               style={{
                 transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                ...(hoveredPointIndex === index
-                  ? { filter: 'drop-shadow(0px 0px 5px rgba(126, 131, 135, 0.61))' }
-                  : {}),
               }}
               pointerEvents='none'
             />
 
-            {/* 클릭 상호작용 히트박스 버튼 */}
             <foreignObject
               x={condition.x - 12}
               y={condition.y - 12}
@@ -156,15 +203,14 @@ const ConditionGraphSvg = ({
         );
       })}
 
-      {/* X축 주차 라벨 */}
       {graphPointList.map(({ weekLabel, x }) => (
         <text
           key={`${weekLabel}-label`}
           x={x}
-          y='163'
+          y='165'
           fill='var(--color-neutral-800)'
           fontFamily='Pretendard, sans-serif'
-          fontSize='10'
+          fontSize='12'
           fontWeight='400'
           textAnchor='middle'
         >

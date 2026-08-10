@@ -40,25 +40,25 @@ export const agreementLists = [
   {
     id: 'terms',
     label: '서비스 이용약관 동의 (필수)',
-    href: '#',
+    href: '/policy/service?type=signup',
     required: true,
   },
   {
     id: 'privacy',
     label: '개인정보 수집 및 이용 동의 (필수)',
-    href: '#',
+    href: '/policy/privacy?type=signup',
     required: true,
   },
   {
     id: 'health',
     label: '건강 정보 수집 및 이용 동의 (필수)',
-    href: '#',
+    href: '/policy/health?type=signup',
     required: true,
   },
   {
     id: 'marketing',
     label: '마케팅 정보 수신 동의 (선택)',
-    href: '#',
+    href: '/policy/marketing?type=signup',
     required: false,
   },
 ] as const;

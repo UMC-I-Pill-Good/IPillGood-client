@@ -2,9 +2,6 @@ interface HealthDeclineCauseSectionProps {
   declineCause: string;
 }
 
-/**
- * 건강 상태 감퇴 원인 섹션 컴포넌트
- */
 const HealthDeclineCauseSection = ({
   declineCause,
 }: HealthDeclineCauseSectionProps) => {

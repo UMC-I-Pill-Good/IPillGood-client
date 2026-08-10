@@ -1,6 +1,6 @@
 'use client';
 
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import type { KeyboardEvent } from 'react';
 import { cn } from '@/shared/utils/cn';
 import { FilterIcon } from '@/assets';
@@ -12,6 +12,7 @@ interface SearchBarProps {
   onFilter?: () => void;
   placeholder: string;
   isFilterButton?: boolean;
+  isClearButton?: boolean;
   className?: string;
   inputClassName?: string;
   filterButtonClassName?: string;
@@ -24,6 +25,7 @@ export const SearchBar = ({
   onFilter,
   placeholder,
   isFilterButton = true,
+  isClearButton = false,
   className,
   inputClassName,
   filterButtonClassName,
@@ -32,6 +34,10 @@ export const SearchBar = ({
     if (e.key !== 'Enter' || e.nativeEvent.isComposing) return; // IME 조합 중 엔터 오작동 방지
     if (!value.trim()) return;
     onSearch?.();
+  };
+
+  const handleClear = () => {
+    onChange('');
   };
 
   return (
@@ -60,6 +66,18 @@ export const SearchBar = ({
           inputClassName,
         )}
       />
+
+      {isClearButton && value && (
+        <button
+          type='button'
+          onClick={handleClear}
+          aria-label='검색어 삭제'
+          className='flex shrink-0 items-center justify-center text-neutral'
+        >
+          <X size={24} aria-hidden='true' />
+        </button>
+      )}
+
       {isFilterButton && (
         <button
           type='button'

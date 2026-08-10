@@ -22,7 +22,7 @@ const AGE_GROUP_BY_OPTION: Partial<Record<AgeFilter, RankingAgeGroup>> = {
   '20대': 'TWENTIES',
   '30대': 'THIRTIES',
   '40대': 'FORTIES',
-  '50대 이상': 'FIFTIES_AND_ABOVE',
+  '50대 이상': 'FIFTIES_PLUS',
 };
 
 const AGE_OPTION_BY_GROUP: Record<RankingAgeGroup, Exclude<AgeFilter, '전체'>> = {
@@ -30,7 +30,7 @@ const AGE_OPTION_BY_GROUP: Record<RankingAgeGroup, Exclude<AgeFilter, '전체'>>
   TWENTIES: '20대',
   THIRTIES: '30대',
   FORTIES: '40대',
-  FIFTIES_AND_ABOVE: '50대 이상',
+  FIFTIES_PLUS: '50대 이상',
 };
 
 const HEALTH_CATEGORY_BY_OPTION: Record<
@@ -39,12 +39,12 @@ const HEALTH_CATEGORY_BY_OPTION: Record<
 > = {
   신경계: 'NERVOUS_SYSTEM',
   감각계: 'SENSORY_SYSTEM',
-  '소화 대사계': 'DIGESTIVE_METABOLISM',
-  내분비계: 'ENDOCRINE_SYSTEM',
-  심혈관계: 'CARDIOVASCULAR_SYSTEM',
+  '소화 대사계': 'DIGESTIVE_METABOLIC',
+  내분비계: 'ENDOCRINE',
+  심혈관계: 'CARDIOVASCULAR',
   '신체방어 및 면역계': 'IMMUNE_SYSTEM',
-  근육계: 'MUSCULAR_SYSTEM',
-  '생식 및 비뇨계': 'REPRODUCTIVE_URINARY_SYSTEM',
+  근육계: 'MUSCULOSKELETAL',
+  '생식 및 비뇨계': 'REPRODUCTIVE_URINARY',
 };
 
 const HEALTH_OPTION_BY_CATEGORY: Record<
@@ -53,12 +53,12 @@ const HEALTH_OPTION_BY_CATEGORY: Record<
 > = {
   NERVOUS_SYSTEM: '신경계',
   SENSORY_SYSTEM: '감각계',
-  DIGESTIVE_METABOLISM: '소화 대사계',
-  ENDOCRINE_SYSTEM: '내분비계',
-  CARDIOVASCULAR_SYSTEM: '심혈관계',
+  DIGESTIVE_METABOLIC: '소화 대사계',
+  ENDOCRINE: '내분비계',
+  CARDIOVASCULAR: '심혈관계',
   IMMUNE_SYSTEM: '신체방어 및 면역계',
-  MUSCULAR_SYSTEM: '근육계',
-  REPRODUCTIVE_URINARY_SYSTEM: '생식 및 비뇨계',
+  MUSCULOSKELETAL: '근육계',
+  REPRODUCTIVE_URINARY: '생식 및 비뇨계',
 };
 
 const isAgeFilter = (value: string | null): value is AgeFilter =>

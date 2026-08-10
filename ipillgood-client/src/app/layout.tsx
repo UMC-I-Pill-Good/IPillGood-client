@@ -1,8 +1,8 @@
 import localFont from 'next/font/local';
 import './globals.css';
 import { Metadata } from 'next';
-import { MswProvider } from '@/app/_providers/MswProvider';
 import { QueryProvider } from '@/app/_providers/QueryProvider';
+import { Toast } from '@/shared/components';
 
 export const metadata: Metadata = {
   title: 'I Pill Good',
@@ -24,9 +24,10 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body className={`${pretendard.variable} antialiased`}>
-        <MswProvider>
-          <QueryProvider>{children}</QueryProvider>
-        </MswProvider>
+        <QueryProvider>
+          <Toast />
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );

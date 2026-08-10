@@ -2,16 +2,26 @@
 
 import { useEffect } from 'react';
 
-export const useScrollLock = () => {
-  useEffect(() => {
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+let scrollLockCount = 0;
+let previousOverflow = '';
 
-    document.body.style.overflow = 'hidden';
-    document.body.style.paddingRight = `${scrollbarWidth}px`;
+export const useScrollLock = (enabled = true) => {
+  useEffect(() => {
+    if (!enabled) return;
+
+    if (scrollLockCount === 0) {
+      previousOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+    }
+
+    scrollLockCount += 1;
 
     return () => {
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
+      scrollLockCount -= 1;
+
+      if (scrollLockCount === 0) {
+        document.body.style.overflow = previousOverflow;
+      }
     };
-  }, []);
+  }, [enabled]);
 };

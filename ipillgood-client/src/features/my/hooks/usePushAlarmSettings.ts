@@ -1,12 +1,41 @@
-import { useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { getNotificationSettingsMe, patchNotificationSettingsMe } from '../api/notification';
+import { intakeNotificationSettingsQueryKey } from './useNotificationSettings';
+import { showToast } from '@/shared/utils';
+
+export const appPushSettingQueryKey = ['appPushSetting'];
 
 export const usePushAlarmSettings = () => {
-  const [isPushAlarmOn, setIsPushAlarmOn] = useState(true); // TODO: 푸시 알람 상태
+  const queryClient = useQueryClient();
+
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: appPushSettingQueryKey,
+    queryFn: getNotificationSettingsMe,
+    select: (res) => res.result,
+  });
+
+  const { mutate: updatePushSetting } = useMutation({
+    mutationFn: patchNotificationSettingsMe,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: appPushSettingQueryKey });
+      queryClient.invalidateQueries({ queryKey: intakeNotificationSettingsQueryKey });
+    },
+    onError: () => {
+      showToast.error('알림 설정 변경에 실패했어요.');
+    },
+  });
 
   const handleTogglePushAlarm = () => {
-    //   TODO: 로직
-    setIsPushAlarmOn((v) => !v);
+    if (!data) return;
+    updatePushSetting({ pushEnabled: !data.pushEnabled });
   };
 
-  return { isPushAlarmOn, handleTogglePushAlarm };
+  return {
+    isPushAlarmOn: data?.pushEnabled,
+    isPushAlarmLoading: isLoading,
+    isPushAlarmError: isError,
+    refetchPushAlarm: refetch,
+    handleTogglePushAlarm,
+    updatePushSetting,
+  };
 };

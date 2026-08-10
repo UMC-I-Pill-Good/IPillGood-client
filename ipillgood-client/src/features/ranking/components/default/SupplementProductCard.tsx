@@ -1,24 +1,17 @@
-'use client';
-
+import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 import { Omega3BottleIcon, RatingStarIcon, ValidBadgeIcon } from '@/assets';
-import { Chip } from '@/shared/components';
 import type { ProductSearchItemDto } from '../../types/ranking';
+import IngredientNameCarousel from './IngredientNameCarousel';
 import RankingBadge from './RankingBadge';
 
 interface SupplementProductCardProps {
   item: ProductSearchItemDto;
   displayRank: number;
 }
-
 const SupplementProductCard = ({ item, displayRank }: SupplementProductCardProps) => {
-  const [hasImageError, setHasImageError] = useState(false);
   const imageUrl = item.imageUrl?.trim();
-  const shouldShowImage = Boolean(imageUrl) && !hasImageError;
-  const ingredientName = item.ingredientName.trim();
-  const ratingAverage = item.ratingAverage ?? 0;
-
+  const averageRating = item.averageRating ?? 0;
   return (
     <article className='ranking-product-card flex w-full items-center justify-center gap-3 px-5 py-4'>
       <RankingBadge rank={displayRank} />
@@ -34,13 +27,13 @@ const SupplementProductCard = ({ item, displayRank }: SupplementProductCardProps
               <span className='sr-only'>식약처 인증 제품</span>
             </>
           )}
-          {shouldShowImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+          {imageUrl ? (
+            <Image
               src={imageUrl}
               alt={`${item.productName} 상품 이미지`}
+              width={43}
+              height={70}
               className='h-[4.375rem] w-[2.6875rem] object-contain'
-              onError={() => setHasImageError(true)}
             />
           ) : (
             <Omega3BottleIcon
@@ -55,7 +48,7 @@ const SupplementProductCard = ({ item, displayRank }: SupplementProductCardProps
             <div className='flex w-full items-center justify-between gap-2'>
               <p className='min-w-0 flex-1 truncate typo-caption-6 text-black'>{item.brand}</p>
               <Link
-                href='/'
+                href={`/product/${item.productId}`}
                 aria-label={`${item.productName} 더보기`}
                 className='inline-flex shrink-0 items-center whitespace-nowrap typo-caption-7 text-neutral-800'
               >
@@ -69,15 +62,13 @@ const SupplementProductCard = ({ item, displayRank }: SupplementProductCardProps
               <div className='flex min-w-0 items-center gap-1.5'>
                 <RatingStarIcon className='size-2.5 shrink-0' aria-hidden='true' />
                 <span className='min-w-0 truncate'>
-                  {ratingAverage.toFixed(1)} ({item.reviewCount.toLocaleString('ko-KR')})
+                  {averageRating.toFixed(1)} ({item.reviewCount.toLocaleString('ko-KR')})
                 </span>
               </div>
             </div>
           </div>
 
-          <div className='flex w-full flex-wrap items-center gap-1'>
-            {ingredientName && <Chip text={ingredientName} variant='point' />}
-          </div>
+          <IngredientNameCarousel ingredientNameList={item.ingredientNames} />
         </div>
       </div>
     </article>

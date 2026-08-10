@@ -1,40 +1,95 @@
 'use client';
 
 import { BottomSheet, TextButton, ToggleButton } from '@/shared/components';
-import { CabinetItem } from '@/features/cabinet/types/cabinet';
 import Image from 'next/image';
 import { BellIcon, TimerOffIcon } from '@/assets';
 import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { IntakeCycleModal, IntakeTimeModal } from '@/shared/components';
+import { useQuery } from '@tanstack/react-query';
+import { getCabinetProductsDetail } from '@/features/cabinet/api/cabinet';
+import { usePatchIntakeProductMutation } from '@/features/cabinet/hooks';
+import { frequencyCycle } from '@/features/cabinet/constants/intake.constants';
+import { useRouter } from 'next/navigation';
+import { usePushAlarmSettings } from '@/features/my/hooks/usePushAlarmSettings';
+import { useNotificationSettings } from '@/features/my/hooks/useNotificationSettings';
 
 interface SupplementDetailBottomSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  item: CabinetItem | null; // 임시
+  memberProductId: number | null;
 }
 
 const SupplementDetailBottomSheet = ({
   open,
   onOpenChange,
-  item,
+  memberProductId,
 }: SupplementDetailBottomSheetProps) => {
-  const [isIntake, setIsIntake] = useState(true); // 임시
+  const router = useRouter();
   const [isOpenIntakeCycleModal, setIsOpenIntakeCycleModal] = useState(false);
   const [isOpenIntakeTimeModal, setIsOpenIntakeTimeModal] = useState(false);
 
-  if (!item) return null;
+  const { data } = useQuery({
+    queryKey: ['cabinetProductDetail', memberProductId],
+    queryFn: () => getCabinetProductsDetail(memberProductId!),
+    enabled: open && memberProductId !== null,
+  });
+  const patchActiveProductMutation = usePatchIntakeProductMutation();
+  const { isPushAlarmOn } = usePushAlarmSettings();
+  const { intakePushEnabled } = useNotificationSettings();
+
+  if (!data?.result) return null;
+
+  const activeProduct = data.result.activeProduct;
+  const notificationEnabled = activeProduct?.notificationEnabled ?? false;
+  const intakeHour = activeProduct ? Number(activeProduct.intakeTime.split(':')[0]) : null;
+  const intakeTimeLabel = activeProduct
+    ? `${intakeHour !== null && intakeHour >= 12 ? '오후' : '오전'} ${activeProduct.intakeTime}`
+    : '';
+
+  const updateActiveProduct = (
+    body: {
+      intakeTime?: string;
+      frequency?: string;
+      notificationEnabled?: boolean;
+    },
+    messages?: { successMessage?: string; errorMessage?: string },
+  ) => {
+    if (!activeProduct) return;
+
+    patchActiveProductMutation.mutate({
+      activeProductId: activeProduct.activeProductId,
+      body: {
+        intakeTime: body.intakeTime ?? activeProduct.intakeTime,
+        frequency: body.frequency ?? activeProduct.frequency,
+        notificationEnabled: body.notificationEnabled ?? notificationEnabled,
+      },
+      successMessage: messages?.successMessage,
+      errorMessage: messages?.errorMessage,
+    });
+  };
 
   return (
     <BottomSheet open={open} onOpenChange={onOpenChange}>
       <div className='flex flex-col'>
         <section className='py-4 space-y-3 flex flex-col items-center justify-center'>
           <div className='flex items-center justify-center bg-white rounded-lg w-45 h-45'>
-            <Image src={item?.image} alt='비타민' className='h-27.5 w-fit shrink-0' />
+            <Image
+              src={data.result.thumbnailImageUrl}
+              alt={data.result.productName}
+              width={110}
+              height={110}
+              className='h-27.5 w-20 shrink-0'
+            />
           </div>
-          <article className='text-center space-y-2'>
-            <p className='typo-caption-2 text-center'>영양제 브랜드</p>
-            <p className='typo-subtitle-4 text-center'>{item?.name}</p>
+          <article className='text-center space-y-2 w-[80%]'>
+            <p className='typo-caption-2 text-center mb-1'>{data.result.brand}</p>
+            <p
+              title={data.result.productName}
+              className='typo-subtitle-4 text-center truncate leading-tight!'
+            >
+              {data.result.productName}
+            </p>
           </article>
         </section>
 
@@ -44,11 +99,39 @@ const SupplementDetailBottomSheet = ({
             <p className='typo-body-9 text-primary'>개별알림</p>
           </div>
 
-          {item.isTaking ? (
+          {!isPushAlarmOn ? (
+            <section className='no-center-glass px-5 pt-6 pb-5 rounded-[20px] flex flex-col items-center justify-between gap-2'>
+              <TimerOffIcon />
+
+              <p className='text-center typo-body-10'>푸시 알림이 꺼져 있어요.</p>
+
+              <p className='text-neutral typo-caption-6'>
+                푸시 알림을 켜면 이 영양제에 대한 알림을 설정할 수 있어요!
+              </p>
+            </section>
+          ) : !intakePushEnabled ? (
+            <section className='no-center-glass px-5 pt-6 pb-5 rounded-[20px] flex flex-col items-center justify-between gap-2'>
+              <TimerOffIcon />
+
+              <p className='text-center typo-body-10'>복용 알림이 꺼져 있어요.</p>
+
+              <p className='text-neutral typo-caption-6'>
+                복용 알림을 켜면 이 영양제에 대한 알림을 설정할 수 있어요!
+              </p>
+            </section>
+          ) : data.result.isActiveIntake ? (
             <section className='space-y-2'>
               <div className='no-center-glass px-5 rounded-[20px] flex items-center justify-between h-13'>
                 <p className='typo-body-10'>복용 알림 ON/OFF</p>
-                <ToggleButton isChecked={isIntake} onClick={() => setIsIntake((prev) => !prev)} />
+                <ToggleButton
+                  isChecked={notificationEnabled}
+                  onClick={() => {
+                    updateActiveProduct(
+                      { notificationEnabled: !notificationEnabled },
+                      { errorMessage: '알림 설정 변경에 실패했어요.' },
+                    );
+                  }}
+                />
               </div>
 
               <div className='no-center-glass px-5 rounded-[20px] flex items-center justify-between h-13'>
@@ -59,7 +142,7 @@ const SupplementDetailBottomSheet = ({
                   className='text-neutral transition hover:brightness-75'
                   onClick={() => setIsOpenIntakeTimeModal(true)}
                 >
-                  오전 08:00
+                  {intakeTimeLabel}
                 </button>
               </div>
 
@@ -71,7 +154,7 @@ const SupplementDetailBottomSheet = ({
                   className='text-neutral flex items-center transition hover:brightness-75'
                   onClick={() => setIsOpenIntakeCycleModal(true)}
                 >
-                  매일 <ChevronRight size={20} />
+                  {activeProduct?.frequencyLabel} <ChevronRight size={20} />
                 </button>
               </div>
             </section>
@@ -93,27 +176,44 @@ const SupplementDetailBottomSheet = ({
         </section>
 
         <section className='space-y-2 pt-4'>
-          <TextButton type='button' text='영양성분 더보기' size='xl' className='w-full' />
-          <button
+          <TextButton
             type='button'
-            aria-label='후기 작성 페이지 이동'
-            className='shrink-0 inline-flex items-center justify-center w-full typo-body-2 h-13 bg-neutral-300 text-neutral hover:brightness-90 active:brightness-80 shadow-[0_4px_4px_rgba(126,131,135,0.1)] transition-all rounded-lg'
-          >
-            후기 작성하기
-          </button>
+            text='영양성분 더보기'
+            size='xl'
+            className='w-full'
+            onClick={() => router.push(`/product/${data.result.productId}`)}
+          />
+          <TextButton
+            href={`/reviews/reviews-add?productId=${data.result.productId}`}
+            text='후기 작성하기'
+            variant='outline'
+            size='xl'
+            className='w-full'
+          />
         </section>
       </div>
       {isOpenIntakeTimeModal && (
         <IntakeTimeModal
+          initialTime={activeProduct?.intakeTime}
           onCancel={() => setIsOpenIntakeTimeModal(false)}
-          onConfirm={() => setIsOpenIntakeTimeModal(false)}
+          onConfirm={(intakeTime) => {
+            setIsOpenIntakeTimeModal(false);
+            updateActiveProduct({ intakeTime }, { successMessage: '복용 시간이 변경됐어요.' });
+          }}
         />
       )}
 
       {isOpenIntakeCycleModal && (
         <IntakeCycleModal
+          initialCycle={activeProduct?.frequencyLabel}
           onCancel={() => setIsOpenIntakeCycleModal(false)}
-          onConfirm={() => setIsOpenIntakeCycleModal(false)}
+          onConfirm={(cycle) => {
+            setIsOpenIntakeCycleModal(false);
+            updateActiveProduct(
+              { frequency: frequencyCycle[cycle] },
+              { successMessage: '복용 주기가 변경됐어요.' },
+            );
+          }}
         />
       )}
     </BottomSheet>

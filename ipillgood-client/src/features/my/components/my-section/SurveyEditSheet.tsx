@@ -32,14 +32,13 @@ const SurveyEditSheet = ({ open, onOpenChange }: SurveyEditSheetProps) => {
           </div>
         </div>
 
-        {/* TODO: 초기 설문 1로 이동 */}
         <TextButton
           type='button'
           text='설문 다시 작성하기'
           variant='primary'
           size='xl'
-          className='mt-11 w-full'
-          onClick={() => {}}
+          href='/survey'
+          className='mt-9.75 w-full mb-8'
         />
       </div>
     </BottomSheet>

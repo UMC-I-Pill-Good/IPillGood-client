@@ -1,22 +1,13 @@
 import { HeaderLogoIcon } from '@/assets';
-import {
-  IntakeCalendarSection,
-  IntakeSupplementSection,
-  RecommendedSupplementSection,
-  TodayIntakeCheckSection,
-} from '@/features/home/components';
+import HomeSection from '@/features/home/components/home-section/HomeSection';
 
 const HomePage = () => {
   return (
-    <main className='flex items-center justify-center flex-col p-5 pb-23'>
-      <div className='flex items-center w-full h-23'>
+    <main className='flex items-center justify-center flex-col px-5 pb-28.5'>
+      <header className='flex items-center w-full'>
         <HeaderLogoIcon className='-ml-4' role='img' aria-label='I Pill Good' />
-      </div>
-      <IntakeSupplementSection />
-      <TodayIntakeCheckSection />
-      <IntakeCalendarSection />
-      {/* TODO: 연속 섭취 섹션 추가 */}
-      <RecommendedSupplementSection />
+      </header>
+      <HomeSection />
     </main>
   );
 };
