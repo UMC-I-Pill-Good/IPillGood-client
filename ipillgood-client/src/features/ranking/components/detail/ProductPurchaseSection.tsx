@@ -32,10 +32,16 @@ const ProductPurchaseSection = ({ productId }: ProductPurchaseSectionProps) => {
   const purchaseCheck = purchaseCheckQuery.data;
 
   const openPurchasePage = (purchaseUrl: string) => {
-    if (openedPurchaseProductIdRef.current === productId) return;
+    if (openedPurchaseProductIdRef.current === productId) return 'alreadyOpened' as const;
 
+    const purchaseWindow = window.open('about:blank', '_blank');
+    if (!purchaseWindow) return 'blocked' as const;
+
+    purchaseWindow.opener = null;
+    purchaseWindow.location.replace(purchaseUrl);
     openedPurchaseProductIdRef.current = productId;
-    window.open(purchaseUrl, '_blank', 'noopener,noreferrer');
+
+    return 'opened' as const;
   };
 
   const handlePurchaseClick = () => {
@@ -60,9 +66,13 @@ const ProductPurchaseSection = ({ productId }: ProductPurchaseSectionProps) => {
   const handlePurchaseConfirm = () => {
     if (!purchaseCheck) return;
 
+    const purchasePageResult = openPurchasePage(purchaseCheck.purchaseUrl);
+    if (purchasePageResult === 'blocked') return;
+
     setIsWarningModalOpen(false);
-    openPurchasePage(purchaseCheck.purchaseUrl);
-    showToast.success(TOAST_MESSAGES.CART_ADDED);
+    if (purchasePageResult === 'opened') {
+      showToast.success(TOAST_MESSAGES.CART_ADDED);
+    }
   };
 
   return (

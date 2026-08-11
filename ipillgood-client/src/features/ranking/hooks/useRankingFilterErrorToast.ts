@@ -1,30 +1,32 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { TOAST_MESSAGES } from '@/shared/constants/toastMessages';
 import { showToast } from '@/shared/utils';
 
 interface UseRankingFilterErrorToastParams {
-  isLoading: boolean;
+  isFetching: boolean;
   errorMessage: string | null;
 }
 
 export const useRankingFilterErrorToast = ({
-  isLoading,
+  isFetching,
   errorMessage,
 }: UseRankingFilterErrorToastParams) => {
   const shouldNotifyRef = useRef(false);
+  const [requestId, setRequestId] = useState(0);
 
   useEffect(() => {
-    if (!shouldNotifyRef.current || isLoading) return;
+    if (!shouldNotifyRef.current || isFetching) return;
 
     if (errorMessage) {
       showToast.error(TOAST_MESSAGES.SEARCH_FETCH_FAILED);
     }
 
     shouldNotifyRef.current = false;
-  }, [errorMessage, isLoading]);
+  }, [errorMessage, isFetching, requestId]);
 
-  return () => {
+  return useCallback(() => {
     shouldNotifyRef.current = true;
-  };
+    setRequestId((currentRequestId) => currentRequestId + 1);
+  }, []);
 };

@@ -117,6 +117,7 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
 
       if (isEditMode && reviewId) {
         await updateReview(reviewId, { rating, content: content.trim(), imageKeys });
+        await invalidateReviewQueries(queryClient, productId);
         showToast.success(TOAST_MESSAGES.REVIEW_UPDATED);
         router.back();
       } else {

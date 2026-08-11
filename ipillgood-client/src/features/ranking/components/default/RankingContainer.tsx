@@ -41,6 +41,8 @@ const RankingContainer = () => {
   };
   const {
     hasNext,
+    filterRequestErrorMessage,
+    isFilterRequestFetching,
     isInitialLoading,
     isLoadingMore,
     items,
@@ -56,8 +58,8 @@ const RankingContainer = () => {
     skip: !hasNext,
   });
   const markFilterRequest = useRankingFilterErrorToast({
-    isLoading: isInitialLoading,
-    errorMessage: message,
+    isFetching: isFilterRequestFetching,
+    errorMessage: filterRequestErrorMessage,
   });
 
   useEffect(() => {

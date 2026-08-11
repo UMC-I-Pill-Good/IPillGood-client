@@ -61,8 +61,8 @@ export const useRankingResult = () => {
   };
   const ranking = useRankingInfiniteProducts({ queryParams: rankingQueryParams });
   const markFilterRequest = useRankingFilterErrorToast({
-    isLoading: ranking.isInitialLoading,
-    errorMessage: ranking.message,
+    isFetching: ranking.isFilterRequestFetching,
+    errorMessage: ranking.filterRequestErrorMessage,
   });
   const handleSaveRecentSearch = useSaveRecentSearch();
   const activeFilterCount = getActiveFilterCount(appliedFilters);
