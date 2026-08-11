@@ -1,7 +1,7 @@
 # 💊 IPillGood Client
 
 <p align="center">
-  <img width="100%" alt="아필굿 배너" src="https://github.com/user-attachments/assets/2a35db81-a847-4106-b1f4-cbe670963a8e" />
+  <img width="100%" alt="아필굿 배너" src="https://github.com/user-attachments/assets/3c06c726-2714-4a43-944b-079d6507b28f" />
 </p>
 
 ### 안녕하세요, 아필굿(I Pill Good) 프론트엔드 팀입니다. 😆
@@ -83,17 +83,21 @@
 ![React Hook Form](https://img.shields.io/badge/React_Hook_Form-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white)
 ![Zod](https://img.shields.io/badge/Zod-3E67B1?style=for-the-badge&logo=zod&logoColor=white)
 
-**Communication**
-
-![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white)
-![Discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)
-![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
-
 ### **Interaction**
 
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
 ![Embla Carousel](https://img.shields.io/badge/Embla_Carousel-000000?style=for-the-badge&logoColor=white)
 ![Vaul](https://img.shields.io/badge/Vaul-000000?style=for-the-badge&logoColor=white)
+
+**PWA & Notifications**
+
+![Firebase](https://img.shields.io/badge/Firebase-DD2C00?style=for-the-badge&logo=firebase&logoColor=white)
+
+**Communication**
+
+![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white)
+![Discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)
+![Figma](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)
 
 <br>
 
@@ -108,7 +112,7 @@
 **네이밍 규칙**
 
 - 컴포넌트/파일명: PascalCase (ex. `UserAuth.tsx`)
-- 폴더명: 소문자 (ex. `auth`, `main`, `profile`)
+- 폴더명: 소문자 (ex. `home`, `cabinet`, `login`)
 
 ```
 src/
@@ -118,6 +122,7 @@ src/
 │      ├── _providers/                    # 전역 Provider 관리
 │      ├── (public)/                      # 누구나 접근 가능
 │      ├── (protected)/                   # 로그인된 사용자만 접근 가능
+│      ├── admin/                         # 관리자 계정만 접근 가능
 │      ├── api/                           # API 공통 인스턴스 정의
 │      ├── layout.tsx                     # 최상위 루트 레이아웃
 │      ├── error.tsx
@@ -125,23 +130,22 @@ src/
 │      └── globals.css
 │
 ├── features/                             # 도메인(비즈니스 기능) 단위 관리
-│       ├── main/
+│       ├── home/
 │       │       ├── api/
 │       │       ├── hooks/
 │       │       ├── components/
 │       │       └── types/
-│       ├── profile/
-│       └── auth/
+│       ├── cabinet/
+│       ├── login/
+│       └── ...
 │
-├── shared/                               # 공통 모듈
-│       ├── components/                   # Button, Modal, Input 등
-│       ├── hooks/
-│       ├── utils/
-│       ├── constants/
-│       ├── lib/
-│       └── types/
-│
-└── store/                                # 전역 상태 (zustand 등)
+└── shared/                               # 공통 모듈
+        ├── components/                   # Button, Modal, Input 등
+        ├── layout/                       # 전역 레이아웃 요소 (Header, NavBar 등)
+        ├── hooks/
+        ├── utils/
+        ├── constants/
+        └── types/
 ```
 
 <br>
@@ -199,11 +203,11 @@ src/
 
 **이슈 이름 형식:** `[FEAT | BUG | REFACTOR] 이슈 내용`
 
-| 유형      | 제목 형식            |
-| --------- | -------------------- |
-| 기능 개발 | `[FEAT] 기능 내용`   |
-| 버그      | `[BUG] 버그 내용`    |
-| 리팩토링  | `[REFACTOR] 리팩토링 |
+| 유형      | 제목 형식             |
+| --------- | --------------------- |
+| 기능 개발 | `[FEAT] 기능 내용`    |
+| 버그      | `[BUG] 버그 내용`     |
+| 리팩토링  | `[REFACTOR] 리팩토링` |
 
 ---
 
@@ -253,8 +257,26 @@ npm run dev
 
 <br>
 
-## 🖥 화면 목록 및 플로우
+## 🖥 화면 목록
 
 <!-- 주요 화면 스크린샷 또는 플로우 이미지 첨부 -->
 
-![아필굿 화면 플로우](https://github.com/user-attachments/assets/11a7c9b9-c246-4e69-bd0c-f8ef1e5d8067)
+### 랜딩 & 로그인 화면
+
+<img width="100%" alt="랜딩 & 로그인 화면" src="https://github.com/user-attachments/assets/1dfed267-10d4-46e2-b14b-9773227c8272" />
+
+### 홈 화면
+
+<img width="100%" alt="홈 화면" src="https://github.com/user-attachments/assets/527ce955-74e0-4614-a185-e71ad6c928e5" />
+
+### 검색 & 랭킹 화면
+
+<img width="100%" alt="검색 & 랭킹 화면" src="https://github.com/user-attachments/assets/d48b3d80-2135-4929-b236-3ad3d823737e" />
+
+### 컨디션 화면
+
+<img width="100%" alt="컨디션 화면" src="https://github.com/user-attachments/assets/4287a3fa-fdb2-4cdc-996e-b037aba7141d" />
+
+### 캐비닛 화면
+
+<img width="100%" alt="캐비닛 화면" src="https://github.com/user-attachments/assets/5b301245-57c3-47f7-bb37-7cb5eca0a24a" />
