@@ -58,12 +58,12 @@ const ConditionStatusBanner = ({
               : 'h-[77px] justify-center py-4',
           )}
         >
-          <div className='mx-auto flex w-full min-w-0 shrink-0 flex-row items-center justify-center gap-2 pl-6'>
+          <div className='mx-auto flex w-full min-w-0 shrink-0 flex-row items-center justify-center gap-1 pl-0 min-[400px]:gap-2 min-[400px]:pl-6'>
             <div className='flex min-w-0 flex-col justify-center gap-1'>
               <p className='text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
                 {title}
               </p>
-              <p className='text-xs font-medium leading-tight tracking-normal text-white'>
+              <p className='whitespace-nowrap text-xs font-medium leading-tight tracking-normal text-white'>
                 매주 일요일에 컨디션 체크 알림을 보내드려요!
                 <br />
                 매주 체크하고, 변화를 기록해 보세요.
