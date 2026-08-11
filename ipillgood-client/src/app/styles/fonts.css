@@ -1,4 +1,9 @@
 @layer utilities {
+  .typo-title-gosanja {
+    font-family: var(--font-gosanja), var(--font-pretendard), sans-serif;
+    font-weight: 400;
+  }
+
   .typo-title-1 {
     @apply text-[40px] font-bold leading-5;
   }
