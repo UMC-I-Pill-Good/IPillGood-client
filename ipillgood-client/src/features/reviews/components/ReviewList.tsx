@@ -66,7 +66,7 @@ const ReviewList = ({ productId }: ReviewListProps) => {
       {productQuery.data && reviewQuery.data && (
         <section className='flex flex-col gap-2 px-5 py-4'>
           <div className='flex items-center justify-between'>
-            <h2 className='typo-body-5 text-black'>
+            <h2 className='typo-title-gosanja text-[18px] font-normal leading-normal text-black'>
               전체 후기 <span className='typo-caption-6 text-neutral-800'>{reviewCount}개</span>
             </h2>
             <ReviewSortDropdown sort={sort} onChange={setSort} />

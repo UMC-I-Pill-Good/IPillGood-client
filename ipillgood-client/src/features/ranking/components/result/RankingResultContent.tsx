@@ -120,7 +120,9 @@ const RankingResultContent = ({
         {viewState !== 'error' && (
           <div className='flex w-full items-center justify-between gap-3'>
             <div className='flex min-w-0 items-end gap-1'>
-              <h1 className='typo-body-5 text-black'>검색 결과</h1>
+              <h1 className='typo-title-gosanja text-[18px] font-normal leading-normal text-black'>
+                검색 결과
+              </h1>
               <span className='pb-0.5 typo-caption-7 text-neutral-800'>{totalElements}개</span>
             </div>
             <SortDropdownTrigger selectedSort={selectedSort} onSortChange={onSortChange} />

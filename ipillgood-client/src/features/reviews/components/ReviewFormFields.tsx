@@ -33,13 +33,18 @@ const ReviewFormFields = ({
 }: ReviewFormFieldsProps) => (
   <section className='flex flex-col gap-5 px-5 py-5'>
     <div className='flex flex-col gap-1'>
-      <h2 className='typo-body-1 text-black'>만족도</h2>
+      <h2 className='typo-title-gosanja text-[18px] font-normal leading-normal text-black'>
+        만족도
+      </h2>
       <ReviewRating rating={rating} onChange={onRatingChange} iconClassName='scale-150' />
       <p className='typo-caption-7 text-neutral-800'>별점을 선택해 주세요</p>
     </div>
 
     <div className='flex flex-col gap-2'>
-      <label htmlFor='review-content' className='typo-body-1 text-black'>
+      <label
+        htmlFor='review-content'
+        className='typo-title-gosanja text-[18px] font-normal leading-normal text-black'
+      >
         후기 내용
       </label>
       <div className='relative h-38.5'>
