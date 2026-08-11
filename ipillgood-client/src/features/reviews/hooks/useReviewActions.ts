@@ -1,16 +1,19 @@
 import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { createReviewReport } from '../api/createReviewReport';
 import { deleteReview } from '../api/deleteReview';
 import { updateReviewHelpful } from '../api/updateReviewHelpful';
 import type { RankingReviewItem, ReviewReportReason } from '../types/review';
 import { getReviewErrorMessage } from '../utils/reviewError';
+import { invalidateReviewQueries } from '../utils/invalidateReviewQueries';
 
 type UseReviewActionsParams = {
   review: RankingReviewItem;
-  onDeleteSuccess: () => void;
+  productId: number;
 };
 
-export const useReviewActions = ({ review, onDeleteSuccess }: UseReviewActionsParams) => {
+export const useReviewActions = ({ review, productId }: UseReviewActionsParams) => {
+  const queryClient = useQueryClient();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [isHelpful, setIsHelpful] = useState(review.helpedByMe);
@@ -49,8 +52,8 @@ export const useReviewActions = ({ review, onDeleteSuccess }: UseReviewActionsPa
       if (!response.isSuccess || !response.result?.deleted) {
         throw new Error(response.message);
       }
+      await invalidateReviewQueries(queryClient, productId);
       setIsDeleteModalOpen(false);
-      onDeleteSuccess();
     } catch (error) {
       setIsDeleteModalOpen(false);
       setActionError(getReviewErrorMessage(error, '후기를 삭제할 수 없습니다.'));
