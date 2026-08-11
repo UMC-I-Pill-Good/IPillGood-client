@@ -21,7 +21,7 @@ const gosanja = localFont({
   display: 'swap',
   weight: '400',
   variable: '--font-gosanja',
-  preload: false,
+  preload: true,
 });
 
 export default function RootLayout({

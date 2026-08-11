@@ -117,7 +117,7 @@ const FaqManagementContent = () => {
         onSearch={handleSearch}
         onCategoryChange={handleCategoryChange}
       />
-      <section aria-label='FAQ 목록' className='flex min-h-0 flex-1 flex-col px-10 pb-2'>
+      <section aria-label='FAQ 목록' className='flex min-h-0 flex-1 flex-col pb-2'>
         {faqListQuery.isPending && (
           <p role='status' className='flex flex-1 items-center justify-center text-lg text-neutral'>
             FAQ 목록을 불러오는 중입니다.
