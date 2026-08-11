@@ -6,6 +6,7 @@ import { Header } from '@/shared/layout';
 import { getRankingProductCompatibility } from '../../api/getRankingProductCompatibility';
 import { getRankingProductDetail } from '../../api/getRankingProductDetail';
 import { getRankingProductIngredients } from '../../api/getRankingProductIngredients';
+import { rankingQueryKeys } from '../../constants/rankingQueryKeys';
 import RankingProductDetail from './RankingProductDetail';
 
 interface RankingProductDetailContainerProps {
@@ -14,7 +15,7 @@ interface RankingProductDetailContainerProps {
 
 const RankingProductDetailContainer = ({ productId }: RankingProductDetailContainerProps) => {
   const { data, isPending, isError, refetch } = useQuery({
-    queryKey: ['ranking-product-detail', productId],
+    queryKey: rankingQueryKeys.productDetail(productId),
     queryFn: async () => {
       const [detailResponse, ingredientResponse, compatibilityResponse] = await Promise.all([
         getRankingProductDetail(productId),

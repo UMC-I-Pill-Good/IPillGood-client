@@ -7,7 +7,6 @@ import { postLogin } from '../api/login';
 import { useRouter } from 'next/navigation';
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
 import { TextButton } from '@/shared/components';
-import { isAdminAccessToken } from '@/shared/utils/authToken';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -25,11 +24,6 @@ const LoginForm = () => {
 
       setTokens(accessToken);
       setOnboardingCompleted(onboardingCompleted);
-
-      if (isAdminAccessToken(accessToken)) {
-        router.push('/admin');
-        return;
-      }
 
       if (onboardingCompleted) {
         router.push('/home');
@@ -68,6 +62,7 @@ const LoginForm = () => {
         </label>
         <input
           id='login-id'
+          name='username'
           type='text'
           className='w-full py-3 border-b border-neutral-500 text-neutral-800 placeholder:text-neutral-700 focus:outline-none typo-body-2 pl-12 pr-5'
           placeholder='아이디'
@@ -85,6 +80,7 @@ const LoginForm = () => {
         </label>
         <input
           id='login-password'
+          name='password'
           type='password'
           className='w-full py-3 border-b border-neutral-500 text-neutral-800 placeholder:text-neutral-700 focus:outline-none typo-body-2 pl-12 pr-5'
           placeholder='비밀번호'

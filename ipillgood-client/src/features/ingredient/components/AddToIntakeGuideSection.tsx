@@ -1,16 +1,9 @@
 'use client';
 
 import { TextButton } from '@/shared/components';
-import AlreadyInIntakeModal from './AlreadyIntakeModal';
-import { useAddToIntakeModal } from '../hooks/useAddToIntakeModal';
 import { useMyInfo } from '@/features/my/hooks/useMyInfo';
 
-interface AddToIntakeGuideSectionProps {
-  ingredientId: number;
-}
-
-const AddToIntakeGuideSection = ({ ingredientId }: AddToIntakeGuideSectionProps) => {
-  const { isOpen, handleAddClick, closeModal, goToCabinet } = useAddToIntakeModal(ingredientId);
+const AddToIntakeGuideSection = () => {
   const { data } = useMyInfo();
 
   return (
@@ -31,10 +24,8 @@ const AddToIntakeGuideSection = ({ ingredientId }: AddToIntakeGuideSectionProps)
         size='xl'
         text='섭취 중인 영양제에 추가하기'
         className='w-full mt-5.5 mb-4'
-        onClick={handleAddClick}
+        href='/cabinet/intake-add'
       />
-
-      {isOpen && <AlreadyInIntakeModal onClose={closeModal} onConfirm={goToCabinet} />}
     </section>
   );
 };
