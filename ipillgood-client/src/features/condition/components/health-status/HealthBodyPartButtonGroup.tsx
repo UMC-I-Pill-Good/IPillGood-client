@@ -16,7 +16,7 @@ const HealthBodyPartButtonGroup = ({
 }: HealthBodyPartButtonGroupProps) => {
   return (
     <section className='flex w-full flex-col px-5 pt-4 pb-0 box-border'>
-      <h2 className='w-full text-xl font-semibold text-black leading-tight'>
+      <h2 className='typo-title-gosanja w-full text-xl font-normal not-italic leading-none text-black'>
         더 자세한 부위를 선택해 주세요.
       </h2>
 
