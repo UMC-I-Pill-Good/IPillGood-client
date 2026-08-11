@@ -5,6 +5,7 @@ export const TOAST_MESSAGES = {
   SUPPLEMENT_ADD_FAILED: '추가에 실패했어요. 다시 시도해 주세요.',
   REVIEW_CREATED: '후기가 등록됐어요!',
   REVIEW_UPDATED: '후기가 수정됐어요!',
+  REVIEW_ALREADY_EXISTS: '이미 해당 영양제에 리뷰를 등록했습니다.',
   REVIEW_PROCESS_FAILED: '후기 처리에 실패했어요. 다시 시도해 주세요.',
   REVIEW_DELETED: '후기가 삭제됐어요.',
   REVIEW_DELETE_FAILED: '삭제에 실패했어요. 다시 시도해 주세요.',
