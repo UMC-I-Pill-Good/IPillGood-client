@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useRankingInfiniteProducts } from '../../hooks/useRankingInfiniteProducts';
+import { useRankingFilterErrorToast } from '../../hooks/useRankingFilterErrorToast';
 import { useRecentSearches } from '../../hooks/useRecentSearches';
 import type { RankingUiSort } from '../../types/ranking';
 import { DEFAULT_RANKING_FILTERS } from '../../constants/rankingFilter';
@@ -54,6 +55,10 @@ const RankingContainer = () => {
     rootMargin: '160px 0px',
     skip: !hasNext,
   });
+  const markFilterRequest = useRankingFilterErrorToast({
+    isLoading: isInitialLoading,
+    errorMessage: message,
+  });
 
   useEffect(() => {
     if (inView && hasNext && !isLoadingMore) {
@@ -75,6 +80,7 @@ const RankingContainer = () => {
   };
 
   const handleApplyFilter = () => {
+    markFilterRequest();
     setAppliedFilters(draftFilters);
     setIsFilterOpen(false);
   };

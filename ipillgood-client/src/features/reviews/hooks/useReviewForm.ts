@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { getRankingProductDetail } from '@/features/ranking/api/getRankingProductDetail';
 import type { RankingProductDetailDto } from '@/features/ranking/types/ranking';
+import { TOAST_MESSAGES } from '@/shared/constants/toastMessages';
+import { showToast } from '@/shared/utils';
 import { createReview } from '../api/createReview';
 import { getReviewById } from '../api/getReviewById';
 import { updateReview } from '../api/updateReview';
@@ -11,7 +13,6 @@ import type { ReviewFormMode, ReviewImagePreview } from '../types/reviewForm';
 import { getReviewErrorMessage } from '../utils/reviewError';
 import { invalidateReviewQueries } from '../utils/invalidateReviewQueries';
 import { useReviewImages } from './useReviewImages';
-import { showToast } from '@/shared/utils';
 
 type UseReviewFormParams = {
   mode: ReviewFormMode;
@@ -116,18 +117,17 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
 
       if (isEditMode && reviewId) {
         await updateReview(reviewId, { rating, content: content.trim(), imageKeys });
+        showToast.success(TOAST_MESSAGES.REVIEW_UPDATED);
         router.back();
       } else {
         await createReview({ productId, rating, content: content.trim(), imageKeys });
         await invalidateReviewQueries(queryClient, productId);
-        showToast.success('후기가 등록됐어요!');
+        showToast.success(TOAST_MESSAGES.REVIEW_CREATED);
         router.push(`/reviews?productId=${productId}`);
       }
     } catch (error) {
       setSubmitError(getReviewSubmitErrorMessage(error, submitStage));
-      if (!isEditMode) {
-        showToast.error('후기 등록에 실패했어요. 다시 시도해 주세요.');
-      }
+      showToast.error(TOAST_MESSAGES.REVIEW_PROCESS_FAILED);
     } finally {
       setIsSubmitting(false);
     }

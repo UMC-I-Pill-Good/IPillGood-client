@@ -1,6 +1,7 @@
 import { getIntakeConflict, postIntakeProduct } from '@/features/cabinet/api/intake';
 import { IntakeConflict } from '@/features/cabinet/types/intake';
 import { intakeTodayQueryKey } from '@/features/home/hooks/useIntakeToday';
+import { TOAST_MESSAGES } from '@/shared/constants/toastMessages';
 import { showToast } from '@/shared/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
@@ -31,7 +32,7 @@ export const useAddIntakeProducts = () => {
       const failedResponse = responses.find((response) => !response.isSuccess);
 
       if (failedResponse) {
-        alert(failedResponse.message);
+        showToast.error(TOAST_MESSAGES.SUPPLEMENT_ADD_FAILED);
         return;
       }
 
@@ -41,11 +42,11 @@ export const useAddIntakeProducts = () => {
       queryClient.invalidateQueries({ queryKey: ['intakeCalendar'] });
       queryClient.invalidateQueries({ queryKey: ['growthStage'] });
 
-      showToast.success('섭취 중인 영양제에 추가됐어요!');
+      showToast.success(TOAST_MESSAGES.SUPPLEMENT_ADDED);
       router.push('/cabinet');
     },
     onError: () => {
-      showToast.error('추가에 실패했어요. 다시 시도해 주세요.');
+      showToast.error(TOAST_MESSAGES.SUPPLEMENT_ADD_FAILED);
     },
   });
 

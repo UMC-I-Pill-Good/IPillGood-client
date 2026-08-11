@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { TextButton } from '@/shared/components';
+import { TOAST_MESSAGES } from '@/shared/constants/toastMessages';
 import { showToast } from '@/shared/utils/toast';
 
 import { getCautionCombinations } from '../../api/getCautionCombinations';
@@ -61,6 +62,7 @@ const ProductPurchaseSection = ({ productId }: ProductPurchaseSectionProps) => {
 
     setIsWarningModalOpen(false);
     openPurchasePage(purchaseCheck.purchaseUrl);
+    showToast.success(TOAST_MESSAGES.CART_ADDED);
   };
 
   return (
