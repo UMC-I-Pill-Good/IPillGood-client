@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
 import { TextButton } from '@/shared/components';
 import { isAdminAccessToken } from '@/shared/utils/authToken';
+import { showToast } from '@/shared/utils';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -25,6 +26,7 @@ const LoginForm = () => {
 
       setTokens(accessToken);
       setOnboardingCompleted(onboardingCompleted);
+      showToast.success('로그인에 성공했어요!');
 
       if (isAdminAccessToken(accessToken)) {
         router.push('/admin');

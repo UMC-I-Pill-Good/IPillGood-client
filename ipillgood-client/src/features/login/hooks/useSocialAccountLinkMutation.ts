@@ -36,9 +36,8 @@ export const useSocialAccountLinkMutation = () => {
       sessionStorage.removeItem('accountLinkProvider');
       setTokens(result.accessToken);
       setOnboardingCompleted(result.onboardingCompleted);
-      router.replace(result.onboardingCompleted ? '/home' : '/survey?step=1');
-
       showToast.success('계정이 연동됐어요!');
+      router.replace(result.onboardingCompleted ? '/home' : '/survey?step=1');
     },
     onError: () => {
       showToast.error('계정 연동에 실패했어요. 다시 시도해 주세요.');

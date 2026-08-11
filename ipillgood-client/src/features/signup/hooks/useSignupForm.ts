@@ -9,6 +9,7 @@ import { emailDuplicatedAtom } from '../atoms/signup.atom';
 import { useAgreementStore } from '../stores/useAgreementStore';
 import { useSignupDraftStore } from '../stores/useSignupDraftStore';
 import { useCallback, useEffect } from 'react';
+import { showToast } from '@/shared/utils';
 
 export const useSignupForm = () => {
   const router = useRouter();
@@ -83,13 +84,19 @@ export const useSignupForm = () => {
         ],
       };
 
-      await postSignup(request);
+      const response = await postSignup(request);
+
+      if (!response.isSuccess) {
+        throw new Error(response.message);
+      }
+
       useAgreementStore.getState().reset();
       useSignupDraftStore.getState().resetDraft();
+      showToast.success('회원가입에 성공했어요.');
       router.push('/signup?step=3');
     } catch (err) {
       console.error(err);
-      alert('회원가입에 실패했습니다. 다시 진행해주세요.');
+      showToast.error('회원가입에 실패했어요. 다시 시도해 주세요.');
       router.push('/signup?step=1');
     }
   });
