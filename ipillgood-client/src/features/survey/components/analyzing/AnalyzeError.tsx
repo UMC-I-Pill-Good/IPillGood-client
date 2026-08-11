@@ -51,11 +51,11 @@ const AnalyzeError = ({ recommendationId }: AnalyzeErrorProps) => {
       </section>
 
       <section className='flex flex-1 flex-col items-center justify-center mt-12'>
-        <article className='flex flex-col items-center justify-center typo-subtitle-5 mb-30'>
-          <p className='whitespace-pre-line text-center leading-7'>
+        <article className='flex flex-col items-center justify-center typo-title-gosanja mb-30'>
+          <p className='whitespace-pre-line typo-body-4 text-center leading-7'>
             {'추천 결과를 불러오는 데\n실패했습니다.'}
           </p>
-          <span className='typo-subtitle-5 text-semantic mt-3'>다시 시도해 주세요.</span>
+          <span className='typo-subtitle-6 text-semantic mt-3'>다시 시도해 주세요.</span>
         </article>
 
         <MascotSadIcon />
