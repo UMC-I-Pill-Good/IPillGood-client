@@ -27,7 +27,7 @@ const IngredientNameCarousel = ({ ingredientNameList }: IngredientNameCarouselPr
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
-      <div className='flex gap-1'>
+      <div className='flex gap-1 [touch-action:pan-y_pinch-zoom]'>
         {ingredientNameList.map((ingredientName) => (
           <div key={ingredientName} className='shrink-0'>
             <Chip text={ingredientName} variant='point' />
