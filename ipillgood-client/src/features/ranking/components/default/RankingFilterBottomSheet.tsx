@@ -42,13 +42,30 @@ const RankingFilterBottomSheet = ({
     });
   };
 
+  const updateAgeGroups = (option: (typeof AGE_OPTIONS)[number]) => {
+    if (option === '전체') {
+      updateDraftFilters({ ageGroups: [] });
+      return;
+    }
+
+    const isSelected = draftFilters.ageGroups.includes(option);
+    updateDraftFilters({
+      ageGroups: isSelected
+        ? draftFilters.ageGroups.filter((ageGroup) => ageGroup !== option)
+        : [...draftFilters.ageGroups, option],
+    });
+  };
+
   const groups: FilterBottomSheetGroup[] = [
     {
       title: '연령대',
       options: AGE_OPTIONS.map((option) => ({
         label: option,
-        isSelected: draftFilters.ageGroup === option,
-        onClick: () => updateDraftFilters({ ageGroup: option }),
+        isSelected:
+          option === '전체'
+            ? draftFilters.ageGroups.length === 0
+            : draftFilters.ageGroups.includes(option),
+        onClick: () => updateAgeGroups(option),
       })),
     },
     {
