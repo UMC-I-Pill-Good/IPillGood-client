@@ -51,7 +51,10 @@ const ProductPurchaseSection = ({ productId }: ProductPurchaseSectionProps) => {
     }
 
     if (!purchaseCheck.hasConflict) {
-      openPurchasePage(purchaseCheck.purchaseUrl);
+      const purchasePageResult = openPurchasePage(purchaseCheck.purchaseUrl);
+      if (purchasePageResult === 'opened') {
+        showToast.success(TOAST_MESSAGES.CART_ADDED);
+      }
       return;
     }
 
