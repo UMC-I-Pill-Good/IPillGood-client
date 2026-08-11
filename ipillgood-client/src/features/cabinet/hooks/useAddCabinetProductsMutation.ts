@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-
 import { postCabinetProducts } from '../api/cabinet';
 
 export const useAddCabinetProductsMutation = () => {
@@ -16,8 +15,8 @@ export const useAddCabinetProductsMutation = () => {
       return response.result;
     },
     onSuccess: () => {
-      void queryClient.invalidateQueries({ queryKey: ['cabinetProducts'] });
-      void queryClient.invalidateQueries({ queryKey: ['cabinetProductsSearch'] });
+      queryClient.invalidateQueries({ queryKey: ['cabinetProducts'] });
+      queryClient.invalidateQueries({ queryKey: ['cabinetProductsSearch'] });
     },
   });
 };

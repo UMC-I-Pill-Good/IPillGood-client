@@ -2,7 +2,7 @@
 
 import { useAddCabinetProductsMutation } from '@/features/cabinet/hooks/useAddCabinetProductsMutation';
 import { TextButton } from '@/shared/components';
-import { isAxiosError } from 'axios';
+import { showToast } from '@/shared/utils';
 import { useRouter } from 'next/navigation';
 import { memo } from 'react';
 
@@ -24,16 +24,11 @@ const SupplementAddSection = ({ selectedIds }: SupplementAddSectionProps) => {
         disabled={selectedIds.length === 0 || addProductsMutation.isPending}
         onClick={() =>
           addProductsMutation.mutate(selectedIds, {
-            onSuccess: () => router.push('/cabinet'),
-            onError: (error) => {
-              const message = isAxiosError<{ message?: string }>(error)
-                ? error.response?.data.message
-                : error instanceof Error
-                  ? error.message
-                  : undefined;
-
-              alert(message ?? '캐비닛에 영양제를 추가하지 못했어요.');
+            onSuccess: () => {
+              showToast.success('캐비닛에 추가됐어요!');
+              router.push('/cabinet');
             },
+            onError: () => showToast.error('추가에 실패했어요. 다시 시도해 주세요.'),
           })
         }
       />
