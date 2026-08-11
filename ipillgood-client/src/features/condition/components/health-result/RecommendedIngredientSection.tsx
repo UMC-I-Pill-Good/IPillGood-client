@@ -14,7 +14,7 @@ const RecommendedIngredientSection = ({
 
   return (
     <section className='flex min-h-[612px] w-full flex-col items-start gap-2 px-5 py-4 box-border'>
-      <h2 className='min-h-6 w-full typo-body-1 text-black leading-none'>
+      <h2 className='typo-title-gosanja min-h-6 w-full text-xl font-normal not-italic leading-none text-black'>
         추천 영양 성분
       </h2>
 

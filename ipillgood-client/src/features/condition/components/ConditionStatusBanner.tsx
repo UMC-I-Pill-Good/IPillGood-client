@@ -31,8 +31,8 @@ const ConditionStatusBanner = ({
           )}
         >
           <div className='flex flex-row items-center gap-2 mx-auto min-w-0 shrink-0 overflow-visible pl-6'>
-            <div className='flex flex-col justify-center gap-0.5 min-w-0 pt-1'>
-              <p className='text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
+            <div className='flex min-w-0 translate-y-0.5 flex-col justify-center gap-0.5 pt-1'>
+              <p className='typo-title-gosanja whitespace-nowrap text-xl font-normal not-italic leading-none tracking-normal text-primary-700'>
                 {title}
               </p>
               <p className='text-sm font-medium text-white leading-normal tracking-normal'>
@@ -59,8 +59,8 @@ const ConditionStatusBanner = ({
           )}
         >
           <div className='mx-auto flex w-full min-w-0 shrink-0 flex-row items-center justify-center gap-1 pl-0 min-[400px]:gap-2 min-[400px]:pl-6'>
-            <div className='flex min-w-0 flex-col justify-center gap-1'>
-              <p className='text-xl font-semibold text-primary-700 leading-none whitespace-nowrap tracking-normal'>
+            <div className='flex min-w-0 translate-y-0.5 flex-col justify-center gap-1'>
+              <p className='typo-title-gosanja whitespace-nowrap text-xl font-normal not-italic leading-none tracking-normal text-primary-700'>
                 {title}
               </p>
               <p className='whitespace-nowrap text-xs font-medium leading-tight tracking-normal text-white'>

@@ -4,7 +4,7 @@ const HealthStatusHeader = () => {
   return (
     <section className='flex w-full flex-col gap-2.5 px-5 pt-4 pb-0 box-border'>
       <div className='inline-flex items-baseline gap-1.5'>
-        <h1 className='text-xl font-semibold text-black leading-tight'>
+        <h1 className='typo-title-gosanja text-xl font-normal not-italic leading-none text-black'>
           궁금한 건강 상태 선택
         </h1>
         <span className='text-sm font-normal text-neutral-800'>
