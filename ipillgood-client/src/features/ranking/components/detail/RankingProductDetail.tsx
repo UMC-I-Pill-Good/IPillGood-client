@@ -8,6 +8,7 @@ import SupplementCombinationSection from './SupplementCombinationSection';
 import SupplementDetailSummaryCard from './SupplementDetailSummaryCard';
 import SupplementIngredientBottomSheet from './SupplementIngredientBottomSheet';
 import ProductPurchaseSection from './ProductPurchaseSection';
+import ProductCabinetAddSection from './ProductCabinetAddSection';
 
 interface RankingProductDetailProps {
   product: RankingProductDetailDto;
@@ -42,6 +43,7 @@ const RankingProductDetail = ({
     />
     <SupplementCombinationSection compatibility={compatibility} />
     <ProductPurchaseSection productId={product.productId} />
+    {product.isOwned === false && <ProductCabinetAddSection productId={product.productId} />}
   </>
 );
 
