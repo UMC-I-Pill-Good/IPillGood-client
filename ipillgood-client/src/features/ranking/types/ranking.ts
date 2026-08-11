@@ -72,6 +72,7 @@ export type RankingProductDetailDto = {
   mfdsCertified: boolean;
   ratingAverage: number | null;
   reviewCount: number;
+  isOwned: boolean;
   adClaimRisk: boolean;
   adClaimRiskIngredients: string[];
 };
