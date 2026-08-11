@@ -3,8 +3,8 @@
 import { deleteCabinetProducts } from '@/features/cabinet/api/cabinet';
 import { intakeTodayQueryKey } from '@/features/home/hooks/useIntakeToday';
 import { ConfirmModal, TextButton } from '@/shared/components';
+import { showToast } from '@/shared/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -21,7 +21,7 @@ const DeleteButtonSection = ({ selectedIds }: DeleteButtonSectionProps) => {
     mutationFn: deleteCabinetProducts,
     onSuccess: (res) => {
       if (!res.isSuccess) {
-        alert(res.message);
+        showToast.error(res.message);
         return;
       }
 
@@ -30,14 +30,12 @@ const DeleteButtonSection = ({ selectedIds }: DeleteButtonSectionProps) => {
       queryClient.invalidateQueries({ queryKey: ['activeProducts'] });
       queryClient.invalidateQueries({ queryKey: intakeTodayQueryKey });
       setIsDeleteModalOpen(false);
+
+      showToast.success('캐비닛에서 삭제됐어요.');
       router.replace('/cabinet');
     },
-    onError: (error) => {
-      const message = isAxiosError<{ message?: string }>(error)
-        ? error.response?.data.message
-        : undefined;
-
-      alert(message ?? '캐비닛 영양제를 삭제하지 못했어요.');
+    onError: () => {
+      showToast.error('삭제에 실패했어요. 다시 시도해 주세요.');
     },
   });
 

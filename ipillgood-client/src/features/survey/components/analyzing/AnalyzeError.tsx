@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useResetSurvey } from '@/features/survey/hooks';
 import { useMutation } from '@tanstack/react-query';
 import { postRecommendationRetry } from '../../api/recommendation';
+import { showToast } from '@/shared/utils';
 
 interface AnalyzeErrorProps {
   recommendationId: number;
@@ -30,17 +31,17 @@ const AnalyzeError = ({ recommendationId }: AnalyzeErrorProps) => {
       }
 
       if (status === 'NO_RESULT') {
-        alert('추천 가능한 영양제가 없습니다. 설문을 다시 진행해주세요.');
+        showToast.error('추천 가능한 영양제가 없습니다. 설문을 다시 진행해주세요.');
         resetSurvey();
         router.replace('/survey');
         return;
       }
 
       // FAILED면 현재 페이지 유지
-      alert('추천 생성에 다시 실패했습니다. 다시 시도해주세요.');
+      showToast.error('추천 생성에 다시 실패했습니다. 다시 시도해주세요.');
     },
     onError: () => {
-      alert('추천 재생성 요청에 실패했습니다.');
+      showToast.error('추천 재생성 요청에 실패했습니다.');
     },
   });
 
@@ -81,6 +82,7 @@ const AnalyzeError = ({ recommendationId }: AnalyzeErrorProps) => {
           onCancel={() => setIsOpenModal(false)}
           onConfirm={() => {
             resetSurvey();
+            showToast.success('설문이 초기화되었습니다.');
             router.push('/survey');
             setIsOpenModal(false);
           }}

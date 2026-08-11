@@ -18,7 +18,8 @@ export const useSocialSignupMutation = () => {
 
   const mutation = useMutation({
     mutationFn: async ({ provider, ...body }: SocialSignupPayload) => {
-      const response = provider === 'kakao' ? await postKakaoSignup(body) : await postNaverSignup(body);
+      const response =
+        provider === 'kakao' ? await postKakaoSignup(body) : await postNaverSignup(body);
 
       if (!response.isSuccess) {
         throw new Error(response.message);
@@ -50,7 +51,7 @@ export const useSocialSignupMutation = () => {
     const provider = sessionStorage.getItem('provider');
 
     if (!socialSignupToken || (provider !== 'kakao' && provider !== 'naver')) {
-      alert('소셜 회원가입 정보를 찾을 수 없습니다. 다시 로그인해주세요.');
+      showToast.error('소셜 회원가입 정보를 찾을 수 없습니다. 다시 로그인해주세요.');
       router.push('/login');
       return;
     }
