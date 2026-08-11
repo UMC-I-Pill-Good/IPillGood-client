@@ -2,12 +2,16 @@
 
 import { TextButton } from '@/shared/components';
 
-const AlreadyIntakeSection = () => {
+interface AlreadyIntakeSectionProps {
+  name: string;
+}
+
+const AlreadyIntakeSection = ({ name }: AlreadyIntakeSectionProps) => {
   return (
     <section>
       <h2 className='typo-body-1 text-black whitespace-pre-line'>이미 챙기고 계셨네요!</h2>
       <p className='typo-caption-6 text-neutral-800 mt-2 whitespace-pre-line leading-4!'>
-        마그네슘 관련 영양제가 이미 캐비닛에 섭취 중인 영양제로
+        <span className='text-black'>{name}</span> 관련 영양제가 이미 캐비닛에 섭취 중인 영양제로
         <br /> 등록되어 있어요. <br />
         <span className='text-point-900'>꾸준히 잘 챙기고 계세요!</span>
       </p>

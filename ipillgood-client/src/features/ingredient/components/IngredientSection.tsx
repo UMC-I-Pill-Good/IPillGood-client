@@ -60,7 +60,7 @@ const IngredientSection = () => {
           recommendedIntakeTime={recommendedIntakeTime}
         />
         {hasIntakeProduct ? (
-          <AlreadyIntakeSection />
+          <AlreadyIntakeSection name={name} />
         ) : hasCabinetProduct ? (
           <AddToIntakeGuideSection />
         ) : (
