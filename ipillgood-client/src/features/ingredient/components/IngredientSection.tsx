@@ -8,35 +8,34 @@ import IngredientSummaryCard from './IngredientSummaryCard';
 import AddToIntakeGuideSection from './AddToIntakeGuideSection';
 import { useParams } from 'next/navigation';
 import { useIngredientDetail } from '../hooks/useIngredientDetail';
+import AlreadyIntakeSection from './AlreadyIntakeSection';
+import { FetchError, LoadingSpinner } from '@/shared/components';
 
 const IngredientSection = () => {
   const { ingredientId } = useParams<{ ingredientId: string }>();
   const { data, isLoading, isError } = useIngredientDetail(Number(ingredientId));
 
   if (isError || (!isLoading && !data)) {
-    // 임시 UI
     return (
       <>
         <Header title='영양성분' />
-        <p className='px-5 py-10 text-center typo-body-10 text-neutral-900'>
-          성분 정보를 불러오지 못했습니다.
-        </p>
+        <FetchError />
       </>
     );
   }
 
   if (isLoading || !data) {
-    // 임시 UI
     return (
       <>
         <Header title='영양성분' />
-        <p className='px-5 py-10 text-center typo-body-10 text-neutral-900'>불러오는 중...</p>
+        <LoadingSpinner />
       </>
     );
   }
 
   const {
     name,
+    hasIntakeProduct,
     imageUrl,
     description,
     effects,
@@ -60,8 +59,10 @@ const IngredientSection = () => {
           recommendedIntake={recommendedIntake}
           recommendedIntakeTime={recommendedIntakeTime}
         />
-        {hasCabinetProduct ? (
-          <AddToIntakeGuideSection ingredientId={Number(ingredientId)} />
+        {hasIntakeProduct ? (
+          <AlreadyIntakeSection />
+        ) : hasCabinetProduct ? (
+          <AddToIntakeGuideSection />
         ) : (
           <AlternativeFoodSection alternativeFoods={alternativeFoods} name={name} />
         )}

@@ -23,6 +23,7 @@ export type IngredientDetailType = {
   recommendedIntake: string | null;
   recommendedIntakeTime: string | null;
   hasCabinetProduct: boolean;
+  hasIntakeProduct: boolean;
   alternativeFoods: AlternativeFoodType[];
 };
 
