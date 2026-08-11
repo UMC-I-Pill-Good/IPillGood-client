@@ -13,6 +13,7 @@ import {
 } from '../utils/rankingFilterQuery';
 import { useRankingInfiniteProducts } from './useRankingInfiniteProducts';
 import { useSaveRecentSearch } from './useRecentSearches';
+import { useRankingFilterErrorToast } from './useRankingFilterErrorToast';
 
 const INITIAL_SKELETON_CARD_COUNT = 4;
 
@@ -59,6 +60,10 @@ export const useRankingResult = () => {
     ...toRankingFilterRequestOptions(appliedFilters),
   };
   const ranking = useRankingInfiniteProducts({ queryParams: rankingQueryParams });
+  const markFilterRequest = useRankingFilterErrorToast({
+    isFetching: ranking.isFilterRequestFetching,
+    errorMessage: ranking.filterRequestErrorMessage,
+  });
   const handleSaveRecentSearch = useSaveRecentSearch();
   const activeFilterCount = getActiveFilterCount(appliedFilters);
   const viewState: 'loading' | 'error' | 'success' | 'emptyFilter' | 'emptySearch' =
@@ -105,6 +110,7 @@ export const useRankingResult = () => {
 
   const handleApplyFilter = () => {
     const nextFilters = draftFilters;
+    markFilterRequest();
     resetSkeletonCardCount();
     setAppliedFilters(nextFilters);
     setIsFilterOpen(false);
