@@ -70,7 +70,7 @@ const ConditionStatusBanner = ({
               </p>
             </div>
 
-            <div className='shrink-0 pointer-events-none flex items-center justify-center h-[76px] w-[59px]'>
+            <div className='pointer-events-none flex h-[76px] w-[59px] shrink-0 translate-x-4 items-center justify-center min-[375px]:translate-x-0'>
               <MascotSearchIcon
                 width={59}
                 height={76}
