@@ -45,7 +45,7 @@ const RankingProductDetailContainer = ({ productId }: RankingProductDetailContai
   });
 
   return (
-    <main className='min-h-dvh overflow-x-hidden bg-background pb-16'>
+    <main className='min-h-dvh overflow-x-hidden bg-background pb-24'>
       <Header title='영양제 더보기' />
       {isPending && <LoadingSpinner />}
       {isError && (
