@@ -10,19 +10,6 @@ import { ADMIN_MENU_LIST } from '@/shared/constants/AdminSidebar';
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
 import { cn } from '@/shared/utils/cn';
 
-const AdminLogo = () => {
-  return (
-    <div className='flex h-[54px] w-[58px] shrink-0 items-center justify-center overflow-visible'>
-      <AdminLogoIcon
-        width={98}
-        height={95}
-        className='max-w-none shrink-0 overflow-visible'
-        aria-hidden='true'
-      />
-    </div>
-  );
-};
-
 const AdminSidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -52,7 +39,14 @@ const AdminSidebar = () => {
     <aside className='flex min-h-dvh w-[169px] shrink-0 flex-col justify-between bg-white'>
       <div className='flex flex-col gap-8'>
         <div className='flex items-end gap-1 bg-primary-200 px-5 py-4'>
-          <AdminLogo />
+          <div className='flex h-[54px] w-[58px] shrink-0 items-center justify-center overflow-visible'>
+            <AdminLogoIcon
+              width={98}
+              height={95}
+              className='max-w-none shrink-0 overflow-visible'
+              aria-hidden='true'
+            />
+          </div>
           <span className='pb-px text-center text-sm font-medium leading-none text-primary'>
             ADMIN
           </span>
