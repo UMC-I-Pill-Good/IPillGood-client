@@ -51,25 +51,6 @@ const ConfirmModal = ({
         >
           {content}
         </p>
-
-        <div className='mt-4 flex items-center gap-3'>
-          <TextButton
-            type='button'
-            text={cancelLabel}
-            variant='outline'
-            size='sm'
-            onClick={onCancel}
-            className='flex-1 shadow-none'
-          />
-          <TextButton
-            type='button'
-            text={confirmLabel}
-            variant='primary'
-            size='sm'
-            onClick={onConfirm}
-            className='flex-1 shadow-[4px_4px_2px_rgba(0,0,0,0.15)]'
-          />
-        </div>
       </div>
     </div>
   );
