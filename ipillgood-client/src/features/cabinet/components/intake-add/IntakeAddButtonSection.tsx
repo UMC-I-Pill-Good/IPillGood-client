@@ -1,7 +1,6 @@
 'use client';
 
 import InteractionWarningModal from '@/features/cabinet/components/modal/InteractionWarningModal';
-
 import { frequencyCycle } from '@/features/cabinet/constants/intake.constants';
 import { useAddIntakeProducts } from '@/features/cabinet/hooks';
 import { IntakeCycleModal, IntakeTimeModal, TextButton } from '@/shared/components';
@@ -15,23 +14,20 @@ const IntakeAddButtonSection = ({ selectedIds }: IntakeAddButtonSectionProps) =>
   const [intakeTime, setIntakeTime] = useState<string | null>(null);
   const [isIntakeTimeModalOpen, setIsIntakeTimeModalOpen] = useState(false);
   const [isIntakeCycleModalOpen, setIsIntakeCycleModalOpen] = useState(false);
-  const {
-    conflicts,
-    isWarningModalOpen,
-    isPending,
-    checkConflictsAndAdd,
-    confirmAdd,
-    cancelAdd,
-  } = useAddIntakeProducts();
+  const { conflicts, isWarningModalOpen, isPending, checkConflictsAndAdd, confirmAdd, cancelAdd } =
+    useAddIntakeProducts();
 
   const handleCycleConfirm = (cycle: string) => {
     if (!intakeTime) return;
 
-    checkConflictsAndAdd({
-      memberProductIds: selectedIds,
-      intakeTime,
-      frequency: frequencyCycle[cycle],
-    }, () => setIsIntakeCycleModalOpen(false));
+    checkConflictsAndAdd(
+      {
+        memberProductIds: selectedIds,
+        intakeTime,
+        frequency: frequencyCycle[cycle],
+      },
+      () => setIsIntakeCycleModalOpen(false),
+    );
   };
 
   return (

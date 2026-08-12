@@ -29,7 +29,7 @@ const SupplementDetailSummaryCard = ({
 
           <div className='flex w-full min-w-0 flex-col gap-1'>
             <p className='truncate typo-caption-6 text-black'>{product.brand}</p>
-            <h1 className='truncate typo-body-9 text-black'>{product.productName}</h1>
+            <h1 className='typo-body-9 text-black'>{product.productName}</h1>
             <div className='flex items-center gap-1.5 typo-caption-6 text-neutral-800'>
               <RatingStarIcon aria-hidden='true' className='size-2.5 shrink-0' />
               <span>

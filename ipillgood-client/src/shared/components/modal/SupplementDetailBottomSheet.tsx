@@ -155,7 +155,7 @@ const SupplementDetailBottomSheet = ({
             <p className='typo-caption-2 text-center mb-1'>{data.result.brand}</p>
             <p
               title={data.result.productName}
-              className='typo-subtitle-4 text-center truncate leading-tight!'
+              className='typo-subtitle-4 text-center leading-tight!'
             >
               {data.result.productName}
             </p>
