@@ -51,7 +51,6 @@ const HealthResultContent = () => {
     isLoading,
     error,
     isValid,
-    handleClose,
     handleIngredientClick,
   } = useHealthResultFlow();
 
@@ -65,7 +64,6 @@ const HealthResultContent = () => {
           leftSpacerClassName='w-8'
           showBackButton={false}
           showCloseButton={true}
-          onClose={handleClose}
         />
       </div>
     );
@@ -81,7 +79,6 @@ const HealthResultContent = () => {
           leftSpacerClassName='w-8'
           showBackButton={false}
           showCloseButton={true}
-          onClose={handleClose}
         />
         <HealthResultSkeleton />
       </div>
@@ -98,7 +95,6 @@ const HealthResultContent = () => {
           leftSpacerClassName='w-8'
           showBackButton={false}
           showCloseButton={true}
-          onClose={handleClose}
         />
       </div>
     );
@@ -113,7 +109,6 @@ const HealthResultContent = () => {
         leftSpacerClassName='w-8'
         showBackButton={false}
         showCloseButton={true}
-        onClose={handleClose}
       />
 
       <HealthDeclineCauseSection declineCause={data.declineCause} />
