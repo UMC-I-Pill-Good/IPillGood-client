@@ -7,16 +7,19 @@ import LifestyleStep from './lifestyle-step/LifestyleStep';
 import HealthStateStep from './health-state-step/HealthStateStep';
 import HealthConcernStep from './health-concern-step/HealthConcernStep';
 import SupplementStep from './supplement-step/SupplementStep';
+import { useResetSurvey } from '../hooks/useResetSurvey';
 
 const SurveyContainer = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { resetSurvey } = useResetSurvey();
 
   const step = Number(searchParams.get('step') ?? 1);
 
   // 이전 단계로 이동 (1단계에서는 이전 페이지로 이동)
   const handleBack = () => {
     if (step === 1) {
+      resetSurvey();
       router.push('/home');
       return;
     }
