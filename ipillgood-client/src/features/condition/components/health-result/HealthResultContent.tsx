@@ -61,9 +61,6 @@ const HealthResultContent = () => {
           title='건강 상태 결과'
           titleClassName='text-left! leading-7!'
           alignWrappedTitleToBottom
-          leftSpacerClassName='w-8'
-          showBackButton={false}
-          showCloseButton={true}
         />
       </div>
     );
@@ -76,9 +73,6 @@ const HealthResultContent = () => {
           title={`궁금 상태: ${majorCategoryLabel} - ${minorCategoryLabel}`}
           titleClassName='text-left! leading-7!'
           alignWrappedTitleToBottom
-          leftSpacerClassName='w-8'
-          showBackButton={false}
-          showCloseButton={true}
         />
         <HealthResultSkeleton />
       </div>
@@ -92,9 +86,6 @@ const HealthResultContent = () => {
           title={`궁금 상태: ${majorCategoryLabel} - ${minorCategoryLabel}`}
           titleClassName='text-left! leading-7!'
           alignWrappedTitleToBottom
-          leftSpacerClassName='w-8'
-          showBackButton={false}
-          showCloseButton={true}
         />
       </div>
     );
@@ -106,9 +97,6 @@ const HealthResultContent = () => {
         title={`궁금 상태: ${majorCategoryLabel} - ${minorCategoryLabel}`}
         titleClassName='text-left! leading-7!'
         alignWrappedTitleToBottom
-        leftSpacerClassName='w-8'
-        showBackButton={false}
-        showCloseButton={true}
       />
 
       <HealthDeclineCauseSection declineCause={data.declineCause} />
