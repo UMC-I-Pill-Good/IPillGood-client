@@ -40,7 +40,7 @@ const RankingSearchBar = ({
         )}
         filterButtonClassName='translate-x-1 translate-y-1'
         inputClassName={cn(
-          'min-w-0 px-1 typo-body-11 placeholder:text-neutral-800',
+          'min-w-0 px-1 text-[16px] font-semibold leading-5 text-black placeholder:font-normal placeholder:text-neutral-800',
           !shouldShowFilterButton && 'pr-9',
         )}
         isFilterButton={shouldShowFilterButton}
