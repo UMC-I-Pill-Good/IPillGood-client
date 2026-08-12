@@ -13,6 +13,7 @@ import { frequencyCycle } from '@/features/cabinet/constants/intake.constants';
 import { useRouter } from 'next/navigation';
 import { usePushAlarmSettings } from '@/features/my/hooks/usePushAlarmSettings';
 import { useNotificationSettings } from '@/features/my/hooks/useNotificationSettings';
+import clsx from 'clsx';
 
 interface SupplementDetailBottomSheetProps {
   open: boolean;
@@ -94,10 +95,25 @@ const SupplementDetailBottomSheet = ({
         </section>
 
         <section className='py-4'>
-          <div className='flex items-center gap-1 mb-1'>
-            <BellIcon />
-            <p className='typo-body-9 text-primary'>개별알림</p>
-          </div>
+          <article
+            className={clsx('flex items-end justify-between', isPushAlarmOn ? 'mb-2' : 'mb-1')}
+          >
+            <div className='flex items-center gap-1'>
+              <BellIcon />
+              <p className='typo-body-9 text-primary'>개별알림</p>
+            </div>
+
+            {isPushAlarmOn && (
+              <TextButton
+                type='button'
+                text={
+                  data.result.isActiveIntake ? '섭취 중인 영양제 삭제' : '섭취 중인 영양제 추가'
+                }
+                size='sm'
+                className='px-3'
+              />
+            )}
+          </article>
 
           {!isPushAlarmOn ? (
             <section className='no-center-glass px-5 pt-6 pb-5 rounded-[20px] flex flex-col items-center justify-between gap-2'>
