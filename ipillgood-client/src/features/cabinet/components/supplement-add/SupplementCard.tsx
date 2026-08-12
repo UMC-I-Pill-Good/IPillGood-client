@@ -11,9 +11,10 @@ interface Props {
   item: SearchProductItem;
   checked: boolean;
   onCheck: () => void;
+  onViewDetails: () => void;
 }
 
-const SupplementCard = ({ item, checked, onCheck }: Props) => {
+const SupplementCard = ({ item, checked, onCheck, onViewDetails }: Props) => {
   const [emblaRef] = useEmblaCarousel({
     dragFree: true,
     containScroll: 'trimSnaps',
@@ -52,7 +53,10 @@ const SupplementCard = ({ item, checked, onCheck }: Props) => {
 
             <Link
               href={`/product/${item.productId}`}
-              onClick={(event) => event.stopPropagation()}
+              onClick={(event) => {
+                event.stopPropagation();
+                onViewDetails();
+              }}
               className='typo-caption-7 text-neutral-700 transition hover:underline'
             >
               더보기

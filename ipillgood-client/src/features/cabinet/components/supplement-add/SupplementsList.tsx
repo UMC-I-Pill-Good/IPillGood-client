@@ -8,9 +8,10 @@ interface SupplementsListProps {
   products: SearchProductItem[];
   selectedIds: number[];
   onToggle: (id: number) => void;
+  onViewDetails: () => void;
 }
 
-const SupplementsList = ({ products, selectedIds, onToggle }: SupplementsListProps) => {
+const SupplementsList = ({ products, selectedIds, onToggle, onViewDetails }: SupplementsListProps) => {
   return (
     <section className='px-5 space-y-2 pb-4'>
       {products.map((item) => (
@@ -19,6 +20,7 @@ const SupplementsList = ({ products, selectedIds, onToggle }: SupplementsListPro
           item={item}
           checked={selectedIds.includes(item.productId)}
           onCheck={() => onToggle(item.productId)}
+          onViewDetails={onViewDetails}
         />
       ))}
     </section>
