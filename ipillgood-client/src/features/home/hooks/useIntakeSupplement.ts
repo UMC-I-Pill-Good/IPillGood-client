@@ -20,6 +20,7 @@ export const useIntakeSupplement = () => {
     mutationFn: deleteActiveProduct,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cabinetProducts'] });
+      queryClient.invalidateQueries({ queryKey: ['cabinetProductsSearch'] });
       queryClient.invalidateQueries({ queryKey: ['activeProducts'] });
       queryClient.invalidateQueries({ queryKey: intakeTodayQueryKey });
       queryClient.invalidateQueries({ queryKey: ['intakeCalendar'] });

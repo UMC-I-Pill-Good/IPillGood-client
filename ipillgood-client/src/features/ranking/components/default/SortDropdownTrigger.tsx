@@ -57,7 +57,7 @@ const SortDropdownTrigger = ({ selectedSort, onSortChange }: SortDropdownTrigger
         <span>{RANKING_UI_SORT_LABELS[selectedSort]}</span>
         <ChevronDown
           aria-hidden='true'
-          className={`size-6 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+          className={`size-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
         />
       </button>
       {isOpen && (

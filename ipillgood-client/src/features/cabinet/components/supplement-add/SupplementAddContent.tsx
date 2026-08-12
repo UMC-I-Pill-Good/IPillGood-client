@@ -70,9 +70,15 @@ const SupplementAddContent = () => {
     }
 
     const animationFrame = requestAnimationFrame(() => {
-      if (scrollContainerRef.current) {
-        scrollContainerRef.current.scrollTop = pendingScrollTopRef.current ?? 0;
-        hasRestoredScrollRef.current = true;
+      const scrollContainer = scrollContainerRef.current;
+      const targetScrollTop = pendingScrollTopRef.current;
+
+      if (scrollContainer && targetScrollTop !== null) {
+        scrollContainer.scrollTop = targetScrollTop;
+
+        if (scrollContainer.scrollTop >= targetScrollTop) {
+          hasRestoredScrollRef.current = true;
+        }
       }
     });
 
