@@ -45,7 +45,7 @@ const RecommendedSupplementSection = () => {
       {/* 설문 기반 영양 상태 요약 */}
       <SurveySummaryCard healthSummary={recommendation?.healthSummary ?? ''} />
       <article className='mt-2'>
-        <p className='text-black typo-title-gosanja text-[14px]'>
+        <p className='text-black typo-title-gosanja text-[14px] leading-5'>
           <span className='text-primary-700 text-[18px]'>{nickname} 님</span>께 아래 영양 성분들을
           추천드릴게요!
         </p>

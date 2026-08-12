@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { GROWTH_STAGE_OPTION_LIST } from '../../constants/growthStage.constant';
 import GrowthStageItem from './GrowthStageItem';
 import { getIntakeStreak } from '../../api/intake';
+import growthStageBackground from '@/assets/images/growth-stage-background.png';
 
 const GrowthStageSection = () => {
   const { data } = useQuery({
@@ -18,7 +19,10 @@ const GrowthStageSection = () => {
   const currentIndex = GROWTH_STAGE_OPTION_LIST.findIndex((stage) => stage.value === mascotStage);
 
   return (
-    <section className='mt-4 flex flex-col px-4 py-3 rounded-[20px] bg-white/50 border border-point-600 w-full shadow-[0px_4px_4px_0px_rgba(126,131,135,0.1)]'>
+    <section
+      className='mt-4 flex flex-col px-4 py-3 rounded-[20px] w-full bg-cover bg-center shadow-[0px_4px_4px_0px_rgba(126,131,135,0.1)]'
+      style={{ backgroundImage: `url(${growthStageBackground.src})` }}
+    >
       <article className='flex flex-col items-center justify-center'>
         <p className='typo-body-5 text-black'>
           연속 섭취 <span className='typo-body-1 text-primary-700'>{streakDays}일째</span>
