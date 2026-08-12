@@ -28,7 +28,7 @@ const SupplementSearchSection = ({
   }, [debouncedKeyword, onDebouncedKeywordChange]);
 
   return (
-    <section className='flex flex-col px-5 space-y-9 pb-2'>
+    <section className='flex flex-col px-5 space-y-7 pb-2'>
       <SearchBar
         value={keyword}
         onChange={setKeyword}
