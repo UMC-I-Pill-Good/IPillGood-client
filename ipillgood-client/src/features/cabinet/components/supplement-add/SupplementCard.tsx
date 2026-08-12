@@ -18,15 +18,18 @@ const SupplementCard = ({ item, checked, onCheck }: Props) => {
     dragFree: true,
     containScroll: 'trimSnaps',
   });
+  const isCheckable = !item.isOwned && item.isSelectable;
 
   return (
-    <div className='relative no-center-glass rounded-[20px] bg-primary/30 border-none px-5 py-3'>
+    <div
+      className={`relative no-center-glass rounded-[20px] bg-primary/30 border-none px-5 py-3${isCheckable ? ' cursor-pointer' : ''}`}
+      onClick={isCheckable ? onCheck : undefined}
+    >
       <div className='flex items-center'>
-        {!item.isOwned && item.isSelectable && (
+        {isCheckable && (
           <CheckboxButton
             checked={checked}
             size='lg'
-            onClick={onCheck}
             className={!checked ? 'bg-transparent' : undefined}
           />
         )}
@@ -49,6 +52,7 @@ const SupplementCard = ({ item, checked, onCheck }: Props) => {
 
             <Link
               href={`/product/${item.productId}`}
+              onClick={(event) => event.stopPropagation()}
               className='typo-caption-7 text-neutral-700 transition hover:underline'
             >
               더보기
