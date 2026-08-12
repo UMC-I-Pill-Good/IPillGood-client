@@ -1,6 +1,6 @@
 import type { RankingGender } from './ranking';
 
-export type AgeFilter = '전체' | '10대' | '20대' | '30대' | '40대' | '50대 이상';
+export type AgeFilter = '10대' | '20대' | '30대' | '40대' | '50대 이상';
 
 export type CertificationFilter = 'ALL' | 'CERTIFIED_ONLY';
 
@@ -16,7 +16,7 @@ export type HealthConcernFilter =
   | null;
 
 export type RankingFilterState = {
-  ageGroup: AgeFilter;
+  ageGroups: AgeFilter[];
   gender?: RankingGender;
   certification: CertificationFilter;
   healthConcern: HealthConcernFilter;

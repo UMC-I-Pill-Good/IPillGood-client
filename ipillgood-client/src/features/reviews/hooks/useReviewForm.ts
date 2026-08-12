@@ -3,32 +3,21 @@ import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { getRankingProductDetail } from '@/features/ranking/api/getRankingProductDetail';
 import type { RankingProductDetailDto } from '@/features/ranking/types/ranking';
+import { TOAST_MESSAGES } from '@/shared/constants/toastMessages';
+import { showToast } from '@/shared/utils';
 import { createReview } from '../api/createReview';
 import { getReviewById } from '../api/getReviewById';
 import { updateReview } from '../api/updateReview';
 import { uploadReviewImages } from '../api/uploadReviewImages';
 import type { ReviewFormMode, ReviewImagePreview } from '../types/reviewForm';
-import { getReviewErrorMessage } from '../utils/reviewError';
+import { getReviewErrorCode } from '../utils/reviewError';
 import { invalidateReviewQueries } from '../utils/invalidateReviewQueries';
 import { useReviewImages } from './useReviewImages';
-import { showToast } from '@/shared/utils';
 
 type UseReviewFormParams = {
   mode: ReviewFormMode;
   productId: number;
   reviewId?: number;
-};
-
-type ReviewSubmitStage = 'imageUpload' | 'reviewSubmit';
-
-const REVIEW_SUBMIT_STAGE_LABEL: Record<ReviewSubmitStage, string> = {
-  imageUpload: '후기 이미지 업로드',
-  reviewSubmit: '후기 저장',
-};
-
-const getReviewSubmitErrorMessage = (error: unknown, stage: ReviewSubmitStage) => {
-  const stageLabel = REVIEW_SUBMIT_STAGE_LABEL[stage];
-  return `${stageLabel} 실패: ${getReviewErrorMessage(error, '요청을 처리할 수 없습니다.')}`;
 };
 
 export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams) => {
@@ -91,7 +80,6 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
     if (!content.trim() || rating === 0 || isSubmitting || (isEditMode && !reviewId)) return;
     setIsSubmitting(true);
     setSubmitError('');
-    let submitStage: ReviewSubmitStage = 'imageUpload';
 
     try {
       const newImageList = imagePreviewList.filter(
@@ -112,22 +100,23 @@ export const useReviewForm = ({ mode, productId, reviewId }: UseReviewFormParams
         throw new Error('업로드된 이미지 키를 확인할 수 없습니다.');
       }
 
-      submitStage = 'reviewSubmit';
-
       if (isEditMode && reviewId) {
         await updateReview(reviewId, { rating, content: content.trim(), imageKeys });
+        await invalidateReviewQueries(queryClient, productId);
+        showToast.success(TOAST_MESSAGES.REVIEW_UPDATED);
         router.back();
       } else {
         await createReview({ productId, rating, content: content.trim(), imageKeys });
         await invalidateReviewQueries(queryClient, productId);
-        showToast.success('후기가 등록됐어요!');
+        showToast.success(TOAST_MESSAGES.REVIEW_CREATED);
         router.push(`/reviews?productId=${productId}`);
       }
     } catch (error) {
-      setSubmitError(getReviewSubmitErrorMessage(error, submitStage));
-      if (!isEditMode) {
-        showToast.error('후기 등록에 실패했어요. 다시 시도해 주세요.');
-      }
+      const toastMessage =
+        getReviewErrorCode(error) === 'REVIEW409_1'
+          ? TOAST_MESSAGES.REVIEW_ALREADY_EXISTS
+          : TOAST_MESSAGES.REVIEW_PROCESS_FAILED;
+      showToast.error(toastMessage);
     } finally {
       setIsSubmitting(false);
     }
