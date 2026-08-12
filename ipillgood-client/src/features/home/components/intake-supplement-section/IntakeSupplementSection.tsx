@@ -8,7 +8,9 @@ const IntakeSupplementSection = () => {
   return (
     <section className='w-full flex flex-col gap-2 mt-4'>
       <article className='flex items-end justify-between'>
-        <h2 className='typo-body-5 text-black leading-tight! mt-2.75'>섭취 중인 영양제</h2>
+        <h2 className='text-black text-[18px] leading-tight! mt-2.75 typo-title-gosanja'>
+          섭취 중인 영양제
+        </h2>
 
         {/* 알림 설정 */}
         <AlarmSettingButton />

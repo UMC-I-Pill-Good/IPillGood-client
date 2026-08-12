@@ -19,7 +19,7 @@ const IntakeCalendarSection = () => {
 
   return (
     <section className='mt-8 w-full flex flex-col gap-2'>
-      <h2 className='typo-body-5 text-black'>영양제 복용 캘린더</h2>
+      <h2 className='typo-title-gosanja text-[18px] text-black'>영양제 복용 캘린더</h2>
       <section className='flex flex-col gap-2 home-card-glass rounded-[20px] px-3 py-2'>
         <CalendarHeader month={month} onPrevMonth={handlePrevMonth} onNextMonth={handleNextMonth} />
         {isPending ? (
