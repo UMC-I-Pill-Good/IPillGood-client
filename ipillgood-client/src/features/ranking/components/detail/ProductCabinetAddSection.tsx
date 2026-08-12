@@ -45,7 +45,7 @@ const ProductCabinetAddSection = ({ productId }: ProductCabinetAddSectionProps) 
           <span className='flex size-[25px] shrink-0 items-center justify-center rounded-full bg-secondary-200 text-secondary-600'>
             <DetailCabinetIcon aria-hidden='true' className='size-[11px]' />
           </span>
-          <p className='w-[179px] shrink-0 typo-caption-6 leading-3 not-italic text-neutral'>
+          <p className='min-w-0 w-[179px] shrink typo-caption-6 leading-3 not-italic text-neutral'>
             해당 영양제를 이미 드시고 계신가요? 그렇다면 캐비닛에 추가해 보세요!
           </p>
         </div>

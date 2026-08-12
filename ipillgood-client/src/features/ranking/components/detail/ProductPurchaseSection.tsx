@@ -87,7 +87,7 @@ const ProductPurchaseSection = ({ productId }: ProductPurchaseSectionProps) => {
             <span className='flex size-[25px] shrink-0 items-center justify-center rounded-full bg-primary-200 text-primary-600'>
               <DetailInfoIcon aria-hidden='true' className='h-[15px] w-1' />
             </span>
-            <p className='w-[179px] shrink-0 typo-caption-6 leading-3 not-italic text-neutral'>
+            <p className='min-w-0 w-[179px] shrink typo-caption-6 leading-3 not-italic text-neutral'>
               질병 치료 및 의약품을 복용 중이라면
               <br />
               의사 상담 후 섭취를 추천드려요.
