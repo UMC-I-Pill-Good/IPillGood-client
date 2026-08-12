@@ -129,7 +129,7 @@ const SupplementDetailBottomSheet = ({
   };
 
   const handleNewIntakeCycleConfirm = (cycle: string) => {
-    if (!newIntakeTime || memberProductId === null) return;
+    if (addActiveProductMutation.isPending || !newIntakeTime || memberProductId === null) return;
 
     addActiveProductMutation.mutate({
       intakeTime: newIntakeTime,
@@ -176,6 +176,7 @@ const SupplementDetailBottomSheet = ({
               text={data.result.isActiveIntake ? '섭취 중인 영양제 삭제' : '섭취 중인 영양제 추가'}
               size='sm'
               className='px-3'
+              disabled={addActiveProductMutation.isPending || deleteActiveProductMutation.isPending}
               onClick={() => {
                 if (data.result.isActiveIntake) {
                   setIsDeleteConfirmModalOpen(true);
@@ -326,7 +327,11 @@ const SupplementDetailBottomSheet = ({
               하시겠습니까?
             </>
           }
-          onConfirm={() => deleteActiveProductMutation.mutate(activeProduct.activeProductId)}
+          onConfirm={() => {
+            if (deleteActiveProductMutation.isPending) return;
+
+            deleteActiveProductMutation.mutate(activeProduct.activeProductId);
+          }}
           onCancel={() => setIsDeleteConfirmModalOpen(false)}
         />
       )}
