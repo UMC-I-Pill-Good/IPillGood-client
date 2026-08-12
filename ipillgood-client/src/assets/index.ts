@@ -82,6 +82,8 @@ export { default as CapsuleGrayIcon } from './icons/capsule-gray.svg';
 export { default as Omega3BottleIcon } from './icons/omega3-bottle.svg';
 export { default as DetailWarningIcon } from './icons/detail-warning.svg';
 export { default as DetailThumbUpIcon } from './icons/detail-thumb-up.svg';
+export { default as DetailInfoIcon } from './icons/detail-info.svg';
+export { default as DetailCabinetIcon } from './icons/detail-cabinet.svg';
 export { default as SeedIcon } from './icons/seed.svg';
 export { default as SproutIcon } from './icons/sprout.svg';
 export { default as SproutLockedIcon } from './icons/sprout-lock.svg';

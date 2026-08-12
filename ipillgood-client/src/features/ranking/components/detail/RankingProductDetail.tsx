@@ -33,7 +33,7 @@ const RankingProductDetail = ({
         <SupplementIngredientBottomSheet ingredients={ingredients} />
       </div>
       <div className='min-h-26.75 rounded-[20px] border border-white/70 bg-white/50 px-3 py-2 shadow-[0_4px_4px_rgba(126,131,135,0.1)] backdrop-blur-sm'>
-        <p className='typo-body-11 text-neutral-800'>{product.description}</p>
+        <p className='typo-caption-2 text-neutral-800'>{product.description}</p>
       </div>
     </section>
     <SupplementAdvertisingNotice
@@ -44,8 +44,10 @@ const RankingProductDetail = ({
       }
     />
     <SupplementCombinationSection compatibility={compatibility} />
-    <ProductPurchaseSection productId={product.productId} />
-    {product.isOwned === false && <ProductCabinetAddSection productId={product.productId} />}
+    <div className='flex w-full flex-col gap-2.5 px-5 py-4'>
+      <ProductPurchaseSection productId={product.productId} />
+      {product.isOwned === false && <ProductCabinetAddSection productId={product.productId} />}
+    </div>
   </>
 );
 
