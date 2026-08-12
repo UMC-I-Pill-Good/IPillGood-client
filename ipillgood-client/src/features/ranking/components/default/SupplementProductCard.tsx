@@ -50,7 +50,7 @@ const SupplementProductCard = ({ item, displayRank }: SupplementProductCardProps
               <Link
                 href={`/product/${item.productId}`}
                 aria-label={`${item.productName} 더보기`}
-                className='inline-flex shrink-0 items-center whitespace-nowrap typo-caption-7 text-neutral-800'
+                className='inline-flex shrink-0 items-center whitespace-nowrap typo-caption-7 text-neutral-700 transition hover:underline'
               >
                 더보기
               </Link>

@@ -43,6 +43,8 @@ export const useRankingInfiniteProducts = ({ queryParams }: UseRankingInfinitePr
   const message =
     rankingQuery.isError && !rankingQuery.data ? getErrorMessage(rankingQuery.error) : null;
   const loadMoreErrorMessage = isFetchNextPageError ? getErrorMessage(rankingQuery.error) : null;
+  const filterRequestErrorMessage =
+    rankingQuery.isError && !isFetchNextPageError ? getErrorMessage(rankingQuery.error) : null;
 
   const loadMore = useCallback(() => {
     if (!hasNextPage || isFetchingNextPage || isFetchNextPageError) return;
@@ -58,6 +60,8 @@ export const useRankingInfiniteProducts = ({ queryParams }: UseRankingInfinitePr
 
   return {
     hasNext: hasNextPage,
+    filterRequestErrorMessage,
+    isFilterRequestFetching: rankingQuery.isFetching && !isFetchingNextPage,
     isInitialLoading: rankingQuery.isPending,
     isLoadingMore: isFetchingNextPage,
     items,

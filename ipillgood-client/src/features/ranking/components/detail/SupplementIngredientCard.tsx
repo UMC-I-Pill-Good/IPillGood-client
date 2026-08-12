@@ -24,7 +24,7 @@ const SupplementIngredientCard = ({ ingredient }: SupplementIngredientCardProps)
           <h3 className='min-w-0 truncate leading-none typo-body-5 text-black'>
             {ingredient.name}
           </h3>
-          <p className='w-full whitespace-pre-line break-keep leading-tight typo-caption-7 text-black'>
+          <p className='w-full whitespace-pre-line break-keep leading-tight typo-caption-3 text-black'>
             {ingredient.description}
           </p>
         </div>

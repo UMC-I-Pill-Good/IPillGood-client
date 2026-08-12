@@ -1,6 +1,7 @@
 import { getIntakeConflict, postIntakeProduct } from '@/features/cabinet/api/intake';
 import { IntakeConflict } from '@/features/cabinet/types/intake';
 import { intakeTodayQueryKey } from '@/features/home/hooks/useIntakeToday';
+import { TOAST_MESSAGES } from '@/shared/constants/toastMessages';
 import { showToast } from '@/shared/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
@@ -16,7 +17,6 @@ interface AddIntakeProductsParams {
 export const useAddIntakeProducts = () => {
   const [conflicts, setConflicts] = useState<IntakeConflict[]>([]);
   const [pendingAddParams, setPendingAddParams] = useState<AddIntakeProductsParams | null>(null);
-  const [isReAdditionWarningModalOpen, setIsReAdditionWarningModalOpen] = useState(false);
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -31,7 +31,7 @@ export const useAddIntakeProducts = () => {
       const failedResponse = responses.find((response) => !response.isSuccess);
 
       if (failedResponse) {
-        alert(failedResponse.message);
+        showToast.error(TOAST_MESSAGES.SUPPLEMENT_ADD_FAILED);
         return;
       }
 
@@ -41,11 +41,11 @@ export const useAddIntakeProducts = () => {
       queryClient.invalidateQueries({ queryKey: ['intakeCalendar'] });
       queryClient.invalidateQueries({ queryKey: ['growthStage'] });
 
-      showToast.success('섭취 중인 영양제에 추가됐어요!');
+      showToast.success(TOAST_MESSAGES.SUPPLEMENT_ADDED);
       router.push('/cabinet');
     },
     onError: () => {
-      showToast.error('추가에 실패했어요. 다시 시도해 주세요.');
+      showToast.error(TOAST_MESSAGES.SUPPLEMENT_ADD_FAILED);
     },
   });
 
@@ -58,11 +58,11 @@ export const useAddIntakeProducts = () => {
         : undefined;
 
       if (errorData?.code === 'INTAKE409_3') {
-        setIsReAdditionWarningModalOpen(true);
+        showToast.error('오늘 재추가할 수 없어요');
         return;
       }
 
-      alert(errorData?.message ?? '병용 금기 여부를 확인하지 못했어요.');
+      showToast.error(errorData?.message ?? '병용 금기 여부를 확인하지 못했어요.');
     },
   });
 
@@ -76,12 +76,12 @@ export const useAddIntakeProducts = () => {
 
         if (failedResponse) {
           if (failedResponse.code === 'INTAKE409_3') {
-            setIsReAdditionWarningModalOpen(true);
+            showToast.error('오늘 재추가할 수 없어요');
             onCheckComplete();
             return;
           }
 
-          alert(failedResponse.message ?? '병용 금기 여부를 확인하지 못했어요.');
+          showToast.error(failedResponse.message ?? '병용 금기 여부를 확인하지 못했어요.');
           onCheckComplete();
           return;
         }
@@ -98,7 +98,7 @@ export const useAddIntakeProducts = () => {
         }
 
         if (detectedConflicts.length === 0) {
-          alert('병용 금기 정보를 불러오지 못했어요.');
+          showToast.error('병용 금기 정보를 불러오지 못했어요.');
           onCheckComplete();
           return;
         }
@@ -122,18 +122,12 @@ export const useAddIntakeProducts = () => {
     setPendingAddParams(null);
   };
 
-  const closeReAdditionWarningModal = () => {
-    setIsReAdditionWarningModalOpen(false);
-  };
-
   return {
     conflicts,
     isWarningModalOpen: pendingAddParams !== null,
-    isReAdditionWarningModalOpen,
     isPending: addIntakeProductsMutation.isPending || intakeConflictMutation.isPending,
     checkConflictsAndAdd,
     confirmAdd,
     cancelAdd,
-    closeReAdditionWarningModal,
   };
 };

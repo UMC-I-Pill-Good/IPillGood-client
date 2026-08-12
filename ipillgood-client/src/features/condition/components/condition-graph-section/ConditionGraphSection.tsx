@@ -124,7 +124,7 @@ const ConditionGraphSection = () => {
       <section className='flex w-full flex-col px-5 py-4'>
         <div className='flex w-full flex-col gap-2'>
           <div className='flex w-full flex-col items-start gap-1'>
-            <h2 className='text-lg font-semibold leading-normal text-black'>
+            <h2 className='typo-title-gosanja text-lg font-normal leading-none text-black'>
               {displayYearMonth} 컨디션 변화 그래프
             </h2>
             <p className='text-xs font-medium leading-normal text-point-900'>

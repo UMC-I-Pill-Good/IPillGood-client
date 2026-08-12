@@ -19,7 +19,7 @@ export const usePatchIntakeProductMutation = () => {
       patchActiveProduct(activeProductId, body),
     onSuccess: (response, variables) => {
       if (!response.isSuccess) {
-        alert(response.message);
+        showToast.error(variables.errorMessage ?? '저장에 실패했어요. 다시 시도해 주세요.');
         return;
       }
 

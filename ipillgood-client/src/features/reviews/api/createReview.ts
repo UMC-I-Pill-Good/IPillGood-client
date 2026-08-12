@@ -1,5 +1,6 @@
 import { axiosInstance } from '@/app/api/api';
 import type { CreateReviewApiResponse, CreateReviewRequest } from '../types/review';
+import { ReviewApiError } from '../utils/reviewError';
 
 export const createReview = async (
   request: CreateReviewRequest,
@@ -10,7 +11,10 @@ export const createReview = async (
     body,
   );
   if (!createResponse.isSuccess || !createResponse.result) {
-    throw new Error(createResponse.message || '후기를 작성할 수 없습니다.');
+    throw new ReviewApiError(
+      createResponse.code,
+      createResponse.message || '후기를 작성할 수 없습니다.',
+    );
   }
 
   return createResponse;

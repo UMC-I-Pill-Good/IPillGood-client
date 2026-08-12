@@ -4,7 +4,6 @@ import type {
   RankingQueryParams,
 } from '../types/ranking';
 import {
-  AGE_OPTIONS,
   DEFAULT_RANKING_FILTERS,
   GENDER_OPTIONS,
   HEALTH_CONCERN_ROWS,
@@ -17,7 +16,7 @@ type RankingFilterRequestOptions = {
 };
 
 const HEALTH_CONCERN_OPTIONS = HEALTH_CONCERN_ROWS.flat();
-const AGE_GROUP_BY_OPTION: Partial<Record<AgeFilter, RankingAgeGroup>> = {
+const AGE_GROUP_BY_OPTION: Record<AgeFilter, RankingAgeGroup> = {
   '10대': 'TEENS',
   '20대': 'TWENTIES',
   '30대': 'THIRTIES',
@@ -25,7 +24,7 @@ const AGE_GROUP_BY_OPTION: Partial<Record<AgeFilter, RankingAgeGroup>> = {
   '50대 이상': 'FIFTIES_PLUS',
 };
 
-const AGE_OPTION_BY_GROUP: Record<RankingAgeGroup, Exclude<AgeFilter, '전체'>> = {
+const AGE_OPTION_BY_GROUP: Record<RankingAgeGroup, AgeFilter> = {
   TEENS: '10대',
   TWENTIES: '20대',
   THIRTIES: '30대',
@@ -61,9 +60,6 @@ const HEALTH_OPTION_BY_CATEGORY: Record<
   REPRODUCTIVE_URINARY: '생식 및 비뇨계',
 };
 
-const isAgeFilter = (value: string | null): value is AgeFilter =>
-  AGE_OPTIONS.some((option) => option === value);
-
 const isHealthConcernFilter = (value: string | null): value is Exclude<HealthConcernFilter, null> =>
   HEALTH_CONCERN_OPTIONS.some((option) => option === value);
 
@@ -93,13 +89,13 @@ export const toRankingQueryParams = (
   RankingQueryParams,
   'ageGroups' | 'gender' | 'healthConcernMajorCategories' | 'ingredientIds'
 > => {
-  const ageGroup = AGE_GROUP_BY_OPTION[filters.ageGroup];
+  const ageGroupList = filters.ageGroups.map((ageGroup) => AGE_GROUP_BY_OPTION[ageGroup]);
   const healthConcernMajorCategory = filters.healthConcern
     ? HEALTH_CATEGORY_BY_OPTION[filters.healthConcern]
     : undefined;
 
   return {
-    ageGroups: ageGroup ? [ageGroup] : undefined,
+    ageGroups: ageGroupList.length ? ageGroupList : undefined,
     gender: filters.gender,
     healthConcernMajorCategories: healthConcernMajorCategory
       ? [healthConcernMajorCategory]
@@ -117,29 +113,26 @@ export const toRankingFilterRequestOptions = (
 export const getRankingFiltersFromSearchParams = (
   searchParams: URLSearchParams,
 ): RankingFilterState => {
-  const ageGroup = searchParams.get('ageGroups');
+  const ageGroupList = (searchParams.get('ageGroups') ?? '').split(',').filter(isRankingAgeGroup);
   const gender = searchParams.get('gender');
   const healthConcernMajorCategory = searchParams.get('healthConcernMajorCategories');
   const ingredientIds = (searchParams.get('ingredientIds') ?? '')
     .split(',')
     .map(Number)
     .filter((ingredientId) => Number.isInteger(ingredientId) && ingredientId > 0);
-  const ageOption =
-    ageGroup && isRankingAgeGroup(ageGroup) ? AGE_OPTION_BY_GROUP[ageGroup] : undefined;
+  const ageGroups = [...new Set(ageGroupList)].map((ageGroup) => AGE_OPTION_BY_GROUP[ageGroup]);
   const healthConcernOption =
     healthConcernMajorCategory && isHealthConcernMajorCategory(healthConcernMajorCategory)
       ? HEALTH_OPTION_BY_CATEGORY[healthConcernMajorCategory]
       : undefined;
 
-  const nextAgeGroup: AgeFilter =
-    ageOption && isAgeFilter(ageOption) ? ageOption : DEFAULT_RANKING_FILTERS.ageGroup;
   const nextHealthConcern: HealthConcernFilter =
     healthConcernOption && isHealthConcernFilter(healthConcernOption)
       ? healthConcernOption
       : DEFAULT_RANKING_FILTERS.healthConcern;
 
   return {
-    ageGroup: nextAgeGroup,
+    ageGroups,
     gender: gender === 'MALE' || gender === 'FEMALE' ? gender : DEFAULT_RANKING_FILTERS.gender,
     certification:
       searchParams.get('mfdsCertified') === 'true'

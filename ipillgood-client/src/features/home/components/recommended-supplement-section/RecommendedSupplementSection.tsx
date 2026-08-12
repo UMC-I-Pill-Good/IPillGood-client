@@ -34,7 +34,7 @@ const RecommendedSupplementSection = () => {
   return (
     <section className='flex flex-col gap-2 mt-8' ref={sectionRef}>
       <article className='flex justify-between items-center'>
-        <h2 className='text-black typo-body-5'>정기 추천 영양 성분</h2>
+        <h2 className='text-black typo-title-gosanja text-[18px]'>정기 추천 영양 성분</h2>
         <Link
           href='/survey'
           className='flex items-center text-neutral-800 h-8 typo-caption-6 px-3 rounded-full bg-linear-[145deg] from-white via-white/40 to-white/10 shadow-[0px_4px_4px_0px_rgba(126,131,135,0.10),inset_-2px_-3px_3px_-1px_rgba(0,0,0,0.03)] border-white border transition hover:from-white/10 hover:via-white/40 hover:to-white'
@@ -45,8 +45,8 @@ const RecommendedSupplementSection = () => {
       {/* 설문 기반 영양 상태 요약 */}
       <SurveySummaryCard healthSummary={recommendation?.healthSummary ?? ''} />
       <article className='mt-2'>
-        <p className='text-black typo-caption-1'>
-          <span className='text-primary-700 typo-body-9'>{nickname} 님</span>께 아래 영양 성분들을
+        <p className='text-black typo-title-gosanja text-[14px] leading-5'>
+          <span className='text-primary-700 text-[18px]'>{nickname} 님</span>께 아래 영양 성분들을
           추천드릴게요!
         </p>
         <p className='text-neutral-800 typo-caption-6'>

@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { FetchError } from '@/shared/components';
+
 import { useDashboardListQuery } from '../hooks/useDashboardListQuery';
 import type { DashboardTableType } from '../types/Dashboard';
 import DashboardSectionHeader from './DashboardSectionHeader';
@@ -28,20 +30,21 @@ const DashboardListSection = ({
     <section aria-busy={dashboardListQuery.isPending} className='flex flex-col gap-2'>
       <DashboardSectionHeader title={title} href={href} />
       {dashboardListQuery.isPending && (
-        <div
+        <p
           role='status'
-          aria-label={`${title} 불러오는 중`}
-          className='mx-10 h-[320px] animate-pulse rounded-[20px] bg-secondary-100'
+          className='mx-10 flex h-[320px] items-center justify-center text-lg text-neutral'
         >
-          <span className='sr-only'>{title} 목록을 불러오는 중입니다.</span>
-        </div>
-      )}
-      {dashboardListQuery.isError && (
-        <p role='alert' className='px-10 text-sm text-semantic-500'>
-          목록을 불러오지 못했습니다.
+          {title} 목록을 불러오는 중입니다.
         </p>
       )}
-      {!dashboardListQuery.isPending && (
+      {dashboardListQuery.isError && (
+        <FetchError
+          description={`${title} 목록을 불러오지 못했습니다.`}
+          onRetry={() => void dashboardListQuery.refetch()}
+          className='mx-10 h-[320px] min-h-0'
+        />
+      )}
+      {!dashboardListQuery.isPending && !dashboardListQuery.isError && (
         <DashboardTable
           tableType={tableType}
           reviewList={reviewList}

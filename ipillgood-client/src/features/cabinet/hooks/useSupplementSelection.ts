@@ -7,5 +7,5 @@ export const useSupplementSelection = () => {
     setSelectedIds((prev) => (prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]));
   };
 
-  return { selectedIds, toggle };
+  return { selectedIds, setSelectedIds, toggle };
 };

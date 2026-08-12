@@ -75,8 +75,8 @@ const AnalysisResultContainer = () => {
     <main className='flex flex-1 min-h-screen flex-col py-4 px-5'>
       <section className='flex flex-col items-center justify-center mt-18 py-4'>
         <CheckCircleIcon />
-        <h5 className='typo-body-1 mt-5'>설문이 완료되었어요!</h5>
-        <h5 className='typo-body-1 mt-2 text-center leading-6!'>
+        <h5 className='typo-body-4 typo-title-gosanja mt-5'>설문이 완료되었어요!</h5>
+        <h5 className='typo-body-4 typo-title-gosanja mt-2 text-center leading-6!'>
           <span className='text-primary'>{myInfoData?.result.nickname} 님</span>에게 딱 맞는 영양
           성분을 추천드려요
         </h5>
