@@ -83,11 +83,11 @@ const ProductPurchaseSection = ({ productId }: ProductPurchaseSectionProps) => {
     <>
       <section className='w-full'>
         <div className='flex aspect-[353/99] min-h-[99px] w-full flex-col items-center justify-center gap-2 rounded-[20px] bg-white p-3 shadow-[0_4px_2px_rgba(126,131,135,0.1)]'>
-          <div className='flex w-full max-w-[253px] items-center gap-2 text-neutral-800'>
+          <div className='flex w-[77%] items-center gap-2 text-neutral-800'>
             <span className='flex size-[25px] shrink-0 items-center justify-center rounded-full bg-primary-200 text-primary-600'>
               <DetailInfoIcon aria-hidden='true' className='h-[15px] w-1' />
             </span>
-            <p className='w-[179px] shrink-0 typo-caption-6 leading-[12.5px] not-italic text-neutral'>
+            <p className='min-w-0 w-[179px] shrink typo-caption-6 leading-3 not-italic text-neutral'>
               질병 치료 및 의약품을 복용 중이라면
               <br />
               의사 상담 후 섭취를 추천드려요.

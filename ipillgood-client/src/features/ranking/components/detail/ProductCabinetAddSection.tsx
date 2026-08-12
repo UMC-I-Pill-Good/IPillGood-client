@@ -41,11 +41,11 @@ const ProductCabinetAddSection = ({ productId }: ProductCabinetAddSectionProps) 
   return (
     <section className='w-full'>
       <div className='flex aspect-[353/99] min-h-[99px] w-full flex-col items-center justify-center gap-2 rounded-[20px] bg-white p-3 shadow-[0_4px_2px_rgba(126,131,135,0.1)]'>
-        <div className='flex w-full max-w-[253px] items-center gap-2 text-neutral-800'>
+        <div className='flex w-[77%] items-center gap-2 text-neutral-800'>
           <span className='flex size-[25px] shrink-0 items-center justify-center rounded-full bg-secondary-200 text-secondary-600'>
             <DetailCabinetIcon aria-hidden='true' className='size-[11px]' />
           </span>
-          <p className='w-[179px] shrink-0 typo-caption-6 leading-[12.5px] not-italic text-neutral'>
+          <p className='min-w-0 w-[179px] shrink typo-caption-6 leading-3 not-italic text-neutral'>
             해당 영양제를 이미 드시고 계신가요? 그렇다면 캐비닛에 추가해 보세요!
           </p>
         </div>
