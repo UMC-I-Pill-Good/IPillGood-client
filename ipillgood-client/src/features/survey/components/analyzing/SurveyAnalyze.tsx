@@ -82,7 +82,10 @@ const SurveyAnalyze = () => {
         <motion.p variants={item} className='text-primary-700 typo-body-10 mb-16'>
           Pill Good? Feel Good!!
         </motion.p>
-        <motion.p variants={item} className='typo-subtitle-4 text-center text-white mb-4'>
+        <motion.p
+          variants={item}
+          className='typo-subtitle-6 text-center typo-title-gosanja text-white mb-4'
+        >
           <span className='block leading-normal'>
             <span className='text-primary-700'>{myInfoData?.result.nickname} 님</span>에게 딱 맞는
             영양제를

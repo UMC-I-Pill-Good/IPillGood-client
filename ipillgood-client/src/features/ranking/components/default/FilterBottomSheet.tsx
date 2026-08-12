@@ -1,8 +1,7 @@
 'use client';
 
+import { BottomSheet, TextButton } from '@/shared/components';
 import { cn } from '@/shared/utils/cn';
-import TextButton from '../button/TextButton';
-import BottomSheet from './BottomSheet';
 
 type FilterBottomSheetOption = {
   label: string;

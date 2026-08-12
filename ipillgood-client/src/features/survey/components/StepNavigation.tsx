@@ -6,6 +6,7 @@ import { ChevronLeft, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useLocalStorage } from '@/shared/hooks';
+import { showToast } from '@/shared/utils';
 import { useResetSurvey } from '../hooks/useResetSurvey';
 
 interface StepNavigationProps {
@@ -64,6 +65,7 @@ const StepNavigation = ({ step, onBack }: StepNavigationProps) => {
           onCancel={() => setIsOpenModal(false)}
           onConfirm={() => {
             resetSurvey();
+            showToast.success('설문이 초기화되었습니다.');
             router.push('/survey');
             setIsOpenModal(false);
           }}

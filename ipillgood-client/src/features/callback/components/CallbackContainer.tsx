@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { postReissue } from '@/app/api/reissue';
 import { useLocalStorage } from '@/shared/hooks';
+import { showToast } from '@/shared/utils';
 import CallbackLoading from '@/app/(public)/callback/ui/CallbackLoading';
 
 const CallbackContainer = () => {
@@ -51,9 +52,15 @@ const CallbackContainer = () => {
 
         setTokens(accessToken);
         setOnboardingCompleted(onboardingCompleted);
+        showToast.success('로그인에 성공했어요!');
         router.replace(onboardingCompleted ? '/home' : '/survey?step=1');
       } catch (error) {
         console.error('소셜 로그인 토큰 재발급 실패:', error);
+        showToast.error(
+          provider === 'kakao'
+            ? '카카오 로그인에 실패했어요. 다시 시도해 주세요.'
+            : '네이버 로그인에 실패했어요. 다시 시도해 주세요.',
+        );
         router.replace('/login');
       }
     };

@@ -17,7 +17,6 @@ interface AddIntakeProductsParams {
 export const useAddIntakeProducts = () => {
   const [conflicts, setConflicts] = useState<IntakeConflict[]>([]);
   const [pendingAddParams, setPendingAddParams] = useState<AddIntakeProductsParams | null>(null);
-  const [isReAdditionWarningModalOpen, setIsReAdditionWarningModalOpen] = useState(false);
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -59,11 +58,11 @@ export const useAddIntakeProducts = () => {
         : undefined;
 
       if (errorData?.code === 'INTAKE409_3') {
-        setIsReAdditionWarningModalOpen(true);
+        showToast.error('오늘 재추가할 수 없어요');
         return;
       }
 
-      alert(errorData?.message ?? '병용 금기 여부를 확인하지 못했어요.');
+      showToast.error(errorData?.message ?? '병용 금기 여부를 확인하지 못했어요.');
     },
   });
 
@@ -77,12 +76,12 @@ export const useAddIntakeProducts = () => {
 
         if (failedResponse) {
           if (failedResponse.code === 'INTAKE409_3') {
-            setIsReAdditionWarningModalOpen(true);
+            showToast.error('오늘 재추가할 수 없어요');
             onCheckComplete();
             return;
           }
 
-          alert(failedResponse.message ?? '병용 금기 여부를 확인하지 못했어요.');
+          showToast.error(failedResponse.message ?? '병용 금기 여부를 확인하지 못했어요.');
           onCheckComplete();
           return;
         }
@@ -99,7 +98,7 @@ export const useAddIntakeProducts = () => {
         }
 
         if (detectedConflicts.length === 0) {
-          alert('병용 금기 정보를 불러오지 못했어요.');
+          showToast.error('병용 금기 정보를 불러오지 못했어요.');
           onCheckComplete();
           return;
         }
@@ -123,18 +122,12 @@ export const useAddIntakeProducts = () => {
     setPendingAddParams(null);
   };
 
-  const closeReAdditionWarningModal = () => {
-    setIsReAdditionWarningModalOpen(false);
-  };
-
   return {
     conflicts,
     isWarningModalOpen: pendingAddParams !== null,
-    isReAdditionWarningModalOpen,
     isPending: addIntakeProductsMutation.isPending || intakeConflictMutation.isPending,
     checkConflictsAndAdd,
     confirmAdd,
     cancelAdd,
-    closeReAdditionWarningModal,
   };
 };

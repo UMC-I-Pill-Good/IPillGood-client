@@ -29,7 +29,7 @@ const LinkConnectionModal = ({
         <p className='text-center typo-body-1 mb-2 text-black'>이미 가입된 계정이 있어요</p>
         <p className='text-center typo-body-10 text-neutral-800 leading-6!'>
           이미 해당 이메일로 가입된 계정이 있어요. <br />
-          기존 계정의 <span className='text-primary-600 typo-body-5'>[{providerName}] </span>
+          기존 계정에 <span className='text-primary-600 typo-body-5'>[{providerName}] </span>
           로그인을
           <br /> 연동하시겠어요?
         </p>
