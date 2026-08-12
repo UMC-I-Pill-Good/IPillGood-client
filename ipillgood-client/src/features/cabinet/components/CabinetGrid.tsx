@@ -11,6 +11,7 @@ import {
   SupplementDetailBottomSheet,
 } from '@/shared/components';
 import { useCabinetProductsQuery, useReviewPrompt } from '../hooks';
+import clsx from 'clsx';
 
 interface CabinetGridProps {
   mode: 'default' | 'add' | 'delete';
@@ -96,7 +97,11 @@ const CabinetGrid = ({ mode, onAddSelectionChange, onDeleteSelectionChange }: Ca
     }
   };
 
-  const slots = Array.from({ length: MAX_COUNT }, (_, index) => products[index]);
+  const slots =
+    products.length > MAX_COUNT
+      ? products
+      : Array.from({ length: MAX_COUNT }, (_, index) => products[index]);
+  const hasOverflowProducts = products.length >= MAX_COUNT;
 
   if (isPending) return <LoadingSpinner />;
 
@@ -108,7 +113,12 @@ const CabinetGrid = ({ mode, onAddSelectionChange, onDeleteSelectionChange }: Ca
 
   return (
     <>
-      <section className='no-center-glass mx-5 grid grid-cols-3 gap-4 rounded-[20px] bg-white/20 px-5 py-4 shadow-[4px_4px_20px_rgba(155,161,255,0.3),inset_4px_4px_4px_rgba(255,255,255,0.2)]'>
+      <section
+        className={clsx(
+          'no-center-glass mx-5 grid grid-cols-3 gap-4 rounded-[20px] bg-white/20 px-5 py-4 shadow-[4px_4px_20px_rgba(155,161,255,0.3),inset_4px_4px_4px_rgba(255,255,255,0.2)]',
+          hasOverflowProducts && 'max-h-120 overflow-y-auto thin-scrollbar',
+        )}
+      >
         {slots.map((item, index) =>
           item ? (
             <CabinetCard
@@ -123,6 +133,9 @@ const CabinetGrid = ({ mode, onAddSelectionChange, onDeleteSelectionChange }: Ca
           ) : (
             <EmptyCabinetCard key={`empty-${index}`} mode={mode} />
           ),
+        )}
+        {mode === 'default' && hasOverflowProducts && (
+          <EmptyCabinetCard key='overflow-add' mode={mode} showAddButton />
         )}
       </section>
 
