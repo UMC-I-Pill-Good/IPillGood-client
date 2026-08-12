@@ -13,7 +13,7 @@ export const HEALTH_CONCERN_ROWS = [
 ] as const;
 
 export const DEFAULT_RANKING_FILTERS: RankingFilterState = {
-  ageGroup: '전체',
+  ageGroups: [],
   gender: undefined,
   certification: 'ALL',
   healthConcern: null,

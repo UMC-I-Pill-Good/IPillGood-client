@@ -7,6 +7,8 @@ import { postLogin } from '../api/login';
 import { useRouter } from 'next/navigation';
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
 import { TextButton } from '@/shared/components';
+import { isAdminAccessToken } from '@/shared/utils/authToken';
+import { showToast } from '@/shared/utils';
 
 const LoginForm = () => {
   const router = useRouter();
@@ -24,6 +26,12 @@ const LoginForm = () => {
 
       setTokens(accessToken);
       setOnboardingCompleted(onboardingCompleted);
+      showToast.success('로그인에 성공했어요!');
+
+      if (isAdminAccessToken(accessToken)) {
+        router.push('/admin');
+        return;
+      }
 
       if (onboardingCompleted) {
         router.push('/home');
@@ -33,7 +41,7 @@ const LoginForm = () => {
     },
     onError: (error) => {
       console.error('로그인 실패:', error instanceof Error ? error.message : '알 수 없는 오류');
-      alert('아이디 또는 비밀번호를 확인해주세요.');
+      showToast.error('아이디 또는 비밀번호를 확인해주세요.');
     },
   });
 
@@ -42,7 +50,7 @@ const LoginForm = () => {
     e.preventDefault();
 
     if (!isValid) {
-      alert('아이디와 비밀번호를 입력해주세요.');
+      showToast.error('아이디와 비밀번호를 입력해주세요.');
       return;
     }
 

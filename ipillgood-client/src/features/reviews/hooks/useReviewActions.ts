@@ -1,16 +1,21 @@
 import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { TOAST_MESSAGES } from '@/shared/constants/toastMessages';
+import { showToast } from '@/shared/utils';
 import { createReviewReport } from '../api/createReviewReport';
 import { deleteReview } from '../api/deleteReview';
 import { updateReviewHelpful } from '../api/updateReviewHelpful';
 import type { RankingReviewItem, ReviewReportReason } from '../types/review';
 import { getReviewErrorMessage } from '../utils/reviewError';
+import { invalidateReviewQueries } from '../utils/invalidateReviewQueries';
 
 type UseReviewActionsParams = {
   review: RankingReviewItem;
-  onDeleteSuccess: () => void;
+  productId: number;
 };
 
-export const useReviewActions = ({ review, onDeleteSuccess }: UseReviewActionsParams) => {
+export const useReviewActions = ({ review, productId }: UseReviewActionsParams) => {
+  const queryClient = useQueryClient();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const [isHelpful, setIsHelpful] = useState(review.helpedByMe);
@@ -49,11 +54,12 @@ export const useReviewActions = ({ review, onDeleteSuccess }: UseReviewActionsPa
       if (!response.isSuccess || !response.result?.deleted) {
         throw new Error(response.message);
       }
+      await invalidateReviewQueries(queryClient, productId);
       setIsDeleteModalOpen(false);
-      onDeleteSuccess();
-    } catch (error) {
+      showToast.success(TOAST_MESSAGES.REVIEW_DELETED);
+    } catch {
       setIsDeleteModalOpen(false);
-      setActionError(getReviewErrorMessage(error, '후기를 삭제할 수 없습니다.'));
+      showToast.error(TOAST_MESSAGES.REVIEW_DELETE_FAILED);
     } finally {
       setIsDeleting(false);
     }
@@ -73,9 +79,10 @@ export const useReviewActions = ({ review, onDeleteSuccess }: UseReviewActionsPa
         throw new Error(response.message);
       }
       setIsReportModalOpen(false);
-    } catch (error) {
+      showToast.success(TOAST_MESSAGES.REPORT_SUBMITTED);
+    } catch {
       setIsReportModalOpen(false);
-      setActionError(getReviewErrorMessage(error, '후기를 신고할 수 없습니다.'));
+      showToast.error(TOAST_MESSAGES.REPORT_SUBMIT_FAILED);
     } finally {
       setIsReporting(false);
     }

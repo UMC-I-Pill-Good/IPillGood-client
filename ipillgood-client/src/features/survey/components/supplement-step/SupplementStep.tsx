@@ -8,6 +8,7 @@ import {
   SelectionCard,
   TextButton,
 } from '@/shared/components';
+import { showToast } from '@/shared/utils';
 import { StepHeader } from '@/shared/layout';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -70,7 +71,7 @@ const SupplementStep = () => {
         router.push(`/survey/analyzing?recommendationId=${data.result.recommendationId}`);
       },
       onError: () => {
-        alert('필수 입력값이 입력되지 않았습니다. 설문을 처음부터 다시 진행해주세요.');
+        showToast.error('설문 저장에 실패했어요. 다시 시도해 주세요.');
         resetSurvey.resetSurvey();
         router.replace('/survey');
       },

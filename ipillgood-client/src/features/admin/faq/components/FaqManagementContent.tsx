@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { isAxiosError } from 'axios';
 
 import { showToast } from '@/shared/utils/toast';
+import { FetchError } from '@/shared/components';
 
 import {
   FAQ_CATEGORY_API_MAP,
@@ -116,23 +117,32 @@ const FaqManagementContent = () => {
         onSearch={handleSearch}
         onCategoryChange={handleCategoryChange}
       />
-      {faqListQuery.isError && (
-        <p role='alert' className='px-10 pb-2 text-sm text-semantic-500'>
-          FAQ 목록을 불러오지 못했습니다.
-        </p>
-      )}
-      <div aria-busy={faqListQuery.isPending} className='flex min-h-0 flex-1 flex-col'>
-        <FaqListControls
-          faqList={faqList}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          onCreate={handleCreate}
-          onUpdate={handleUpdate}
-          onDelete={handleDelete}
-          isSubmitting={isSubmitting}
-        />
-      </div>
+      <section aria-label='FAQ 목록' className='flex min-h-0 flex-1 flex-col pb-2'>
+        {faqListQuery.isPending && (
+          <p role='status' className='flex flex-1 items-center justify-center text-lg text-neutral'>
+            FAQ 목록을 불러오는 중입니다.
+          </p>
+        )}
+        {faqListQuery.isError && (
+          <FetchError
+            description='FAQ 목록을 불러오지 못했습니다.'
+            onRetry={() => void faqListQuery.refetch()}
+            className='min-h-0 flex-1'
+          />
+        )}
+        {!faqListQuery.isPending && !faqListQuery.isError && (
+          <FaqListControls
+            faqList={faqList}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+            onCreate={handleCreate}
+            onUpdate={handleUpdate}
+            onDelete={handleDelete}
+            isSubmitting={isSubmitting}
+          />
+        )}
+      </section>
     </main>
   );
 };

@@ -1,6 +1,5 @@
 'use client';
 
-import { FilterBottomSheet } from '@/shared/components';
 import {
   AGE_OPTIONS,
   CERTIFICATION_OPTIONS,
@@ -9,7 +8,7 @@ import {
 } from '../../constants/rankingFilter';
 import type { CertificationFilter, RankingFilterState } from '../../types/rankingFilter';
 import { genderToOption, optionToGender } from '../../utils/rankingFilterQuery';
-import { FilterBottomSheetGroup } from '@/shared/components/modal/FilterBottomSheet';
+import FilterBottomSheet, { FilterBottomSheetGroup } from './FilterBottomSheet';
 
 const certificationToOption = (certification: CertificationFilter) =>
   certification === 'CERTIFIED_ONLY' ? '인증 제품만' : '전체';
@@ -42,13 +41,30 @@ const RankingFilterBottomSheet = ({
     });
   };
 
+  const updateAgeGroups = (option: (typeof AGE_OPTIONS)[number]) => {
+    if (option === '전체') {
+      updateDraftFilters({ ageGroups: [] });
+      return;
+    }
+
+    const isSelected = draftFilters.ageGroups.includes(option);
+    updateDraftFilters({
+      ageGroups: isSelected
+        ? draftFilters.ageGroups.filter((ageGroup) => ageGroup !== option)
+        : [...draftFilters.ageGroups, option],
+    });
+  };
+
   const groups: FilterBottomSheetGroup[] = [
     {
       title: '연령대',
       options: AGE_OPTIONS.map((option) => ({
         label: option,
-        isSelected: draftFilters.ageGroup === option,
-        onClick: () => updateDraftFilters({ ageGroup: option }),
+        isSelected:
+          option === '전체'
+            ? draftFilters.ageGroups.length === 0
+            : draftFilters.ageGroups.includes(option),
+        onClick: () => updateAgeGroups(option),
       })),
     },
     {

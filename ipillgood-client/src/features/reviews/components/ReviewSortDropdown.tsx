@@ -1,10 +1,10 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { DropdownIcon } from '@/assets';
 import { useEscapeKey, useOutsideClick } from '@/shared/hooks';
 import type { ReviewSort } from '../types/review';
 import DropdownOptionMenu from '@/features/ranking/components/default/DropdownOptionMenu';
+import { ChevronDown } from 'lucide-react';
 
 interface ReviewSortDropdownProps {
   sort: ReviewSort;
@@ -35,7 +35,10 @@ const ReviewSortDropdown = ({ sort, onChange }: ReviewSortDropdownProps) => {
         onClick={() => setIsOpen((open) => !open)}
       >
         <span>{SORT_LABELS[sort]}</span>
-        <DropdownIcon aria-hidden='true' className='size-6' />
+        <ChevronDown
+          aria-hidden='true'
+          className={`size-6 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+        />
       </button>
       {isOpen && (
         <DropdownOptionMenu

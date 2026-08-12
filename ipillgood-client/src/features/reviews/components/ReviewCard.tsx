@@ -10,12 +10,11 @@ import ReviewCardContent from './ReviewCardContent';
 interface ReviewCardProps {
   review: RankingReviewItem;
   productId: number;
-  onDelete: () => void;
 }
 
-const ReviewCard = ({ review, productId, onDelete }: ReviewCardProps) => {
+const ReviewCard = ({ review, productId }: ReviewCardProps) => {
   const router = useRouter();
-  const reviewActions = useReviewActions({ review, onDeleteSuccess: onDelete });
+  const reviewActions = useReviewActions({ review, productId });
 
   return (
     <>

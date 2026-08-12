@@ -7,8 +7,10 @@ interface SupplementCombinationSectionProps {
 
 const SupplementCombinationSection = ({ compatibility }: SupplementCombinationSectionProps) => (
   <section className='flex w-full flex-col gap-1.5 px-5 pb-2.5 pt-4'>
-    <div className='flex flex-col gap-1'>
-      <h2 className='typo-body-5 text-black'>내 영양제와 궁합</h2>
+    <div className='flex flex-col'>
+      <h2 className='typo-title-gosanja text-[18px] font-normal leading-normal text-black'>
+        내 영양제와 궁합
+      </h2>
       <p className='typo-caption-6 text-neutral-800'>
         보유 중인 영양제 {compatibility.ownedProductCount}개 기준
       </p>

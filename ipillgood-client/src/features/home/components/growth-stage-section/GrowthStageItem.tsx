@@ -37,7 +37,11 @@ const GrowthStageItem = ({ stage, status }: GrowthStageItemProps) => {
           <span className='text-point-900'>{dayRangeText}</span>
           <div className='h-5.25 mt-1'>
             {status === 'CURRENT' && (
-              <Chip variant='point' className='px-[7.5px] h-full' text='현재 단계' />
+              <Chip
+                variant='point'
+                className='px-[7.5px] h-full whitespace-nowrap'
+                text='현재 단계'
+              />
             )}
           </div>
         </div>

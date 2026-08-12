@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useLocalStorage } from '@/shared/hooks';
 import { postKakaoLink, postNaverLink } from '../api/socialLogin';
+import { showToast } from '@/shared/utils';
 
 type SocialProvider = 'kakao' | 'naver';
 
@@ -35,11 +36,11 @@ export const useSocialAccountLinkMutation = () => {
       sessionStorage.removeItem('accountLinkProvider');
       setTokens(result.accessToken);
       setOnboardingCompleted(result.onboardingCompleted);
+      showToast.success('계정이 연동됐어요!');
       router.replace(result.onboardingCompleted ? '/home' : '/survey?step=1');
     },
-    onError: (error) => {
-      console.error('소셜 계정 연동 실패:', error);
-      alert('계정 연동에 실패했습니다. 다시 시도해주세요.');
+    onError: () => {
+      showToast.error('계정 연동에 실패했어요. 다시 시도해 주세요.');
     },
   });
 

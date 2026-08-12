@@ -8,6 +8,7 @@ import { Header } from '@/shared/layout';
 import { getRankingProductDetail } from '@/features/ranking/api/getRankingProductDetail';
 import SupplementDetailSummaryCard from '@/features/ranking/components/detail/SupplementDetailSummaryCard';
 import { getProductReviews } from '../api/getProductReviews';
+import { reviewQueryKeys } from '../constants/reviewQueryKeys';
 import type { ReviewSort } from '../types/review';
 import ReviewCard from './ReviewCard';
 import ReviewSortDropdown from './ReviewSortDropdown';
@@ -19,7 +20,7 @@ interface ReviewListProps {
 const ReviewList = ({ productId }: ReviewListProps) => {
   const [sort, setSort] = useState<ReviewSort>('LATEST');
   const productQuery = useQuery({
-    queryKey: ['review-product', productId],
+    queryKey: reviewQueryKeys.product(productId),
     queryFn: async () => {
       const response = await getRankingProductDetail(productId);
       if (!response.isSuccess || !response.result) {
@@ -29,7 +30,7 @@ const ReviewList = ({ productId }: ReviewListProps) => {
     },
   });
   const reviewQuery = useInfiniteQuery({
-    queryKey: ['product-reviews', productId, sort],
+    queryKey: [...reviewQueryKeys.productReviews(productId), sort],
     queryFn: async ({ pageParam }) => {
       const response = await getProductReviews({ productId, sort, size: 20, cursor: pageParam });
       if (!response.isSuccess || !response.result) {
@@ -65,7 +66,7 @@ const ReviewList = ({ productId }: ReviewListProps) => {
       {productQuery.data && reviewQuery.data && (
         <section className='flex flex-col gap-2 px-5 py-4'>
           <div className='flex items-center justify-between'>
-            <h2 className='typo-body-5 text-black'>
+            <h2 className='typo-title-gosanja text-[18px] font-normal leading-normal text-black'>
               전체 후기 <span className='typo-caption-6 text-neutral-800'>{reviewCount}개</span>
             </h2>
             <ReviewSortDropdown sort={sort} onChange={setSort} />
@@ -78,12 +79,7 @@ const ReviewList = ({ productId }: ReviewListProps) => {
           ) : (
             <div className='flex flex-col gap-2'>
               {reviewList.map((review) => (
-                <ReviewCard
-                  key={review.reviewId}
-                  review={review}
-                  productId={productId}
-                  onDelete={() => void reviewQuery.refetch()}
-                />
+                <ReviewCard key={review.reviewId} review={review} productId={productId} />
               ))}
               {reviewQuery.isFetchNextPageError ? (
                 <LoadMoreError

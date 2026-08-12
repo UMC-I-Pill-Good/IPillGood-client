@@ -25,6 +25,14 @@ const pretendard = localFont({
   variable: '--font-pretendard',
 });
 
+const gosanja = localFont({
+  src: '../assets/fonts/Gosanja.woff2',
+  display: 'swap',
+  weight: '400',
+  variable: '--font-gosanja',
+  preload: true,
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -32,7 +40,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ko'>
-      <body className={`${pretendard.variable} antialiased`}>
+      <body className={`${pretendard.variable} ${gosanja.variable} antialiased`}>
         <QueryProvider>
           <Toast />
           {children}

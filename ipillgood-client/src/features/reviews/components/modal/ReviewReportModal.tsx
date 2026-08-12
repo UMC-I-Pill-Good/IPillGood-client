@@ -29,7 +29,7 @@ const ReviewReportModal = ({ onCancel, onSubmit, isSubmitting }: ReviewReportMod
     <ModalShell
       onClose={onCancel}
       ariaLabel='후기 신고'
-      className='max-h-[calc(100dvh-2rem)] gap-4 overflow-y-auto border border-white !px-5 shadow-[4px_4px_20px_rgba(126,131,135,0.2)]'
+      className='w-[calc(100vw-2rem)]! max-w-77.5! max-h-[calc(100dvh-2rem)] gap-4 overflow-x-hidden overflow-y-auto border border-white px-5! shadow-[4px_4px_20px_rgba(126,131,135,0.2)]'
     >
       <h2 className='text-center typo-body-5 text-semantic-600'>신고하기</h2>
       <p className='text-center typo-caption-2 text-neutral-800'>
@@ -62,7 +62,7 @@ const ReviewReportModal = ({ onCancel, onSubmit, isSubmitting }: ReviewReportMod
           );
         })}
       </div>
-      <div className='relative w-67.5 self-center'>
+      <div className='relative w-full max-w-67.5 self-center'>
         <textarea
           value={content}
           maxLength={200}
@@ -70,23 +70,23 @@ const ReviewReportModal = ({ onCancel, onSubmit, isSubmitting }: ReviewReportMod
           placeholder='추가 내용을 입력해 주세요 (선택사항)'
           className='h-35.5 w-full resize-none rounded-lg border border-neutral-800 p-2 typo-caption-6 text-black outline-none placeholder:text-neutral-800'
         />
-        <span className='absolute bottom-3 right-3 typo-caption-7 text-neutral-800'>
+        <span className='pointer-events-none absolute bottom-3 right-3 typo-caption-7 text-neutral-800'>
           {content.length}/200
         </span>
       </div>
-      <div className='flex w-65.25 items-center justify-center gap-3 self-center'>
+      <div className='flex w-full max-w-65.25 items-center justify-center gap-3 self-center'>
         <TextButton
           text='취소'
           variant='semanticOutline'
           size='sm'
-          className='w-31'
+          className='min-w-0 flex-1'
           onClick={onCancel}
         />
         <TextButton
           text='신고하기'
           variant='semantic'
           size='sm'
-          className='w-31 shadow-[4px_4px_2px_rgba(0,0,0,0.15)]'
+          className='min-w-0 flex-1 shadow-[4px_4px_2px_rgba(0,0,0,0.15)]'
           disabled={!selectedReason || isSubmitting}
           onClick={() => selectedReason && onSubmit(selectedReason, content)}
         />

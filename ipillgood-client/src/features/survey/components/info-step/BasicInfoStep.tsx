@@ -8,6 +8,7 @@ import { TextButton } from '@/shared/components';
 import { useRouter } from 'next/navigation';
 import { useAtomValue } from 'jotai';
 import { genderAtom, selectedJobAtom, selectedDateAtom } from '@/features/survey/atoms/survey.atom';
+import { showToast } from '@/shared/utils';
 
 const BasicInfoStep = () => {
   const router = useRouter();
@@ -30,7 +31,7 @@ const BasicInfoStep = () => {
 
       // 미래 날짜 선택 시 경고 후 이동 중단
       if (selected > today) {
-        alert('마지막 생리 시작일은 오늘 이전 날짜로 선택해주세요.');
+        showToast.error('마지막 생리 시작일은 오늘 이전 날짜로 선택해주세요.');
         return;
       }
     }

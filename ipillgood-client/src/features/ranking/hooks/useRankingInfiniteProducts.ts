@@ -3,6 +3,7 @@
 import { useCallback } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getRanking } from '../api/getRanking';
+import { rankingQueryKeys } from '../constants/rankingQueryKeys';
 import type { RankingQueryParams } from '../types/ranking';
 
 const DEFAULT_PAGE_SIZE = 20;
@@ -17,7 +18,7 @@ const getErrorMessage = (error: unknown) =>
 
 export const useRankingInfiniteProducts = ({ queryParams }: UseRankingInfiniteProductsParams) => {
   const rankingQuery = useInfiniteQuery({
-    queryKey: ['rankingProducts', queryParams],
+    queryKey: [...rankingQueryKeys.products(), queryParams],
     queryFn: async ({ pageParam }) => {
       const response = await getRanking({
         ...queryParams,
@@ -42,6 +43,8 @@ export const useRankingInfiniteProducts = ({ queryParams }: UseRankingInfinitePr
   const message =
     rankingQuery.isError && !rankingQuery.data ? getErrorMessage(rankingQuery.error) : null;
   const loadMoreErrorMessage = isFetchNextPageError ? getErrorMessage(rankingQuery.error) : null;
+  const filterRequestErrorMessage =
+    rankingQuery.isError && !isFetchNextPageError ? getErrorMessage(rankingQuery.error) : null;
 
   const loadMore = useCallback(() => {
     if (!hasNextPage || isFetchingNextPage || isFetchNextPageError) return;
@@ -57,6 +60,8 @@ export const useRankingInfiniteProducts = ({ queryParams }: UseRankingInfinitePr
 
   return {
     hasNext: hasNextPage,
+    filterRequestErrorMessage,
+    isFilterRequestFetching: rankingQuery.isFetching && !isFetchingNextPage,
     isInitialLoading: rankingQuery.isPending,
     isLoadingMore: isFetchingNextPage,
     items,

@@ -40,7 +40,7 @@ const ReviewOptionsMenu = ({ reviewId, onEdit, onDelete }: ReviewOptionsMenuProp
         <div
           id={menuId}
           role='menu'
-          className='absolute bottom-8 right-0 z-10 flex h-24 w-20.25 flex-col items-start overflow-hidden rounded-lg border border-white bg-white/80 shadow-md backdrop-blur-[20px]'
+          className='absolute bottom-8 right-0 z-10 flex h-16 w-20.25 flex-col items-start overflow-hidden rounded-lg border border-white bg-white/80 shadow-md backdrop-blur-[20px]'
         >
           <button
             type='button'
@@ -57,14 +57,6 @@ const ReviewOptionsMenu = ({ reviewId, onEdit, onDelete }: ReviewOptionsMenuProp
             onClick={handleDelete}
           >
             후기 삭제
-          </button>
-          <button
-            type='button'
-            role='menuitem'
-            className='flex h-8 w-full items-center justify-center gap-1 px-2 typo-caption-2 text-neutral-800'
-            onClick={() => setIsMenuOpen(false)}
-          >
-            취소
           </button>
         </div>
       )}

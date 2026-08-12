@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { TextButton } from '@/shared/components';
+import { TOAST_MESSAGES } from '@/shared/constants/toastMessages';
 import { showToast } from '@/shared/utils/toast';
 
 import { getCautionCombinations } from '../../api/getCautionCombinations';
@@ -31,10 +32,16 @@ const ProductPurchaseSection = ({ productId }: ProductPurchaseSectionProps) => {
   const purchaseCheck = purchaseCheckQuery.data;
 
   const openPurchasePage = (purchaseUrl: string) => {
-    if (openedPurchaseProductIdRef.current === productId) return;
+    if (openedPurchaseProductIdRef.current === productId) return 'alreadyOpened' as const;
 
+    const purchaseWindow = window.open('about:blank', '_blank');
+    if (!purchaseWindow) return 'blocked' as const;
+
+    purchaseWindow.opener = null;
+    purchaseWindow.location.replace(purchaseUrl);
     openedPurchaseProductIdRef.current = productId;
-    window.open(purchaseUrl, '_blank', 'noopener,noreferrer');
+
+    return 'opened' as const;
   };
 
   const handlePurchaseClick = () => {
@@ -44,7 +51,10 @@ const ProductPurchaseSection = ({ productId }: ProductPurchaseSectionProps) => {
     }
 
     if (!purchaseCheck.hasConflict) {
-      openPurchasePage(purchaseCheck.purchaseUrl);
+      const purchasePageResult = openPurchasePage(purchaseCheck.purchaseUrl);
+      if (purchasePageResult === 'opened') {
+        showToast.success(TOAST_MESSAGES.CART_ADDED);
+      }
       return;
     }
 
@@ -59,8 +69,13 @@ const ProductPurchaseSection = ({ productId }: ProductPurchaseSectionProps) => {
   const handlePurchaseConfirm = () => {
     if (!purchaseCheck) return;
 
+    const purchasePageResult = openPurchasePage(purchaseCheck.purchaseUrl);
+    if (purchasePageResult === 'blocked') return;
+
     setIsWarningModalOpen(false);
-    openPurchasePage(purchaseCheck.purchaseUrl);
+    if (purchasePageResult === 'opened') {
+      showToast.success(TOAST_MESSAGES.CART_ADDED);
+    }
   };
 
   return (
