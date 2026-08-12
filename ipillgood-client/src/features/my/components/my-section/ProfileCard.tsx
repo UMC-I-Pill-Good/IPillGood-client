@@ -18,15 +18,15 @@ const ProfileCard = () => {
           )
         )}
       </div>
-      <div className='flex flex-col gap-1.75 justify-center'>
+      <div className='flex min-w-0 flex-col justify-center gap-1.75'>
         {isLoading ? (
           <div className='w-16 h-4 rounded animate-pulse bg-primary-300' />
         ) : (
-          <p className='text-black typo-body-2'>{data?.nickname ?? '회원'}</p>
+          <p className='truncate text-black typo-body-2'>{data?.nickname ?? '회원'}</p>
         )}
         <Link
           href='/my/profile'
-          className='rounded-full px-5 py-[9.5px] bg-primary-600 hover:bg-primary-700 active:bg-primary-800 typo-caption-2 transition-colors duration-200 text-white shadow-[4px_4px_15px_0px_rgba(0,0,0,0.10)]'
+          className='self-start whitespace-nowrap rounded-full bg-primary-600 px-5 py-[9.5px] text-white shadow-[4px_4px_15px_0px_rgba(0,0,0,0.10)] transition-colors duration-200 hover:bg-primary-700 active:bg-primary-800 typo-caption-2'
         >
           프로필 관리
         </Link>

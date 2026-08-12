@@ -24,6 +24,7 @@ import { deleteActiveProduct } from '@/features/home/api/intake';
 import { intakeTodayQueryKey } from '@/features/home/hooks/useIntakeToday';
 import { postIntakeProduct } from '@/features/cabinet/api/intake';
 import { showToast } from '@/shared/utils';
+import { isAxiosError } from 'axios';
 
 interface SupplementDetailBottomSheetProps {
   open: boolean;
@@ -50,6 +51,7 @@ const SupplementDetailBottomSheet = ({
   });
 
   const patchActiveProductMutation = usePatchIntakeProductMutation();
+
   const invalidateIntakeQueries = () => {
     queryClient.invalidateQueries({ queryKey: ['cabinetProducts'] });
     queryClient.invalidateQueries({ queryKey: ['activeProducts'] });
@@ -58,6 +60,7 @@ const SupplementDetailBottomSheet = ({
     queryClient.invalidateQueries({ queryKey: ['growthStage'] });
     queryClient.invalidateQueries({ queryKey: ['cabinetProductDetail'] });
   };
+
   const addActiveProductMutation = useMutation({
     mutationFn: ({ intakeTime, frequency }: { intakeTime: string; frequency: string }) =>
       postIntakeProduct({ memberProductId: memberProductId!, intakeTime, frequency }),
@@ -70,7 +73,15 @@ const SupplementDetailBottomSheet = ({
       invalidateIntakeQueries();
       showToast.success('섭취 중인 영양제에 추가됐어요.');
     },
-    onError: () => showToast.error('섭취 중인 영양제 추가에 실패했어요. 다시 시도해 주세요.'),
+    onError: (error) => {
+      const errorData = isAxiosError<{ code?: string; message?: string }>(error)
+        ? error.response?.data
+        : undefined;
+
+      showToast.error(
+        errorData?.message ?? '섭취 중인 영양제 추가에 실패했어요. 다시 시도해 주세요.',
+      );
+    },
   });
 
   const deleteActiveProductMutation = useMutation({
