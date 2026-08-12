@@ -19,8 +19,13 @@ export const useIntakeSupplement = () => {
   const deleteMutation = useMutation({
     mutationFn: deleteActiveProduct,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cabinetProducts'] });
       queryClient.invalidateQueries({ queryKey: ['activeProducts'] });
       queryClient.invalidateQueries({ queryKey: intakeTodayQueryKey });
+      queryClient.invalidateQueries({ queryKey: ['intakeCalendar'] });
+      queryClient.invalidateQueries({ queryKey: ['growthStage'] });
+      queryClient.invalidateQueries({ queryKey: ['cabinetProductDetail'] });
+
       showToast.success('섭취 중인 영양제에서 삭제됐어요.');
     },
     onError: () => {
