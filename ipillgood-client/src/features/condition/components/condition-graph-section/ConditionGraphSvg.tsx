@@ -26,6 +26,9 @@ const ConditionGraphSvg = ({
   onHoverPoint,
   onSelectPoint,
 }: ConditionGraphSvgProps) => {
+  const hoverCardWidth = 48;
+  const hoverCardHeight = 29;
+  const hoverCardPointGap = 16;
   const validPoints = graphPointList.filter((p) => p.score !== null);
   const firstValidPointIndex = graphPointList.findIndex((point) => point.score !== null);
   const leadingUncheckedPoints =
@@ -117,9 +120,54 @@ const ConditionGraphSvg = ({
         if (condition.score === null) return null;
 
         const isHighlighted = hoveredPointIndex === index || selectedPointIndex === index;
+        const isHovered = hoveredPointIndex === index;
+        const hoverCardX = condition.x - hoverCardWidth / 2;
+        const hoverCardY = condition.y - hoverCardHeight - hoverCardPointGap;
+        const hoverCardScore = Number(condition.score.toFixed(1));
 
         return (
           <g key={condition.weekLabel}>
+            {isHovered && (
+              <>
+                <line
+                  x1={condition.x}
+                  y1={hoverCardY + hoverCardHeight}
+                  x2={condition.x}
+                  y2={AXIS_BOTTOM}
+                  stroke='var(--color-neutral-400)'
+                  strokeWidth='1.5'
+                  pointerEvents='none'
+                />
+
+                <g pointerEvents='none'>
+                  <rect
+                    x={hoverCardX}
+                    y={hoverCardY}
+                    width={hoverCardWidth}
+                    height={hoverCardHeight}
+                    rx='8'
+                    fill='var(--color-primary-600)'
+                  />
+                  <text
+                    x={condition.x}
+                    y={hoverCardY + hoverCardHeight / 2}
+                    fill='var(--color-white)'
+                    fontFamily='Pretendard, sans-serif'
+                    fontSize='10'
+                    textAnchor='middle'
+                    dominantBaseline='middle'
+                  >
+                    <tspan x={condition.x} dy='-5' fontWeight='600'>
+                      {condition.weekLabel}
+                    </tspan>
+                    <tspan x={condition.x} dy='11' fontWeight='400'>
+                      {hoverCardScore}점
+                    </tspan>
+                  </text>
+                </g>
+              </>
+            )}
+
             <circle
               cx={condition.x}
               cy={condition.y}
