@@ -3,6 +3,7 @@ import {
   NavBar,
   PushPermissionWatcher,
   ForegroundMessageListener,
+  SupplementAddReturnStateGuard,
 } from '@/shared/layout';
 
 const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
@@ -11,6 +12,7 @@ const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
       <div className='mx-auto min-h-dvh w-full max-w-110 bg-background'>
         <PushPermissionWatcher />
         <ForegroundMessageListener />
+        <SupplementAddReturnStateGuard />
         {children}
         <NavBar />
       </div>

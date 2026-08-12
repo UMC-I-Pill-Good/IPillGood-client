@@ -155,7 +155,7 @@ const SupplementDetailBottomSheet = ({
             <p className='typo-caption-2 text-center mb-1'>{data.result.brand}</p>
             <p
               title={data.result.productName}
-              className='typo-subtitle-4 text-center truncate leading-tight!'
+              className='typo-subtitle-4 text-center leading-tight!'
             >
               {data.result.productName}
             </p>
@@ -170,22 +170,27 @@ const SupplementDetailBottomSheet = ({
               <BellIcon />
               <p className='typo-body-9 text-primary'>개별알림</p>
             </div>
-
-            <TextButton
-              type='button'
-              text={data.result.isActiveIntake ? '섭취 중인 영양제 삭제' : '섭취 중인 영양제 추가'}
-              size='sm'
-              className='px-3'
-              disabled={addActiveProductMutation.isPending || deleteActiveProductMutation.isPending}
-              onClick={() => {
-                if (data.result.isActiveIntake) {
-                  setIsDeleteConfirmModalOpen(true);
-                  return;
+            {isPushAlarmOn && (
+              <TextButton
+                type='button'
+                text={
+                  data.result.isActiveIntake ? '섭취 중인 영양제 삭제' : '섭취 중인 영양제 추가'
                 }
+                size='sm'
+                className='px-3'
+                disabled={
+                  addActiveProductMutation.isPending || deleteActiveProductMutation.isPending
+                }
+                onClick={() => {
+                  if (data.result.isActiveIntake) {
+                    setIsDeleteConfirmModalOpen(true);
+                    return;
+                  }
 
-                setIsOpenIntakeTimeModal(true);
-              }}
-            />
+                  setIsOpenIntakeTimeModal(true);
+                }}
+              />
+            )}
           </article>
 
           {!isPushAlarmOn ? (

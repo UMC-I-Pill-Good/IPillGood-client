@@ -58,10 +58,10 @@ const StepNavigation = ({ step, onBack }: StepNavigationProps) => {
         <ConfirmModal
           title={
             <span>
-              설문을 <span className='text-semantic'>중단</span>하시겠습니까?
+              설문을 <span className='text-semantic'>초기화</span>하시겠습니까?
             </span>
           }
-
+          content='아필굿의 맞춤 추천은 초기 설문 정보를 기반으로 만들어지기 때문에, 완료가 꼭 필요해요!'
           onCancel={() => setIsOpenModal(false)}
           onConfirm={() => {
             resetSurvey();
