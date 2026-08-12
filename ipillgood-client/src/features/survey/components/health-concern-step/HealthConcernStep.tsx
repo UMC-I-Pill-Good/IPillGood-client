@@ -31,7 +31,7 @@ const HealthConcernStep = () => {
         desc='관심 분야를 선택해주세요. (최대 3개 선택)'
       />
 
-      <div className='mt-2 grid grid-cols-4 gap-2'>
+      <div className='mt-2 grid grid-cols-4 gap-2 mb-8'>
         {healthConcernItems.map(({ id, label, icon }) => (
           <SelectionCard
             key={id}
