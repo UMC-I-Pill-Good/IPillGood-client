@@ -14,7 +14,7 @@ const ProfileCard = () => {
           <div className='w-full h-full animate-pulse bg-primary-200' />
         ) : (
           data?.profileImageUrl && (
-            <Image width={80} height={80} src={data.profileImageUrl} alt='프로필 사진' />
+            <Image width={80} height={80} src={data.profileImageUrl} alt='프로필 사진' preload />
           )
         )}
       </div>

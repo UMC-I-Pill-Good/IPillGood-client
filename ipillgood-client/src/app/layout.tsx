@@ -1,11 +1,20 @@
 import localFont from 'next/font/local';
 import './globals.css';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { QueryProvider } from '@/app/_providers/QueryProvider';
 import { Toast } from '@/shared/components';
 
 export const metadata: Metadata = {
   title: 'I Pill Good',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: '아필굿',
+  },
+  icons: {
+    apple: '/favicon.ico',
+  },
   description: '사용자 맞춤 영양제 추천 서비스',
 };
 
