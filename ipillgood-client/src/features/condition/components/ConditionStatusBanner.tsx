@@ -54,8 +54,8 @@ const ConditionStatusBanner = ({
           className={clsx(
             'relative flex w-full flex-col items-center rounded-2xl bg-primary-300 px-4 text-left shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
             currentWeekStatus.checkAvailable
-              ? 'justify-between pb-4 pt-3'
-              : 'h-[77px] justify-center py-4',
+              ? 'justify-between pb-4.5 pt-3.5'
+              : 'h-[77px] justify-center py-4.5',
           )}
         >
           <div className='mx-auto flex w-full min-w-0 shrink-0 flex-row items-center justify-center gap-1 pl-0 min-[400px]:gap-2 min-[400px]:pl-6'>

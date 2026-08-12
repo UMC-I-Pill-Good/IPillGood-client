@@ -31,23 +31,23 @@ const AdminPagination = ({
     { length: Math.max(0, endPage - startPage + 1) },
     (_, index) => startPage + index,
   );
-  const hasPreviousGroup = startPage > 1;
-  const hasNextGroup = endPage < normalizedTotalPages;
+  const hasPreviousPage = normalizedCurrentPage > 1;
+  const hasNextPage = normalizedCurrentPage < normalizedTotalPages;
 
-  const handlePreviousGroupClick = () => {
-    if (!hasPreviousGroup) {
+  const handlePreviousPageClick = () => {
+    if (!hasPreviousPage) {
       return;
     }
 
-    onPageChange(startPage - 1);
+    onPageChange(normalizedCurrentPage - 1);
   };
 
-  const handleNextGroupClick = () => {
-    if (!hasNextGroup) {
+  const handleNextPageClick = () => {
+    if (!hasNextPage) {
       return;
     }
 
-    onPageChange(endPage + 1);
+    onPageChange(normalizedCurrentPage + 1);
   };
 
   if (!normalizedTotalPages) {
@@ -61,9 +61,9 @@ const AdminPagination = ({
     >
       <button
         type='button'
-        onClick={handlePreviousGroupClick}
-        disabled={!hasPreviousGroup}
-        aria-label='이전 페이지 묶음'
+        onClick={handlePreviousPageClick}
+        disabled={!hasPreviousPage}
+        aria-label='이전 페이지'
         className='flex h-5 w-[15px] shrink-0 items-center justify-center disabled:cursor-not-allowed disabled:opacity-40'
       >
         <AdminPaginationChevronIcon className='h-[11px] w-1.5' aria-hidden='true' />
@@ -94,9 +94,9 @@ const AdminPagination = ({
 
       <button
         type='button'
-        onClick={handleNextGroupClick}
-        disabled={!hasNextGroup}
-        aria-label='다음 페이지 묶음'
+        onClick={handleNextPageClick}
+        disabled={!hasNextPage}
+        aria-label='다음 페이지'
         className='flex h-5 w-[15px] shrink-0 items-center justify-center disabled:cursor-not-allowed disabled:opacity-40'
       >
         <AdminPaginationChevronIcon className='h-[11px] w-1.5 rotate-180' aria-hidden='true' />
