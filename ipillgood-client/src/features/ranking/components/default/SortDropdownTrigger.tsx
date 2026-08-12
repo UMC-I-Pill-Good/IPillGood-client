@@ -1,23 +1,17 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { DropdownIcon } from '@/assets';
-import {
-  RANKING_UI_SORT_LABELS,
-  RANKING_UI_SORT_OPTIONS,
-} from '../../constants/sortOptions';
+import { RANKING_UI_SORT_LABELS, RANKING_UI_SORT_OPTIONS } from '../../constants/sortOptions';
 import type { RankingUiSort } from '../../types/ranking';
 import DropdownOptionMenu from './DropdownOptionMenu';
+import { ChevronDown } from 'lucide-react';
 
 interface SortDropdownTriggerProps {
   selectedSort: RankingUiSort;
   onSortChange: (sort: RankingUiSort) => void;
 }
 
-const SortDropdownTrigger = ({
-  selectedSort,
-  onSortChange,
-}: SortDropdownTriggerProps) => {
+const SortDropdownTrigger = ({ selectedSort, onSortChange }: SortDropdownTriggerProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -61,7 +55,10 @@ const SortDropdownTrigger = ({
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <span>{RANKING_UI_SORT_LABELS[selectedSort]}</span>
-        <DropdownIcon aria-hidden='true' className='size-6' />
+        <ChevronDown
+          aria-hidden='true'
+          className={`size-6 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+        />
       </button>
       {isOpen && (
         <DropdownOptionMenu

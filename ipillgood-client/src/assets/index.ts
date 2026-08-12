@@ -1,6 +1,5 @@
 export { default as BadgeIcon } from './icons/badge.svg';
 export { default as CabinetIcon } from './icons/cabinet.svg';
-export { default as DropdownIcon } from './icons/dropdown.svg';
 export { default as CrossSmallIcon } from './icons/fi-rr-cross-small.svg';
 export { default as SearchIcon } from './icons/fi-rr-search.svg';
 export { default as RatingStarIcon } from './icons/fi-rr-star.svg';
