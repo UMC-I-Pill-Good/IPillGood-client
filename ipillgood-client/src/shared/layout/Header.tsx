@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { ChevronLeft, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { IconButton } from '@/shared/components';
@@ -34,7 +34,7 @@ export const Header = ({
 
   const isBackOnly = showBackButton && !showCloseButton;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!alignWrappedTitleToBottom || !titleRef.current) return;
 
     const titleElement = titleRef.current;
@@ -49,7 +49,7 @@ export const Header = ({
     updateTitleWrapping();
 
     return () => resizeObserver.disconnect();
-  }, [alignWrappedTitleToBottom, title]);
+  }, [alignWrappedTitleToBottom, isBackOnly, title]);
 
   return (
     <header className='flex h-17.5 w-full items-center gap-2 px-5'>
