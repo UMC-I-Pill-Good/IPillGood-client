@@ -13,11 +13,12 @@ import {
 } from '../utils/rankingFilterQuery';
 import { useRankingInfiniteProducts } from './useRankingInfiniteProducts';
 import { useSaveRecentSearch } from './useRecentSearches';
+import { useRankingFilterErrorToast } from './useRankingFilterErrorToast';
 
 const INITIAL_SKELETON_CARD_COUNT = 4;
 
 const getActiveFilterCount = (filters: RankingFilterState) =>
-  Number(filters.ageGroup !== DEFAULT_RANKING_FILTERS.ageGroup) +
+  Number(filters.ageGroups.length > 0) +
   Number(filters.gender !== DEFAULT_RANKING_FILTERS.gender) +
   Number(filters.certification !== DEFAULT_RANKING_FILTERS.certification) +
   Number(filters.healthConcern !== DEFAULT_RANKING_FILTERS.healthConcern) +
@@ -59,6 +60,10 @@ export const useRankingResult = () => {
     ...toRankingFilterRequestOptions(appliedFilters),
   };
   const ranking = useRankingInfiniteProducts({ queryParams: rankingQueryParams });
+  const markFilterRequest = useRankingFilterErrorToast({
+    isFetching: ranking.isFilterRequestFetching,
+    errorMessage: ranking.filterRequestErrorMessage,
+  });
   const handleSaveRecentSearch = useSaveRecentSearch();
   const activeFilterCount = getActiveFilterCount(appliedFilters);
   const viewState: 'loading' | 'error' | 'success' | 'emptyFilter' | 'emptySearch' =
@@ -105,6 +110,7 @@ export const useRankingResult = () => {
 
   const handleApplyFilter = () => {
     const nextFilters = draftFilters;
+    markFilterRequest();
     resetSkeletonCardCount();
     setAppliedFilters(nextFilters);
     setIsFilterOpen(false);

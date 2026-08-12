@@ -6,17 +6,14 @@ interface RankingToolbarProps {
   onSortChange: (sort: RankingUiSort) => void;
 }
 
-const RankingToolbar = ({
-  selectedSort,
-  onSortChange,
-}: RankingToolbarProps) => {
+const RankingToolbar = ({ selectedSort, onSortChange }: RankingToolbarProps) => {
   return (
     <section className='flex w-full items-end justify-between gap-3'>
       <div className='flex min-w-0 items-center gap-1'>
-        <h1 className='typo-body-5 text-black'>랭킹</h1>
-        <p className='typo-caption-7 truncate text-neutral-800'>
-          *실시간 구매 데이터 기반
-        </p>
+        <h1 className='typo-title-gosanja text-[18px] font-normal leading-normal text-black'>
+          랭킹
+        </h1>
+        <p className='typo-caption-7 truncate text-neutral-800'>*실시간 구매 데이터 기반</p>
       </div>
       <SortDropdownTrigger selectedSort={selectedSort} onSortChange={onSortChange} />
     </section>

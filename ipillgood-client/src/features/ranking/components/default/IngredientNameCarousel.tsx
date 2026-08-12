@@ -20,14 +20,14 @@ const IngredientNameCarousel = ({ ingredientNameList }: IngredientNameCarouselPr
   return (
     <div
       ref={emblaRef}
-      className='w-full overflow-x-auto [scrollbar-color:var(--color-neutral-500)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:bg-transparent'
+      className='w-full cursor-grab overflow-hidden active:cursor-grabbing'
       role='region'
       aria-roledescription='carousel'
       aria-label='영양 성분 목록'
       tabIndex={0}
       onKeyDown={handleKeyDown}
     >
-      <div className='flex gap-1'>
+      <div className='flex gap-1 [touch-action:pan-y_pinch-zoom]'>
         {ingredientNameList.map((ingredientName) => (
           <div key={ingredientName} className='shrink-0'>
             <Chip text={ingredientName} variant='point' />
