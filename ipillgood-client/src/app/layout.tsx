@@ -6,10 +6,7 @@ import { Toast } from '@/shared/components';
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.ipillgood.store'),
-  title: {
-    template: '%s | 아필굿',
-    default: '아필굿 | 나에게 딱 맞는 영양제 추천 서비스',
-  },
+  title: 'I Pill Good',
   description:
     '건강 상태와 생활 습관을 바탕으로 나에게 맞는 영양제를 추천하고 관리하는 맞춤형 건강 서비스, 아필굿',
   applicationName: '아필굿',
