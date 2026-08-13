@@ -43,3 +43,6 @@ export { default as LoadingSpinner } from './LoadingSpinner';
 
 /* Toast */
 export { default as Toast } from './Toast';
+
+/* WheelPicker */
+export { default as WheelPicker } from './WheelPicker';
