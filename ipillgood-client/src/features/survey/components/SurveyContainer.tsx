@@ -16,6 +16,7 @@ const SurveyContainer = () => {
 
   const step = Number(searchParams.get('step') ?? 1);
   const returnTo = searchParams.get('returnTo') === '/my' ? '/my' : '/home';
+  const returnToParam = returnTo === '/my' ? '&returnTo=/my' : '';
 
   // 이전 단계로 이동 (1단계에서는 이전 페이지로 이동)
   const handleBack = () => {
@@ -25,7 +26,7 @@ const SurveyContainer = () => {
       return;
     }
 
-    router.push(`/survey?step=${step - 1}`);
+    router.push(`/survey?step=${step - 1}${returnToParam}`);
   };
 
   return (

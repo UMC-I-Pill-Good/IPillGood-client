@@ -25,8 +25,10 @@ export const useAddIntakeProducts = ({ onSuccess }: UseAddIntakeProductsOptions 
   const router = useRouter();
 
   useEffect(() => {
+    if (onSuccess) return;
+
     router.prefetch('/home');
-  }, [router]);
+  }, [onSuccess, router]);
 
   const addIntakeProductsMutation = useMutation({
     mutationFn: ({ memberProductIds, intakeTime, frequency }: AddIntakeProductsParams) =>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEscapeKey, useOutsideClick, useScrollLock } from '@/shared/hooks';
-import clsx from 'clsx';
+import { cn } from '@/shared/utils';
 import { useRef, type ReactNode } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
 
@@ -33,7 +33,7 @@ const ModalShell = ({
           role='dialog'
           aria-modal='true'
           aria-label={ariaLabel}
-          className={clsx(
+          className={cn(
             'flex w-77.5 max-h-[85dvh] flex-col rounded-[20px] bg-white px-7.5 py-6',
             allowOverflow ? 'overflow-visible' : 'overflow-y-auto',
             className,
