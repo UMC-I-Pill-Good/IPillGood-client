@@ -1,10 +1,10 @@
 'use client';
 
 import { TextButton } from '@/shared/components';
-import { useMyInfo } from '@/features/my/hooks/useMyInfo';
+import { useMyInfoQuery } from '@/shared/hooks';
 
 const AddToIntakeGuideSection = () => {
-  const { data } = useMyInfo();
+  const { data } = useMyInfoQuery();
 
   return (
     <section>

@@ -25,18 +25,19 @@ const DayIntakeListModal = ({ date, onClose }: DayIntakeListModalProps) => {
   return (
     <ModalShell
       onClose={onClose}
-      className='gap-4.75 pt-4'
+      className='max-h-[80dvh] gap-4.75 pt-4 overflow-hidden!'
       ariaLabel={`${Number(month)}월 ${Number(day)}일 섭취한 영양제 목록`}
     >
-      <p className='typo-body-5 text-black text-center mt-2'>
+      <p className='mt-2 shrink-0 text-center typo-body-5 text-black'>
         {Number(month)}월 {Number(day)}일 섭취한 영양제 목록
       </p>
       {isPending ? (
-        <div className='flex h-20 items-center justify-center'>
+        <div className='flex min-h-0 flex-1 items-center justify-center'>
           <Loader2 className='text-primary-600 size-6 animate-spin' />
         </div>
       ) : (
-        <div>
+        <>
+          <div className='min-h-0 flex-1 overflow-y-auto overscroll-contain thin-scrollbar'>
           <CheckboxList
             list={products.map((product) => ({
               id: product.activeProductId,
@@ -46,14 +47,15 @@ const DayIntakeListModal = ({ date, onClose }: DayIntakeListModalProps) => {
             onToggle={() => {}}
             readOnly
           />
+          </div>
           <TextButton
             size='lg'
             type='button'
-            className='w-full mt-4.75'
+            className='mt-4.75 w-full shrink-0'
             onClick={onClose}
             text='닫기'
           />
-        </div>
+        </>
       )}
     </ModalShell>
   );

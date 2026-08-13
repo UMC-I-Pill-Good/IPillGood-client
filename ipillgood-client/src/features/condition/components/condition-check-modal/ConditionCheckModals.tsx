@@ -6,14 +6,14 @@ import ConditionVitalityModal from './ConditionVitalityModal';
 import ConditionSleepTimeModal from './ConditionSleepTimeModal';
 import ConditionCheckCompleteModal from './ConditionCheckCompleteModal';
 import ConditionSundayIntakeModal from './ConditionSundayIntakeModal';
-import { useMyInfo } from '@/features/my/hooks/useMyInfo';
+import { useMyInfoQuery } from '@/shared/hooks';
 
 interface ConditionCheckModalsProps {
   userName?: string;
 }
 
 const ConditionCheckModals = ({ userName = '아필굿' }: ConditionCheckModalsProps) => {
-  const { data: myInfo } = useMyInfo();
+  const { data: myInfo } = useMyInfoQuery();
   const displayUserName = myInfo?.nickname ?? userName;
   const {
     isCheckModalOpen,

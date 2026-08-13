@@ -20,7 +20,7 @@ const IngredientKeywordList = ({
           key={`${ingredientId}-${keyword}-${index}`}
           text={keyword}
           variant='point'
-          className='shadow-[0_4px_4px_rgba(126,131,135,0.1)]'
+          className='typo-caption-2 shadow-[0_4px_4px_rgba(126,131,135,0.1)]'
         />
       ))}
     </div>

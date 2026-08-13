@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import SurveySummaryCard from './SurveySummaryCard';
 import RecommendedSupplementCard from './RecommendedSupplementCard';
-import { useMyInfo } from '@/features/my/hooks/useMyInfo';
+import { useMyInfoQuery } from '@/shared/hooks';
 import RecommendationFeedbackModal from './RecommendationFeedbackModal';
 import { useRecommendationFeedback } from '../../hooks/useRecommendationFeedback';
 import { useRecommendation } from '../../hooks/useRecommendation';
@@ -22,7 +22,7 @@ const RecommendedSupplementSection = () => {
 
   const { recommendation, isLoading, isError } = useRecommendation();
 
-  const { data: myInfo } = useMyInfo();
+  const { data: myInfo } = useMyInfoQuery();
   const nickname = myInfo?.nickname ?? '회원';
 
   if (isLoading) {
@@ -32,7 +32,7 @@ const RecommendedSupplementSection = () => {
   if (isError) return null;
 
   return (
-    <section className='flex flex-col gap-2 mt-8' ref={sectionRef}>
+    <section className='flex flex-col gap-2 mt-8 w-full' ref={sectionRef}>
       <article className='flex justify-between items-center'>
         <h2 className='text-black typo-title-gosanja text-[18px]'>정기 추천 영양 성분</h2>
         <Link

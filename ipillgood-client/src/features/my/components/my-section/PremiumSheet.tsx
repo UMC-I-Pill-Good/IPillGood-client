@@ -10,7 +10,7 @@ const PremiumSheet = ({ open, onOpenChange }: PremiumSheetProps) => {
   return (
     <BottomSheet open={open} onOpenChange={onOpenChange}>
       <div className='flex flex-col px-5 pt-10 items-center'>
-        <p className='typo-body-5 text-black text-center'>
+        <p className='text-[18px] typo-title-gosanja text-black text-center'>
           죄송합니다.
           <br />
           현재 프리미엄 서비스는

@@ -24,7 +24,10 @@ const ModalShell = ({ onClose, className = '', children, ariaLabel }: ModalShell
         role='dialog'
         aria-modal='true'
         aria-label={ariaLabel}
-        className={clsx('flex w-77.5 flex-col rounded-[20px] bg-white px-7.5 py-6', className)}
+        className={clsx(
+          'flex w-77.5 max-h-[85dvh] flex-col overflow-y-auto rounded-[20px] bg-white px-7.5 py-6',
+          className,
+        )}
       >
         {children}
       </div>

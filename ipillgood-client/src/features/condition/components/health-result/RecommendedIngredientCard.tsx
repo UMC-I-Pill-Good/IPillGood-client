@@ -66,7 +66,7 @@ const RecommendedIngredientCard = ({
             <Chip
               text='캐비닛 내 존재'
               variant='point'
-              className='bg-secondary-600 shadow-[0_4px_4px_rgba(126,131,135,0.1)] text-white typo-caption-6 h-6 px-3 mb-1'
+              className='bg-secondary-600 shadow-[0_4px_4px_rgba(126,131,135,0.1)] text-white typo-caption-2 h-6 px-3 mb-1'
             />
           )}
 
@@ -84,10 +84,10 @@ const RecommendedIngredientCard = ({
             </div>
 
             <div className='flex min-w-0 flex-col items-start gap-0.5 w-full'>
-              <span className='w-full typo-body-10 text-primary-700 leading-none'>
+              <span className='w-full typo-body-10 font-semibold text-primary-700 leading-none'>
                 추천 이유
               </span>
-              <p className='w-full whitespace-pre-line break-keep typo-caption-7 text-black leading-tight'>
+              <p className='w-full whitespace-pre-line break-keep typo-caption-3 text-black leading-tight'>
                 {ingredient.description}
               </p>
             </div>

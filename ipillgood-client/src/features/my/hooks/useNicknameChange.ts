@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { myInfoQueryKey, useMyInfo } from './useMyInfo';
+import { useMyInfoQuery } from '@/shared/hooks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { patchProfile } from '../api/member';
 import { nicknameSchema } from '../schemas/nicknameSchema';
@@ -13,7 +13,7 @@ const validateNickname = (value: string) => {
 };
 
 export const useNicknameChange = () => {
-  const { data } = useMyInfo();
+  const { data } = useMyInfoQuery();
   const queryClient = useQueryClient();
 
   const [nickname, setNickname] = useState('');
@@ -32,7 +32,7 @@ export const useNicknameChange = () => {
     mutationFn: patchProfile,
     // 수정 성공 시 내 정보 캐시를 무효화해 최신 닉네임을 다시 불러옴
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: myInfoQueryKey });
+      queryClient.invalidateQueries({ queryKey: ['myInfo'] });
       showToast.success('프로필이 저장됐어요.');
     },
     onError: () => {

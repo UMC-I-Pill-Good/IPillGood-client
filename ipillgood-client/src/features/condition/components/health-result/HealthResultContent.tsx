@@ -51,7 +51,6 @@ const HealthResultContent = () => {
     isLoading,
     error,
     isValid,
-    handleClose,
     handleIngredientClick,
   } = useHealthResultFlow();
 
@@ -61,10 +60,7 @@ const HealthResultContent = () => {
         <Header
           title='건강 상태 결과'
           titleClassName='text-left! leading-7!'
-          leftSpacerClassName='w-8'
-          showBackButton={false}
-          showCloseButton={true}
-          onClose={handleClose}
+          alignWrappedTitleToBottom
         />
       </div>
     );
@@ -76,10 +72,7 @@ const HealthResultContent = () => {
         <Header
           title={`궁금 상태: ${majorCategoryLabel} - ${minorCategoryLabel}`}
           titleClassName='text-left! leading-7!'
-          leftSpacerClassName='w-8'
-          showBackButton={false}
-          showCloseButton={true}
-          onClose={handleClose}
+          alignWrappedTitleToBottom
         />
         <HealthResultSkeleton />
       </div>
@@ -92,10 +85,7 @@ const HealthResultContent = () => {
         <Header
           title={`궁금 상태: ${majorCategoryLabel} - ${minorCategoryLabel}`}
           titleClassName='text-left! leading-7!'
-          leftSpacerClassName='w-8'
-          showBackButton={false}
-          showCloseButton={true}
-          onClose={handleClose}
+          alignWrappedTitleToBottom
         />
       </div>
     );
@@ -106,10 +96,7 @@ const HealthResultContent = () => {
       <Header
         title={`궁금 상태: ${majorCategoryLabel} - ${minorCategoryLabel}`}
         titleClassName='text-left! leading-7!'
-        leftSpacerClassName='w-8'
-        showBackButton={false}
-        showCloseButton={true}
-        onClose={handleClose}
+        alignWrappedTitleToBottom
       />
 
       <HealthDeclineCauseSection declineCause={data.declineCause} />

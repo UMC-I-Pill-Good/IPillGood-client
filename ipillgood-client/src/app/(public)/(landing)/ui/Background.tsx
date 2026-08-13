@@ -51,7 +51,7 @@ const particles = [
 
 export const Background = () => {
   return (
-    <>
+    <div aria-hidden='true' className='pointer-events-none contents'>
       {/* blur */}
       <div className='bg-blur absolute top-22 -right-20 h-52 w-52 bg-[#C1AFFF]/90 blur-[80px]' />
 
@@ -247,6 +247,6 @@ export const Background = () => {
             'inset 0 4px 4px rgba(155,161,255,.2), inset 0 -4px 4px rgba(255,255,255,.4), 2px 2px 4px rgba(155,161,255,.2)',
         }}
       />
-    </>
+    </div>
   );
 };
