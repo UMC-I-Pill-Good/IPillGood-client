@@ -37,10 +37,10 @@ const InfoToggleCard = ({ title, icon, items }: InfoToggleCardProps) => {
       <div className='mt-4 flex justify-end'>{icon}</div>
 
       {isExpanded && (
-        <ul className='mt-4 flex flex-col gap-1 text-black typo-caption-7 leading-4!'>
+        <ul className='mt-4 flex flex-col gap-1 text-black typo-caption-3 leading-4!'>
           {items.map((item, index) => (
             <li key={index} className='flex items-start'>
-              <span className='w-0.5 h-0.5 rounded-full bg-black ml-0.5 mr-2.5 mt-2 shrink-0' />
+              <span className='w-0.75 h-0.75 rounded-full bg-black ml-0.5 mr-2.5 mt-2 shrink-0' />
               {item}
             </li>
           ))}
