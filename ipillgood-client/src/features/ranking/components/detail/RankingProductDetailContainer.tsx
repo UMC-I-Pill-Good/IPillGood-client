@@ -1,12 +1,8 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import { FetchError, LoadingSpinner } from '@/shared/components';
 import { Header } from '@/shared/layout';
-import { getRankingProductCompatibility } from '../../api/getRankingProductCompatibility';
-import { getRankingProductDetail } from '../../api/getRankingProductDetail';
-import { getRankingProductIngredients } from '../../api/getRankingProductIngredients';
-import { rankingQueryKeys } from '../../constants/rankingQueryKeys';
+import { useRankingProductDetail } from '../../hooks/useRankingProductDetail';
 import RankingProductDetail from './RankingProductDetail';
 
 interface RankingProductDetailContainerProps {
@@ -14,35 +10,7 @@ interface RankingProductDetailContainerProps {
 }
 
 const RankingProductDetailContainer = ({ productId }: RankingProductDetailContainerProps) => {
-  const { data, isPending, isError, refetch } = useQuery({
-    queryKey: rankingQueryKeys.productDetail(productId),
-    queryFn: async () => {
-      const [detailResponse, ingredientResponse, compatibilityResponse] = await Promise.all([
-        getRankingProductDetail(productId),
-        getRankingProductIngredients(productId),
-        getRankingProductCompatibility(productId),
-      ]);
-
-      if (
-        !detailResponse.isSuccess ||
-        !detailResponse.result ||
-        !ingredientResponse.isSuccess ||
-        !ingredientResponse.result ||
-        !compatibilityResponse.isSuccess ||
-        !compatibilityResponse.result
-      ) {
-        throw new Error(
-          detailResponse.message || ingredientResponse.message || compatibilityResponse.message,
-        );
-      }
-
-      return {
-        product: detailResponse.result,
-        ingredients: ingredientResponse.result.ingredientInfos,
-        compatibility: compatibilityResponse.result,
-      };
-    },
-  });
+  const { data, isPending, isError, refetch } = useRankingProductDetail(productId);
 
   return (
     <main className='min-h-dvh overflow-x-hidden bg-background pb-24'>

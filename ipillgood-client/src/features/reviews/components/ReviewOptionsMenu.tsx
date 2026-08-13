@@ -53,7 +53,7 @@ const ReviewOptionsMenu = ({ reviewId, onEdit, onDelete }: ReviewOptionsMenuProp
           <button
             type='button'
             role='menuitem'
-            className='flex h-8 w-full items-center justify-center gap-1 border-b border-neutral-300 px-2 typo-caption-2 text-neutral-800'
+            className='flex h-8 w-full items-center justify-center gap-1 px-2 typo-caption-2 text-neutral-800'
             onClick={handleDelete}
           >
             후기 삭제
