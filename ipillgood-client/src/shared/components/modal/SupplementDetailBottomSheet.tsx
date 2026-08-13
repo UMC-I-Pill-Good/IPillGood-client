@@ -8,22 +8,21 @@ import {
   TextButton,
   ToggleButton,
 } from '@/shared/components';
+import InteractionWarningModal from '@/features/cabinet/components/modal/InteractionWarningModal';
 import Image from 'next/image';
 import { BellIcon, TimerOffIcon } from '@/assets';
 import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getCabinetProductsDetail } from '@/features/cabinet/api/cabinet';
-import { usePatchIntakeProductMutation } from '@/features/cabinet/hooks';
+import { useAddIntakeProducts, usePatchIntakeProductMutation } from '@/features/cabinet/hooks';
 import { frequencyCycle } from '@/features/cabinet/constants/intake.constants';
 import { useRouter } from 'next/navigation';
 import { usePushAlarmSettings } from '@/features/my/hooks/usePushAlarmSettings';
 import { useNotificationSettings } from '@/features/my/hooks/useNotificationSettings';
 import { deleteActiveProduct } from '@/features/home/api/intake';
 import { intakeTodayQueryKey } from '@/features/home/hooks/useIntakeToday';
-import { postIntakeProduct } from '@/features/cabinet/api/intake';
 import { showToast } from '@/shared/utils';
-import { isAxiosError } from 'axios';
 
 interface SupplementDetailBottomSheetProps {
   open: boolean;
@@ -60,27 +59,15 @@ const SupplementDetailBottomSheet = ({
     queryClient.invalidateQueries({ queryKey: ['cabinetProductDetail'] });
   };
 
-  const addActiveProductMutation = useMutation({
-    mutationFn: ({ intakeTime, frequency }: { intakeTime: string; frequency: string }) =>
-      postIntakeProduct({ memberProductId: memberProductId!, intakeTime, frequency }),
-    onSuccess: (response) => {
-      if (!response.isSuccess) {
-        showToast.error('섭취 중인 영양제 추가에 실패했어요. 다시 시도해 주세요.');
-        return;
-      }
-
-      invalidateIntakeQueries();
-      showToast.success('섭취 중인 영양제에 추가됐어요.');
-    },
-    onError: (error) => {
-      const errorData = isAxiosError<{ code?: string; message?: string }>(error)
-        ? error.response?.data
-        : undefined;
-
-      showToast.error(
-        errorData?.message ?? '섭취 중인 영양제 추가에 실패했어요. 다시 시도해 주세요.',
-      );
-    },
+  const {
+    conflicts,
+    isWarningModalOpen,
+    isPending: isAddingActiveProduct,
+    checkConflictsAndAdd,
+    confirmAdd,
+    cancelAdd,
+  } = useAddIntakeProducts({
+    onSuccess: invalidateIntakeQueries,
   });
 
   const deleteActiveProductMutation = useMutation({
@@ -128,13 +115,16 @@ const SupplementDetailBottomSheet = ({
   };
 
   const handleNewIntakeCycleConfirm = (cycle: string) => {
-    if (addActiveProductMutation.isPending || !newIntakeTime || memberProductId === null) return;
+    if (isAddingActiveProduct || !newIntakeTime || memberProductId === null) return;
 
-    addActiveProductMutation.mutate({
-      intakeTime: newIntakeTime,
-      frequency: frequencyCycle[cycle],
-    });
-    setIsOpenIntakeCycleModal(false);
+    checkConflictsAndAdd(
+      {
+        memberProductIds: [memberProductId],
+        intakeTime: newIntakeTime,
+        frequency: frequencyCycle[cycle],
+      },
+      () => setIsOpenIntakeCycleModal(false),
+    );
   };
 
   return (
@@ -173,7 +163,7 @@ const SupplementDetailBottomSheet = ({
               text={data.result.isActiveIntake ? '섭취 중인 영양제 삭제' : '섭취 중인 영양제 추가'}
               size='sm'
               className='px-3'
-              disabled={addActiveProductMutation.isPending || deleteActiveProductMutation.isPending}
+              disabled={isAddingActiveProduct || deleteActiveProductMutation.isPending}
               onClick={() => {
                 if (data.result.isActiveIntake) {
                   setIsDeleteConfirmModalOpen(true);
@@ -330,6 +320,14 @@ const SupplementDetailBottomSheet = ({
             deleteActiveProductMutation.mutate(activeProduct.activeProductId);
           }}
           onCancel={() => setIsDeleteConfirmModalOpen(false)}
+        />
+      )}
+
+      {isWarningModalOpen && (
+        <InteractionWarningModal
+          conflicts={conflicts}
+          onCancel={cancelAdd}
+          onConfirm={confirmAdd}
         />
       )}
     </BottomSheet>

@@ -14,7 +14,11 @@ interface AddIntakeProductsParams {
   frequency: string;
 }
 
-export const useAddIntakeProducts = () => {
+interface UseAddIntakeProductsOptions {
+  onSuccess?: () => void;
+}
+
+export const useAddIntakeProducts = ({ onSuccess }: UseAddIntakeProductsOptions = {}) => {
   const [conflicts, setConflicts] = useState<IntakeConflict[]>([]);
   const [pendingAddParams, setPendingAddParams] = useState<AddIntakeProductsParams | null>(null);
   const queryClient = useQueryClient();
@@ -42,6 +46,11 @@ export const useAddIntakeProducts = () => {
       queryClient.invalidateQueries({ queryKey: ['growthStage'] });
 
       showToast.success(TOAST_MESSAGES.SUPPLEMENT_ADDED);
+      if (onSuccess) {
+        onSuccess();
+        return;
+      }
+
       router.push('/cabinet');
     },
     onError: () => {
@@ -114,6 +123,8 @@ export const useAddIntakeProducts = () => {
   const confirmAdd = () => {
     if (pendingAddParams) {
       addIntakeProductsMutation.mutate(pendingAddParams);
+      setConflicts([]);
+      setPendingAddParams(null);
     }
   };
 
