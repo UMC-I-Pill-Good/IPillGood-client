@@ -1,13 +1,13 @@
 'use client';
 
 import { deleteActiveProduct } from '@/features/home/api/intake';
-import { intakeTodayQueryKey } from '@/features/home/hooks/useIntakeToday';
 import {
   intakeNotificationSettingsQueryKey,
   useNotificationSettings,
 } from '@/features/my/hooks/useNotificationSettings';
 import { usePushAlarmSettings } from '@/features/my/hooks/usePushAlarmSettings';
 import { showToast } from '@/shared/utils';
+import { invalidateActiveProductQueries } from '@/shared/utils/invalidateMemberProductQueries';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
@@ -39,15 +39,8 @@ export const useSupplementDetailBottomSheet = ({
 
   const patchActiveProductMutation = usePatchIntakeProductMutation();
 
-  const invalidateIntakeQueries = () => {
-    queryClient.invalidateQueries({ queryKey: ['cabinetProducts'] });
-    queryClient.invalidateQueries({ queryKey: ['activeProducts'] });
-    queryClient.invalidateQueries({ queryKey: intakeTodayQueryKey });
-    queryClient.invalidateQueries({ queryKey: intakeNotificationSettingsQueryKey });
-    queryClient.invalidateQueries({ queryKey: ['intakeCalendar'] });
-    queryClient.invalidateQueries({ queryKey: ['growthStage'] });
-    queryClient.invalidateQueries({ queryKey: ['cabinetProductDetail'] });
-  };
+  const invalidateActiveProduct = () =>
+    invalidateActiveProductQueries(queryClient, { includeNotificationSettings: true });
 
   const {
     conflicts,
@@ -57,13 +50,14 @@ export const useSupplementDetailBottomSheet = ({
     confirmAdd,
     cancelAdd,
   } = useAddIntakeProducts({
-    onSuccess: invalidateIntakeQueries,
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: intakeNotificationSettingsQueryKey }),
   });
 
   const deleteActiveProductMutation = useMutation({
     mutationFn: deleteActiveProduct,
     onSuccess: () => {
-      invalidateIntakeQueries();
+      invalidateActiveProduct();
       showToast.success('섭취 중인 영양제에서 삭제됐어요.');
       setIsDeleteConfirmModalOpen(false);
     },
