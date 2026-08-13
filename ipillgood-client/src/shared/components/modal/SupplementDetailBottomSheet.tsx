@@ -181,7 +181,7 @@ const SupplementDetailBottomSheet = ({
         <section className='space-y-2 pt-4'>
           <TextButton
             type='button'
-            text='영양성분 더보기'
+            text='영양제 더보기'
             size='xl'
             className='w-full'
             onClick={() => router.push(`/product/${data.result.productId}`)}
