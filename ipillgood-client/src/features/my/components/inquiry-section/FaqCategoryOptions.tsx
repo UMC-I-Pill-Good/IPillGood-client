@@ -11,7 +11,7 @@ interface FaqCategoryOptionsProps {
 
 const FaqCategoryOptions = ({ selectedCategory, onSelectCategory }: FaqCategoryOptionsProps) => {
   return (
-    <div className='flex gap-2 mt-3 mb-6'>
+    <div className='flex gap-2 mt-3 mb-5 pb-1 overflow-x-auto hide-scrollbar'>
       {FAQ_CATEGORY_OPTION_LIST.map((option) => (
         <TextButton
           key={option.value}
