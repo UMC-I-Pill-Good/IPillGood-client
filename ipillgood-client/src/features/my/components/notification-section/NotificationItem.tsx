@@ -27,7 +27,7 @@ const NotificationItem = ({
         onClick && !disabled && 'cursor-pointer hover:bg-white/90 active:bg-white',
       )}
     >
-      <span className='typo-body-10 text-black'>{label}</span>
+      <span className='typo-body-10 text-black truncate w-[80%]'>{label}</span>
       <span
         className='absolute right-4 top-1/2 -translate-y-1/2'
         onClick={(e) => e.stopPropagation()}
