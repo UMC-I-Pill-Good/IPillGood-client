@@ -110,6 +110,7 @@ const SupplementAddContent = () => {
         onDebouncedKeywordChange={setDebouncedKeyword}
         sort={sort}
         setSort={setSort}
+        selectedCount={selectedIds.length}
       />
 
       <div
