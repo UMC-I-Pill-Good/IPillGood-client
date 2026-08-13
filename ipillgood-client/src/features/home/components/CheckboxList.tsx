@@ -30,7 +30,10 @@ const CheckboxList = ({ list, checkedIdList, onToggle, readOnly = false }: Check
                 ariaLabel={item.label}
               />
             </div>
-            <span title={item.label} className='flex-1 text-point-700 text-wrap leading-[1.3]'>
+            <span
+              title={item.label}
+              className='min-w-0 flex-1 text-point-700 wrap-anywhere leading-[1.3]'
+            >
               {item.label}
             </span>
           </div>
