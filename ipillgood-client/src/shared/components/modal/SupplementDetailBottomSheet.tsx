@@ -19,7 +19,10 @@ import { useAddIntakeProducts, usePatchIntakeProductMutation } from '@/features/
 import { frequencyCycle } from '@/features/cabinet/constants/intake.constants';
 import { useRouter } from 'next/navigation';
 import { usePushAlarmSettings } from '@/features/my/hooks/usePushAlarmSettings';
-import { useNotificationSettings } from '@/features/my/hooks/useNotificationSettings';
+import {
+  intakeNotificationSettingsQueryKey,
+  useNotificationSettings,
+} from '@/features/my/hooks/useNotificationSettings';
 import { deleteActiveProduct } from '@/features/home/api/intake';
 import { intakeTodayQueryKey } from '@/features/home/hooks/useIntakeToday';
 import { showToast } from '@/shared/utils';
@@ -54,6 +57,7 @@ const SupplementDetailBottomSheet = ({
     queryClient.invalidateQueries({ queryKey: ['cabinetProducts'] });
     queryClient.invalidateQueries({ queryKey: ['activeProducts'] });
     queryClient.invalidateQueries({ queryKey: intakeTodayQueryKey });
+    queryClient.invalidateQueries({ queryKey: intakeNotificationSettingsQueryKey });
     queryClient.invalidateQueries({ queryKey: ['intakeCalendar'] });
     queryClient.invalidateQueries({ queryKey: ['growthStage'] });
     queryClient.invalidateQueries({ queryKey: ['cabinetProductDetail'] });

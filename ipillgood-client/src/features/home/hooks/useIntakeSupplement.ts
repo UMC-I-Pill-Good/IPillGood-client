@@ -1,3 +1,4 @@
+import { intakeNotificationSettingsQueryKey } from './../../my/hooks/useNotificationSettings';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { deleteActiveProduct, getActiveProducts } from '../api/intake';
@@ -26,6 +27,7 @@ export const useIntakeSupplement = () => {
       queryClient.invalidateQueries({ queryKey: ['intakeCalendar'] });
       queryClient.invalidateQueries({ queryKey: ['growthStage'] });
       queryClient.invalidateQueries({ queryKey: ['cabinetProductDetail'] });
+      queryClient.invalidateQueries({ queryKey: intakeNotificationSettingsQueryKey });
 
       showToast.success('섭취 중인 영양제에서 삭제됐어요.');
     },
