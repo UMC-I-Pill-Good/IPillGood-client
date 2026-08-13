@@ -7,7 +7,7 @@ import {
 } from '@/features/my/hooks/useNotificationSettings';
 import { usePushAlarmSettings } from '@/features/my/hooks/usePushAlarmSettings';
 import { showToast } from '@/shared/utils';
-import { invalidateActiveProductQueries } from '@/shared/utils/invalidateMemberProductQueries';
+import { invalidateActiveProductQueries } from '@/shared/utils/invalidateActiveProductQueries';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
@@ -67,7 +67,6 @@ export const useSupplementDetailBottomSheet = ({
   const { isPushAlarmOn } = usePushAlarmSettings();
   const { intakePushEnabled } = useNotificationSettings();
 
-
   const activeProduct = data?.result.activeProduct;
   const notificationEnabled = activeProduct?.notificationEnabled ?? false;
   const intakeHour = activeProduct ? Number(activeProduct.intakeTime.split(':')[0]) : null;
@@ -109,7 +108,6 @@ export const useSupplementDetailBottomSheet = ({
       () => setIsOpenIntakeCycleModal(false),
     );
   };
-
 
   return {
     data,

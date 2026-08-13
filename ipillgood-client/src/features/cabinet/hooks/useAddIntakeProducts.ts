@@ -1,7 +1,7 @@
 import { getIntakeConflict, postIntakeProduct } from '@/features/cabinet/api/intake';
 import { IntakeConflict } from '@/features/cabinet/types/intake';
 import { TOAST_MESSAGES } from '@/shared/constants/toastMessages';
-import { invalidateActiveProductQueries } from '@/shared/utils/invalidateMemberProductQueries';
+import { invalidateActiveProductQueries } from '@/shared/utils/invalidateActiveProductQueries';
 import { showToast } from '@/shared/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
@@ -63,7 +63,7 @@ export const useAddIntakeProducts = ({ onSuccess }: UseAddIntakeProductsOptions 
         : undefined;
 
       if (errorData?.code === 'INTAKE409_3') {
-        showToast.error('오늘은 재추가 추가할 수 없습니다.');
+        showToast.error('오늘은 재추가할 수 없습니다.');
         return;
       }
 
@@ -81,7 +81,7 @@ export const useAddIntakeProducts = ({ onSuccess }: UseAddIntakeProductsOptions 
 
         if (failedResponse) {
           if (failedResponse.code === 'INTAKE409_3') {
-            showToast.error('오늘은 재추가 추가할 수 없습니다.');
+            showToast.error('오늘은 재추가할 수 없습니다.');
             onCheckComplete();
             return;
           }

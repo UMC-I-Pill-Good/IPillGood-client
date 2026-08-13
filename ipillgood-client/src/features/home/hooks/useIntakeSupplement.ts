@@ -1,4 +1,4 @@
-import { invalidateActiveProductQueries } from '@/shared/utils/invalidateMemberProductQueries';
+import { invalidateActiveProductQueries } from '@/shared/utils/invalidateActiveProductQueries';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { deleteActiveProduct, getActiveProducts } from '../api/intake';

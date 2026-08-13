@@ -20,7 +20,7 @@ const ProfileCard = () => {
       </div>
       <div className='flex min-w-0 flex-col justify-center gap-1.75'>
         {isLoading ? (
-          <div className='w-16 h- rounded animate-pulse bg-primary-300' />
+          <div className='w-16 h-4 rounded animate-pulse bg-primary-300' />
         ) : (
           <p className='truncate text-black text-[18px] typo-title-gosanja pt-1'>
             {data?.nickname ?? '회원'}

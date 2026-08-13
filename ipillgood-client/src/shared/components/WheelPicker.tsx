@@ -40,18 +40,22 @@ const WheelPicker = <T extends WheelPickerValue>({
   const renderedOptions = isLooping ? [...options, ...options, ...options] : options;
   const middleOffset = isLooping ? options.length : 0;
 
-  useEffect(() => {
-    if (!scrollRef.current) return;
+  const valueIndex = options.indexOf(value);
 
-    const index = options.indexOf(value);
-    if (index === -1) return;
+  useEffect(() => {
+    if (!scrollRef.current || valueIndex === -1) return;
 
     isProgrammaticScroll.current = true;
-    scrollRef.current.scrollTo({ top: (middleOffset + index) * itemHeight, behavior: 'auto' });
+
+    scrollRef.current.scrollTo({
+      top: (middleOffset + valueIndex) * itemHeight,
+      behavior: 'auto',
+    });
+
     requestAnimationFrame(() => {
       isProgrammaticScroll.current = false;
     });
-  }, [itemHeight, middleOffset, options, value]);
+  }, [itemHeight, middleOffset, valueIndex]);
 
   useEffect(
     () => () => {
@@ -113,6 +117,7 @@ const WheelPicker = <T extends WheelPickerValue>({
       <div
         ref={scrollRef}
         role='listbox'
+        tabIndex={0}
         aria-label={ariaLabel}
         aria-activedescendant={`${optionIdPrefix}-option-${activeIndex}`}
         onScroll={handleScroll}
