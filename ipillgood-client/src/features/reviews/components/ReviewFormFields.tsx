@@ -69,7 +69,7 @@ const ReviewFormFields = ({
       </div>
       <div className='flex gap-2'>
         {imagePreviews.length < MAX_REVIEW_IMAGE_COUNT && (
-          <label className='flex size-25 cursor-pointer items-center justify-center rounded-lg border border-neutral-400 text-4xl font-light text-neutral-500 transition-colors hover:bg-neutral-300'>
+          <label className='flex size-25 cursor-pointer items-center justify-center rounded-lg border border-neutral-400 text-4xl font-light text-neutral-500 transition-colors hover:bg-neutral-200'>
             +
             <input
               type='file'
