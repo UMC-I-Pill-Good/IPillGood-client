@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useMyInfo } from '../../hooks/useMyInfo';
+import { useMyInfoQuery } from '@/shared/hooks';
 import Image from 'next/image';
 
 const ProfileCard = () => {
-  const { data, isLoading } = useMyInfo();
+  const { data, isLoading } = useMyInfoQuery();
 
   return (
     <div className='flex px-5 py-4 gap-3 bg-linear-[165deg] from-primary-300/50 to-primary-300/70 rounded-[20px] shadow-[0px_4px_4px_0px_rgba(126,131,135,0.10)]'>
@@ -22,7 +22,7 @@ const ProfileCard = () => {
         {isLoading ? (
           <div className='w-16 h-4 rounded animate-pulse bg-primary-300' />
         ) : (
-          <p className='truncate text-black text-[18px] typo-title-gosanja'>
+          <p className='truncate text-black text-[18px] typo-title-gosanja pt-1'>
             {data?.nickname ?? '회원'}
           </p>
         )}

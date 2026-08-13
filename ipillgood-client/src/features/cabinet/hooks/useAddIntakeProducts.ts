@@ -1,7 +1,7 @@
 import { getIntakeConflict, postIntakeProduct } from '@/features/cabinet/api/intake';
 import { IntakeConflict } from '@/features/cabinet/types/intake';
-import { intakeTodayQueryKey } from '@/features/home/hooks/useIntakeToday';
 import { TOAST_MESSAGES } from '@/shared/constants/toastMessages';
+import { invalidateActiveProductQueries } from '@/shared/utils/invalidateActiveProductQueries';
 import { showToast } from '@/shared/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
@@ -39,11 +39,7 @@ export const useAddIntakeProducts = ({ onSuccess }: UseAddIntakeProductsOptions 
         return;
       }
 
-      queryClient.invalidateQueries({ queryKey: ['cabinetProducts'] });
-      queryClient.invalidateQueries({ queryKey: ['activeProducts'] });
-      queryClient.invalidateQueries({ queryKey: intakeTodayQueryKey });
-      queryClient.invalidateQueries({ queryKey: ['intakeCalendar'] });
-      queryClient.invalidateQueries({ queryKey: ['growthStage'] });
+      invalidateActiveProductQueries(queryClient);
 
       showToast.success(TOAST_MESSAGES.SUPPLEMENT_ADDED);
       if (onSuccess) {
@@ -67,7 +63,7 @@ export const useAddIntakeProducts = ({ onSuccess }: UseAddIntakeProductsOptions 
         : undefined;
 
       if (errorData?.code === 'INTAKE409_3') {
-        showToast.error('오늘 삭제한 영양제는 내일부터 다시 추가할 수 있습니다.');
+        showToast.error('오늘은 재추가할 수 없습니다.');
         return;
       }
 
@@ -85,7 +81,7 @@ export const useAddIntakeProducts = ({ onSuccess }: UseAddIntakeProductsOptions 
 
         if (failedResponse) {
           if (failedResponse.code === 'INTAKE409_3') {
-            showToast.error('오늘 삭제한 영양제는 내일부터 다시 추가할 수 있습니다.');
+            showToast.error('오늘은 재추가할 수 없습니다.');
             onCheckComplete();
             return;
           }

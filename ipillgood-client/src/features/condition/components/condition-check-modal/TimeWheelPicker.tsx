@@ -76,7 +76,7 @@ const TimeWheelPicker = ({
   };
 
   return (
-    <div className='relative h-24 w-[87px]'>
+    <div className='relative h-24 w-21.75'>
       <div className='pointer-events-none absolute left-0 right-0 top-8 bottom-8 border-y border-neutral-500' />
 
       <div

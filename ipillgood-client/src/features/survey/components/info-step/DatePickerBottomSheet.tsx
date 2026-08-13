@@ -1,7 +1,6 @@
 import { DateValue } from '@/features/survey/types/survey';
 import { monthOptions, yearOptions } from '@/features/survey/constants/basicInfo.constants';
-import { BottomSheet, TextButton } from '@/shared/components';
-import { WheelSelectDate } from './WheelSelectDate';
+import { BottomSheet, TextButton, WheelPicker } from '@/shared/components';
 
 interface DatePickerBottomSheetProps {
   open: boolean;
@@ -39,9 +38,29 @@ const DatePickerBottomSheet = ({
   return (
     <BottomSheet open={open} onOpenChange={onOpenChange}>
       <div className='mt-8 mb-5 flex items-stretch gap-4'>
-        <WheelSelectDate options={yearOptions} value={value.year} onChange={handleYearChange} />
-        <WheelSelectDate options={monthOptions} value={value.month} onChange={handleMonthChange} />
-        <WheelSelectDate
+        <WheelPicker
+          ariaLabel='출생 연도 선택'
+          itemHeight={48}
+          selectedClassName='typo-body-5'
+          unselectedClassName='typo-body-6 text-neutral'
+          options={yearOptions}
+          value={value.year}
+          onChange={handleYearChange}
+        />
+        <WheelPicker
+          ariaLabel='출생 월 선택'
+          itemHeight={48}
+          selectedClassName='typo-body-5'
+          unselectedClassName='typo-body-6 text-neutral'
+          options={monthOptions}
+          value={value.month}
+          onChange={handleMonthChange}
+        />
+        <WheelPicker
+          ariaLabel='출생 일 선택'
+          itemHeight={48}
+          selectedClassName='typo-body-5'
+          unselectedClassName='typo-body-6 text-neutral'
           options={dayOptions}
           value={value.day}
           onChange={(day) => onChange({ ...value, day })}

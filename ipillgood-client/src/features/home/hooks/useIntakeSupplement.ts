@@ -1,8 +1,7 @@
-import { intakeNotificationSettingsQueryKey } from './../../my/hooks/useNotificationSettings';
+import { invalidateActiveProductQueries } from '@/shared/utils/invalidateActiveProductQueries';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { deleteActiveProduct, getActiveProducts } from '../api/intake';
-import { intakeTodayQueryKey } from './useIntakeToday';
 import { showToast } from '@/shared/utils';
 
 export const useIntakeSupplement = () => {
@@ -20,14 +19,10 @@ export const useIntakeSupplement = () => {
   const deleteMutation = useMutation({
     mutationFn: deleteActiveProduct,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cabinetProducts'] });
-      queryClient.invalidateQueries({ queryKey: ['cabinetProductsSearch'] });
-      queryClient.invalidateQueries({ queryKey: ['activeProducts'] });
-      queryClient.invalidateQueries({ queryKey: intakeTodayQueryKey });
-      queryClient.invalidateQueries({ queryKey: ['intakeCalendar'] });
-      queryClient.invalidateQueries({ queryKey: ['growthStage'] });
-      queryClient.invalidateQueries({ queryKey: ['cabinetProductDetail'] });
-      queryClient.invalidateQueries({ queryKey: intakeNotificationSettingsQueryKey });
+      invalidateActiveProductQueries(queryClient, {
+        includeCabinetSearch: true,
+        includeNotificationSettings: true,
+      });
 
       showToast.success('섭취 중인 영양제에서 삭제됐어요.');
     },

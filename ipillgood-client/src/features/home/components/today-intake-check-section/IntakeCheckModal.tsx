@@ -19,32 +19,40 @@ const IntakeCheckModal = ({
   onConfirm,
 }: IntakeCheckModalProps) => {
   const [checkedIdList, setCheckedIdList] = useState<number[]>(() =>
-    products.filter((p) => p.taken).map((p) => p.activeProductId),
+    products.filter((product) => product.taken).map((product) => product.activeProductId),
   );
 
   const handleToggleCheck = (activeProductId: number) => {
-    setCheckedIdList((prev) =>
-      prev.includes(activeProductId)
-        ? prev.filter((id) => id !== activeProductId)
-        : [...prev, activeProductId],
+    setCheckedIdList((previousIds) =>
+      previousIds.includes(activeProductId)
+        ? previousIds.filter((id) => id !== activeProductId)
+        : [...previousIds, activeProductId],
     );
   };
 
   return (
-    <ModalShell onClose={onCancel} className='gap-2.5' ariaLabel='오늘 영양제, 챙겨 드셨나요?'>
-      <div className='flex flex-col items-center justify-center gap-2'>
+    <ModalShell
+      onClose={onCancel}
+      className='max-h-[80dvh] gap-2.5 overflow-hidden!'
+      ariaLabel='오늘 영양제, 챙겨 드셨나요?'
+    >
+      <div className='shrink-0 flex flex-col items-center justify-center gap-2'>
         <p className='typo-body-5 text-black'>오늘 영양제, 챙겨 드셨나요?</p>
         <p className='typo-caption-2 text-neutral-800'>건강한 루틴이 쌓이고 있어요!</p>
       </div>
-      <CheckboxList
-        list={products.map((p) => ({
-          id: p.activeProductId,
-          label: p.productName,
-        }))}
-        checkedIdList={checkedIdList}
-        onToggle={handleToggleCheck}
-      />
-      <div className='mt-3 flex items-center gap-3'>
+
+      <div className='min-h-0 flex-1 overflow-y-auto overscroll-contain thin-scrollbar'>
+        <CheckboxList
+          list={products.map((product) => ({
+            id: product.activeProductId,
+            label: product.productName,
+          }))}
+          checkedIdList={checkedIdList}
+          onToggle={handleToggleCheck}
+        />
+      </div>
+
+      <div className='mt-3 shrink-0 flex items-center gap-3'>
         <TextButton
           type='button'
           text='아직 안 먹었어요!'

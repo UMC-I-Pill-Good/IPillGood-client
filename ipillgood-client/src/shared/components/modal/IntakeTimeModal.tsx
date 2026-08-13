@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ModalClockIcon } from '@/assets';
-import { WheelSelectTime } from '@/features/cabinet/components/modal/WheelSelectTime';
-import { IconButton, ModalShell, TextButton } from '@/shared/components';
+import { IconButton, ModalShell, TextButton, WheelPicker } from '@/shared/components';
 import { X } from 'lucide-react';
 
 interface IntakeTimeModalProps {
@@ -44,11 +43,37 @@ const IntakeTimeModal = ({ initialTime = '00:00', onConfirm, onCancel }: IntakeT
       </section>
 
       <section className='mt-8 flex items-center justify-center gap-4'>
-        <WheelSelectTime options={meridiemOptions} value={meridiem} onChange={setMeridiem} />
+        <WheelPicker
+          ariaLabel='오전 또는 오후 선택'
+          itemHeight={35}
+          selectedClassName='typo-body-9'
+          unselectedClassName='typo-body-10 text-neutral'
+          options={meridiemOptions}
+          value={meridiem}
+          onChange={setMeridiem}
+        />
 
-        <WheelSelectTime options={hourOptions} value={hour} onChange={setHour} />
+        <WheelPicker
+          ariaLabel='시 선택'
+          itemHeight={35}
+          loop
+          selectedClassName='typo-body-9'
+          unselectedClassName='typo-body-10 text-neutral'
+          options={hourOptions}
+          value={hour}
+          onChange={setHour}
+        />
 
-        <WheelSelectTime options={minuteOptions} value={minute} onChange={setMinute} />
+        <WheelPicker
+          ariaLabel='분 선택'
+          itemHeight={35}
+          loop
+          selectedClassName='typo-body-9'
+          unselectedClassName='typo-body-10 text-neutral'
+          options={minuteOptions}
+          value={minute}
+          onChange={setMinute}
+        />
       </section>
 
       <TextButton
