@@ -21,9 +21,9 @@ const InteractionWarningModal = ({
     <ModalShell
       onClose={onCancel}
       ariaLabel='병용 금기 처리 알림'
-      className='w-88 overflow-hidden px-10 py-8 pointer-events-auto'
+      className='w-88 max-h-[80vh] overflow-hidden px-10 py-8 pointer-events-auto'
     >
-      <section className='flex flex-col items-center justify-center space-y-4'>
+      <section className='min-h-0 flex flex-1 flex-col items-center justify-center space-y-4'>
         {!isDuplication ? (
           <>
             <WarningIcon width={60} height={60} />
@@ -68,13 +68,17 @@ const InteractionWarningModal = ({
               권장되지 않습니다.
             </p>
 
-            <article className='space-y-2'>
+            <article
+              className='max-h-[calc(80dvh-16rem)] w-full overflow-y-auto overscroll-contain thin-scrollbar space-y-2'
+              onWheel={(event) => event.stopPropagation()}
+            >
               {conflicts.map((conflict) => (
                 <div
                   key={`${conflict.currentIngredientId}-${conflict.targetIngredientId}`}
                   className='px-5 py-3 bg-semantic-200 rounded-lg flex gap-2'
                 >
                   <WarningCircleIcon className='shrink-0' />
+
                   <div className='flex flex-col gap-1 break-keep'>
                     <p className='typo-body-10'>
                       {conflict.currentIngredientName} + {conflict.targetIngredientName}
@@ -90,7 +94,7 @@ const InteractionWarningModal = ({
         )}
       </section>
 
-      <section className='mt-5 flex items-center gap-3'>
+      <section className='mt-5 flex shrink-0 items-center gap-3'>
         <TextButton
           type='button'
           text='취소'
