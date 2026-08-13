@@ -34,10 +34,10 @@ const CalendarGrid = ({ year, month, days, onDayClick }: CalendarGridProps) => {
         return (
           <div
             key={day.date}
-            onClick={day.selectable ? () => onDayClick(day.date) : undefined}
+            onClick={day.allCompleted ? () => onDayClick(day.date) : undefined}
             className={`relative z-0 h-6.75 flex items-center justify-center w-6.75 typo-caption-6 ${
               isFuture ? 'text-neutral-800' : 'text-black'
-            } ${day.selectable ? 'cursor-pointer' : 'cursor-default'}`}
+            } ${day.allCompleted ? 'cursor-pointer' : 'cursor-default'}`}
           >
             <div className='absolute -z-10'>
               {day.streakStatus === 'COMPLETED' ? (

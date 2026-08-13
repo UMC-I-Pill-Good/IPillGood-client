@@ -13,7 +13,9 @@ const WithdrawCompleteSection = () => {
       <div className='flex items-center justify-center w-25 h-25 rounded-full bg-primary-200'>
         <Check size={60} className='text-primary-600' />
       </div>
-      <h2 className='text-black typo-body-1 mt-4'>회원 탈퇴가 완료되었습니다.</h2>
+      <h2 className='text-black text-[20px] typo-title-gosanja mt-4'>
+        회원 탈퇴가 완료되었습니다.
+      </h2>
       <p className='text-black typo-caption-2 mt-3 mb-12.75'>
         그동안 <span className='text-primary-600'>아필굿</span>을 이용해 주셔서 감사합니다.
       </p>

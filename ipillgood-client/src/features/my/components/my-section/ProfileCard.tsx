@@ -22,7 +22,9 @@ const ProfileCard = () => {
         {isLoading ? (
           <div className='w-16 h-4 rounded animate-pulse bg-primary-300' />
         ) : (
-          <p className='truncate text-black typo-body-2'>{data?.nickname ?? '회원'}</p>
+          <p className='truncate text-black text-[18px] typo-title-gosanja'>
+            {data?.nickname ?? '회원'}
+          </p>
         )}
         <Link
           href='/my/profile'

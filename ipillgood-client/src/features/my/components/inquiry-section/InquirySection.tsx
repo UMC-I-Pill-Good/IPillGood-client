@@ -18,7 +18,7 @@ const InquirySection = () => {
   }
 
   return (
-    <section className='px-5 pt-4 flex flex-col flex-1 pb-20'>
+    <section className='px-5 pt-4 flex flex-col flex-1 pb-28.5'>
       <FaqAccordion faqList={faqs ?? []} title='자주 묻는 질문 (FAQ)' />
 
       <TextButton

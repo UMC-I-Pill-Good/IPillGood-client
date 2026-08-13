@@ -1,6 +1,6 @@
 'use client';
 import { useLayoutEffect, useRef, useState } from 'react';
-import { ChevronLeft, X } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { IconButton } from '@/shared/components';
 import { cn } from '@/shared/utils';
@@ -8,9 +8,6 @@ import { cn } from '@/shared/utils';
 interface HeaderProps {
   title?: string;
   showBackButton?: boolean; // 기본 true
-  showCloseButton?: boolean; // 기본 false
-  onBack?: () => void; // 없으면 router.back()
-  onClose?: () => void; // 없으면 router.back()
   titleClassName?: string;
   leftSpacerClassName?: string;
   alignWrappedTitleToBottom?: boolean;
@@ -19,9 +16,6 @@ interface HeaderProps {
 export const Header = ({
   title,
   showBackButton = true,
-  showCloseButton = false,
-  onBack,
-  onClose,
   titleClassName,
   leftSpacerClassName,
   alignWrappedTitleToBottom = false,
@@ -29,10 +23,7 @@ export const Header = ({
   const router = useRouter();
   const titleRef = useRef<HTMLHeadingElement>(null);
   const [isTitleWrapped, setIsTitleWrapped] = useState(false);
-  const handleBack = onBack ?? (() => router.back());
-  const handleClose = onClose ?? (() => router.back());
-
-  const isBackOnly = showBackButton && !showCloseButton;
+  const handleBack = () => router.back();
 
   useLayoutEffect(() => {
     if (!alignWrappedTitleToBottom || !titleRef.current) return;
@@ -49,15 +40,20 @@ export const Header = ({
     updateTitleWrapping();
 
     return () => resizeObserver.disconnect();
-  }, [alignWrappedTitleToBottom, isBackOnly, title]);
+  }, [alignWrappedTitleToBottom, showBackButton, title]);
 
   return (
-    <header className='flex h-17.5 w-full items-center gap-2 px-5'>
+    <header
+      className={cn(
+        'flex h-17.5 w-full items-center gap-2 px-5',
+        showBackButton && 'sticky top-0 z-10 bg-background',
+      )}
+    >
       {showBackButton && (
         <IconButton icon={<ChevronLeft size={26} />} ariaLabel='뒤로 가기' onClick={handleBack} />
       )}
 
-      {isBackOnly ? (
+      {showBackButton ? (
         <h1
           ref={titleRef}
           className={cn(
@@ -70,7 +66,7 @@ export const Header = ({
         </h1>
       ) : (
         <>
-          {!showBackButton && <div className={cn('w-9 shrink-0', leftSpacerClassName)} />}
+          <div className={cn('w-9 shrink-0', leftSpacerClassName)} />
           <h1
             ref={titleRef}
             className={cn(
@@ -81,12 +77,8 @@ export const Header = ({
           >
             {title}
           </h1>
-          {!showCloseButton && <div className='w-9' />}
+          <div className='w-9' />
         </>
-      )}
-
-      {showCloseButton && (
-        <IconButton icon={<X size={22} />} ariaLabel='닫기' onClick={handleClose} />
       )}
     </header>
   );

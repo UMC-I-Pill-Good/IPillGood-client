@@ -64,7 +64,7 @@ const NotificationSection = () => {
         ) : (
           <div className='mt-1 flex flex-col justify-between items-center px-5 py-5 pb-7.5 rounded-[30px] home-card-glass'>
             <MascotSadIcon />
-            <p className='typo-body-6 text-primary-700'>
+            <p className='text-[18px] typo-title-gosanja text-primary-700'>
               현재 섭취 중인 영양제가 존재하지 않아요...
             </p>
           </div>

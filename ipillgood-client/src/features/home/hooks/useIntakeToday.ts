@@ -39,8 +39,9 @@ export const useIntakeToday = () => {
       queryClient.invalidateQueries({ queryKey: intakeTodayQueryKey });
       queryClient.invalidateQueries({ queryKey: ['intakeCalendar'] });
       queryClient.invalidateQueries({ queryKey: ['growthStage'] });
+      queryClient.invalidateQueries({ queryKey: ['intakeDays'] });
       setIsModalOpen(false);
-      showToast.success('오늘도 잘 챙기셨어요!');
+      showToast.success('저장되었습니다.');
     },
 
     onError: () => {

@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { Header } from '@/shared/layout/Header';
 import { FetchError, TextButton } from '@/shared/components';
 import { useHealthStatusSelection } from '../../hooks/useHealthStatusSelection';
@@ -10,8 +9,6 @@ import HealthSystemCardGrid from './HealthSystemCardGrid';
 import HealthBodyPartButtonGroup from './HealthBodyPartButtonGroup';
 
 const HealthStatusSelection = () => {
-  const router = useRouter();
-
   const {
     selectedSystemKey,
     selectedBodyPartKey,
@@ -29,11 +26,7 @@ const HealthStatusSelection = () => {
   if (categoryError) {
     return (
       <div className='flex min-h-dvh w-full flex-col overflow-x-hidden bg-background'>
-        <Header
-          title='건강 상태'
-          showBackButton
-          onBack={() => router.push('/condition')}
-        />
+        <Header title='건강 상태' showBackButton />
 
         <FetchError
           description='건강 상태 분류를 불러오지 못했습니다.'
@@ -45,11 +38,7 @@ const HealthStatusSelection = () => {
 
   return (
     <div className='flex min-h-dvh w-full flex-col overflow-x-hidden bg-background pb-20'>
-      <Header
-        title='건강 상태'
-        showBackButton
-        onBack={() => router.push('/condition')}
-      />
+      <Header title='건강 상태' showBackButton />
 
       <HealthStatusHeader />
 
