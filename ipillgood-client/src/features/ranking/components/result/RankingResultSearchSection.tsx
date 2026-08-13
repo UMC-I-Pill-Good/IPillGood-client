@@ -23,13 +23,13 @@ const RankingResultSearchSection = ({
       onChange={onChange}
       onSearch={onSearch}
       onFilterClick={onFilterClick}
-      className='flex-1'
+      className='min-w-0 flex-1'
       searchBarClassName='h-11'
       showFilterButton={value.trim() === submittedValue.trim()}
     />
     <button
       type='button'
-      className='glass rounded-full px-3 typo-caption-2 text-primary-600'
+      className='glass shrink-0 rounded-full px-3 typo-caption-2 text-primary-600'
       onClick={onCancel}
     >
       취소
