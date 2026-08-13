@@ -5,3 +5,4 @@ export * from '@/features/cabinet/hooks/useReviewPrompt';
 export * from '@/features/cabinet/hooks/useCabinetSearchQuery';
 export * from '@/features/cabinet/hooks/useAddIntakeProducts';
 export * from '@/features/cabinet/hooks/usePatchIntakeProductMutation';
+export * from '@/features/cabinet/hooks/useSupplementDetailBottomSheet';
