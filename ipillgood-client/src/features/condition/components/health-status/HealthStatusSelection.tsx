@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { Header } from '@/shared/layout/Header';
 import { FetchError, TextButton } from '@/shared/components';
 import { useHealthStatusSelection } from '../../hooks/useHealthStatusSelection';
@@ -10,8 +9,6 @@ import HealthSystemCardGrid from './HealthSystemCardGrid';
 import HealthBodyPartButtonGroup from './HealthBodyPartButtonGroup';
 
 const HealthStatusSelection = () => {
-  const router = useRouter();
-
   const {
     selectedSystemKey,
     selectedBodyPartKey,
