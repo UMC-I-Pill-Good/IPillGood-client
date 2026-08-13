@@ -23,13 +23,6 @@ const CabinetActions = () => {
             <section className='flex items-center justify-end gap-1 px-5 pb-4'>
               <TextButton
                 type='button'
-                text='섭취 중인 영양제 추가'
-                size='sm'
-                className='px-3'
-                onClick={() => router.push('/cabinet/intake-add')}
-              />
-              <TextButton
-                type='button'
                 text='영양제 삭제'
                 variant='outline'
                 size='sm'

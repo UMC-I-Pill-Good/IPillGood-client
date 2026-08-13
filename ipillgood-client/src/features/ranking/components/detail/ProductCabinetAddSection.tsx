@@ -52,7 +52,7 @@ const ProductCabinetAddSection = ({ productId }: ProductCabinetAddSectionProps) 
         <TextButton
           type='button'
           text='캐비닛에 추가하기'
-          variant='primary'
+          variant='outline'
           size='lg'
           className='h-10 w-[77%] rounded-lg px-2 text-[18px] font-medium leading-normal shadow-[0_4px_2px_rgba(126,131,135,0.1)]'
           disabled={addProductMutation.isPending}

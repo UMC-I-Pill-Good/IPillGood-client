@@ -28,8 +28,10 @@ const SurveyContainer = () => {
   };
 
   return (
-    <main className='flex min-h-screen flex-col px-5 py-4'>
-      <StepNavigation step={step} onBack={handleBack} />
+    <main className='flex min-h-screen flex-col px-5 pb-4'>
+      <div className='sticky top-0 z-30 bg-background py-4'>
+        <StepNavigation step={step} onBack={handleBack} />
+      </div>
 
       {step === 1 && <BasicInfoStep />}
       {step === 2 && <LifestyleStep />}
