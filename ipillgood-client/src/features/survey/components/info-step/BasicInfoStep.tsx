@@ -5,13 +5,14 @@ import BirthYearSection from './BirthYearSection';
 import GenderSelectSection from './GenderSelectSection';
 import JobSelectSection from './JobSelectSection';
 import { TextButton } from '@/shared/components';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAtomValue } from 'jotai';
 import { genderAtom, selectedJobAtom, selectedDateAtom } from '@/features/survey/atoms/survey.atom';
 import { showToast } from '@/shared/utils';
 
 const BasicInfoStep = () => {
   const router = useRouter();
+  const returnToParam = useSearchParams().get('returnTo') === '/my' ? '&returnTo=/my' : '';
 
   const gender = useAtomValue(genderAtom);
   const selectedJob = useAtomValue(selectedJobAtom);
@@ -36,7 +37,7 @@ const BasicInfoStep = () => {
       }
     }
 
-    router.push('/survey?step=2');
+    router.push(`/survey?step=2${returnToParam}`);
   };
 
   return (

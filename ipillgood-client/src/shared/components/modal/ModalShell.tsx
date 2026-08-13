@@ -10,9 +10,16 @@ interface ModalShellProps {
   className?: string;
   children: ReactNode;
   ariaLabel: string;
+  allowOverflow?: boolean;
 }
 
-const ModalShell = ({ onClose, className = '', children, ariaLabel }: ModalShellProps) => {
+const ModalShell = ({
+  onClose,
+  className = '',
+  children,
+  ariaLabel,
+  allowOverflow = false,
+}: ModalShellProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   useScrollLock();
   useEscapeKey(onClose);
@@ -27,7 +34,8 @@ const ModalShell = ({ onClose, className = '', children, ariaLabel }: ModalShell
           aria-modal='true'
           aria-label={ariaLabel}
           className={clsx(
-            'flex w-77.5 max-h-[85dvh] flex-col overflow-y-auto rounded-[20px] bg-white px-7.5 py-6',
+            'flex w-77.5 max-h-[85dvh] flex-col rounded-[20px] bg-white px-7.5 py-6',
+            allowOverflow ? 'overflow-visible' : 'overflow-y-auto',
             className,
           )}
         >

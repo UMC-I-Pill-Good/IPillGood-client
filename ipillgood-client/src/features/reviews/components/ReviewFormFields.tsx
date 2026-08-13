@@ -103,7 +103,7 @@ const ReviewFormFields = ({
     )}
     <TextButton
       type='button'
-      text={isSubmitting ? '처리 중...' : submitButtonText}
+      text={submitButtonText}
       size='xl'
       className='mt-2 h-13 w-full'
       disabled={isSubmitting || !content.trim() || rating === 0}

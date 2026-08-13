@@ -47,7 +47,7 @@ export const useAddIntakeProducts = ({ onSuccess }: UseAddIntakeProductsOptions 
         return;
       }
 
-      router.push('/cabinet');
+      router.push('/home');
     },
     onError: () => {
       showToast.error(TOAST_MESSAGES.SUPPLEMENT_ADD_FAILED);

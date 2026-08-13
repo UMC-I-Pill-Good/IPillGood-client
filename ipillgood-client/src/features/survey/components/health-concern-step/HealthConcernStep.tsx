@@ -7,12 +7,13 @@ import {
   healthConcernItems,
 } from '@/features/survey/constants/healthConcern.constants';
 import { useSelectable } from '@/features/survey/hooks';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAtom } from 'jotai';
 import { healthConcernAtom } from '@/features/survey/atoms/survey.atom';
 
 const HealthConcernStep = () => {
   const router = useRouter();
+  const returnToParam = useSearchParams().get('returnTo') === '/my' ? '&returnTo=/my' : '';
 
   const [selectedItems, setSelectedItems] = useAtom(healthConcernAtom);
 
@@ -51,7 +52,7 @@ const HealthConcernStep = () => {
         size='xl'
         className='mt-auto w-full'
         disabled={!isValid}
-        onClick={() => router.push('/survey?step=5')}
+        onClick={() => router.push(`/survey?step=5${returnToParam}`)}
       />
     </section>
   );

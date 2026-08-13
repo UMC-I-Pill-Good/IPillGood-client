@@ -29,18 +29,18 @@ const ReviewDeleteModal = ({ onConfirm, onCancel, isSubmitting }: ReviewDeleteMo
       </p>
       <div className='mt-5 flex items-center gap-2.5'>
         <TextButton
-          text='예'
+          text='아니요'
           variant='semanticOutline'
           size='sm'
-          onClick={onConfirm}
+          onClick={handleCancel}
           disabled={isSubmitting}
           className='flex-1'
         />
         <TextButton
-          text='아니요'
+          text='예'
           variant='semantic'
           size='sm'
-          onClick={handleCancel}
+          onClick={onConfirm}
           disabled={isSubmitting}
           className='flex-1'
         />

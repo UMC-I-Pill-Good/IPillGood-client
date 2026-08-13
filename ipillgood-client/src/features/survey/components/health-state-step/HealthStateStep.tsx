@@ -3,13 +3,14 @@ import { FetchError, LoadingSpinner, TextButton } from '@/shared/components';
 import { StepHeader } from '@/shared/layout';
 import { getContraindications } from '@/features/survey/api/ingredients';
 import { questionLabel } from '@/features/survey/constants/healthState.constants';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAtom } from 'jotai';
 import { healthStateAtom } from '@/features/survey/atoms/survey.atom';
 import { ContraindicationGroup } from '@/features/survey/types/ingredients';
 
 const HealthStateStep = () => {
   const router = useRouter();
+  const returnToParam = useSearchParams().get('returnTo') === '/my' ? '&returnTo=/my' : '';
 
   // 건강 상태(금기사항) 목록 조회
   const { data, isPending, isError, refetch } = useQuery({
@@ -101,7 +102,7 @@ const HealthStateStep = () => {
         text='다음'
         size='xl'
         className='mt-auto w-full'
-        onClick={() => router.push('/survey?step=4')}
+        onClick={() => router.push(`/survey?step=4${returnToParam}`)}
       />
     </section>
   );

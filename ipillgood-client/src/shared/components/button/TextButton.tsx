@@ -60,7 +60,7 @@ const TextButton = ({
 
   if (href && !disabled) {
     return (
-      <a href={href} target={target} rel={rel} className={buttonClassName}>
+      <a href={href} target={target} rel={rel} onClick={onClick} className={buttonClassName}>
         {text}
       </a>
     );

@@ -15,12 +15,13 @@ const SurveyContainer = () => {
   const { resetSurvey } = useResetSurvey();
 
   const step = Number(searchParams.get('step') ?? 1);
+  const returnTo = searchParams.get('returnTo') === '/my' ? '/my' : '/home';
 
   // 이전 단계로 이동 (1단계에서는 이전 페이지로 이동)
   const handleBack = () => {
     if (step === 1) {
       resetSurvey();
-      router.push('/home');
+      router.push(returnTo);
       return;
     }
 
