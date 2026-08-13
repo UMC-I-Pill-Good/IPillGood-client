@@ -1,7 +1,7 @@
 # 💊 IPillGood Client
 
 <p align="center">
-  <img width="100%" alt="아필굿 배너" src="https://github.com/user-attachments/assets/3c06c726-2714-4a43-944b-079d6507b28f" />
+  <img width="100%" alt="아필굿 배너" src="https://github.com/user-attachments/assets/1fdcd508-461c-407b-83fc-d47ba92bf95e" />
 </p>
 
 ### 안녕하세요, 아필굿(I Pill Good) 프론트엔드 팀입니다. 😆
@@ -201,13 +201,14 @@ src/
 
 ### 3️⃣ Issue
 
-**이슈 이름 형식:** `[FEAT | BUG | REFACTOR] 이슈 내용`
+**이슈 이름 형식:** `[FEAT | BUG | REFACTOR | RELEASE] 이슈 내용`
 
 | 유형      | 제목 형식             |
 | --------- | --------------------- |
 | 기능 개발 | `[FEAT] 기능 내용`    |
 | 버그      | `[BUG] 버그 내용`     |
 | 리팩토링  | `[REFACTOR] 리팩토링` |
+| 배포      | `[RELEASE] 배포 내용` |
 
 ---
 
@@ -267,11 +268,11 @@ npm run dev
 
 ### 홈 화면
 
-<img width="100%" alt="홈 화면" src="https://github.com/user-attachments/assets/527ce955-74e0-4614-a185-e71ad6c928e5" />
+<img width="100%" alt="홈 화면" src="https://github.com/user-attachments/assets/d1638b00-d806-4438-ad18-94fbc951c3c2" />
 
 ### 검색 & 랭킹 화면
 
-<img width="100%" alt="검색 & 랭킹 화면" src="https://github.com/user-attachments/assets/d48b3d80-2135-4929-b236-3ad3d823737e" />
+<img width="100%" alt="검색 & 랭킹 화면" src="https://github.com/user-attachments/assets/d4a80a8e-9867-46b9-bb8a-fe603d5046d1" />
 
 ### 컨디션 화면
 
@@ -279,4 +280,8 @@ npm run dev
 
 ### 캐비닛 화면
 
-<img width="100%" alt="캐비닛 화면" src="https://github.com/user-attachments/assets/5b301245-57c3-47f7-bb37-7cb5eca0a24a" />
+<img width="100%" alt="캐비닛 화면" src="https://github.com/user-attachments/assets/eef77fae-83cd-4d2e-81ec-81e21e197409" />
+
+### 마이페이지 화면
+
+<img width="100%" alt="마이페이지 화면" src="https://github.com/user-attachments/assets/7f23c412-c5c1-486e-805e-5a418586e65d" />
