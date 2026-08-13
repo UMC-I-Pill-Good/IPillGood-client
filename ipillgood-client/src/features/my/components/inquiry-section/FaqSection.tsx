@@ -41,7 +41,9 @@ const FaqSection = () => {
       return (
         <div className='flex flex-col items-center py-5 '>
           <MascotSadIcon />
-          <p className='typo-body-6 text-primary-700'>검색 결과가 존재하지 않아요...</p>
+          <p className='text-[18px] typo-title-gosanja text-primary-700'>
+            검색 결과가 존재하지 않아요...
+          </p>
         </div>
       );
     }
@@ -51,7 +53,7 @@ const FaqSection = () => {
 
   return (
     <section className='px-5 pt-4 pb-28.5 flex-1 flex flex-col'>
-      <h2 className='text-black typo-body-5'>자주 묻는 질문 (FAQ)</h2>
+      <h2 className='text-black text-[18px] typo-title-gosanja'>자주 묻는 질문 (FAQ)</h2>
       <SearchBar
         isFilterButton={false}
         value={keyword}
