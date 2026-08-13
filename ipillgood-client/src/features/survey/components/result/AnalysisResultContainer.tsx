@@ -15,7 +15,7 @@ const AnalysisResultContainer = () => {
   const recommendationId = Number(searchParams.get('recommendationId'));
   const confirmedRecommendationId = useRef<number | null>(null);
 
-  const { data: myInfoData } = useMyInfoQuery();
+  const { data: myInfo } = useMyInfoQuery();
 
   const { data, isPending, isError, refetch } = useRecommendationQuery(recommendationId);
 
@@ -77,7 +77,7 @@ const AnalysisResultContainer = () => {
         <CheckCircleIcon />
         <h5 className='typo-body-4 typo-title-gosanja mt-5'>설문이 완료되었어요!</h5>
         <h5 className='typo-body-4 typo-title-gosanja mt-2 text-center leading-6!'>
-          <span className='text-primary'>{myInfoData?.result.nickname} 님</span>에게 딱 맞는 영양
+          <span className='text-primary'>{myInfo?.nickname} 님</span>에게 딱 맞는 영양
           성분을 추천드려요
         </h5>
 

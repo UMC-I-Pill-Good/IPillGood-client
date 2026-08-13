@@ -5,5 +5,6 @@ export const useMyInfoQuery = () =>
   useQuery({
     queryKey: ['myInfo'],
     queryFn: getMyInfo,
+    select: (response) => response.result,
     staleTime: 1000 * 60 * 5,
   });

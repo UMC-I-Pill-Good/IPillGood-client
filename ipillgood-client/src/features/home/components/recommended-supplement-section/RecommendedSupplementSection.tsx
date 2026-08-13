@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import SurveySummaryCard from './SurveySummaryCard';
 import RecommendedSupplementCard from './RecommendedSupplementCard';
-import { useMyInfo } from '@/features/my/hooks/useMyInfo';
+import { useMyInfoQuery } from '@/shared/hooks';
 import RecommendationFeedbackModal from './RecommendationFeedbackModal';
 import { useRecommendationFeedback } from '../../hooks/useRecommendationFeedback';
 import { useRecommendation } from '../../hooks/useRecommendation';
@@ -22,7 +22,7 @@ const RecommendedSupplementSection = () => {
 
   const { recommendation, isLoading, isError } = useRecommendation();
 
-  const { data: myInfo } = useMyInfo();
+  const { data: myInfo } = useMyInfoQuery();
   const nickname = myInfo?.nickname ?? '회원';
 
   if (isLoading) {

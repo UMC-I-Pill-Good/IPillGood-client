@@ -2,14 +2,14 @@
 
 import { TextButton } from '@/shared/components';
 import LogoutModal from './LogoutModal';
-import { useMyInfo } from '../../hooks/useMyInfo';
+import { useMyInfoQuery } from '@/shared/hooks';
 import { useState } from 'react';
 import { useLogout } from '../../hooks/useLogout';
 
 const LogoutSection = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data } = useMyInfo();
+  const { data } = useMyInfoQuery();
   const { handleLogout, isLoggingOut } = useLogout(() => setIsOpen(false));
 
   return (
