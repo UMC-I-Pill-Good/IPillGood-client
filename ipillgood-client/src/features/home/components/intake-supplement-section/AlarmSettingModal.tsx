@@ -21,6 +21,7 @@ const AlarmSettingModal = ({ onClose }: AlarmSettingModalProps) => {
         variant='primary'
         size='lg'
         href='/my/settings'
+        onClick={onClose}
         className='mt-5 w-full'
       />
     </ModalShell>

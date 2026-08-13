@@ -25,15 +25,15 @@ const RecommendedSupplementCard = ({ recommendationItem }: RecommendedSupplement
       <div className='w-11.25 h-18 relative shrink-0'>
         <Image fill src={imageUrl} alt={ingredientName} sizes='45px' className='object-contain' />
       </div>
-      <div className='flex flex-col min-w-0'>
+      <div className='flex flex-col min-w-0 w-full'>
         <p className='text-black typo-caption-1'>{ingredientName}</p>
-        <div className='flex justify-between typo-caption-6 '>
+        <div className='flex justify-between items-center typo-caption-6 '>
           <span className='text-neutral-800'>일일 권장량: {recommendedIntake}</span>
           <span className='text-primary-600'>{recommendedIntakeTime}</span>
         </div>
         <div className='flex gap-1 mt-2 mask-l-from-99% mask-r-from-99% overflow-x-scroll hide-scrollbar pb-2 px-0.5'>
           {effectKeywords.map((keyword) => (
-            <Chip key={keyword} text={keyword} variant='point' className='bg-[#77E5B7] px-4 py-1' />
+            <Chip key={keyword} text={keyword} variant='point' className='px-4 py-1' />
           ))}
         </div>
       </div>

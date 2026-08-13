@@ -11,7 +11,7 @@ const SupplementIngredientCard = ({ ingredient }: SupplementIngredientCardProps)
   <Link
     href={`/ingredient/${ingredient.ingredientId}`}
     aria-label={`${ingredient.name} 성분 상세 보기`}
-    className='block rounded-[20px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+    className='block rounded-[20px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition hover:bg-[#4680FE]/8'
   >
     <article className='flex w-full items-center gap-3 whitespace-normal rounded-[20px] border-none no-center-glass bg-primary/30 px-5 py-4'>
       <SupplementProductImage

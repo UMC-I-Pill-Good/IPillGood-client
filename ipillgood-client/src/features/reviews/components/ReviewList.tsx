@@ -63,7 +63,7 @@ const ReviewList = ({ productId }: ReviewListProps) => {
               ) : reviewQuery.hasNextPage ? (
                 <TextButton
                   type='button'
-                  text={reviewQuery.isFetchingNextPage ? '불러오는 중...' : '후기 더보기'}
+                  text='후기 더보기'
                   variant='assistive'
                   size='sm'
                   disabled={reviewQuery.isFetchingNextPage}
