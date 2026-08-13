@@ -67,7 +67,7 @@ export const useAddIntakeProducts = ({ onSuccess }: UseAddIntakeProductsOptions 
         : undefined;
 
       if (errorData?.code === 'INTAKE409_3') {
-        showToast.error('오늘 재추가할 수 없어요');
+        showToast.error('오늘 삭제한 영양제는 내일부터 다시 추가할 수 있습니다.');
         return;
       }
 
@@ -85,7 +85,7 @@ export const useAddIntakeProducts = ({ onSuccess }: UseAddIntakeProductsOptions 
 
         if (failedResponse) {
           if (failedResponse.code === 'INTAKE409_3') {
-            showToast.error('오늘 재추가할 수 없어요');
+            showToast.error('오늘 삭제한 영양제는 내일부터 다시 추가할 수 있습니다.');
             onCheckComplete();
             return;
           }
