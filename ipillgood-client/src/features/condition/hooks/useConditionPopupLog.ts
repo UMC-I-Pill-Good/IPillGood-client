@@ -5,6 +5,7 @@ import { patchConditionPopupDismissed } from '../api/patchConditionPopupDismisse
 import { conditionQueryKeys } from '../constants/conditionQueryKeys';
 import { type ConditionCheckStep } from '../store/useConditionStore';
 import { type ConditionCurrentWeekResult } from '../types/condition';
+import { showToast } from '@/shared/utils';
 
 interface UseConditionPopupLogParams {
   currentWeekStatus: ConditionCurrentWeekResult;
@@ -78,6 +79,7 @@ export const useConditionPopupLog = ({
       );
     } catch (error) {
       console.error('팝업 닫힘 기록 실패:', error);
+      showToast.error('팝업 상태를 저장하지 못했어요. 다시 시도해 주세요.');
     }
   };
 

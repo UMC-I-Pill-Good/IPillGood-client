@@ -39,8 +39,7 @@ const LoginForm = () => {
         router.push('/survey?step=1');
       }
     },
-    onError: (error) => {
-      console.error('로그인 실패:', error instanceof Error ? error.message : '알 수 없는 오류');
+    onError: () => {
       showToast.error('아이디 또는 비밀번호를 확인해주세요.');
     },
   });

@@ -62,8 +62,8 @@ export const useSignupForm = () => {
 
         setEmailServerErrorMessage(null);
         router.push('/signup?step=2');
-      } catch (err) {
-        console.error(err);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (error) {
         setEmailServerErrorMessage('이미 사용 중인 이메일입니다.');
       }
       return;
