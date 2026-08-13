@@ -59,7 +59,7 @@ const IntakeCheckModal = ({
           variant='primary'
           size='sm'
           onClick={() => onConfirm(checkedIdList)}
-          disabled={isConfirming}
+          disabled={isConfirming || checkedIdList.length === 0}
           className='flex-1'
         />
       </div>

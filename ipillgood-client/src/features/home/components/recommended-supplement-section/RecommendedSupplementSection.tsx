@@ -32,7 +32,7 @@ const RecommendedSupplementSection = () => {
   if (isError) return null;
 
   return (
-    <section className='flex flex-col gap-2 mt-8' ref={sectionRef}>
+    <section className='flex flex-col gap-2 mt-8 w-full' ref={sectionRef}>
       <article className='flex justify-between items-center'>
         <h2 className='text-black typo-title-gosanja text-[18px]'>정기 추천 영양 성분</h2>
         <Link

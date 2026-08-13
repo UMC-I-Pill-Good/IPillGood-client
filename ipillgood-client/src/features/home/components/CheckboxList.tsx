@@ -10,7 +10,7 @@ interface CheckboxListProps {
 }
 const CheckboxList = ({ list, checkedIdList, onToggle, readOnly = false }: CheckboxListProps) => {
   return (
-    <div className='flex flex-col gap-2 max-h-40 overflow-y-auto mask-t-from-99% mask-b-from-99% hide-scrollbar pb-1 pt-1.25'>
+    <div className='flex flex-col gap-2 pb-1 pt-1.25'>
       {list.map((item) => {
         const checked = checkedIdList.includes(item.id);
         return (
@@ -32,7 +32,7 @@ const CheckboxList = ({ list, checkedIdList, onToggle, readOnly = false }: Check
             </div>
             <span
               title={item.label}
-              className='min-w-0 flex-1 text-point-700 truncate leading-[1.3]'
+              className='min-w-0 flex-1 text-point-700 wrap-anywhere leading-[1.3]'
             >
               {item.label}
             </span>
