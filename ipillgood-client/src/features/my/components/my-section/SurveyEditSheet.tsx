@@ -37,7 +37,7 @@ const SurveyEditSheet = ({ open, onOpenChange }: SurveyEditSheetProps) => {
           text='설문 다시 작성하기'
           variant='primary'
           size='xl'
-          href='/survey'
+          href='/survey?returnTo=/my'
           className='mt-9.75 w-full mb-8'
         />
       </div>

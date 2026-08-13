@@ -3,10 +3,11 @@ import { StepHeader } from '@/shared/layout';
 import { useAtom, useAtomValue } from 'jotai';
 import { genderAtom, lifestyleAtom } from '@/features/survey/atoms/survey.atom';
 import { lifestyleOptions } from '@/features/survey/constants/lifestyle.constants';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const LifestyleStep = () => {
   const router = useRouter();
+  const returnToParam = useSearchParams().get('returnTo') === '/my' ? '&returnTo=/my' : '';
 
   const [selectedOptions, setSelectedOptions] = useAtom(lifestyleAtom);
   const gender = useAtomValue(genderAtom);
@@ -64,7 +65,7 @@ const LifestyleStep = () => {
         text='다음'
         size='xl'
         className='mt-auto w-full'
-        onClick={() => router.push('/survey?step=3')}
+        onClick={() => router.push(`/survey?step=3${returnToParam}`)}
       />
     </section>
   );

@@ -38,6 +38,7 @@ const IntakeCycleModal = ({
     <ModalShell
       onClose={onCancel}
       ariaLabel='복용 주기 선택'
+      allowOverflow
       className='relative w-full max-w-88 pointer-events-auto'
     >
       <div className='absolute right-6 top-6'>

@@ -12,12 +12,14 @@ interface SupplementSearchSectionProps {
   onDebouncedKeywordChange: (keyword: string | null) => void;
   sort: '후기 많은 순' | '평점 높은 순';
   setSort: (value: '후기 많은 순' | '평점 높은 순') => void;
+  selectedCount: number;
 }
 
 const SupplementSearchSection = ({
   onDebouncedKeywordChange,
   sort,
   setSort,
+  selectedCount,
 }: SupplementSearchSectionProps) => {
   const [keyword, setKeyword] = useState('');
   const [isSortOpen, setIsSortOpen] = useState(false);
@@ -39,7 +41,10 @@ const SupplementSearchSection = ({
       />
 
       <section className='flex items-center justify-between'>
-        <p className='typo-body-5'>제품 목록</p>
+        <div className='flex items-baseline gap-1.5'>
+          <p className='typo-body-5'>제품 목록</p>
+          <span className='typo-caption-6 text-neutral-800'>{selectedCount}개 선택</span>
+        </div>
 
         <div className='relative'>
           <button

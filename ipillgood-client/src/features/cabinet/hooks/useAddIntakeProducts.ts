@@ -6,7 +6,7 @@ import { showToast } from '@/shared/utils';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface AddIntakeProductsParams {
   memberProductIds: number[];
@@ -24,6 +24,12 @@ export const useAddIntakeProducts = ({ onSuccess }: UseAddIntakeProductsOptions 
   const queryClient = useQueryClient();
   const router = useRouter();
 
+  useEffect(() => {
+    if (onSuccess) return;
+
+    router.prefetch('/home');
+  }, [onSuccess, router]);
+
   const addIntakeProductsMutation = useMutation({
     mutationFn: ({ memberProductIds, intakeTime, frequency }: AddIntakeProductsParams) =>
       Promise.all(
@@ -39,15 +45,15 @@ export const useAddIntakeProducts = ({ onSuccess }: UseAddIntakeProductsOptions 
         return;
       }
 
-      invalidateActiveProductQueries(queryClient);
-
       showToast.success(TOAST_MESSAGES.SUPPLEMENT_ADDED);
       if (onSuccess) {
+        invalidateActiveProductQueries(queryClient);
         onSuccess();
         return;
       }
 
-      router.push('/cabinet');
+      router.replace('/home');
+      queueMicrotask(() => invalidateActiveProductQueries(queryClient));
     },
     onError: () => {
       showToast.error(TOAST_MESSAGES.SUPPLEMENT_ADD_FAILED);
