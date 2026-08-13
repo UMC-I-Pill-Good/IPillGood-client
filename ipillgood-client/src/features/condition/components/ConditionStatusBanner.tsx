@@ -30,7 +30,7 @@ const ConditionStatusBanner = ({
             'shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
           )}
         >
-          <div className='flex flex-row items-center gap-2 mx-auto min-w-0 shrink-0 overflow-visible pl-6'>
+          <div className='mx-auto flex min-w-0 shrink-0 translate-x-[6px] flex-row items-center gap-1 overflow-visible min-[375px]:gap-2'>
             <div className='flex min-w-0 translate-y-0.5 flex-col justify-center gap-0.5 pt-1'>
               <p className='typo-title-gosanja whitespace-nowrap text-xl font-normal not-italic leading-none tracking-normal text-primary-700'>
                 {title}
@@ -40,10 +40,10 @@ const ConditionStatusBanner = ({
               </p>
             </div>
 
-            <div className='shrink-0 pointer-events-none flex items-center justify-center h-[80px] w-[59px]'>
+            <div className='pointer-events-none flex h-[76px] w-[56px] shrink-0 items-center justify-center'>
               <MascotHeartIcon
-                width={59}
-                height={80}
+                width={56}
+                height={76}
                 className='block h-full w-full object-contain'
               />
             </div>
@@ -54,11 +54,11 @@ const ConditionStatusBanner = ({
           className={clsx(
             'relative flex w-full flex-col items-center rounded-2xl bg-primary-300 px-4 text-left shadow-[0_4px_4px_0_rgba(126,131,135,0.1)]',
             currentWeekStatus.checkAvailable
-              ? 'justify-between pb-4.5 pt-3.5'
-              : 'h-[77px] justify-center py-4.5',
+              ? 'justify-between pb-5.5 pt-4.5'
+              : 'h-[85px] justify-center py-5.5',
           )}
         >
-          <div className='mx-auto flex w-full min-w-0 shrink-0 flex-row items-center justify-center gap-1 pl-0 min-[400px]:gap-2 min-[400px]:pl-6'>
+          <div className='mx-auto flex w-full min-w-0 shrink-0 flex-row items-center justify-center gap-1 pl-0 min-[400px]:pl-5'>
             <div className='flex min-w-0 translate-y-0.5 flex-col justify-center gap-1'>
               <p className='typo-title-gosanja whitespace-nowrap text-xl font-normal not-italic leading-none tracking-normal text-primary-700'>
                 {title}
@@ -85,7 +85,7 @@ const ConditionStatusBanner = ({
               text='이번 주 컨디션 체크하러 가기'
               size='lg'
               onClick={onOpenConditionCheck}
-              className='mx-auto h-10.5 w-full max-w-[290px] rounded-lg bg-primary-600 text-base font-medium text-white shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] transition-all hover:bg-primary-700'
+              className='mx-auto h-10.5 w-full max-w-[300px] rounded-lg bg-primary-600 text-base font-medium text-white shadow-[0_4px_4px_0_rgba(126,131,135,0.1)] transition-all hover:bg-primary-700'
             />
           )}
         </div>

@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
+import { DetailInfoIcon } from '@/assets';
 import { TextButton } from '@/shared/components';
 import { TOAST_MESSAGES } from '@/shared/constants/toastMessages';
 import { showToast } from '@/shared/utils/toast';
@@ -80,18 +81,27 @@ const ProductPurchaseSection = ({ productId }: ProductPurchaseSectionProps) => {
 
   return (
     <>
-      <section className='flex w-full flex-col gap-2 px-5 py-4'>
-        <p className='text-center typo-caption-6 text-neutral-800'>
-          질병 치료 및 의약품을 복용 중이라면 의사 상담 후 섭취를 추천드려요.
-        </p>
-        <TextButton
-          type='button'
-          text='구매하러 가기'
-          size='xl'
-          onClick={handlePurchaseClick}
-          disabled={purchaseCheckQuery.isPending}
-          className='h-13 w-full rounded-lg px-2 typo-body-2'
-        />
+      <section className='w-full'>
+        <div className='flex aspect-[353/99] min-h-[99px] w-full flex-col items-center justify-center gap-2 rounded-[20px] bg-white p-3 shadow-[0_4px_2px_rgba(126,131,135,0.1)]'>
+          <div className='flex w-[77%] items-center gap-2 text-neutral-800'>
+            <span className='flex size-[25px] shrink-0 items-center justify-center rounded-full bg-primary-200 text-primary-600'>
+              <DetailInfoIcon aria-hidden='true' className='h-[15px] w-1' />
+            </span>
+            <p className='min-w-0 w-[179px] shrink typo-caption-6 leading-3 not-italic text-neutral'>
+              질병 치료 및 의약품을 복용 중이라면
+              <br />
+              의사 상담 후 섭취를 추천드려요.
+            </p>
+          </div>
+          <TextButton
+            type='button'
+            text='구매하러 가기'
+            size='lg'
+            onClick={handlePurchaseClick}
+            disabled={purchaseCheckQuery.isPending}
+            className='h-10 w-[77%] rounded-lg px-2 text-[18px] font-medium leading-normal shadow-[0_4px_2px_rgba(126,131,135,0.1)]'
+          />
+        </div>
       </section>
 
       {isWarningModalOpen && purchaseCheck && (

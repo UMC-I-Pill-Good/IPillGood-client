@@ -3,6 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 
+import { DetailCabinetIcon } from '@/assets';
 import { useAddCabinetProductsMutation } from '@/features/cabinet/hooks/useAddCabinetProductsMutation';
 import { TextButton } from '@/shared/components';
 import { showToast } from '@/shared/utils';
@@ -38,21 +39,26 @@ const ProductCabinetAddSection = ({ productId }: ProductCabinetAddSectionProps) 
   };
 
   return (
-    <section className='flex w-full flex-col gap-2 px-5 pb-6'>
-      <p className='text-center typo-caption-6 leading-none text-neutral'>
-        해당 영양제를 이미 드시고 계신가요?
-        <br />
-        그렇다면 캐비닛에 추가해 보세요!
-      </p>
-      <TextButton
-        type='button'
-        text='캐비닛에 추가하기'
-        variant='outline'
-        size='xl'
-        className='w-full rounded-lg border-secondary-600 bg-transparent text-secondary-700'
-        disabled={addProductMutation.isPending}
-        onClick={handleAddProduct}
-      />
+    <section className='w-full'>
+      <div className='flex aspect-[353/99] min-h-[99px] w-full flex-col items-center justify-center gap-2 rounded-[20px] bg-white p-3 shadow-[0_4px_2px_rgba(126,131,135,0.1)]'>
+        <div className='flex w-[77%] items-center gap-2 text-neutral-800'>
+          <span className='flex size-[25px] shrink-0 items-center justify-center rounded-full bg-secondary-200 text-secondary-600'>
+            <DetailCabinetIcon aria-hidden='true' className='size-[11px]' />
+          </span>
+          <p className='min-w-0 w-[179px] shrink typo-caption-6 leading-3 not-italic text-neutral'>
+            해당 영양제를 이미 드시고 계신가요? 그렇다면 캐비닛에 추가해 보세요!
+          </p>
+        </div>
+        <TextButton
+          type='button'
+          text='캐비닛에 추가하기'
+          variant='primary'
+          size='lg'
+          className='h-10 w-[77%] rounded-lg px-2 text-[18px] font-medium leading-normal shadow-[0_4px_2px_rgba(126,131,135,0.1)]'
+          disabled={addProductMutation.isPending}
+          onClick={handleAddProduct}
+        />
+      </div>
     </section>
   );
 };

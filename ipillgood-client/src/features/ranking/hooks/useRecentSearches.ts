@@ -7,6 +7,7 @@ import {
 } from '../api/recentSearch';
 
 const RECENT_KEYWORDS_QUERY_KEY = ['recentKeywords'] as const;
+const MAX_RECENT_KEYWORD_COUNT = 5;
 
 export const useSaveRecentSearch = () => {
   const queryClient = useQueryClient();
@@ -35,7 +36,7 @@ export const useRecentSearches = () => {
       if (!response.isSuccess || !response.result) {
         throw new Error(response.message);
       }
-      return response.result.keywords;
+      return response.result.keywords.slice(0, MAX_RECENT_KEYWORD_COUNT);
     },
   });
   const deleteMutation = useMutation({

@@ -20,6 +20,7 @@ const SupplementCombinationSection = ({ compatibility }: SupplementCombinationSe
       <CombinationCard
         title='함께 섭취하면 좋은 조합이에요!'
         ingredientNameList={compatibility.goodCombinations.map((item) => item.targetIngredientName)}
+        emptyMessage='함께 섭취하면 좋은 성분 조합이 없어요.'
         tone='favorable'
       />
       <CombinationCard
@@ -27,6 +28,7 @@ const SupplementCombinationSection = ({ compatibility }: SupplementCombinationSe
         ingredientNameList={compatibility.cautionCombinations.map(
           (item) => item.targetIngredientName,
         )}
+        emptyMessage='주의가 필요한 성분 조합이 없어요.'
         tone='caution'
       />
     </div>

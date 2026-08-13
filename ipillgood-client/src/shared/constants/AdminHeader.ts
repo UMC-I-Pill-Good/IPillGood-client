@@ -1,11 +1,5 @@
 export const ADMIN_HEADER_LIST = [
   {
-    pathname: '/admin/db',
-    parentTitle: 'DB 관리',
-    currentTitle: 'DB 목록',
-    pageTitle: 'DB 목록',
-  },
-  {
     pathname: '/admin/reviews',
     parentTitle: '후기 관리',
     currentTitle: '후기 신고',
