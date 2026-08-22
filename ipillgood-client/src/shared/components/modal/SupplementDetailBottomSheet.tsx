@@ -102,40 +102,58 @@ const SupplementDetailBottomSheet = ({
             />
           </article>
 
-          {!isPushAlarmOn ? (
+          {!data.result.isActiveIntake ? (
             <section className='no-center-glass px-5 pt-6 pb-5 rounded-[20px] flex flex-col items-center justify-between gap-2'>
               <TimerOffIcon />
 
-              <p className='text-center typo-body-10'>푸시 알림이 꺼져 있어요.</p>
+              <p className='text-center typo-body-10'>
+                섭취 중일 때만
+                <br />
+                알림을 설정할 수 있어요
+              </p>
 
               <p className='text-neutral typo-caption-6'>
-                푸시 알림을 켜면 이 영양제에 대한 알림을 설정할 수 있어요!
+                섭취 중인 영양제로 추가하면 알림을 설정할 수 있어요!
               </p>
             </section>
-          ) : !intakePushEnabled ? (
-            <section className='no-center-glass px-5 pt-6 pb-5 rounded-[20px] flex flex-col items-center justify-between gap-2'>
-              <TimerOffIcon />
-
-              <p className='text-center typo-body-10'>복용 알림이 꺼져 있어요.</p>
-
-              <p className='text-neutral typo-caption-6'>
-                복용 알림을 켜면 이 영양제에 대한 알림을 설정할 수 있어요!
-              </p>
-            </section>
-          ) : data.result.isActiveIntake ? (
+          ) : (
             <section className='space-y-2'>
-              <div className='no-center-glass px-5 rounded-[20px] flex items-center justify-between h-13'>
-                <p className='typo-body-10'>복용 알림 ON/OFF</p>
-                <ToggleButton
-                  isChecked={notificationEnabled}
-                  onClick={() => {
-                    updateActiveProduct(
-                      { notificationEnabled: !notificationEnabled },
-                      { errorMessage: '알림 설정 변경에 실패했어요.' },
-                    );
-                  }}
-                />
-              </div>
+              {/* 푸시/복용 알림이 꺼져 있으면 알림 ON/OFF만 막고,
+                  복용 시간·주기는 알림과 무관한 설정이므로 그대로 변경할 수 있게 둔다 */}
+              {!isPushAlarmOn ? (
+                <div className='no-center-glass px-5 pt-6 pb-5 rounded-[20px] flex flex-col items-center justify-between gap-2'>
+                  <TimerOffIcon />
+
+                  <p className='text-center typo-body-10'>푸시 알림이 꺼져 있어요.</p>
+
+                  <p className='text-neutral typo-caption-6'>
+                    푸시 알림을 켜면 이 영양제에 대한 알림을 설정할 수 있어요!
+                  </p>
+                </div>
+              ) : !intakePushEnabled ? (
+                <div className='no-center-glass px-5 pt-6 pb-5 rounded-[20px] flex flex-col items-center justify-between gap-2'>
+                  <TimerOffIcon />
+
+                  <p className='text-center typo-body-10'>복용 알림이 꺼져 있어요.</p>
+
+                  <p className='text-neutral typo-caption-6'>
+                    복용 알림을 켜면 이 영양제에 대한 알림을 설정할 수 있어요!
+                  </p>
+                </div>
+              ) : (
+                <div className='no-center-glass px-5 rounded-[20px] flex items-center justify-between h-13'>
+                  <p className='typo-body-10'>복용 알림 ON/OFF</p>
+                  <ToggleButton
+                    isChecked={notificationEnabled}
+                    onClick={() => {
+                      updateActiveProduct(
+                        { notificationEnabled: !notificationEnabled },
+                        { errorMessage: '알림 설정 변경에 실패했어요.' },
+                      );
+                    }}
+                  />
+                </div>
+              )}
 
               <div className='no-center-glass px-5 rounded-[20px] flex items-center justify-between h-13'>
                 <p className='typo-body-10'>복용 시간</p>
@@ -160,20 +178,6 @@ const SupplementDetailBottomSheet = ({
                   {activeProduct?.frequencyLabel} <ChevronRight size={20} />
                 </button>
               </div>
-            </section>
-          ) : (
-            <section className='no-center-glass px-5 pt-6 pb-5 rounded-[20px] flex flex-col items-center justify-between gap-2'>
-              <TimerOffIcon />
-
-              <p className='text-center typo-body-10'>
-                섭취 중일 때만
-                <br />
-                알림을 설정할 수 있어요
-              </p>
-
-              <p className='text-neutral typo-caption-6'>
-                섭취 중인 영양제로 추가하면 알림을 설정할 수 있어요!
-              </p>
             </section>
           )}
         </section>

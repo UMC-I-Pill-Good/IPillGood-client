@@ -38,7 +38,15 @@ const NotificationSection = () => {
 
   return (
     <section className='flex flex-col px-5 py-4 gap-8 pb-28.5'>
-      <p className='typo-body-6 text-neutral-800'>섭취 중인 영양제의 알림을 설정해 보세요.</p>
+      {isPushAlarmOn ? (
+        <p className='typo-body-6 text-neutral-800'>섭취 중인 영양제의 알림을 설정해 보세요.</p>
+      ) : (
+        <p className='typo-body-6 text-neutral-800'>
+          푸시 알림이 꺼져 있어 알림을 설정할 수 없어요.
+          <br />
+          <span className='text-primary'>설정 &gt; 푸시 알림</span>을 먼저 켜주세요.
+        </p>
+      )}
 
       <NotificationCard title='전체 알림 ON/OFF'>
         <NotificationItem
