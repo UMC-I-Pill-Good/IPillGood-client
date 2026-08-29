@@ -3,6 +3,7 @@ import { postPushTokens, deletePushTokens } from '../api/notification';
 import { getMessagingInstance } from '@/shared/utils/firebase';
 import { getToken } from 'firebase/messaging';
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
+import { isPushSupported } from '@/shared/utils';
 
 export const useFcmTokens = () => {
   const { getPushTokenId, setPushTokenId } = useLocalStorage();
@@ -23,6 +24,11 @@ export const useFcmTokens = () => {
   });
 
   const handleRegisterFcmTokens = async () => {
+    // iOS 브라우저 탭 등 웹 푸시 미지원 환경에서는 Notification API가 없어 요청 자체가 불가능
+    if (!isPushSupported()) {
+      return { permission: 'unsupported' as const, isRegistered: false };
+    }
+
     // 브라우저 알림 권한 요청 다이얼로그
     const permission = await Notification.requestPermission();
 

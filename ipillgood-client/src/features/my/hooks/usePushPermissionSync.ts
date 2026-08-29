@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { isPushSupported } from '@/shared/utils';
 
 /*
  * 서버 설정은 켜져있는데(pushEnabled: true) 브라우저 알림 권한이 'granted'가 아니면
@@ -12,6 +13,11 @@ export const usePushPermissionSync = (
   updatePushSetting: (variables: { pushEnabled: boolean }) => void,
 ) => {
   useEffect(() => {
+    // iOS 브라우저 탭처럼 웹 푸시 미지원 환경에서는 Notification API 자체가 없어서
+    // 권한을 읽을 수 없다. 이 경우는 '거부됨'이 아니라 '판단 불가'이므로,
+    // 홈 화면 PWA에서 켜둔 서버 설정을 여기서 꺼버리지 않도록 그대로 둔다.
+    if (!isPushSupported()) return;
+
     const syncIfRevoked = () => {
       if (pushEnabled && Notification.permission !== 'granted') {
         updatePushSetting({ pushEnabled: false });
