@@ -16,7 +16,7 @@ const AlarmSettingSection = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [optimisticOn, setOptimisticOn] = useState(false);
   const { isPushAlarmOn, handleTogglePushAlarm } = usePushAlarmSettings();
-  const { handleRegisterFcmTokens } = useFcmTokens();
+  const { requestNotificationPermission, registerFcmToken } = useFcmTokens();
 
   const handleToggle = async () => {
     if (isProcessing || isPushAlarmOn === undefined) return; // 처리 중이거나 설정값 로드 전이면 재클릭 무시
@@ -36,19 +36,26 @@ const AlarmSettingSection = () => {
 
     setIsProcessing(true);
 
-    // 브라우저 알림 권한 설정 전 -> FCM 토큰 등록까지 성공한 경우에만 서버 설정을 켬
+    // 브라우저 알림 권한 설정 전 -> 허용을 받은 뒤에만 FCM 토큰 등록을 진행
     if (Notification.permission === 'default') {
-      setOptimisticOn(true);
-      const { permission, isRegistered } = await handleRegisterFcmTokens();
+      const permission = await requestNotificationPermission();
 
-      if (permission !== 'granted' || !isRegistered) {
+      if (permission !== 'granted') {
         setIsProcessing(false);
-        setOptimisticOn(false);
         if (permission === 'denied') {
           setModalVariant('denied');
-        } else if (permission === 'granted') {
-          showToast.error('알림 등록에 실패했어요. 다시 시도해 주세요.');
         }
+        return;
+      }
+
+      // 허용 클릭된 시점부터 낙관적으로 on 표시, 서버 등록은 이어서 백그라운드로 진행
+      setOptimisticOn(true);
+      const isRegistered = await registerFcmToken();
+
+      if (!isRegistered) {
+        setIsProcessing(false);
+        setOptimisticOn(false);
+        showToast.error('알림 등록에 실패했어요. 다시 시도해 주세요.');
         return;
       }
     }
