@@ -17,17 +17,20 @@ export const usePushAlarmSettings = () => {
   const { mutate: updatePushSetting } = useMutation({
     mutationFn: patchNotificationSettingsMe,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: appPushSettingQueryKey });
-      queryClient.invalidateQueries({ queryKey: intakeNotificationSettingsQueryKey });
+      // 반환해서 refetch가 끝난 뒤에 onSettled가 호출되도록 함
+      return Promise.all([
+        queryClient.invalidateQueries({ queryKey: appPushSettingQueryKey }),
+        queryClient.invalidateQueries({ queryKey: intakeNotificationSettingsQueryKey }),
+      ]);
     },
     onError: () => {
       showToast.error('알림 설정 변경에 실패했어요.');
     },
   });
 
-  const handleTogglePushAlarm = () => {
+  const handleTogglePushAlarm = (onSettled?: () => void) => {
     if (!data) return;
-    updatePushSetting({ pushEnabled: !data.pushEnabled });
+    updatePushSetting({ pushEnabled: !data.pushEnabled }, { onSettled });
   };
 
   return {
