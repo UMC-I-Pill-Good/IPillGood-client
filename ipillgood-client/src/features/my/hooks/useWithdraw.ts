@@ -1,16 +1,25 @@
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteMember } from '../api/member';
+import { deletePushTokens } from '../api/notification';
 import { showToast } from '@/shared/utils';
 
 export const useWithdraw = (onWithdrawSuccess: () => void) => {
-  const { clearTokens } = useLocalStorage();
+  const { clearTokens, getPushTokenId, clearPushTokenId } = useLocalStorage();
   const queryClient = useQueryClient();
 
   const withdrawMutation = useMutation({
-    mutationFn: deleteMember,
+    mutationFn: async () => {
+      const pushTokenId = getPushTokenId();
+      if (pushTokenId) {
+        await deletePushTokens(Number(pushTokenId)).catch(() => {});
+      }
+
+      await deleteMember();
+    },
     onSuccess: () => {
       clearTokens();
+      clearPushTokenId();
       queryClient.clear();
       onWithdrawSuccess();
     },
