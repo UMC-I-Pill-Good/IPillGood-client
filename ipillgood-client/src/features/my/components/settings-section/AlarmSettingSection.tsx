@@ -19,7 +19,7 @@ const AlarmSettingSection = () => {
   const { handleRegisterFcmTokens } = useFcmTokens();
 
   const handleToggle = async () => {
-    if (isProcessing) return; // 토큰 등록 진행 중 재클릭 무시
+    if (isProcessing || isPushAlarmOn === undefined) return; // 처리 중이거나 설정값 로드 전이면 재클릭 무시
 
     // iOS 브라우저 탭처럼 웹 푸시 미지원 환경
     // Notification API 자체가 없어서 권한 팝업이 뜰 수 없으므로 안내만 띄움
@@ -34,14 +34,15 @@ const AlarmSettingSection = () => {
       return;
     }
 
+    setIsProcessing(true);
+
     // 브라우저 알림 권한 설정 전 -> FCM 토큰 등록까지 성공한 경우에만 서버 설정을 켬
     if (Notification.permission === 'default') {
-      setIsProcessing(true);
       setOptimisticOn(true);
       const { permission, isRegistered } = await handleRegisterFcmTokens();
-      setIsProcessing(false);
 
       if (permission !== 'granted' || !isRegistered) {
+        setIsProcessing(false);
         setOptimisticOn(false);
         if (permission === 'denied') {
           setModalVariant('denied');
@@ -51,8 +52,11 @@ const AlarmSettingSection = () => {
         return;
       }
     }
-    // 서버 값이 갱신된 뒤에 낙관적 상태를 해제해서 깜빡임 없이 전환
-    handleTogglePushAlarm(() => setOptimisticOn(false));
+    // 서버 값이 갱신된 뒤에 처리 상태와 낙관적 상태를 함께 해제해서 깜빡임 없이 전환
+    handleTogglePushAlarm(() => {
+      setIsProcessing(false);
+      setOptimisticOn(false);
+    });
   };
 
   const AlertRight = (
