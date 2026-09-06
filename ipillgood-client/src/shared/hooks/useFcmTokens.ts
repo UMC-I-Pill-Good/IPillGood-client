@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { postPushTokens, deletePushTokens } from '../api/notification';
+import { postPushTokens, deletePushTokens } from '@/features/my/api/notification';
 import { getMessagingInstance } from '@/shared/utils/firebase';
 import { getToken } from 'firebase/messaging';
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
