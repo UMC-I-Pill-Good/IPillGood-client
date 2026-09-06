@@ -12,3 +12,24 @@ firebase.initializeApp({
 });
 
 firebase.messaging();
+
+// 알림 클릭 시 payload의 targetRoute로 이동(포그라운드 용)
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+
+  const targetRoute = event.notification.data?.targetRoute || '/';
+  const targetUrl = self.location.origin + targetRoute;
+
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      for (const client of clientList) {
+        if (client.url === targetUrl && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      if (clients.openWindow) {
+        return clients.openWindow(targetUrl);
+      }
+    }),
+  );
+});
