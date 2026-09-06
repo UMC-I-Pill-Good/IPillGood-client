@@ -23,40 +23,39 @@ export const useFcmTokens = () => {
     },
   });
 
-  const handleRegisterFcmTokens = async () => {
+  // 브라우저 알림 권한 요청 다이얼로그
+  const requestNotificationPermission = async () => {
     // iOS 브라우저 탭 등 웹 푸시 미지원 환경에서는 Notification API가 없어 요청 자체가 불가능
-    if (!isPushSupported()) {
-      return { permission: 'unsupported' as const, isRegistered: false };
-    }
+    if (!isPushSupported()) return 'unsupported' as const;
 
-    // 브라우저 알림 권한 요청 다이얼로그
-    const permission = await Notification.requestPermission();
+    return Notification.requestPermission();
+  };
 
-    // 'granted'가 아니면(denied 또는 default) FCM 토큰 등록 없이 여기서 종료
-    // denied로 인한 서버 값 동기화는 앱 전역 PushPermissionWatcher가 처리
-    if (permission !== 'granted') {
-      return { permission, isRegistered: false };
-    }
-
+  // 권한이 granted인 상태에서 FCM 토큰을 발급받아 서버에 등록
+  const registerFcmToken = async () => {
     try {
       const messaging = await getMessagingInstance();
-      if (!messaging) return { permission, isRegistered: false };
+      if (!messaging) return false;
 
       // FCM 토큰 발급
       const token = await getToken(messaging, {
         vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
       });
 
-      if (!token) return { permission, isRegistered: false };
+      if (!token) return false;
 
       // 발급받은 토큰을 서버에 등록해서 이 기기로 푸시를 보낼 수 있게 함
       await registerMutation.mutateAsync({ platform: 'WEB', token });
 
-      return { permission, isRegistered: true };
+      return true;
     } catch {
-      return { permission, isRegistered: false };
+      return false;
     }
   };
 
-  return { handleRegisterFcmTokens, isRegistering: registerMutation.isPending };
+  return {
+    requestNotificationPermission,
+    registerFcmToken,
+    isRegistering: registerMutation.isPending,
+  };
 };
